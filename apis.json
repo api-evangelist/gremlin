@@ -1,0 +1,63 @@
+{
+    "name": "Gremlin",
+    "description": "Downtime is expensive and can hurt your brand. Gremlin provides engineers with the framework to safely, securely, and easily simulate real outages with an ever-growing library of attacks. Turn failure into resilience with chaos engineering.",
+    "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/28174-www-gremlin-com.jpg",
+    "tags": [
+        "api provider",
+        "api service provider",
+        "have api",
+        "monitoring",
+        "reliability"
+    ],
+    "created": "2019-12-19",
+    "modified": "2019-12-19",
+    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/gremlin\/master\/apis.json",
+    "specificationVersion": "0.14",
+    "apis": [
+        {
+            "name": "Gremlin",
+            "description": null,
+            "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/28174-www-gremlin-com.jpg",
+            "humanURL": "https:\/\/www.gremlin.com",
+            "baseURL": "",
+            "tags": [],
+            "properties": [
+                {
+                    "type": "x-openapi",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/gremlin-openapi.json"
+                }
+            ]
+        }
+    ],
+    "include": [],
+    "x-common": [
+        {
+            "type": "Crunchbase",
+            "url": "https:\/\/crunchbase.com\/organization\/gremlin-inc"
+        },
+        {
+            "type": "Email",
+            "url": "sales@gremlin.com"
+        },
+        {
+            "type": "Email",
+            "url": "support@gremlin.com"
+        },
+        {
+            "type": "Email",
+            "url": "press@gremlin.com"
+        },
+        {
+            "type": "Github",
+            "url": "https:\/\/github.com\/GremlinInc"
+        },
+        {
+            "type": "Twitter",
+            "url": "https:\/\/twitter.com\/GremlinInc"
+        },
+        {
+            "type": "Website",
+            "url": "https:\/\/www.gremlin.com"
+        }
+    ]
+}
