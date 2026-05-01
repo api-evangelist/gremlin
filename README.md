@@ -5,18 +5,39 @@ Gremlin is a chaos engineering platform that helps teams build more resilient sy
 
 ## Scope
 
-- **Type:** Index 
-- **Position:** Consuming 
-- **Access:** 3rd-Party 
+- **Type:** Index
+- **Position:** Consuming
+- **Access:** 3rd-Party
 
 ## Tags:
 
- - Chaos Engineering, Reliability, Site Reliability Engineering, Infrastructure Testing, Fault Injection
+ - Chaos Engineering, Fault Injection, Infrastructure Testing, Reliability, Site Reliability Engineering
 
 ## Timestamps
 
-- **Created:** 2025-01-01 
-- **Modified:** 2026-03-16 
+- **Created:** 2025-01-01
+- **Modified:** 2026-04-28
+
+## APIs
+
+### Gremlin API
+The Gremlin Failure-as-a-Service API for programmatically running chaos engineering attacks, scenarios, reliability tests, disaster recovery experiments, and managing teams, integrations, and infrastructure targets across cloud, container, and Kubernetes environments.
+
+**Human URL:** [https://www.gremlin.com/docs](https://www.gremlin.com/docs)
+
+**Base URL:** `https://api.gremlin.com/v1`
+
+#### Tags:
+
+ - Chaos Engineering, Fault Injection, Reliability
+
+#### Properties
+
+- [Documentation](https://www.gremlin.com/docs)
+- [OpenAPI](openapi/gremlin-openapi.yml)
+- [Capabilities](capabilities/gremlin-capabilities.yml)
+- [Rules](rules/gremlin-rules.yml)
+- [JSONSchema](json-schema/gremlin-schema-index.yml)
 
 ## Common Properties
 

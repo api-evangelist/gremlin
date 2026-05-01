@@ -1,0 +1,32 @@
+rules:
+  gremlin-info-contact-required:
+    description: Gremlin API spec must declare a contact.
+    message: info.contact is required
+    given: $.info
+    severity: warn
+    then:
+      field: contact
+      function: truthy
+  gremlin-server-https-only:
+    description: All Gremlin servers must use HTTPS.
+    message: Server URL must use https://
+    given: $.servers[*].url
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: ^https://
+  gremlin-operation-tag-required:
+    description: Each Gremlin operation must declare at least one tag.
+    given: $.paths[*][get,post,put,delete,patch]
+    severity: warn
+    then:
+      field: tags
+      function: truthy
+  gremlin-operation-summary-required:
+    description: Each operation should have a human-readable summary.
+    given: $.paths[*][get,post,put,delete,patch]
+    severity: warn
+    then:
+      field: summary
+      function: truthy

@@ -8,7 +8,7 @@ description: >-
 image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 url: https://www.gremlin.com
 created: '2025-01-01'
-modified: '2026-03-16'
+modified: '2026-04-28'
 specificationVersion: '0.19'
 type: Index
 tags:
@@ -17,7 +17,31 @@ tags:
   - Infrastructure Testing
   - Reliability
   - Site Reliability Engineering
-apis: []
+apis:
+  - aid: gremlin:gremlin-api
+    name: Gremlin API
+    description: >-
+      The Gremlin Failure-as-a-Service API for programmatically running chaos
+      engineering attacks, scenarios, reliability tests, disaster recovery
+      experiments, and managing teams, integrations, and infrastructure
+      targets across cloud, container, and Kubernetes environments.
+    humanURL: https://www.gremlin.com/docs
+    baseURL: https://api.gremlin.com/v1
+    tags:
+      - Chaos Engineering
+      - Fault Injection
+      - Reliability
+    properties:
+      - type: Documentation
+        url: https://www.gremlin.com/docs
+      - type: OpenAPI
+        url: openapi/gremlin-openapi.yml
+      - type: Capabilities
+        url: capabilities/gremlin-capabilities.yml
+      - type: Rules
+        url: rules/gremlin-rules.yml
+      - type: JSONSchema
+        url: json-schema/gremlin-schema-index.yml
 common:
   - type: Portal
     url: https://www.gremlin.com
