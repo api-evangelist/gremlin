@@ -59,6 +59,13 @@ common:
     url: https://www.gremlin.com/privacy
   - type: Support
     url: https://www.gremlin.com/support
+  - type: Integrations
+    url: https://www.gremlin.com/partners
+integrations:
+  - name: Arrow
+  - name: Linkedin
+  - name: Facebook
+  - name: Instagram
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
