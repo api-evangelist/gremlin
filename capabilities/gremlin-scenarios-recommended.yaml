@@ -1,0 +1,174 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — scenarios.recommended
+  description: 'Gremlin API — scenarios.recommended. 3 operations. Lead operation: List all recommended scenarios.. Self-contained
+    Naftiko capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - scenarios.recommended
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-scenarios-recommended
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — scenarios.recommended business capability. Self-contained, no shared references.
+    resources:
+    - name: scenarios-recommended
+      path: /scenarios/recommended
+      operations:
+      - name: getactive
+        method: GET
+        description: List all recommended scenarios.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: scenarios-recommended-static-staticEndpointName
+      path: /scenarios/recommended/static/{staticEndpointName}
+      operations:
+      - name: getrecommendedscenariofromstaticendpointname
+        method: GET
+        description: Get details about a recommended scenario.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: staticEndpointName
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: scenarios-recommended-guid
+      path: /scenarios/recommended/{guid}
+      operations:
+      - name: getrecommendedscenario
+        method: GET
+        description: Get details about a recommended scenario.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-scenarios-recommended-rest
+    port: 8080
+    description: REST adapter for Gremlin API — scenarios.recommended. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/scenarios/recommended
+      name: scenarios-recommended
+      description: REST surface for scenarios-recommended.
+      operations:
+      - method: GET
+        name: getactive
+        description: List all recommended scenarios.
+        call: gremlin-scenarios-recommended.getactive
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/recommended/static/{staticendpointname}
+      name: scenarios-recommended-static-staticendpointname
+      description: REST surface for scenarios-recommended-static-staticEndpointName.
+      operations:
+      - method: GET
+        name: getrecommendedscenariofromstaticendpointname
+        description: Get details about a recommended scenario.
+        call: gremlin-scenarios-recommended.getrecommendedscenariofromstaticendpointname
+        with:
+          staticEndpointName: rest.staticEndpointName
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/recommended/{guid}
+      name: scenarios-recommended-guid
+      description: REST surface for scenarios-recommended-guid.
+      operations:
+      - method: GET
+        name: getrecommendedscenario
+        description: Get details about a recommended scenario.
+        call: gremlin-scenarios-recommended.getrecommendedscenario
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-scenarios-recommended-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — scenarios.recommended. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-all-recommended-scenarios
+      description: List all recommended scenarios.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios-recommended.getactive
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-about-recommended-scenario
+      description: Get details about a recommended scenario.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios-recommended.getrecommendedscenariofromstaticendpointname
+      with:
+        staticEndpointName: tools.staticEndpointName
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-about-recommended-scenario-2
+      description: Get details about a recommended scenario.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios-recommended.getrecommendedscenario
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.

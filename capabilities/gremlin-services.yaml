@@ -1,0 +1,1318 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — services
+  description: 'Gremlin API — services. 25 operations. Lead operation: Paginated endpoint for fetching services for a given
+    team. Self-contained Naftiko capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - services
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-services
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — services business capability. Self-contained, no shared references.
+    resources:
+    - name: services
+      path: /services
+      operations:
+      - name: getallservices
+        method: GET
+        description: Paginated endpoint for fetching services for a given team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: pageToken
+          in: query
+          type: string
+          description: Token corresponding to the last page of customer services retrieved. Pass the pageToken to get the
+            next page of customer services
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: createservice
+        method: POST
+        description: Create a service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: bulkaddhealthcheckstoservices
+        method: PATCH
+        description: Bulk add a given Status Check to all services
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: services-all-for-company
+      path: /services/all-for-company
+      operations:
+      - name: getallservicesforcompany
+        method: GET
+        description: Paginated endpoint for fetching services for a given company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: pageToken
+          in: query
+          type: string
+          description: Token corresponding to the last page of customer services retrieved. Pass the pageToken to get the
+            next page of customer services
+    - name: services-bulk-create-with-load-balancers
+      path: /services/bulk-create-with-load-balancers
+      operations:
+      - name: bulkcreatewithloadbalancers
+        method: POST
+        description: Bulk create services based on AWS Load balancers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: services-bulk-delete
+      path: /services/bulk-delete
+      operations:
+      - name: bulkdeleteservices
+        method: POST
+        description: Bulk delete services
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: services-service-creation-readiness-clients
+      path: /services/service-creation-readiness/clients
+      operations:
+      - name: computeservicereadinessagentsfrompoduids
+        method: POST
+        description: Retrieves clients for a potential service definition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: services-service-creation-readiness-targetType
+      path: /services/service-creation-readiness/{targetType}
+      operations:
+      - name: getservicecreationreadiness
+        method: GET
+        description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: targetType
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: services-id-risk-summary
+      path: /services/{id}/risk-summary
+      operations:
+      - name: getrisksummary
+        method: GET
+        description: Load risk evaluations for service. Re-evaluate risks if service has been deployed since the last evaluation.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: services-serviceId
+      path: /services/{serviceId}
+      operations:
+      - name: getservice
+        method: GET
+        description: Retrieve a service by id
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: delete6
+        method: DELETE
+        description: Permanently delete a service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: update4
+        method: PATCH
+        description: Update a service, editing some fields
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: services-serviceId-baseline
+      path: /services/{serviceId}/baseline
+      operations:
+      - name: runalltests
+        method: POST
+        description: Run RM tests for a given service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: services-serviceId-dependencies
+      path: /services/{serviceId}/dependencies
+      operations:
+      - name: getactivedependencies
+        method: GET
+        description: Paginated endpoint for listing active dependencies for a given service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          required: true
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: pageToken
+          in: query
+          type: string
+          description: 'Token corresponding to the last page of customer services retrieved. Pass the pageToken to get the
+            next page of customer services. Only pageNumber or pageToken '
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: definedependency
+        method: POST
+        description: Manually define a new dependency for a given Service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: services-serviceId-dependencies-discovered
+      path: /services/{serviceId}/dependencies/discovered
+      operations:
+      - name: deletealldiscovereddependencies
+        method: DELETE
+        description: Deletes all discovered dependencies, including those marked as ignored, for the specified service. Halts
+          any active runs if necessary and updates the service's reliability score.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          required: true
+        - name: confirm
+          in: query
+          type: boolean
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: services-serviceId-dependencies-ignored
+      path: /services/{serviceId}/dependencies/ignored
+      operations:
+      - name: getignoreddependencies
+        method: GET
+        description: Paginated endpoint for listing ignored dependencies for a given service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          required: true
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: pageToken
+          in: query
+          type: string
+          description: 'Token corresponding to the last page of customer services retrieved. Pass the pageToken to get the
+            next page of customer services. Only pageNumber or pageToken '
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: deleteallignoreddependencies
+        method: DELETE
+        description: Delete all dependencies that are marked ignored
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: services-serviceId-dependencies-ignored-dependencyId
+      path: /services/{serviceId}/dependencies/ignored/{dependencyId}
+      operations:
+      - name: deleteignoreddependency
+        method: DELETE
+        description: Delete a dependency that is marked as ignored
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          required: true
+        - name: dependencyId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: services-serviceId-dependencies-dependencyId
+      path: /services/{serviceId}/dependencies/{dependencyId}
+      operations:
+      - name: deletedependency
+        method: DELETE
+        description: Mark a dependency as ignored, removing it from the list of active dependencies and reliability score.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          required: true
+        - name: dependencyId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: updatedependency
+        method: PATCH
+        description: Update a dependency's name and/or isSPOF flag. We deliberately do not allow updating a dependency's endpoint,
+          i.e. address and port, because updating either of these values effectively changes the dependency. To change these
+          values, refer t
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          required: true
+        - name: dependencyId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: services-serviceId-dependencies-dependencyId-name
+      path: /services/{serviceId}/dependencies/{dependencyId}/name
+      operations:
+      - name: renamedependency
+        method: PUT
+        description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          required: true
+        - name: dependencyId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: services-serviceId-metrics-awsResource
+      path: /services/{serviceId}/metrics/{awsResource}
+      operations:
+      - name: getmetrics
+        method: GET
+        description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          required: true
+        - name: awsResource
+          in: path
+          type: string
+          required: true
+        - name: startTime
+          in: query
+          type: integer
+        - name: endTime
+          in: query
+          type: integer
+        - name: statusCheck
+          in: query
+          type: string
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: services-serviceId-score
+      path: /services/{serviceId}/score
+      operations:
+      - name: getservicescore
+        method: GET
+        description: Retrieve a service's score in plain/text
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: services-serviceId-status-checks
+      path: /services/{serviceId}/status-checks
+      operations:
+      - name: getstatuschecksforservice
+        method: GET
+        description: Fetch Status Checks associated with a given service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-services-rest
+    port: 8080
+    description: REST adapter for Gremlin API — services. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/services
+      name: services
+      description: REST surface for services.
+      operations:
+      - method: GET
+        name: getallservices
+        description: Paginated endpoint for fetching services for a given team
+        call: gremlin-services.getallservices
+        with:
+          pageSize: rest.pageSize
+          pageToken: rest.pageToken
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createservice
+        description: Create a service
+        call: gremlin-services.createservice
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: bulkaddhealthcheckstoservices
+        description: Bulk add a given Status Check to all services
+        call: gremlin-services.bulkaddhealthcheckstoservices
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/all-for-company
+      name: services-all-for-company
+      description: REST surface for services-all-for-company.
+      operations:
+      - method: GET
+        name: getallservicesforcompany
+        description: Paginated endpoint for fetching services for a given company
+        call: gremlin-services.getallservicesforcompany
+        with:
+          pageSize: rest.pageSize
+          pageToken: rest.pageToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/bulk-create-with-load-balancers
+      name: services-bulk-create-with-load-balancers
+      description: REST surface for services-bulk-create-with-load-balancers.
+      operations:
+      - method: POST
+        name: bulkcreatewithloadbalancers
+        description: Bulk create services based on AWS Load balancers
+        call: gremlin-services.bulkcreatewithloadbalancers
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/bulk-delete
+      name: services-bulk-delete
+      description: REST surface for services-bulk-delete.
+      operations:
+      - method: POST
+        name: bulkdeleteservices
+        description: Bulk delete services
+        call: gremlin-services.bulkdeleteservices
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/service-creation-readiness/clients
+      name: services-service-creation-readiness-clients
+      description: REST surface for services-service-creation-readiness-clients.
+      operations:
+      - method: POST
+        name: computeservicereadinessagentsfrompoduids
+        description: Retrieves clients for a potential service definition
+        call: gremlin-services.computeservicereadinessagentsfrompoduids
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/service-creation-readiness/{targettype}
+      name: services-service-creation-readiness-targettype
+      description: REST surface for services-service-creation-readiness-targetType.
+      operations:
+      - method: GET
+        name: getservicecreationreadiness
+        description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        call: gremlin-services.getservicecreationreadiness
+        with:
+          targetType: rest.targetType
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/{id}/risk-summary
+      name: services-id-risk-summary
+      description: REST surface for services-id-risk-summary.
+      operations:
+      - method: GET
+        name: getrisksummary
+        description: Load risk evaluations for service. Re-evaluate risks if service has been deployed since the last evaluation.
+        call: gremlin-services.getrisksummary
+        with:
+          id: rest.id
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/{serviceid}
+      name: services-serviceid
+      description: REST surface for services-serviceId.
+      operations:
+      - method: GET
+        name: getservice
+        description: Retrieve a service by id
+        call: gremlin-services.getservice
+        with:
+          serviceId: rest.serviceId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete6
+        description: Permanently delete a service
+        call: gremlin-services.delete6
+        with:
+          serviceId: rest.serviceId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: update4
+        description: Update a service, editing some fields
+        call: gremlin-services.update4
+        with:
+          serviceId: rest.serviceId
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/{serviceid}/baseline
+      name: services-serviceid-baseline
+      description: REST surface for services-serviceId-baseline.
+      operations:
+      - method: POST
+        name: runalltests
+        description: Run RM tests for a given service
+        call: gremlin-services.runalltests
+        with:
+          serviceId: rest.serviceId
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/{serviceid}/dependencies
+      name: services-serviceid-dependencies
+      description: REST surface for services-serviceId-dependencies.
+      operations:
+      - method: GET
+        name: getactivedependencies
+        description: Paginated endpoint for listing active dependencies for a given service
+        call: gremlin-services.getactivedependencies
+        with:
+          serviceId: rest.serviceId
+          pageSize: rest.pageSize
+          pageToken: rest.pageToken
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: definedependency
+        description: Manually define a new dependency for a given Service
+        call: gremlin-services.definedependency
+        with:
+          serviceId: rest.serviceId
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/{serviceid}/dependencies/discovered
+      name: services-serviceid-dependencies-discovered
+      description: REST surface for services-serviceId-dependencies-discovered.
+      operations:
+      - method: DELETE
+        name: deletealldiscovereddependencies
+        description: Deletes all discovered dependencies, including those marked as ignored, for the specified service. Halts
+          any active runs if necessary and updates the service's reliability score.
+        call: gremlin-services.deletealldiscovereddependencies
+        with:
+          serviceId: rest.serviceId
+          confirm: rest.confirm
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/{serviceid}/dependencies/ignored
+      name: services-serviceid-dependencies-ignored
+      description: REST surface for services-serviceId-dependencies-ignored.
+      operations:
+      - method: GET
+        name: getignoreddependencies
+        description: Paginated endpoint for listing ignored dependencies for a given service
+        call: gremlin-services.getignoreddependencies
+        with:
+          serviceId: rest.serviceId
+          pageSize: rest.pageSize
+          pageToken: rest.pageToken
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteallignoreddependencies
+        description: Delete all dependencies that are marked ignored
+        call: gremlin-services.deleteallignoreddependencies
+        with:
+          serviceId: rest.serviceId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/{serviceid}/dependencies/ignored/{dependencyid}
+      name: services-serviceid-dependencies-ignored-dependencyid
+      description: REST surface for services-serviceId-dependencies-ignored-dependencyId.
+      operations:
+      - method: DELETE
+        name: deleteignoreddependency
+        description: Delete a dependency that is marked as ignored
+        call: gremlin-services.deleteignoreddependency
+        with:
+          serviceId: rest.serviceId
+          dependencyId: rest.dependencyId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/{serviceid}/dependencies/{dependencyid}
+      name: services-serviceid-dependencies-dependencyid
+      description: REST surface for services-serviceId-dependencies-dependencyId.
+      operations:
+      - method: DELETE
+        name: deletedependency
+        description: Mark a dependency as ignored, removing it from the list of active dependencies and reliability score.
+        call: gremlin-services.deletedependency
+        with:
+          serviceId: rest.serviceId
+          dependencyId: rest.dependencyId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatedependency
+        description: Update a dependency's name and/or isSPOF flag. We deliberately do not allow updating a dependency's endpoint,
+          i.e. address and port, because updating either of these values effectively changes the dependency. To change these
+          values, refer t
+        call: gremlin-services.updatedependency
+        with:
+          serviceId: rest.serviceId
+          dependencyId: rest.dependencyId
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/{serviceid}/dependencies/{dependencyid}/name
+      name: services-serviceid-dependencies-dependencyid-name
+      description: REST surface for services-serviceId-dependencies-dependencyId-name.
+      operations:
+      - method: PUT
+        name: renamedependency
+        description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        call: gremlin-services.renamedependency
+        with:
+          serviceId: rest.serviceId
+          dependencyId: rest.dependencyId
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/{serviceid}/metrics/{awsresource}
+      name: services-serviceid-metrics-awsresource
+      description: REST surface for services-serviceId-metrics-awsResource.
+      operations:
+      - method: GET
+        name: getmetrics
+        description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        call: gremlin-services.getmetrics
+        with:
+          serviceId: rest.serviceId
+          awsResource: rest.awsResource
+          startTime: rest.startTime
+          endTime: rest.endTime
+          statusCheck: rest.statusCheck
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/{serviceid}/score
+      name: services-serviceid-score
+      description: REST surface for services-serviceId-score.
+      operations:
+      - method: GET
+        name: getservicescore
+        description: Retrieve a service's score in plain/text
+        call: gremlin-services.getservicescore
+        with:
+          serviceId: rest.serviceId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/{serviceid}/status-checks
+      name: services-serviceid-status-checks
+      description: REST surface for services-serviceId-status-checks.
+      operations:
+      - method: GET
+        name: getstatuschecksforservice
+        description: Fetch Status Checks associated with a given service
+        call: gremlin-services.getstatuschecksforservice
+        with:
+          serviceId: rest.serviceId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-services-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — services. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: paginated-endpoint-fetching-services-given
+      description: Paginated endpoint for fetching services for a given team
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-services.getallservices
+      with:
+        pageSize: tools.pageSize
+        pageToken: tools.pageToken
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-service
+      description: Create a service
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-services.createservice
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-add-given-status-check
+      description: Bulk add a given Status Check to all services
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-services.bulkaddhealthcheckstoservices
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: paginated-endpoint-fetching-services-given-2
+      description: Paginated endpoint for fetching services for a given company
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-services.getallservicesforcompany
+      with:
+        pageSize: tools.pageSize
+        pageToken: tools.pageToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-create-services-based-aws
+      description: Bulk create services based on AWS Load balancers
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-services.bulkcreatewithloadbalancers
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-delete-services
+      description: Bulk delete services
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-services.bulkdeleteservices
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieves-clients-potential-service-definition
+      description: Retrieves clients for a potential service definition
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: gremlin-services.computeservicereadinessagentsfrompoduids
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: requires-privilege-services-write-https-www-gremlin-com
+      description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-services.getservicecreationreadiness
+      with:
+        targetType: tools.targetType
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: load-risk-evaluations-service-re
+      description: Load risk evaluations for service. Re-evaluate risks if service has been deployed since the last evaluation.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-services.getrisksummary
+      with:
+        id: tools.id
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-service-id
+      description: Retrieve a service by id
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-services.getservice
+      with:
+        serviceId: tools.serviceId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: permanently-delete-service
+      description: Permanently delete a service
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-services.delete6
+      with:
+        serviceId: tools.serviceId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-service-editing-some-fields
+      description: Update a service, editing some fields
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-services.update4
+      with:
+        serviceId: tools.serviceId
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: run-rm-tests-given-service
+      description: Run RM tests for a given service
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-services.runalltests
+      with:
+        serviceId: tools.serviceId
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: paginated-endpoint-listing-active-dependencies
+      description: Paginated endpoint for listing active dependencies for a given service
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-services.getactivedependencies
+      with:
+        serviceId: tools.serviceId
+        pageSize: tools.pageSize
+        pageToken: tools.pageToken
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: manually-define-new-dependency-given
+      description: Manually define a new dependency for a given Service
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-services.definedependency
+      with:
+        serviceId: tools.serviceId
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletes-all-discovered-dependencies-including
+      description: Deletes all discovered dependencies, including those marked as ignored, for the specified service. Halts
+        any active runs if necessary and updates the service's reliability score.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-services.deletealldiscovereddependencies
+      with:
+        serviceId: tools.serviceId
+        confirm: tools.confirm
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: paginated-endpoint-listing-ignored-dependencies
+      description: Paginated endpoint for listing ignored dependencies for a given service
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-services.getignoreddependencies
+      with:
+        serviceId: tools.serviceId
+        pageSize: tools.pageSize
+        pageToken: tools.pageToken
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-all-dependencies-that-are
+      description: Delete all dependencies that are marked ignored
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-services.deleteallignoreddependencies
+      with:
+        serviceId: tools.serviceId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-dependency-that-is-marked
+      description: Delete a dependency that is marked as ignored
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-services.deleteignoreddependency
+      with:
+        serviceId: tools.serviceId
+        dependencyId: tools.dependencyId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: mark-dependency-ignored-removing-it
+      description: Mark a dependency as ignored, removing it from the list of active dependencies and reliability score.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-services.deletedependency
+      with:
+        serviceId: tools.serviceId
+        dependencyId: tools.dependencyId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-dependency-s-name-and-isspof
+      description: Update a dependency's name and/or isSPOF flag. We deliberately do not allow updating a dependency's endpoint,
+        i.e. address and port, because updating either of these values effectively changes the dependency. To change these
+        values, refer t
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-services.updatedependency
+      with:
+        serviceId: tools.serviceId
+        dependencyId: tools.dependencyId
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: requires-privilege-services-write-https-www-gremlin-com-2
+      description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-services.renamedependency
+      with:
+        serviceId: tools.serviceId
+        dependencyId: tools.dependencyId
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: requires-privilege-services-read-https-www-gremlin-com
+      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-services.getmetrics
+      with:
+        serviceId: tools.serviceId
+        awsResource: tools.awsResource
+        startTime: tools.startTime
+        endTime: tools.endTime
+        statusCheck: tools.statusCheck
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-service-s-score-plain-text
+      description: Retrieve a service's score in plain/text
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-services.getservicescore
+      with:
+        serviceId: tools.serviceId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fetch-status-checks-associated-given
+      description: Fetch Status Checks associated with a given service
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-services.getstatuschecksforservice
+      with:
+        serviceId: tools.serviceId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.

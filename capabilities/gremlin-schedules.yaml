@@ -1,0 +1,869 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — schedules
+  description: 'Gremlin API — schedules. 18 operations. Lead operation: This functionality has moved to POST /schedules/attacks..
+    Self-contained Naftiko capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - schedules
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-schedules
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — schedules business capability. Self-contained, no shared references.
+    resources:
+    - name: schedules
+      path: /schedules
+      operations:
+      - name: createattackschedulelegacy
+        method: POST
+        description: This functionality has moved to POST /schedules/attacks.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: schedules-active
+      path: /schedules/active
+      operations:
+      - name: getattackscheduleslegacy
+        method: GET
+        description: This functionality has moved to GET /schedules/attacks.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: schedules-attacks
+      path: /schedules/attacks
+      operations:
+      - name: getattackschedules
+        method: GET
+        description: Get all active experiment schedules. This functionality has moved to GET /schedules/attacks/paged.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: createattackschedule
+        method: POST
+        description: Create an attack schedule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: schedules-attacks-paged
+      path: /schedules/attacks/paged
+      operations:
+      - name: getpaginatedattackschedules
+        method: GET
+        description: Paginated endpoint for listing a team's experiment schedules ordered by trigger time.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: pageToken
+          in: query
+          type: string
+          description: Pass the pageToken to get the next page of experiment schedules
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: schedules-attacks-guid
+      path: /schedules/attacks/{guid}
+      operations:
+      - name: getsingleattackschedule
+        method: GET
+        description: Get an attack schedule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: deleteattackschedule
+        method: DELETE
+        description: Delete an attack schedule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: schedules-scenarios
+      path: /schedules/scenarios
+      operations:
+      - name: getscenarioschedules1
+        method: GET
+        description: Get all scenario schedules. This functionality has moved to GET /schedules/scenarios/paged.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: createscenarioschedule
+        method: POST
+        description: Create a scenario schedule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: schedules-scenarios-paged
+      path: /schedules/scenarios/paged
+      operations:
+      - name: getpaginatedscenarioschedules
+        method: GET
+        description: Paginated endpoint for listing a team's scenario schedules ordered by trigger time.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: pageToken
+          in: query
+          type: string
+          description: Pass the pageToken to get the next page of scenario schedules
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: schedules-scenarios-guid
+      path: /schedules/scenarios/{guid}
+      operations:
+      - name: getsinglescenarioschedule
+        method: GET
+        description: Get a scenario schedule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: updatescenarioschedule
+        method: PUT
+        description: Update a scenario schedule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deletescenarioschedule
+        method: DELETE
+        description: Delete a scenario schedule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: schedules-scenarios-guid-enabled
+      path: /schedules/scenarios/{guid}/enabled
+      operations:
+      - name: enablescenarioschedule
+        method: POST
+        description: Enable a scenario schedule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: disablescenarioschedule
+        method: DELETE
+        description: Disable a scenario schedule.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: schedules-services-paged
+      path: /schedules/services/paged
+      operations:
+      - name: getpaginatedserviceschedules
+        method: GET
+        description: Paginated endpoint for listing a team's service schedules ordered by trigger time.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: pageToken
+          in: query
+          type: string
+          description: Pass the pageToken to get the next page of service schedules
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: schedules-guid
+      path: /schedules/{guid}
+      operations:
+      - name: getsingleattackschedulelegacy
+        method: GET
+        description: This functionality has moved to GET /schedules/attacks/{guid}.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: deleteattackschedulelegacy
+        method: DELETE
+        description: This functionality has moved to DELETE /schedules/attacks/{guid}
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-schedules-rest
+    port: 8080
+    description: REST adapter for Gremlin API — schedules. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/schedules
+      name: schedules
+      description: REST surface for schedules.
+      operations:
+      - method: POST
+        name: createattackschedulelegacy
+        description: This functionality has moved to POST /schedules/attacks.
+        call: gremlin-schedules.createattackschedulelegacy
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/schedules/active
+      name: schedules-active
+      description: REST surface for schedules-active.
+      operations:
+      - method: GET
+        name: getattackscheduleslegacy
+        description: This functionality has moved to GET /schedules/attacks.
+        call: gremlin-schedules.getattackscheduleslegacy
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/schedules/attacks
+      name: schedules-attacks
+      description: REST surface for schedules-attacks.
+      operations:
+      - method: GET
+        name: getattackschedules
+        description: Get all active experiment schedules. This functionality has moved to GET /schedules/attacks/paged.
+        call: gremlin-schedules.getattackschedules
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createattackschedule
+        description: Create an attack schedule.
+        call: gremlin-schedules.createattackschedule
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/schedules/attacks/paged
+      name: schedules-attacks-paged
+      description: REST surface for schedules-attacks-paged.
+      operations:
+      - method: GET
+        name: getpaginatedattackschedules
+        description: Paginated endpoint for listing a team's experiment schedules ordered by trigger time.
+        call: gremlin-schedules.getpaginatedattackschedules
+        with:
+          pageSize: rest.pageSize
+          pageToken: rest.pageToken
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/schedules/attacks/{guid}
+      name: schedules-attacks-guid
+      description: REST surface for schedules-attacks-guid.
+      operations:
+      - method: GET
+        name: getsingleattackschedule
+        description: Get an attack schedule.
+        call: gremlin-schedules.getsingleattackschedule
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteattackschedule
+        description: Delete an attack schedule.
+        call: gremlin-schedules.deleteattackschedule
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/schedules/scenarios
+      name: schedules-scenarios
+      description: REST surface for schedules-scenarios.
+      operations:
+      - method: GET
+        name: getscenarioschedules1
+        description: Get all scenario schedules. This functionality has moved to GET /schedules/scenarios/paged.
+        call: gremlin-schedules.getscenarioschedules1
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createscenarioschedule
+        description: Create a scenario schedule.
+        call: gremlin-schedules.createscenarioschedule
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/schedules/scenarios/paged
+      name: schedules-scenarios-paged
+      description: REST surface for schedules-scenarios-paged.
+      operations:
+      - method: GET
+        name: getpaginatedscenarioschedules
+        description: Paginated endpoint for listing a team's scenario schedules ordered by trigger time.
+        call: gremlin-schedules.getpaginatedscenarioschedules
+        with:
+          pageSize: rest.pageSize
+          pageToken: rest.pageToken
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/schedules/scenarios/{guid}
+      name: schedules-scenarios-guid
+      description: REST surface for schedules-scenarios-guid.
+      operations:
+      - method: GET
+        name: getsinglescenarioschedule
+        description: Get a scenario schedule.
+        call: gremlin-schedules.getsinglescenarioschedule
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatescenarioschedule
+        description: Update a scenario schedule.
+        call: gremlin-schedules.updatescenarioschedule
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletescenarioschedule
+        description: Delete a scenario schedule.
+        call: gremlin-schedules.deletescenarioschedule
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/schedules/scenarios/{guid}/enabled
+      name: schedules-scenarios-guid-enabled
+      description: REST surface for schedules-scenarios-guid-enabled.
+      operations:
+      - method: POST
+        name: enablescenarioschedule
+        description: Enable a scenario schedule.
+        call: gremlin-schedules.enablescenarioschedule
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: disablescenarioschedule
+        description: Disable a scenario schedule.
+        call: gremlin-schedules.disablescenarioschedule
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/schedules/services/paged
+      name: schedules-services-paged
+      description: REST surface for schedules-services-paged.
+      operations:
+      - method: GET
+        name: getpaginatedserviceschedules
+        description: Paginated endpoint for listing a team's service schedules ordered by trigger time.
+        call: gremlin-schedules.getpaginatedserviceschedules
+        with:
+          pageSize: rest.pageSize
+          pageToken: rest.pageToken
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/schedules/{guid}
+      name: schedules-guid
+      description: REST surface for schedules-guid.
+      operations:
+      - method: GET
+        name: getsingleattackschedulelegacy
+        description: This functionality has moved to GET /schedules/attacks/{guid}.
+        call: gremlin-schedules.getsingleattackschedulelegacy
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteattackschedulelegacy
+        description: This functionality has moved to DELETE /schedules/attacks/{guid}
+        call: gremlin-schedules.deleteattackschedulelegacy
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-schedules-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — schedules. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: this-functionality-has-moved-post
+      description: This functionality has moved to POST /schedules/attacks.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-schedules.createattackschedulelegacy
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: this-functionality-has-moved-get
+      description: This functionality has moved to GET /schedules/attacks.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-schedules.getattackscheduleslegacy
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-active-experiment-schedules
+      description: Get all active experiment schedules. This functionality has moved to GET /schedules/attacks/paged.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-schedules.getattackschedules
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-attack-schedule
+      description: Create an attack schedule.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-schedules.createattackschedule
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: paginated-endpoint-listing-team-s-experiment
+      description: Paginated endpoint for listing a team's experiment schedules ordered by trigger time.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-schedules.getpaginatedattackschedules
+      with:
+        pageSize: tools.pageSize
+        pageToken: tools.pageToken
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-attack-schedule
+      description: Get an attack schedule.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-schedules.getsingleattackschedule
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-attack-schedule
+      description: Delete an attack schedule.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-schedules.deleteattackschedule
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-scenario-schedules-this
+      description: Get all scenario schedules. This functionality has moved to GET /schedules/scenarios/paged.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-schedules.getscenarioschedules1
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-scenario-schedule
+      description: Create a scenario schedule.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-schedules.createscenarioschedule
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: paginated-endpoint-listing-team-s-scenario
+      description: Paginated endpoint for listing a team's scenario schedules ordered by trigger time.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-schedules.getpaginatedscenarioschedules
+      with:
+        pageSize: tools.pageSize
+        pageToken: tools.pageToken
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-scenario-schedule
+      description: Get a scenario schedule.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-schedules.getsinglescenarioschedule
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-scenario-schedule
+      description: Update a scenario schedule.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-schedules.updatescenarioschedule
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-scenario-schedule
+      description: Delete a scenario schedule.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-schedules.deletescenarioschedule
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: enable-scenario-schedule
+      description: Enable a scenario schedule.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-schedules.enablescenarioschedule
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: disable-scenario-schedule
+      description: Disable a scenario schedule.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-schedules.disablescenarioschedule
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: paginated-endpoint-listing-team-s-service
+      description: Paginated endpoint for listing a team's service schedules ordered by trigger time.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-schedules.getpaginatedserviceschedules
+      with:
+        pageSize: tools.pageSize
+        pageToken: tools.pageToken
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: this-functionality-has-moved-get-2
+      description: This functionality has moved to GET /schedules/attacks/{guid}.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-schedules.getsingleattackschedulelegacy
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: this-functionality-has-moved-delete
+      description: This functionality has moved to DELETE /schedules/attacks/{guid}
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-schedules.deleteattackschedulelegacy
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,530 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — jira
+  description: 'Gremlin API — jira. 10 operations. Lead operation: Returns the fields and data available and required for
+    creating issues.. Self-contained Naftiko capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - jira
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-jira
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — jira business capability. Self-contained, no shared references.
+    resources:
+    - name: jira-issue-meta
+      path: /jira/issue-meta
+      operations:
+      - name: issuemeta
+        method: GET
+        description: Returns the fields and data available and required for creating issues.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: projectId
+          in: query
+          type: string
+          required: true
+        - name: issueTypeId
+          in: query
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: jira-issues
+      path: /jira/issues
+      operations:
+      - name: issuesforgremlinentityids
+        method: GET
+        description: Returns issues for entity ids with details.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: gremlinEntityIds
+          in: query
+          type: array
+          description: A list of Gremlin entity ids
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: issue
+        method: POST
+        description: Creates new issue.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: jira-issues-count
+      path: /jira/issues/count
+      operations:
+      - name: issuecount
+        method: GET
+        description: Returns total issues for entity ids with details.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: gremlinEntityIds
+          in: query
+          type: array
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: jira-issues-services
+      path: /jira/issues/services
+      operations:
+      - name: issuesforgremlinentityidoftype
+        method: GET
+        description: Returns issues for an entity id with details.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: gremlinEntityId
+          in: query
+          type: string
+          description: A Gremlin entity id
+          required: true
+        - name: type
+          in: query
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: jira-labels
+      path: /jira/labels
+      operations:
+      - name: labels
+        method: GET
+        description: Returns all labels of Jira instance.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: jira-priorities
+      path: /jira/priorities
+      operations:
+      - name: priorities
+        method: GET
+        description: Returns the list of issue priorities.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: jira-projects
+      path: /jira/projects
+      operations:
+      - name: projectsearch
+        method: GET
+        description: Search for projects.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: query
+          in: query
+          type: string
+        - name: startAt
+          in: query
+          type: integer
+        - name: maxResults
+          in: query
+          type: integer
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: jira-projects-projectIdOrKey
+      path: /jira/projects/{projectIdOrKey}
+      operations:
+      - name: projectbyid
+        method: GET
+        description: Returns project with given id or key.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: projectIdOrKey
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: jira-projects-projectIdOrKey-users
+      path: /jira/projects/{projectIdOrKey}/users
+      operations:
+      - name: projectusers
+        method: GET
+        description: Returns users assignable to given project.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: projectIdOrKey
+          in: path
+          type: string
+          required: true
+        - name: startAt
+          in: query
+          type: integer
+        - name: maxResults
+          in: query
+          type: integer
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-jira-rest
+    port: 8080
+    description: REST adapter for Gremlin API — jira. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/jira/issue-meta
+      name: jira-issue-meta
+      description: REST surface for jira-issue-meta.
+      operations:
+      - method: GET
+        name: issuemeta
+        description: Returns the fields and data available and required for creating issues.
+        call: gremlin-jira.issuemeta
+        with:
+          projectId: rest.projectId
+          issueTypeId: rest.issueTypeId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/jira/issues
+      name: jira-issues
+      description: REST surface for jira-issues.
+      operations:
+      - method: GET
+        name: issuesforgremlinentityids
+        description: Returns issues for entity ids with details.
+        call: gremlin-jira.issuesforgremlinentityids
+        with:
+          gremlinEntityIds: rest.gremlinEntityIds
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: issue
+        description: Creates new issue.
+        call: gremlin-jira.issue
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/jira/issues/count
+      name: jira-issues-count
+      description: REST surface for jira-issues-count.
+      operations:
+      - method: GET
+        name: issuecount
+        description: Returns total issues for entity ids with details.
+        call: gremlin-jira.issuecount
+        with:
+          gremlinEntityIds: rest.gremlinEntityIds
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/jira/issues/services
+      name: jira-issues-services
+      description: REST surface for jira-issues-services.
+      operations:
+      - method: GET
+        name: issuesforgremlinentityidoftype
+        description: Returns issues for an entity id with details.
+        call: gremlin-jira.issuesforgremlinentityidoftype
+        with:
+          gremlinEntityId: rest.gremlinEntityId
+          type: rest.type
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/jira/labels
+      name: jira-labels
+      description: REST surface for jira-labels.
+      operations:
+      - method: GET
+        name: labels
+        description: Returns all labels of Jira instance.
+        call: gremlin-jira.labels
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/jira/priorities
+      name: jira-priorities
+      description: REST surface for jira-priorities.
+      operations:
+      - method: GET
+        name: priorities
+        description: Returns the list of issue priorities.
+        call: gremlin-jira.priorities
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/jira/projects
+      name: jira-projects
+      description: REST surface for jira-projects.
+      operations:
+      - method: GET
+        name: projectsearch
+        description: Search for projects.
+        call: gremlin-jira.projectsearch
+        with:
+          query: rest.query
+          startAt: rest.startAt
+          maxResults: rest.maxResults
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/jira/projects/{projectidorkey}
+      name: jira-projects-projectidorkey
+      description: REST surface for jira-projects-projectIdOrKey.
+      operations:
+      - method: GET
+        name: projectbyid
+        description: Returns project with given id or key.
+        call: gremlin-jira.projectbyid
+        with:
+          projectIdOrKey: rest.projectIdOrKey
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/jira/projects/{projectidorkey}/users
+      name: jira-projects-projectidorkey-users
+      description: REST surface for jira-projects-projectIdOrKey-users.
+      operations:
+      - method: GET
+        name: projectusers
+        description: Returns users assignable to given project.
+        call: gremlin-jira.projectusers
+        with:
+          projectIdOrKey: rest.projectIdOrKey
+          startAt: rest.startAt
+          maxResults: rest.maxResults
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-jira-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — jira. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: returns-fields-and-data-available
+      description: Returns the fields and data available and required for creating issues.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-jira.issuemeta
+      with:
+        projectId: tools.projectId
+        issueTypeId: tools.issueTypeId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-issues-entity-ids-details
+      description: Returns issues for entity ids with details.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-jira.issuesforgremlinentityids
+      with:
+        gremlinEntityIds: tools.gremlinEntityIds
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: creates-new-issue
+      description: Creates new issue.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-jira.issue
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-total-issues-entity-ids
+      description: Returns total issues for entity ids with details.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-jira.issuecount
+      with:
+        gremlinEntityIds: tools.gremlinEntityIds
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-issues-entity-id-details
+      description: Returns issues for an entity id with details.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-jira.issuesforgremlinentityidoftype
+      with:
+        gremlinEntityId: tools.gremlinEntityId
+        type: tools.type
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-all-labels-jira-instance
+      description: Returns all labels of Jira instance.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-jira.labels
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-list-issue-priorities
+      description: Returns the list of issue priorities.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-jira.priorities
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: search-projects
+      description: Search for projects.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-jira.projectsearch
+      with:
+        query: tools.query
+        startAt: tools.startAt
+        maxResults: tools.maxResults
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-project-given-id-key
+      description: Returns project with given id or key.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-jira.projectbyid
+      with:
+        projectIdOrKey: tools.projectIdOrKey
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-users-assignable-given-project
+      description: Returns users assignable to given project.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-jira.projectusers
+      with:
+        projectIdOrKey: tools.projectIdOrKey
+        startAt: tools.startAt
+        maxResults: tools.maxResults
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,247 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — grafana
+  description: 'Gremlin API — grafana. 4 operations. Lead operation: Get all alerts. Self-contained Naftiko capability covering
+    one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - grafana
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-grafana
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — grafana business capability. Self-contained, no shared references.
+    resources:
+    - name: grafana-alerts
+      path: /grafana/alerts
+      operations:
+      - name: alerts
+        method: GET
+        description: Get all alerts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: query
+          type: string
+        - name: grafanaUri
+          in: query
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: grafana-dashboards
+      path: /grafana/dashboards
+      operations:
+      - name: dashboards
+        method: GET
+        description: Get all dashboards
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: query
+          type: string
+        - name: grafanaUri
+          in: query
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: grafana-monitors
+      path: /grafana/monitors
+      operations:
+      - name: searchmonitors1
+        method: GET
+        description: Searches for Grafana alert monitors
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: searchString
+          in: query
+          type: string
+        - name: grafanaIntegrationName
+          in: query
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: grafana-rules
+      path: /grafana/rules
+      operations:
+      - name: rules
+        method: GET
+        description: Get all rules
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: query
+          type: string
+        - name: grafanaUri
+          in: query
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-grafana-rest
+    port: 8080
+    description: REST adapter for Gremlin API — grafana. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/grafana/alerts
+      name: grafana-alerts
+      description: REST surface for grafana-alerts.
+      operations:
+      - method: GET
+        name: alerts
+        description: Get all alerts
+        call: gremlin-grafana.alerts
+        with:
+          name: rest.name
+          grafanaUri: rest.grafanaUri
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/grafana/dashboards
+      name: grafana-dashboards
+      description: REST surface for grafana-dashboards.
+      operations:
+      - method: GET
+        name: dashboards
+        description: Get all dashboards
+        call: gremlin-grafana.dashboards
+        with:
+          name: rest.name
+          grafanaUri: rest.grafanaUri
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/grafana/monitors
+      name: grafana-monitors
+      description: REST surface for grafana-monitors.
+      operations:
+      - method: GET
+        name: searchmonitors1
+        description: Searches for Grafana alert monitors
+        call: gremlin-grafana.searchmonitors1
+        with:
+          searchString: rest.searchString
+          grafanaIntegrationName: rest.grafanaIntegrationName
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/grafana/rules
+      name: grafana-rules
+      description: REST surface for grafana-rules.
+      operations:
+      - method: GET
+        name: rules
+        description: Get all rules
+        call: gremlin-grafana.rules
+        with:
+          name: rest.name
+          grafanaUri: rest.grafanaUri
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-grafana-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — grafana. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-all-alerts
+      description: Get all alerts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-grafana.alerts
+      with:
+        name: tools.name
+        grafanaUri: tools.grafanaUri
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-dashboards
+      description: Get all dashboards
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-grafana.dashboards
+      with:
+        name: tools.name
+        grafanaUri: tools.grafanaUri
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: searches-grafana-alert-monitors
+      description: Searches for Grafana alert monitors
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-grafana.searchmonitors1
+      with:
+        searchString: tools.searchString
+        grafanaIntegrationName: tools.grafanaIntegrationName
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-rules
+      description: Get all rules
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-grafana.rules
+      with:
+        name: tools.name
+        grafanaUri: tools.grafanaUri
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.

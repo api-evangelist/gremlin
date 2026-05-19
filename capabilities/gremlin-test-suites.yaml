@@ -1,0 +1,264 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — test-suites
+  description: 'Gremlin API — test-suites. 6 operations. Lead operation: Gets all reliability test suites for a company, starting
+    with Gremlin''s default global test suite, followed by other global suites and company''s custom test suites. Self-contained
+    Naftiko capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - test-suites
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-test-suites
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — test-suites business capability. Self-contained, no shared references.
+    resources:
+    - name: test-suites
+      path: /test-suites
+      operations:
+      - name: getalltestsuites
+        method: GET
+        description: Gets all reliability test suites for a company, starting with Gremlin's default global test suite, followed
+          by other global suites and company's custom test suites
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: createtestsuite
+        method: POST
+        description: Creates a reliability test suite
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: test-suites-detected-risks
+      path: /test-suites/detected-risks
+      operations:
+      - name: getrisks
+        method: GET
+        description: Retrieve the default list of available risks to add to a given TestSuite
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: test-suites-testSuiteId
+      path: /test-suites/{testSuiteId}
+      operations:
+      - name: gettestsuite
+        method: GET
+        description: Gets a reliability test suite
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: testSuiteId
+          in: path
+          type: string
+          required: true
+      - name: deletetestsuite
+        method: DELETE
+        description: Delete a Test Suite.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: testSuiteId
+          in: path
+          type: string
+          required: true
+      - name: updatetestsuite
+        method: PATCH
+        description: Updates a reliability test suite
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: testSuiteId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-test-suites-rest
+    port: 8080
+    description: REST adapter for Gremlin API — test-suites. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/test-suites
+      name: test-suites
+      description: REST surface for test-suites.
+      operations:
+      - method: GET
+        name: getalltestsuites
+        description: Gets all reliability test suites for a company, starting with Gremlin's default global test suite, followed
+          by other global suites and company's custom test suites
+        call: gremlin-test-suites.getalltestsuites
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createtestsuite
+        description: Creates a reliability test suite
+        call: gremlin-test-suites.createtestsuite
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/test-suites/detected-risks
+      name: test-suites-detected-risks
+      description: REST surface for test-suites-detected-risks.
+      operations:
+      - method: GET
+        name: getrisks
+        description: Retrieve the default list of available risks to add to a given TestSuite
+        call: gremlin-test-suites.getrisks
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/test-suites/{testsuiteid}
+      name: test-suites-testsuiteid
+      description: REST surface for test-suites-testSuiteId.
+      operations:
+      - method: GET
+        name: gettestsuite
+        description: Gets a reliability test suite
+        call: gremlin-test-suites.gettestsuite
+        with:
+          testSuiteId: rest.testSuiteId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletetestsuite
+        description: Delete a Test Suite.
+        call: gremlin-test-suites.deletetestsuite
+        with:
+          testSuiteId: rest.testSuiteId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatetestsuite
+        description: Updates a reliability test suite
+        call: gremlin-test-suites.updatetestsuite
+        with:
+          testSuiteId: rest.testSuiteId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-test-suites-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — test-suites. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: gets-all-reliability-test-suites
+      description: Gets all reliability test suites for a company, starting with Gremlin's default global test suite, followed
+        by other global suites and company's custom test suites
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-test-suites.getalltestsuites
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: creates-reliability-test-suite
+      description: Creates a reliability test suite
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: gremlin-test-suites.createtestsuite
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-default-list-available-risks
+      description: Retrieve the default list of available risks to add to a given TestSuite
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-test-suites.getrisks
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gets-reliability-test-suite
+      description: Gets a reliability test suite
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-test-suites.gettestsuite
+      with:
+        testSuiteId: tools.testSuiteId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-test-suite
+      description: Delete a Test Suite.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-test-suites.deletetestsuite
+      with:
+        testSuiteId: tools.testSuiteId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updates-reliability-test-suite
+      description: Updates a reliability test suite
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-test-suites.updatetestsuite
+      with:
+        testSuiteId: tools.testSuiteId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,323 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — users.auth.mfa
+  description: 'Gremlin API — users.auth.mfa. 7 operations. Lead operation: Authenticate a user with MFA.. Self-contained
+    Naftiko capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - users.auth.mfa
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-users-auth-mfa
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — users.auth.mfa business capability. Self-contained, no shared references.
+    resources:
+    - name: users-auth-mfa-auth
+      path: /users/auth/mfa/auth
+      operations:
+      - name: auth
+        method: POST
+        description: Authenticate a user with MFA.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: getCompanySession
+          in: query
+          type: boolean
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: users-auth-mfa-disable
+      path: /users/auth/mfa/disable
+      operations:
+      - name: disable
+        method: POST
+        description: Removes the MFA provider and secret, disabling MFA login.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: users-auth-mfa-enable
+      path: /users/auth/mfa/enable
+      operations:
+      - name: enable
+        method: POST
+        description: Generate a secret key and enables it for the user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: users-auth-mfa-forceDisable
+      path: /users/auth/mfa/forceDisable
+      operations:
+      - name: forcedisable
+        method: POST
+        description: Removes the MFA provider and secret, disabling MFA login.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: users-auth-mfa-info
+      path: /users/auth/mfa/info
+      operations:
+      - name: getinfo
+        method: GET
+        description: Returns the enabled/disabled status and provider if set, of MFA for the user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: users-auth-mfa-validate
+      path: /users/auth/mfa/validate
+      operations:
+      - name: validate
+        method: POST
+        description: Validate a MFA token for a user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: users-auth-mfa-email-enabled
+      path: /users/auth/mfa/{email}/enabled
+      operations:
+      - name: isenabled
+        method: GET
+        description: Returns the enabled/disabled status of MFA for a user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: email
+          in: path
+          type: string
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-users-auth-mfa-rest
+    port: 8080
+    description: REST adapter for Gremlin API — users.auth.mfa. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/users/auth/mfa/auth
+      name: users-auth-mfa-auth
+      description: REST surface for users-auth-mfa-auth.
+      operations:
+      - method: POST
+        name: auth
+        description: Authenticate a user with MFA.
+        call: gremlin-users-auth-mfa.auth
+        with:
+          getCompanySession: rest.getCompanySession
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/auth/mfa/disable
+      name: users-auth-mfa-disable
+      description: REST surface for users-auth-mfa-disable.
+      operations:
+      - method: POST
+        name: disable
+        description: Removes the MFA provider and secret, disabling MFA login.
+        call: gremlin-users-auth-mfa.disable
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/auth/mfa/enable
+      name: users-auth-mfa-enable
+      description: REST surface for users-auth-mfa-enable.
+      operations:
+      - method: POST
+        name: enable
+        description: Generate a secret key and enables it for the user.
+        call: gremlin-users-auth-mfa.enable
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/auth/mfa/forcedisable
+      name: users-auth-mfa-forcedisable
+      description: REST surface for users-auth-mfa-forceDisable.
+      operations:
+      - method: POST
+        name: forcedisable
+        description: Removes the MFA provider and secret, disabling MFA login.
+        call: gremlin-users-auth-mfa.forcedisable
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/auth/mfa/info
+      name: users-auth-mfa-info
+      description: REST surface for users-auth-mfa-info.
+      operations:
+      - method: GET
+        name: getinfo
+        description: Returns the enabled/disabled status and provider if set, of MFA for the user.
+        call: gremlin-users-auth-mfa.getinfo
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/auth/mfa/validate
+      name: users-auth-mfa-validate
+      description: REST surface for users-auth-mfa-validate.
+      operations:
+      - method: POST
+        name: validate
+        description: Validate a MFA token for a user
+        call: gremlin-users-auth-mfa.validate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/auth/mfa/{email}/enabled
+      name: users-auth-mfa-email-enabled
+      description: REST surface for users-auth-mfa-email-enabled.
+      operations:
+      - method: GET
+        name: isenabled
+        description: Returns the enabled/disabled status of MFA for a user.
+        call: gremlin-users-auth-mfa.isenabled
+        with:
+          email: rest.email
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-users-auth-mfa-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — users.auth.mfa. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: authenticate-user-mfa
+      description: Authenticate a user with MFA.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-users-auth-mfa.auth
+      with:
+        getCompanySession: tools.getCompanySession
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: removes-mfa-provider-and-secret
+      description: Removes the MFA provider and secret, disabling MFA login.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-users-auth-mfa.disable
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: generate-secret-key-and-enables
+      description: Generate a secret key and enables it for the user.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-users-auth-mfa.enable
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: removes-mfa-provider-and-secret-2
+      description: Removes the MFA provider and secret, disabling MFA login.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-users-auth-mfa.forcedisable
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-enabled-disabled-status-and
+      description: Returns the enabled/disabled status and provider if set, of MFA for the user.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-users-auth-mfa.getinfo
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: validate-mfa-token-user
+      description: Validate a MFA token for a user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: gremlin-users-auth-mfa.validate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-enabled-disabled-status-mfa
+      description: Returns the enabled/disabled status of MFA for a user.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-users-auth-mfa.isenabled
+      with:
+        email: tools.email
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,266 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — integration-clients
+  description: 'Gremlin API — integration-clients. 5 operations. Lead operation: Returns all integration clients within a
+    company or team.. Self-contained Naftiko capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - integration-clients
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-integration-clients
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — integration-clients business capability. Self-contained, no shared references.
+    resources:
+    - name: integration-clients
+      path: /integration-clients
+      operations:
+      - name: all3
+        method: GET
+        description: Returns all integration clients within a company or team.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: integration-clients-active
+      path: /integration-clients/active
+      operations:
+      - name: active3
+        method: GET
+        description: Get all active integration clients.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: integration-clients-matches-tags
+      path: /integration-clients/matches-tags
+      operations:
+      - name: matchestags
+        method: POST
+        description: Returns list of clients which match the given tags
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: integration-clients-identifier
+      path: /integration-clients/{identifier}
+      operations:
+      - name: revoke2
+        method: DELETE
+        description: Deactivates an integration client.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          description: The identifier of the integration client to modify.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: integration-clients-identifier-activate
+      path: /integration-clients/{identifier}/activate
+      operations:
+      - name: activate1
+        method: PUT
+        description: Activates an integration client.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          description: The identifier of the integration client to modify.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-integration-clients-rest
+    port: 8080
+    description: REST adapter for Gremlin API — integration-clients. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/integration-clients
+      name: integration-clients
+      description: REST surface for integration-clients.
+      operations:
+      - method: GET
+        name: all3
+        description: Returns all integration clients within a company or team.
+        call: gremlin-integration-clients.all3
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/integration-clients/active
+      name: integration-clients-active
+      description: REST surface for integration-clients-active.
+      operations:
+      - method: GET
+        name: active3
+        description: Get all active integration clients.
+        call: gremlin-integration-clients.active3
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/integration-clients/matches-tags
+      name: integration-clients-matches-tags
+      description: REST surface for integration-clients-matches-tags.
+      operations:
+      - method: POST
+        name: matchestags
+        description: Returns list of clients which match the given tags
+        call: gremlin-integration-clients.matchestags
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/integration-clients/{identifier}
+      name: integration-clients-identifier
+      description: REST surface for integration-clients-identifier.
+      operations:
+      - method: DELETE
+        name: revoke2
+        description: Deactivates an integration client.
+        call: gremlin-integration-clients.revoke2
+        with:
+          identifier: rest.identifier
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/integration-clients/{identifier}/activate
+      name: integration-clients-identifier-activate
+      description: REST surface for integration-clients-identifier-activate.
+      operations:
+      - method: PUT
+        name: activate1
+        description: Activates an integration client.
+        call: gremlin-integration-clients.activate1
+        with:
+          identifier: rest.identifier
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-integration-clients-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — integration-clients. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: returns-all-integration-clients-within
+      description: Returns all integration clients within a company or team.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-integration-clients.all3
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-active-integration-clients
+      description: Get all active integration clients.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-integration-clients.active3
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-list-clients-which-match
+      description: Returns list of clients which match the given tags
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: gremlin-integration-clients.matchestags
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deactivates-integration-client
+      description: Deactivates an integration client.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-integration-clients.revoke2
+      with:
+        identifier: tools.identifier
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: activates-integration-client
+      description: Activates an integration client.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-integration-clients.activate1
+      with:
+        identifier: tools.identifier
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.

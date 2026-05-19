@@ -1,0 +1,506 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — gamedays
+  description: 'Gremlin API — gamedays. 9 operations. Lead operation: Get all GameDays by team.. Self-contained Naftiko capability
+    covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - gamedays
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-gamedays
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — gamedays business capability. Self-contained, no shared references.
+    resources:
+    - name: gamedays
+      path: /gamedays
+      operations:
+      - name: getgamedaysforteam
+        method: GET
+        description: Get all GameDays by team.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: pageNumber
+          in: query
+          type: integer
+          description: Get the specific page of GameDays. Only pageNumber or pageToken accepted along with pageSize
+        - name: pageToken
+          in: query
+          type: string
+          description: Token corresponding to the last page of GameDays. Pass the pageToken to get the next page of GameDays.
+            Only pageNumber or pageToken accepted along with pageSize
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: creategamedayplan
+        method: POST
+        description: Create new GameDay plan.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: gamedays-gameDayId
+      path: /gamedays/{gameDayId}
+      operations:
+      - name: getgameday
+        method: GET
+        description: Get GameDay details by id.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: gameDayId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: updategameday
+        method: PATCH
+        description: Updates a GameDay plan.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: gameDayId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: gamedays-gameDayId-runs-scenarioId
+      path: /gamedays/{gameDayId}/runs/{scenarioId}
+      operations:
+      - name: runscenarioforgameday
+        method: POST
+        description: Runs specific Scenario associated with GameDay.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: gameDayId
+          in: path
+          type: string
+          required: true
+        - name: scenarioId
+          in: path
+          type: string
+          required: true
+        - name: scenarioVersion
+          in: query
+          type: integer
+          description: Expected version of scenario. If the current version is different this will receive a 418 with the
+            correct version
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: gamedays-gameDayId-summary
+      path: /gamedays/{gameDayId}/summary
+      operations:
+      - name: updategamedaysummary
+        method: PATCH
+        description: Updates a GameDay summary.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: gameDayId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: gamedays-gameDayId-summary-export
+      path: /gamedays/{gameDayId}/summary/export
+      operations:
+      - name: export
+        method: GET
+        description: Exports GameDay Summary PDF file.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: gameDayId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: gamedays-gameDayId-summary-images-imageName
+      path: /gamedays/{gameDayId}/summary/images/{imageName}
+      operations:
+      - name: delete1
+        method: DELETE
+        description: Remove an image associated with a gameday
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: imageName
+          in: path
+          type: string
+          required: true
+        - name: gameDayId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: put1
+        method: PATCH
+        description: Upload an image to a given gameday
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: imageName
+          in: path
+          type: string
+          required: true
+        - name: gameDayId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+  exposes:
+  - type: rest
+    namespace: gremlin-gamedays-rest
+    port: 8080
+    description: REST adapter for Gremlin API — gamedays. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/gamedays
+      name: gamedays
+      description: REST surface for gamedays.
+      operations:
+      - method: GET
+        name: getgamedaysforteam
+        description: Get all GameDays by team.
+        call: gremlin-gamedays.getgamedaysforteam
+        with:
+          pageSize: rest.pageSize
+          pageNumber: rest.pageNumber
+          pageToken: rest.pageToken
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: creategamedayplan
+        description: Create new GameDay plan.
+        call: gremlin-gamedays.creategamedayplan
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/gamedays/{gamedayid}
+      name: gamedays-gamedayid
+      description: REST surface for gamedays-gameDayId.
+      operations:
+      - method: GET
+        name: getgameday
+        description: Get GameDay details by id.
+        call: gremlin-gamedays.getgameday
+        with:
+          gameDayId: rest.gameDayId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updategameday
+        description: Updates a GameDay plan.
+        call: gremlin-gamedays.updategameday
+        with:
+          gameDayId: rest.gameDayId
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/gamedays/{gamedayid}/runs/{scenarioid}
+      name: gamedays-gamedayid-runs-scenarioid
+      description: REST surface for gamedays-gameDayId-runs-scenarioId.
+      operations:
+      - method: POST
+        name: runscenarioforgameday
+        description: Runs specific Scenario associated with GameDay.
+        call: gremlin-gamedays.runscenarioforgameday
+        with:
+          gameDayId: rest.gameDayId
+          scenarioId: rest.scenarioId
+          scenarioVersion: rest.scenarioVersion
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/gamedays/{gamedayid}/summary
+      name: gamedays-gamedayid-summary
+      description: REST surface for gamedays-gameDayId-summary.
+      operations:
+      - method: PATCH
+        name: updategamedaysummary
+        description: Updates a GameDay summary.
+        call: gremlin-gamedays.updategamedaysummary
+        with:
+          gameDayId: rest.gameDayId
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/gamedays/{gamedayid}/summary/export
+      name: gamedays-gamedayid-summary-export
+      description: REST surface for gamedays-gameDayId-summary-export.
+      operations:
+      - method: GET
+        name: export
+        description: Exports GameDay Summary PDF file.
+        call: gremlin-gamedays.export
+        with:
+          gameDayId: rest.gameDayId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/gamedays/{gamedayid}/summary/images/{imagename}
+      name: gamedays-gamedayid-summary-images-imagename
+      description: REST surface for gamedays-gameDayId-summary-images-imageName.
+      operations:
+      - method: DELETE
+        name: delete1
+        description: Remove an image associated with a gameday
+        call: gremlin-gamedays.delete1
+        with:
+          imageName: rest.imageName
+          gameDayId: rest.gameDayId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: put1
+        description: Upload an image to a given gameday
+        call: gremlin-gamedays.put1
+        with:
+          imageName: rest.imageName
+          gameDayId: rest.gameDayId
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-gamedays-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — gamedays. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-all-gamedays-team
+      description: Get all GameDays by team.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-gamedays.getgamedaysforteam
+      with:
+        pageSize: tools.pageSize
+        pageNumber: tools.pageNumber
+        pageToken: tools.pageToken
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-gameday-plan
+      description: Create new GameDay plan.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-gamedays.creategamedayplan
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-gameday-details-id
+      description: Get GameDay details by id.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-gamedays.getgameday
+      with:
+        gameDayId: tools.gameDayId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updates-gameday-plan
+      description: Updates a GameDay plan.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-gamedays.updategameday
+      with:
+        gameDayId: tools.gameDayId
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: runs-specific-scenario-associated-gameday
+      description: Runs specific Scenario associated with GameDay.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-gamedays.runscenarioforgameday
+      with:
+        gameDayId: tools.gameDayId
+        scenarioId: tools.scenarioId
+        scenarioVersion: tools.scenarioVersion
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updates-gameday-summary
+      description: Updates a GameDay summary.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-gamedays.updategamedaysummary
+      with:
+        gameDayId: tools.gameDayId
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: exports-gameday-summary-pdf-file
+      description: Exports GameDay Summary PDF file.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-gamedays.export
+      with:
+        gameDayId: tools.gameDayId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-image-associated-gameday
+      description: Remove an image associated with a gameday
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-gamedays.delete1
+      with:
+        imageName: tools.imageName
+        gameDayId: tools.gameDayId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upload-image-given-gameday
+      description: Upload an image to a given gameday
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-gamedays.put1
+      with:
+        imageName: tools.imageName
+        gameDayId: tools.gameDayId
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

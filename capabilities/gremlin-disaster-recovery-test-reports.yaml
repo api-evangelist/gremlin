@@ -1,0 +1,163 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — disaster-recovery-test-reports
+  description: 'Gremlin API — disaster-recovery-test-reports. 3 operations. Lead operation: Gets a page of disaster recovery
+    test reports. Self-contained Naftiko capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - disaster-recovery-test-reports
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-disaster-recovery-test-reports
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — disaster-recovery-test-reports business capability. Self-contained, no shared references.
+    resources:
+    - name: disaster-recovery-test-reports
+      path: /disaster-recovery-test-reports
+      operations:
+      - name: getlargescaletests
+        method: GET
+        description: Gets a page of disaster recovery test reports
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pageToken
+          in: query
+          type: string
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+    - name: disaster-recovery-test-reports-identifier
+      path: /disaster-recovery-test-reports/{identifier}
+      operations:
+      - name: getlargescaletest
+        method: GET
+        description: Gets a disaster recovery test report
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+    - name: disaster-recovery-test-reports-identifier-pdf
+      path: /disaster-recovery-test-reports/{identifier}/pdf
+      operations:
+      - name: getlargescaletestpdf
+        method: GET
+        description: Gets a disaster recovery test report as PDF
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-disaster-recovery-test-reports-rest
+    port: 8080
+    description: REST adapter for Gremlin API — disaster-recovery-test-reports. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/disaster-recovery-test-reports
+      name: disaster-recovery-test-reports
+      description: REST surface for disaster-recovery-test-reports.
+      operations:
+      - method: GET
+        name: getlargescaletests
+        description: Gets a page of disaster recovery test reports
+        call: gremlin-disaster-recovery-test-reports.getlargescaletests
+        with:
+          pageToken: rest.pageToken
+          pageSize: rest.pageSize
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/disaster-recovery-test-reports/{identifier}
+      name: disaster-recovery-test-reports-identifier
+      description: REST surface for disaster-recovery-test-reports-identifier.
+      operations:
+      - method: GET
+        name: getlargescaletest
+        description: Gets a disaster recovery test report
+        call: gremlin-disaster-recovery-test-reports.getlargescaletest
+        with:
+          identifier: rest.identifier
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/disaster-recovery-test-reports/{identifier}/pdf
+      name: disaster-recovery-test-reports-identifier-pdf
+      description: REST surface for disaster-recovery-test-reports-identifier-pdf.
+      operations:
+      - method: GET
+        name: getlargescaletestpdf
+        description: Gets a disaster recovery test report as PDF
+        call: gremlin-disaster-recovery-test-reports.getlargescaletestpdf
+        with:
+          identifier: rest.identifier
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-disaster-recovery-test-reports-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — disaster-recovery-test-reports. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: gets-page-disaster-recovery-test
+      description: Gets a page of disaster recovery test reports
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-disaster-recovery-test-reports.getlargescaletests
+      with:
+        pageToken: tools.pageToken
+        pageSize: tools.pageSize
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gets-disaster-recovery-test-report
+      description: Gets a disaster recovery test report
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-disaster-recovery-test-reports.getlargescaletest
+      with:
+        identifier: tools.identifier
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gets-disaster-recovery-test-report-2
+      description: Gets a disaster recovery test report as PDF
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-disaster-recovery-test-reports.getlargescaletestpdf
+      with:
+        identifier: tools.identifier
+      outputParameters:
+      - type: object
+        mapping: $.

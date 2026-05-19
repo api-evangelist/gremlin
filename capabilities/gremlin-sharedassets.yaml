@@ -1,0 +1,653 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — sharedAssets
+  description: 'Gremlin API — sharedAssets. 13 operations. Lead operation: List available assets for sharing and all incoming
+    and outgoing requests. Self-contained Naftiko capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - sharedAssets
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-sharedassets
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — sharedAssets business capability. Self-contained, no shared references.
+    resources:
+    - name: sharedAssets
+      path: /sharedAssets
+      operations:
+      - name: listavailableassetswithrequests
+        method: GET
+        description: List available assets for sharing and all incoming and outgoing requests
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: assetId
+          in: query
+          type: string
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: sharedAssets-requests
+      path: /sharedAssets/requests
+      operations:
+      - name: listmyrequests
+        method: GET
+        description: List my requests for assets to be shared with my team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: requestaccess
+        method: POST
+        description: Request access to a given asset
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: sharedAssets-requests-approve
+      path: /sharedAssets/requests/approve
+      operations:
+      - name: approveaccessrequests
+        method: POST
+        description: Approves a sharing request to a resource you own
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: sharedAssets-requests-delete
+      path: /sharedAssets/requests/delete
+      operations:
+      - name: deleteaccessrequests
+        method: POST
+        description: Deletes a sharing request your team has made to an asset you don't control
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: sharedAssets-requests-deny
+      path: /sharedAssets/requests/deny
+      operations:
+      - name: denyaccessrequests
+        method: POST
+        description: Denies or Revokes a sharing request to a resource you own
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: sharedAssets-requests-toMe
+      path: /sharedAssets/requests/toMe
+      operations:
+      - name: listrequeststome
+        method: GET
+        description: List other team's requests to my team for sharing assets my team controls
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: assetId
+          in: query
+          type: string
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: sharedAssets-requests-requestId
+      path: /sharedAssets/requests/{requestId}
+      operations:
+      - name: deleterequest
+        method: DELETE
+        description: Deletes an existing request for Access
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: requestId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: sharedAssets-requests-requestId-approve
+      path: /sharedAssets/requests/{requestId}/approve
+      operations:
+      - name: approveaccess
+        method: POST
+        description: Approves a sharing request to a resource you own
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: requestId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: sharedAssets-requests-requestId-delete
+      path: /sharedAssets/requests/{requestId}/delete
+      operations:
+      - name: postdeleterequest
+        method: POST
+        description: Deletes an existing request for Access
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: requestId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: sharedAssets-requests-requestId-deny
+      path: /sharedAssets/requests/{requestId}/deny
+      operations:
+      - name: denyaccess
+        method: POST
+        description: Denies or Revokes a sharing request to a resource you own
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: requestId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: sharedAssets-withMe
+      path: /sharedAssets/withMe
+      operations:
+      - name: listassetssharedwithme
+        method: GET
+        description: List assets currently shared with your team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: sharedAssets-owningTeam-assetId
+      path: /sharedAssets/{owningTeam}/{assetId}
+      operations:
+      - name: requestaccesstoasset
+        method: POST
+        description: Request access to a given asset owned by another team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: owningTeam
+          in: path
+          type: string
+          required: true
+        - name: assetId
+          in: path
+          type: string
+          required: true
+        - name: namespace
+          in: query
+          type: string
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-sharedassets-rest
+    port: 8080
+    description: REST adapter for Gremlin API — sharedAssets. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/sharedassets
+      name: sharedassets
+      description: REST surface for sharedAssets.
+      operations:
+      - method: GET
+        name: listavailableassetswithrequests
+        description: List available assets for sharing and all incoming and outgoing requests
+        call: gremlin-sharedassets.listavailableassetswithrequests
+        with:
+          assetId: rest.assetId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/sharedassets/requests
+      name: sharedassets-requests
+      description: REST surface for sharedAssets-requests.
+      operations:
+      - method: GET
+        name: listmyrequests
+        description: List my requests for assets to be shared with my team
+        call: gremlin-sharedassets.listmyrequests
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: requestaccess
+        description: Request access to a given asset
+        call: gremlin-sharedassets.requestaccess
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/sharedassets/requests/approve
+      name: sharedassets-requests-approve
+      description: REST surface for sharedAssets-requests-approve.
+      operations:
+      - method: POST
+        name: approveaccessrequests
+        description: Approves a sharing request to a resource you own
+        call: gremlin-sharedassets.approveaccessrequests
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/sharedassets/requests/delete
+      name: sharedassets-requests-delete
+      description: REST surface for sharedAssets-requests-delete.
+      operations:
+      - method: POST
+        name: deleteaccessrequests
+        description: Deletes a sharing request your team has made to an asset you don't control
+        call: gremlin-sharedassets.deleteaccessrequests
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/sharedassets/requests/deny
+      name: sharedassets-requests-deny
+      description: REST surface for sharedAssets-requests-deny.
+      operations:
+      - method: POST
+        name: denyaccessrequests
+        description: Denies or Revokes a sharing request to a resource you own
+        call: gremlin-sharedassets.denyaccessrequests
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/sharedassets/requests/tome
+      name: sharedassets-requests-tome
+      description: REST surface for sharedAssets-requests-toMe.
+      operations:
+      - method: GET
+        name: listrequeststome
+        description: List other team's requests to my team for sharing assets my team controls
+        call: gremlin-sharedassets.listrequeststome
+        with:
+          assetId: rest.assetId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/sharedassets/requests/{requestid}
+      name: sharedassets-requests-requestid
+      description: REST surface for sharedAssets-requests-requestId.
+      operations:
+      - method: DELETE
+        name: deleterequest
+        description: Deletes an existing request for Access
+        call: gremlin-sharedassets.deleterequest
+        with:
+          requestId: rest.requestId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/sharedassets/requests/{requestid}/approve
+      name: sharedassets-requests-requestid-approve
+      description: REST surface for sharedAssets-requests-requestId-approve.
+      operations:
+      - method: POST
+        name: approveaccess
+        description: Approves a sharing request to a resource you own
+        call: gremlin-sharedassets.approveaccess
+        with:
+          requestId: rest.requestId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/sharedassets/requests/{requestid}/delete
+      name: sharedassets-requests-requestid-delete
+      description: REST surface for sharedAssets-requests-requestId-delete.
+      operations:
+      - method: POST
+        name: postdeleterequest
+        description: Deletes an existing request for Access
+        call: gremlin-sharedassets.postdeleterequest
+        with:
+          requestId: rest.requestId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/sharedassets/requests/{requestid}/deny
+      name: sharedassets-requests-requestid-deny
+      description: REST surface for sharedAssets-requests-requestId-deny.
+      operations:
+      - method: POST
+        name: denyaccess
+        description: Denies or Revokes a sharing request to a resource you own
+        call: gremlin-sharedassets.denyaccess
+        with:
+          requestId: rest.requestId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/sharedassets/withme
+      name: sharedassets-withme
+      description: REST surface for sharedAssets-withMe.
+      operations:
+      - method: GET
+        name: listassetssharedwithme
+        description: List assets currently shared with your team
+        call: gremlin-sharedassets.listassetssharedwithme
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/sharedassets/{owningteam}/{assetid}
+      name: sharedassets-owningteam-assetid
+      description: REST surface for sharedAssets-owningTeam-assetId.
+      operations:
+      - method: POST
+        name: requestaccesstoasset
+        description: Request access to a given asset owned by another team
+        call: gremlin-sharedassets.requestaccesstoasset
+        with:
+          owningTeam: rest.owningTeam
+          assetId: rest.assetId
+          namespace: rest.namespace
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-sharedassets-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — sharedAssets. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-available-assets-sharing-and
+      description: List available assets for sharing and all incoming and outgoing requests
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-sharedassets.listavailableassetswithrequests
+      with:
+        assetId: tools.assetId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-my-requests-assets-be
+      description: List my requests for assets to be shared with my team
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-sharedassets.listmyrequests
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: request-access-given-asset
+      description: Request access to a given asset
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-sharedassets.requestaccess
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: approves-sharing-request-resource-you
+      description: Approves a sharing request to a resource you own
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-sharedassets.approveaccessrequests
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletes-sharing-request-your-team
+      description: Deletes a sharing request your team has made to an asset you don't control
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-sharedassets.deleteaccessrequests
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: denies-revokes-sharing-request-resource
+      description: Denies or Revokes a sharing request to a resource you own
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-sharedassets.denyaccessrequests
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-other-team-s-requests-my
+      description: List other team's requests to my team for sharing assets my team controls
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-sharedassets.listrequeststome
+      with:
+        assetId: tools.assetId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletes-existing-request-access
+      description: Deletes an existing request for Access
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-sharedassets.deleterequest
+      with:
+        requestId: tools.requestId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: approves-sharing-request-resource-you-2
+      description: Approves a sharing request to a resource you own
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-sharedassets.approveaccess
+      with:
+        requestId: tools.requestId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletes-existing-request-access-2
+      description: Deletes an existing request for Access
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-sharedassets.postdeleterequest
+      with:
+        requestId: tools.requestId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: denies-revokes-sharing-request-resource-2
+      description: Denies or Revokes a sharing request to a resource you own
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-sharedassets.denyaccess
+      with:
+        requestId: tools.requestId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-assets-currently-shared-your
+      description: List assets currently shared with your team
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-sharedassets.listassetssharedwithme
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: request-access-given-asset-owned
+      description: Request access to a given asset owned by another team
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-sharedassets.requestaccesstoasset
+      with:
+        owningTeam: tools.owningTeam
+        assetId: tools.assetId
+        namespace: tools.namespace
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.

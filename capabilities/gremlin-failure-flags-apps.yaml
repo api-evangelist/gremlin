@@ -1,0 +1,226 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — failure-flags.apps
+  description: 'Gremlin API — failure-flags.apps. 4 operations. Lead operation: List Applications by team.. Self-contained
+    Naftiko capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - failure-flags.apps
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-failure-flags-apps
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — failure-flags.apps business capability. Self-contained, no shared references.
+    resources:
+    - name: failure-flags-apps
+      path: /failure-flags/apps
+      operations:
+      - name: getapplicationsforteam
+        method: GET
+        description: List Applications by team.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: onlyWithMetricsEnabled
+          in: query
+          type: boolean
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: failure-flags-apps-name
+      path: /failure-flags/apps/{name}
+      operations:
+      - name: getapplicationfornameandteam
+        method: GET
+        description: Get Application by name.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: failure-flags-apps-name-protect
+      path: /failure-flags/apps/{name}/protect
+      operations:
+      - name: protectapplication
+        method: POST
+        description: Protect Application by name.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: failure-flags-apps-name-unprotect
+      path: /failure-flags/apps/{name}/unprotect
+      operations:
+      - name: unprotectapplication
+        method: POST
+        description: Unprotect Application by name.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-failure-flags-apps-rest
+    port: 8080
+    description: REST adapter for Gremlin API — failure-flags.apps. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/failure-flags/apps
+      name: failure-flags-apps
+      description: REST surface for failure-flags-apps.
+      operations:
+      - method: GET
+        name: getapplicationsforteam
+        description: List Applications by team.
+        call: gremlin-failure-flags-apps.getapplicationsforteam
+        with:
+          onlyWithMetricsEnabled: rest.onlyWithMetricsEnabled
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/failure-flags/apps/{name}
+      name: failure-flags-apps-name
+      description: REST surface for failure-flags-apps-name.
+      operations:
+      - method: GET
+        name: getapplicationfornameandteam
+        description: Get Application by name.
+        call: gremlin-failure-flags-apps.getapplicationfornameandteam
+        with:
+          name: rest.name
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/failure-flags/apps/{name}/protect
+      name: failure-flags-apps-name-protect
+      description: REST surface for failure-flags-apps-name-protect.
+      operations:
+      - method: POST
+        name: protectapplication
+        description: Protect Application by name.
+        call: gremlin-failure-flags-apps.protectapplication
+        with:
+          name: rest.name
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/failure-flags/apps/{name}/unprotect
+      name: failure-flags-apps-name-unprotect
+      description: REST surface for failure-flags-apps-name-unprotect.
+      operations:
+      - method: POST
+        name: unprotectapplication
+        description: Unprotect Application by name.
+        call: gremlin-failure-flags-apps.unprotectapplication
+        with:
+          name: rest.name
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-failure-flags-apps-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — failure-flags.apps. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-applications-team
+      description: List Applications by team.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-failure-flags-apps.getapplicationsforteam
+      with:
+        onlyWithMetricsEnabled: tools.onlyWithMetricsEnabled
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-application-name
+      description: Get Application by name.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-failure-flags-apps.getapplicationfornameandteam
+      with:
+        name: tools.name
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: protect-application-name
+      description: Protect Application by name.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-failure-flags-apps.protectapplication
+      with:
+        name: tools.name
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: unprotect-application-name
+      description: Unprotect Application by name.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-failure-flags-apps.unprotectapplication
+      with:
+        name: tools.name
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.

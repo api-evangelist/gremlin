@@ -1,0 +1,137 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — metrics
+  description: 'Gremlin API — metrics. 2 operations. Lead operation: Get metrics for an attack. Self-contained Naftiko capability
+    covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - metrics
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-metrics
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — metrics business capability. Self-contained, no shared references.
+    resources:
+    - name: metrics-attacks-attackId
+      path: /metrics/attacks/{attackId}
+      operations:
+      - name: getmetricsforattack
+        method: GET
+        description: Get metrics for an attack
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: attackId
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: metrics-scenarios-scenarioId-runs-scenarioRunNumber
+      path: /metrics/scenarios/{scenarioId}/runs/{scenarioRunNumber}
+      operations:
+      - name: getmetricsforscenariorun
+        method: GET
+        description: Get metrics for a scenario run
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: scenarioId
+          in: path
+          type: string
+          required: true
+        - name: scenarioRunNumber
+          in: path
+          type: integer
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-metrics-rest
+    port: 8080
+    description: REST adapter for Gremlin API — metrics. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/metrics/attacks/{attackid}
+      name: metrics-attacks-attackid
+      description: REST surface for metrics-attacks-attackId.
+      operations:
+      - method: GET
+        name: getmetricsforattack
+        description: Get metrics for an attack
+        call: gremlin-metrics.getmetricsforattack
+        with:
+          attackId: rest.attackId
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/metrics/scenarios/{scenarioid}/runs/{scenariorunnumber}
+      name: metrics-scenarios-scenarioid-runs-scenariorunnumber
+      description: REST surface for metrics-scenarios-scenarioId-runs-scenarioRunNumber.
+      operations:
+      - method: GET
+        name: getmetricsforscenariorun
+        description: Get metrics for a scenario run
+        call: gremlin-metrics.getmetricsforscenariorun
+        with:
+          scenarioId: rest.scenarioId
+          scenarioRunNumber: rest.scenarioRunNumber
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-metrics-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — metrics. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-metrics-attack
+      description: Get metrics for an attack
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-metrics.getmetricsforattack
+      with:
+        attackId: tools.attackId
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-metrics-scenario-run
+      description: Get metrics for a scenario run
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-metrics.getmetricsforscenariorun
+      with:
+        scenarioId: tools.scenarioId
+        scenarioRunNumber: tools.scenarioRunNumber
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.

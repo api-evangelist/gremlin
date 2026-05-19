@@ -1,0 +1,618 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — failure-flags.experiments
+  description: 'Gremlin API — failure-flags.experiments. 12 operations. Lead operation: Get all Experiments for a team.. Self-contained
+    Naftiko capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - failure-flags.experiments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-failure-flags-experiments
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — failure-flags.experiments business capability. Self-contained, no shared references.
+    resources:
+    - name: failure-flags-experiments
+      path: /failure-flags/experiments
+      operations:
+      - name: getexperimentsforteam
+        method: GET
+        description: Get all Experiments for a team.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: includeScenarios
+          in: query
+          type: boolean
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: createexperiment
+        method: POST
+        description: Create an Experiment.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: failure-flags-experiments-active
+      path: /failure-flags/experiments/active
+      operations:
+      - name: getactiveexperimentsforteam
+        method: GET
+        description: Get all active Experiments for a team.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: pageToken
+          in: query
+          type: string
+          description: Token corresponding to the last page of team summaries retrieved. Pass the pageToken to get the next
+            page of team summaries
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: failure-flags-experiments-completed-paged
+      path: /failure-flags/experiments/completed/paged
+      operations:
+      - name: getcompletedexperimentsforteam
+        method: GET
+        description: Get all completed Experiments for a team.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: pageToken
+          in: query
+          type: string
+          description: Token corresponding to the last page of team summaries retrieved. Pass the pageToken to get the next
+            page of team summaries
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: failure-flags-experiments-id
+      path: /failure-flags/experiments/{id}
+      operations:
+      - name: getexperimentforteamandid
+        method: GET
+        description: Get Experiment by ID.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: deleteexperiment
+        method: DELETE
+        description: Delete an Experiment by team and ID.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: failure-flags-experiments-id-halt
+      path: /failure-flags/experiments/{id}/halt
+      operations:
+      - name: haltexperiment
+        method: POST
+        description: Halt an Experiment by team and ID.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: failure-flags-experiments-id-protect
+      path: /failure-flags/experiments/{id}/protect
+      operations:
+      - name: protectexperiment
+        method: POST
+        description: Protect an Experiment by team and ID.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: failure-flags-experiments-id-run
+      path: /failure-flags/experiments/{id}/run
+      operations:
+      - name: runexperiment
+        method: POST
+        description: Run an Experiment by team and ID.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: failure-flags-experiments-id-run-startTime
+      path: /failure-flags/experiments/{id}/run/{startTime}
+      operations:
+      - name: getexperimentrundetailsforidandstarttime
+        method: GET
+        description: Get details for a single Experiment run by ID and run start time.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: startTime
+          in: path
+          type: integer
+          description: Epoch MS timestamp of the start of the experiment
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: failure-flags-experiments-id-runs
+      path: /failure-flags/experiments/{id}/runs
+      operations:
+      - name: allrunsforexperiment
+        method: GET
+        description: List all runs of an Experiment by team and ID.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: failure-flags-experiments-id-unprotect
+      path: /failure-flags/experiments/{id}/unprotect
+      operations:
+      - name: unprotectexperiment
+        method: POST
+        description: Unprotect an Experiment by team and ID.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-failure-flags-experiments-rest
+    port: 8080
+    description: REST adapter for Gremlin API — failure-flags.experiments. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/failure-flags/experiments
+      name: failure-flags-experiments
+      description: REST surface for failure-flags-experiments.
+      operations:
+      - method: GET
+        name: getexperimentsforteam
+        description: Get all Experiments for a team.
+        call: gremlin-failure-flags-experiments.getexperimentsforteam
+        with:
+          includeScenarios: rest.includeScenarios
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createexperiment
+        description: Create an Experiment.
+        call: gremlin-failure-flags-experiments.createexperiment
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/failure-flags/experiments/active
+      name: failure-flags-experiments-active
+      description: REST surface for failure-flags-experiments-active.
+      operations:
+      - method: GET
+        name: getactiveexperimentsforteam
+        description: Get all active Experiments for a team.
+        call: gremlin-failure-flags-experiments.getactiveexperimentsforteam
+        with:
+          pageSize: rest.pageSize
+          pageToken: rest.pageToken
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/failure-flags/experiments/completed/paged
+      name: failure-flags-experiments-completed-paged
+      description: REST surface for failure-flags-experiments-completed-paged.
+      operations:
+      - method: GET
+        name: getcompletedexperimentsforteam
+        description: Get all completed Experiments for a team.
+        call: gremlin-failure-flags-experiments.getcompletedexperimentsforteam
+        with:
+          pageSize: rest.pageSize
+          pageToken: rest.pageToken
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/failure-flags/experiments/{id}
+      name: failure-flags-experiments-id
+      description: REST surface for failure-flags-experiments-id.
+      operations:
+      - method: GET
+        name: getexperimentforteamandid
+        description: Get Experiment by ID.
+        call: gremlin-failure-flags-experiments.getexperimentforteamandid
+        with:
+          id: rest.id
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteexperiment
+        description: Delete an Experiment by team and ID.
+        call: gremlin-failure-flags-experiments.deleteexperiment
+        with:
+          id: rest.id
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/failure-flags/experiments/{id}/halt
+      name: failure-flags-experiments-id-halt
+      description: REST surface for failure-flags-experiments-id-halt.
+      operations:
+      - method: POST
+        name: haltexperiment
+        description: Halt an Experiment by team and ID.
+        call: gremlin-failure-flags-experiments.haltexperiment
+        with:
+          id: rest.id
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/failure-flags/experiments/{id}/protect
+      name: failure-flags-experiments-id-protect
+      description: REST surface for failure-flags-experiments-id-protect.
+      operations:
+      - method: POST
+        name: protectexperiment
+        description: Protect an Experiment by team and ID.
+        call: gremlin-failure-flags-experiments.protectexperiment
+        with:
+          id: rest.id
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/failure-flags/experiments/{id}/run
+      name: failure-flags-experiments-id-run
+      description: REST surface for failure-flags-experiments-id-run.
+      operations:
+      - method: POST
+        name: runexperiment
+        description: Run an Experiment by team and ID.
+        call: gremlin-failure-flags-experiments.runexperiment
+        with:
+          id: rest.id
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/failure-flags/experiments/{id}/run/{starttime}
+      name: failure-flags-experiments-id-run-starttime
+      description: REST surface for failure-flags-experiments-id-run-startTime.
+      operations:
+      - method: GET
+        name: getexperimentrundetailsforidandstarttime
+        description: Get details for a single Experiment run by ID and run start time.
+        call: gremlin-failure-flags-experiments.getexperimentrundetailsforidandstarttime
+        with:
+          id: rest.id
+          startTime: rest.startTime
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/failure-flags/experiments/{id}/runs
+      name: failure-flags-experiments-id-runs
+      description: REST surface for failure-flags-experiments-id-runs.
+      operations:
+      - method: GET
+        name: allrunsforexperiment
+        description: List all runs of an Experiment by team and ID.
+        call: gremlin-failure-flags-experiments.allrunsforexperiment
+        with:
+          id: rest.id
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/failure-flags/experiments/{id}/unprotect
+      name: failure-flags-experiments-id-unprotect
+      description: REST surface for failure-flags-experiments-id-unprotect.
+      operations:
+      - method: POST
+        name: unprotectexperiment
+        description: Unprotect an Experiment by team and ID.
+        call: gremlin-failure-flags-experiments.unprotectexperiment
+        with:
+          id: rest.id
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-failure-flags-experiments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — failure-flags.experiments. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-all-experiments-team
+      description: Get all Experiments for a team.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-failure-flags-experiments.getexperimentsforteam
+      with:
+        includeScenarios: tools.includeScenarios
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-experiment
+      description: Create an Experiment.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-failure-flags-experiments.createexperiment
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-active-experiments-team
+      description: Get all active Experiments for a team.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-failure-flags-experiments.getactiveexperimentsforteam
+      with:
+        pageSize: tools.pageSize
+        pageToken: tools.pageToken
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-completed-experiments-team
+      description: Get all completed Experiments for a team.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-failure-flags-experiments.getcompletedexperimentsforteam
+      with:
+        pageSize: tools.pageSize
+        pageToken: tools.pageToken
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-experiment-id
+      description: Get Experiment by ID.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-failure-flags-experiments.getexperimentforteamandid
+      with:
+        id: tools.id
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-experiment-team-and-id
+      description: Delete an Experiment by team and ID.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-failure-flags-experiments.deleteexperiment
+      with:
+        id: tools.id
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: halt-experiment-team-and-id
+      description: Halt an Experiment by team and ID.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-failure-flags-experiments.haltexperiment
+      with:
+        id: tools.id
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: protect-experiment-team-and-id
+      description: Protect an Experiment by team and ID.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-failure-flags-experiments.protectexperiment
+      with:
+        id: tools.id
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: run-experiment-team-and-id
+      description: Run an Experiment by team and ID.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-failure-flags-experiments.runexperiment
+      with:
+        id: tools.id
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-single-experiment-run
+      description: Get details for a single Experiment run by ID and run start time.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-failure-flags-experiments.getexperimentrundetailsforidandstarttime
+      with:
+        id: tools.id
+        startTime: tools.startTime
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-runs-experiment-team
+      description: List all runs of an Experiment by team and ID.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-failure-flags-experiments.allrunsforexperiment
+      with:
+        id: tools.id
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: unprotect-experiment-team-and-id
+      description: Unprotect an Experiment by team and ID.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-failure-flags-experiments.unprotectexperiment
+      with:
+        id: tools.id
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,140 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — reports.security
+  description: 'Gremlin API — reports.security. 2 operations. Lead operation: Loads the Access Summary for the specified company
+    in the time period requested (max: 1 hour). Returned in JSON format. Self-contained Naftiko capability covering one Gremlin
+    business surface.'
+  tags:
+  - Gremlin
+  - reports.security
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-reports-security
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — reports.security business capability. Self-contained, no shared references.
+    resources:
+    - name: reports-security-access
+      path: /reports/security/access
+      operations:
+      - name: accesssummary
+        method: GET
+        description: 'Loads the Access Summary for the specified company in the time period requested (max: 1 hour). Returned
+          in JSON format'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: start
+          in: query
+          type: string
+          description: Start time in format 'yyyy-mm-ddThh:mm:ss.sssZ'
+          required: true
+        - name: end
+          in: query
+          type: string
+          description: End time in format 'yyyy-mm-ddThh:mm:ss.sssZ'
+          required: true
+    - name: reports-security-event
+      path: /reports/security/event
+      operations:
+      - name: eventsummary
+        method: GET
+        description: 'Loads the Experiment Summary for the specified company in the time period requested (max: 1 hour) and
+          the recent scenario runs. Returned in JSON format'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: start
+          in: query
+          type: string
+          description: Start time in format 'yyyy-mm-ddThh:mm:ss.sssZ'
+          required: true
+        - name: end
+          in: query
+          type: string
+          description: End time in format 'yyyy-mm-ddThh:mm:ss.sssZ'
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-reports-security-rest
+    port: 8080
+    description: REST adapter for Gremlin API — reports.security. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/reports/security/access
+      name: reports-security-access
+      description: REST surface for reports-security-access.
+      operations:
+      - method: GET
+        name: accesssummary
+        description: 'Loads the Access Summary for the specified company in the time period requested (max: 1 hour). Returned
+          in JSON format'
+        call: gremlin-reports-security.accesssummary
+        with:
+          start: rest.start
+          end: rest.end
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/reports/security/event
+      name: reports-security-event
+      description: REST surface for reports-security-event.
+      operations:
+      - method: GET
+        name: eventsummary
+        description: 'Loads the Experiment Summary for the specified company in the time period requested (max: 1 hour) and
+          the recent scenario runs. Returned in JSON format'
+        call: gremlin-reports-security.eventsummary
+        with:
+          start: rest.start
+          end: rest.end
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-reports-security-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — reports.security. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: loads-access-summary-specified-company
+      description: 'Loads the Access Summary for the specified company in the time period requested (max: 1 hour). Returned
+        in JSON format'
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-reports-security.accesssummary
+      with:
+        start: tools.start
+        end: tools.end
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: loads-experiment-summary-specified-company
+      description: 'Loads the Experiment Summary for the specified company in the time period requested (max: 1 hour) and
+        the recent scenario runs. Returned in JSON format'
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-reports-security.eventsummary
+      with:
+        start: tools.start
+        end: tools.end
+      outputParameters:
+      - type: object
+        mapping: $.

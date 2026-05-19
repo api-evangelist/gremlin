@@ -1,0 +1,227 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — google-cloud.integration.resources
+  description: 'Gremlin API — google-cloud.integration.resources. 3 operations. Lead operation: google-cloud.integration.resources.
+    Self-contained Naftiko capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - google-cloud.integration.resources
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-google-cloud-integration-resources
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — google-cloud.integration.resources business capability. Self-contained, no shared references.
+    resources:
+    - name: gcp-integrations-integrationId-resources-all
+      path: /gcp/integrations/{integrationId}/resources/all
+      operations:
+      - name: all1
+        method: GET
+        description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: integrationId
+          in: path
+          type: string
+          required: true
+        - name: cloudRunRegion
+          in: query
+          type: array
+        - name: pageToken
+          in: query
+          type: string
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: gcp-integrations-integrationId-resources-cloud-run
+      path: /gcp/integrations/{integrationId}/resources/cloud-run
+      operations:
+      - name: listcloudrunresources
+        method: GET
+        description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: integrationId
+          in: path
+          type: string
+          required: true
+        - name: region
+          in: query
+          type: array
+        - name: pageToken
+          in: query
+          type: string
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: gcp-integrations-integrationId-resources-compute
+      path: /gcp/integrations/{integrationId}/resources/compute
+      operations:
+      - name: listcomputeresources
+        method: GET
+        description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: integrationId
+          in: path
+          type: string
+          required: true
+        - name: resourceType
+          in: query
+          type: array
+        - name: pageToken
+          in: query
+          type: string
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-google-cloud-integration-resources-rest
+    port: 8080
+    description: REST adapter for Gremlin API — google-cloud.integration.resources. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/gcp/integrations/{integrationid}/resources/all
+      name: gcp-integrations-integrationid-resources-all
+      description: REST surface for gcp-integrations-integrationId-resources-all.
+      operations:
+      - method: GET
+        name: all1
+        description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        call: gremlin-google-cloud-integration-resources.all1
+        with:
+          integrationId: rest.integrationId
+          cloudRunRegion: rest.cloudRunRegion
+          pageToken: rest.pageToken
+          pageSize: rest.pageSize
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/gcp/integrations/{integrationid}/resources/cloud-run
+      name: gcp-integrations-integrationid-resources-cloud-run
+      description: REST surface for gcp-integrations-integrationId-resources-cloud-run.
+      operations:
+      - method: GET
+        name: listcloudrunresources
+        description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        call: gremlin-google-cloud-integration-resources.listcloudrunresources
+        with:
+          integrationId: rest.integrationId
+          region: rest.region
+          pageToken: rest.pageToken
+          pageSize: rest.pageSize
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/gcp/integrations/{integrationid}/resources/compute
+      name: gcp-integrations-integrationid-resources-compute
+      description: REST surface for gcp-integrations-integrationId-resources-compute.
+      operations:
+      - method: GET
+        name: listcomputeresources
+        description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        call: gremlin-google-cloud-integration-resources.listcomputeresources
+        with:
+          integrationId: rest.integrationId
+          resourceType: rest.resourceType
+          pageToken: rest.pageToken
+          pageSize: rest.pageSize
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-google-cloud-integration-resources-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — google-cloud.integration.resources. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: requires-privilege-minimum-team-privileges-https
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-google-cloud-integration-resources.all1
+      with:
+        integrationId: tools.integrationId
+        cloudRunRegion: tools.cloudRunRegion
+        pageToken: tools.pageToken
+        pageSize: tools.pageSize
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: requires-privilege-minimum-team-privileges-https-2
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-google-cloud-integration-resources.listcloudrunresources
+      with:
+        integrationId: tools.integrationId
+        region: tools.region
+        pageToken: tools.pageToken
+        pageSize: tools.pageSize
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: requires-privilege-minimum-team-privileges-https-3
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-google-cloud-integration-resources.listcomputeresources
+      with:
+        integrationId: tools.integrationId
+        resourceType: tools.resourceType
+        pageToken: tools.pageToken
+        pageSize: tools.pageSize
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.

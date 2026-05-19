@@ -1,0 +1,1565 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — scenarios
+  description: 'Gremlin API — scenarios. 30 operations. Lead operation: List all runnable scenarios.. Self-contained Naftiko
+    capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - scenarios
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-scenarios
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — scenarios business capability. Self-contained, no shared references.
+    resources:
+    - name: scenarios
+      path: /scenarios
+      operations:
+      - name: getrunnable
+        method: GET
+        description: List all runnable scenarios.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: createnewscenario
+        method: POST
+        description: Create a new scenario.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: scenarios-active
+      path: /scenarios/active
+      operations:
+      - name: getactive1
+        method: GET
+        description: List all active scenarios.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: scenarios-active-runs
+      path: /scenarios/active-runs
+      operations:
+      - name: getactiveruns
+        method: GET
+        description: List all active scenarios.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: scenarios-active-paged
+      path: /scenarios/active/paged
+      operations:
+      - name: getpaginatedactiveruns
+        method: GET
+        description: Get a team's active FI scenario runs ordered by start time desc.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: pageToken
+          in: query
+          type: string
+          description: Pass the pageToken to get the next page of active FI scenario runs
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: scenarios-archived
+      path: /scenarios/archived
+      operations:
+      - name: getarchived
+        method: GET
+        description: List all archived scenarios.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: scenarios-completed-paged
+      path: /scenarios/completed/paged
+      operations:
+      - name: getpaginatedcompletedscenarioruns
+        method: GET
+        description: Get a team's completed FI scenario runs ordered by start time desc.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: pageToken
+          in: query
+          type: string
+          description: Pass the pageToken to get the next page of completed reliability test runs
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: scenarios-drafts
+      path: /scenarios/drafts
+      operations:
+      - name: getdrafts
+        method: GET
+        description: List all draft scenarios.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: scenarios-halt
+      path: /scenarios/halt
+      operations:
+      - name: haltaspost2
+        method: POST
+        description: Idempotently halt all scenario runs and active attacks.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: scenarios-halt-guid-runs-runNumber
+      path: /scenarios/halt/{guid}/runs/{runNumber}
+      operations:
+      - name: haltaspost3
+        method: POST
+        description: Idempotently halt the specified scenario run.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: runNumber
+          in: path
+          type: integer
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: scenarios-runs
+      path: /scenarios/runs
+      operations:
+      - name: getallrunsforteam
+        method: GET
+        description: List all scenario runs for your team.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: state
+          in: query
+          type: string
+        - name: includeArchived
+          in: query
+          type: string
+        - name: startDate
+          in: query
+          type: string
+        - name: endDate
+          in: query
+          type: string
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: scenarios-shared
+      path: /scenarios/shared
+      operations:
+      - name: getscenariossharedwithteam
+        method: GET
+        description: Get all scenarios shared with this team.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: createnewsharedscenario
+        method: POST
+        description: Create new shared scenarios.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: scenarios-shared-guid
+      path: /scenarios/shared/{guid}
+      operations:
+      - name: getsharedscenario
+        method: GET
+        description: Get details on a shared scenarios.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: unsharescenario
+        method: DELETE
+        description: Unshare a company shared scenario.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: scenarios-guid
+      path: /scenarios/{guid}
+      operations:
+      - name: getscenario
+        method: GET
+        description: Get details about a scenario.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: updatescenario
+        method: PUT
+        description: Update a scenario
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: delete4
+        method: DELETE
+        description: Delete a scenario.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: scenarios-guid-archive
+      path: /scenarios/{guid}/archive
+      operations:
+      - name: archive
+        method: POST
+        description: Archive a scenario.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: scenarios-guid-restore
+      path: /scenarios/{guid}/restore
+      operations:
+      - name: restore
+        method: POST
+        description: Restore an archived scenario.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: scenarios-guid-runs
+      path: /scenarios/{guid}/runs
+      operations:
+      - name: getruns
+        method: GET
+        description: List all runs for a scenario.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: startDate
+          in: query
+          type: string
+        - name: endDate
+          in: query
+          type: string
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: runscenario
+        method: POST
+        description: Run a scenario.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: scenarios-guid-runs-paged
+      path: /scenarios/{guid}/runs/paged
+      operations:
+      - name: getrunspaged
+        method: GET
+        description: Paged list runs for a scenario.  Scenarios are monotonically increasing and use their run number as the
+          pagination key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: runNumber
+          in: query
+          type: integer
+        - name: limit
+          in: query
+          type: integer
+        - name: forward
+          in: query
+          type: boolean
+          description: Used to indicate querying forward or backwards from the supplied runNumber (defaults to forward)
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: scenarios-guid-runs-runNumber
+      path: /scenarios/{guid}/runs/{runNumber}
+      operations:
+      - name: getscenariorun
+        method: GET
+        description: Get details about a scenario run.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: runNumber
+          in: path
+          type: integer
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: scenarios-guid-runs-runNumber-resultFlags
+      path: /scenarios/{guid}/runs/{runNumber}/resultFlags
+      operations:
+      - name: setscenariorunresultflags
+        method: PUT
+        description: This functionality has been replaced by PUT /{guid}/runs/{runNumber}/results.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: runNumber
+          in: path
+          type: integer
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: scenarios-guid-runs-runNumber-resultNotes
+      path: /scenarios/{guid}/runs/{runNumber}/resultNotes
+      operations:
+      - name: setscenariorunresultnotes
+        method: PUT
+        description: Update the result notes of a scenario run.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: runNumber
+          in: path
+          type: integer
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: scenarios-guid-runs-runNumber-results
+      path: /scenarios/{guid}/runs/{runNumber}/results
+      operations:
+      - name: setscenariorunresults
+        method: PUT
+        description: Update the results of a scenario run.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: runNumber
+          in: path
+          type: integer
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: scenarios-guid-schedules
+      path: /scenarios/{guid}/schedules
+      operations:
+      - name: getscenarioschedules
+        method: GET
+        description: Get all schedules for a scenario.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: guid
+          in: path
+          type: string
+          description: This value represents the globally unique identifier of the record to fetch.
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: scenarios-scenarioId-runs-runNumber-images-imageName
+      path: /scenarios/{scenarioId}/runs/{runNumber}/images/{imageName}
+      operations:
+      - name: deleteimage
+        method: DELETE
+        description: Deletes a given images associated with a given scenario
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: imageName
+          in: path
+          type: string
+          required: true
+        - name: scenarioId
+          in: path
+          type: string
+          required: true
+        - name: runNumber
+          in: path
+          type: integer
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+      - name: addimage
+        method: PATCH
+        description: Uploads an image to a given scenario
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: imageName
+          in: path
+          type: string
+          required: true
+        - name: scenarioId
+          in: path
+          type: string
+          required: true
+        - name: runNumber
+          in: path
+          type: integer
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+  exposes:
+  - type: rest
+    namespace: gremlin-scenarios-rest
+    port: 8080
+    description: REST adapter for Gremlin API — scenarios. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/scenarios
+      name: scenarios
+      description: REST surface for scenarios.
+      operations:
+      - method: GET
+        name: getrunnable
+        description: List all runnable scenarios.
+        call: gremlin-scenarios.getrunnable
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createnewscenario
+        description: Create a new scenario.
+        call: gremlin-scenarios.createnewscenario
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/active
+      name: scenarios-active
+      description: REST surface for scenarios-active.
+      operations:
+      - method: GET
+        name: getactive1
+        description: List all active scenarios.
+        call: gremlin-scenarios.getactive1
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/active-runs
+      name: scenarios-active-runs
+      description: REST surface for scenarios-active-runs.
+      operations:
+      - method: GET
+        name: getactiveruns
+        description: List all active scenarios.
+        call: gremlin-scenarios.getactiveruns
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/active/paged
+      name: scenarios-active-paged
+      description: REST surface for scenarios-active-paged.
+      operations:
+      - method: GET
+        name: getpaginatedactiveruns
+        description: Get a team's active FI scenario runs ordered by start time desc.
+        call: gremlin-scenarios.getpaginatedactiveruns
+        with:
+          pageSize: rest.pageSize
+          pageToken: rest.pageToken
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/archived
+      name: scenarios-archived
+      description: REST surface for scenarios-archived.
+      operations:
+      - method: GET
+        name: getarchived
+        description: List all archived scenarios.
+        call: gremlin-scenarios.getarchived
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/completed/paged
+      name: scenarios-completed-paged
+      description: REST surface for scenarios-completed-paged.
+      operations:
+      - method: GET
+        name: getpaginatedcompletedscenarioruns
+        description: Get a team's completed FI scenario runs ordered by start time desc.
+        call: gremlin-scenarios.getpaginatedcompletedscenarioruns
+        with:
+          pageSize: rest.pageSize
+          pageToken: rest.pageToken
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/drafts
+      name: scenarios-drafts
+      description: REST surface for scenarios-drafts.
+      operations:
+      - method: GET
+        name: getdrafts
+        description: List all draft scenarios.
+        call: gremlin-scenarios.getdrafts
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/halt
+      name: scenarios-halt
+      description: REST surface for scenarios-halt.
+      operations:
+      - method: POST
+        name: haltaspost2
+        description: Idempotently halt all scenario runs and active attacks.
+        call: gremlin-scenarios.haltaspost2
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/halt/{guid}/runs/{runnumber}
+      name: scenarios-halt-guid-runs-runnumber
+      description: REST surface for scenarios-halt-guid-runs-runNumber.
+      operations:
+      - method: POST
+        name: haltaspost3
+        description: Idempotently halt the specified scenario run.
+        call: gremlin-scenarios.haltaspost3
+        with:
+          guid: rest.guid
+          runNumber: rest.runNumber
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/runs
+      name: scenarios-runs
+      description: REST surface for scenarios-runs.
+      operations:
+      - method: GET
+        name: getallrunsforteam
+        description: List all scenario runs for your team.
+        call: gremlin-scenarios.getallrunsforteam
+        with:
+          state: rest.state
+          includeArchived: rest.includeArchived
+          startDate: rest.startDate
+          endDate: rest.endDate
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/shared
+      name: scenarios-shared
+      description: REST surface for scenarios-shared.
+      operations:
+      - method: GET
+        name: getscenariossharedwithteam
+        description: Get all scenarios shared with this team.
+        call: gremlin-scenarios.getscenariossharedwithteam
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createnewsharedscenario
+        description: Create new shared scenarios.
+        call: gremlin-scenarios.createnewsharedscenario
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/shared/{guid}
+      name: scenarios-shared-guid
+      description: REST surface for scenarios-shared-guid.
+      operations:
+      - method: GET
+        name: getsharedscenario
+        description: Get details on a shared scenarios.
+        call: gremlin-scenarios.getsharedscenario
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: unsharescenario
+        description: Unshare a company shared scenario.
+        call: gremlin-scenarios.unsharescenario
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/{guid}
+      name: scenarios-guid
+      description: REST surface for scenarios-guid.
+      operations:
+      - method: GET
+        name: getscenario
+        description: Get details about a scenario.
+        call: gremlin-scenarios.getscenario
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatescenario
+        description: Update a scenario
+        call: gremlin-scenarios.updatescenario
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete4
+        description: Delete a scenario.
+        call: gremlin-scenarios.delete4
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/{guid}/archive
+      name: scenarios-guid-archive
+      description: REST surface for scenarios-guid-archive.
+      operations:
+      - method: POST
+        name: archive
+        description: Archive a scenario.
+        call: gremlin-scenarios.archive
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/{guid}/restore
+      name: scenarios-guid-restore
+      description: REST surface for scenarios-guid-restore.
+      operations:
+      - method: POST
+        name: restore
+        description: Restore an archived scenario.
+        call: gremlin-scenarios.restore
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/{guid}/runs
+      name: scenarios-guid-runs
+      description: REST surface for scenarios-guid-runs.
+      operations:
+      - method: GET
+        name: getruns
+        description: List all runs for a scenario.
+        call: gremlin-scenarios.getruns
+        with:
+          guid: rest.guid
+          startDate: rest.startDate
+          endDate: rest.endDate
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: runscenario
+        description: Run a scenario.
+        call: gremlin-scenarios.runscenario
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/{guid}/runs/paged
+      name: scenarios-guid-runs-paged
+      description: REST surface for scenarios-guid-runs-paged.
+      operations:
+      - method: GET
+        name: getrunspaged
+        description: Paged list runs for a scenario.  Scenarios are monotonically increasing and use their run number as the
+          pagination key
+        call: gremlin-scenarios.getrunspaged
+        with:
+          guid: rest.guid
+          runNumber: rest.runNumber
+          limit: rest.limit
+          forward: rest.forward
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/{guid}/runs/{runnumber}
+      name: scenarios-guid-runs-runnumber
+      description: REST surface for scenarios-guid-runs-runNumber.
+      operations:
+      - method: GET
+        name: getscenariorun
+        description: Get details about a scenario run.
+        call: gremlin-scenarios.getscenariorun
+        with:
+          guid: rest.guid
+          runNumber: rest.runNumber
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/{guid}/runs/{runnumber}/resultflags
+      name: scenarios-guid-runs-runnumber-resultflags
+      description: REST surface for scenarios-guid-runs-runNumber-resultFlags.
+      operations:
+      - method: PUT
+        name: setscenariorunresultflags
+        description: This functionality has been replaced by PUT /{guid}/runs/{runNumber}/results.
+        call: gremlin-scenarios.setscenariorunresultflags
+        with:
+          guid: rest.guid
+          runNumber: rest.runNumber
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/{guid}/runs/{runnumber}/resultnotes
+      name: scenarios-guid-runs-runnumber-resultnotes
+      description: REST surface for scenarios-guid-runs-runNumber-resultNotes.
+      operations:
+      - method: PUT
+        name: setscenariorunresultnotes
+        description: Update the result notes of a scenario run.
+        call: gremlin-scenarios.setscenariorunresultnotes
+        with:
+          guid: rest.guid
+          runNumber: rest.runNumber
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/{guid}/runs/{runnumber}/results
+      name: scenarios-guid-runs-runnumber-results
+      description: REST surface for scenarios-guid-runs-runNumber-results.
+      operations:
+      - method: PUT
+        name: setscenariorunresults
+        description: Update the results of a scenario run.
+        call: gremlin-scenarios.setscenariorunresults
+        with:
+          guid: rest.guid
+          runNumber: rest.runNumber
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/{guid}/schedules
+      name: scenarios-guid-schedules
+      description: REST surface for scenarios-guid-schedules.
+      operations:
+      - method: GET
+        name: getscenarioschedules
+        description: Get all schedules for a scenario.
+        call: gremlin-scenarios.getscenarioschedules
+        with:
+          guid: rest.guid
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/scenarios/{scenarioid}/runs/{runnumber}/images/{imagename}
+      name: scenarios-scenarioid-runs-runnumber-images-imagename
+      description: REST surface for scenarios-scenarioId-runs-runNumber-images-imageName.
+      operations:
+      - method: DELETE
+        name: deleteimage
+        description: Deletes a given images associated with a given scenario
+        call: gremlin-scenarios.deleteimage
+        with:
+          imageName: rest.imageName
+          scenarioId: rest.scenarioId
+          runNumber: rest.runNumber
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: addimage
+        description: Uploads an image to a given scenario
+        call: gremlin-scenarios.addimage
+        with:
+          imageName: rest.imageName
+          scenarioId: rest.scenarioId
+          runNumber: rest.runNumber
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-scenarios-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — scenarios. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-all-runnable-scenarios
+      description: List all runnable scenarios.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.getrunnable
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-scenario
+      description: Create a new scenario.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-scenarios.createnewscenario
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-active-scenarios
+      description: List all active scenarios.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.getactive1
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-active-scenarios-2
+      description: List all active scenarios.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.getactiveruns
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-team-s-active-fi-scenario
+      description: Get a team's active FI scenario runs ordered by start time desc.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.getpaginatedactiveruns
+      with:
+        pageSize: tools.pageSize
+        pageToken: tools.pageToken
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-archived-scenarios
+      description: List all archived scenarios.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.getarchived
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-team-s-completed-fi-scenario
+      description: Get a team's completed FI scenario runs ordered by start time desc.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.getpaginatedcompletedscenarioruns
+      with:
+        pageSize: tools.pageSize
+        pageToken: tools.pageToken
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-draft-scenarios
+      description: List all draft scenarios.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.getdrafts
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: idempotently-halt-all-scenario-runs
+      description: Idempotently halt all scenario runs and active attacks.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-scenarios.haltaspost2
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: idempotently-halt-specified-scenario-run
+      description: Idempotently halt the specified scenario run.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-scenarios.haltaspost3
+      with:
+        guid: tools.guid
+        runNumber: tools.runNumber
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-scenario-runs-your
+      description: List all scenario runs for your team.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.getallrunsforteam
+      with:
+        state: tools.state
+        includeArchived: tools.includeArchived
+        startDate: tools.startDate
+        endDate: tools.endDate
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-scenarios-shared-this
+      description: Get all scenarios shared with this team.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.getscenariossharedwithteam
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-shared-scenarios
+      description: Create new shared scenarios.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-scenarios.createnewsharedscenario
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-shared-scenarios
+      description: Get details on a shared scenarios.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.getsharedscenario
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: unshare-company-shared-scenario
+      description: Unshare a company shared scenario.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-scenarios.unsharescenario
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-about-scenario
+      description: Get details about a scenario.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.getscenario
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-scenario
+      description: Update a scenario
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.updatescenario
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-scenario
+      description: Delete a scenario.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-scenarios.delete4
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: archive-scenario
+      description: Archive a scenario.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-scenarios.archive
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: restore-archived-scenario
+      description: Restore an archived scenario.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-scenarios.restore
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-runs-scenario
+      description: List all runs for a scenario.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.getruns
+      with:
+        guid: tools.guid
+        startDate: tools.startDate
+        endDate: tools.endDate
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: run-scenario
+      description: Run a scenario.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-scenarios.runscenario
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: paged-list-runs-scenario-scenarios
+      description: Paged list runs for a scenario.  Scenarios are monotonically increasing and use their run number as the
+        pagination key
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.getrunspaged
+      with:
+        guid: tools.guid
+        runNumber: tools.runNumber
+        limit: tools.limit
+        forward: tools.forward
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-about-scenario-run
+      description: Get details about a scenario run.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.getscenariorun
+      with:
+        guid: tools.guid
+        runNumber: tools.runNumber
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: this-functionality-has-been-replaced
+      description: This functionality has been replaced by PUT /{guid}/runs/{runNumber}/results.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.setscenariorunresultflags
+      with:
+        guid: tools.guid
+        runNumber: tools.runNumber
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-result-notes-scenario-run
+      description: Update the result notes of a scenario run.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.setscenariorunresultnotes
+      with:
+        guid: tools.guid
+        runNumber: tools.runNumber
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-results-scenario-run
+      description: Update the results of a scenario run.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.setscenariorunresults
+      with:
+        guid: tools.guid
+        runNumber: tools.runNumber
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-schedules-scenario
+      description: Get all schedules for a scenario.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.getscenarioschedules
+      with:
+        guid: tools.guid
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletes-given-images-associated-given
+      description: Deletes a given images associated with a given scenario
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-scenarios.deleteimage
+      with:
+        imageName: tools.imageName
+        scenarioId: tools.scenarioId
+        runNumber: tools.runNumber
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: uploads-image-given-scenario
+      description: Uploads an image to a given scenario
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-scenarios.addimage
+      with:
+        imageName: tools.imageName
+        scenarioId: tools.scenarioId
+        runNumber: tools.runNumber
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

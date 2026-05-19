@@ -1,0 +1,183 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — Notification Integrations
+  description: 'Gremlin API — Notification Integrations. 4 operations. Lead operation: List all integrations associated with
+    your company. Self-contained Naftiko capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - Notification Integrations
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-notification-integrations
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — Notification Integrations business capability. Self-contained, no shared references.
+    resources:
+    - name: integrations
+      path: /integrations
+      operations:
+      - name: list
+        method: GET
+        description: List all integrations associated with your company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: integrations-type
+      path: /integrations/{type}
+      operations:
+      - name: get2
+        method: GET
+        description: Get the integration for your company that is identified by the supplied type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: type
+          in: path
+          type: string
+          required: true
+      - name: put
+        method: PUT
+        description: Puts the integration identified by the supplied type on your company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: type
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: delete
+        method: DELETE
+        description: Idempotently deletes the integration associated with your company, identified by the supplied type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: type
+          in: path
+          type: string
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-notification-integrations-rest
+    port: 8080
+    description: REST adapter for Gremlin API — Notification Integrations. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/integrations
+      name: integrations
+      description: REST surface for integrations.
+      operations:
+      - method: GET
+        name: list
+        description: List all integrations associated with your company
+        call: gremlin-notification-integrations.list
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/integrations/{type}
+      name: integrations-type
+      description: REST surface for integrations-type.
+      operations:
+      - method: GET
+        name: get2
+        description: Get the integration for your company that is identified by the supplied type
+        call: gremlin-notification-integrations.get2
+        with:
+          type: rest.type
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: put
+        description: Puts the integration identified by the supplied type on your company
+        call: gremlin-notification-integrations.put
+        with:
+          type: rest.type
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete
+        description: Idempotently deletes the integration associated with your company, identified by the supplied type
+        call: gremlin-notification-integrations.delete
+        with:
+          type: rest.type
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-notification-integrations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — Notification Integrations. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-all-integrations-associated-your
+      description: List all integrations associated with your company
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-notification-integrations.list
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-integration-your-company-that
+      description: Get the integration for your company that is identified by the supplied type
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-notification-integrations.get2
+      with:
+        type: tools.type
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: puts-integration-identified-supplied-type
+      description: Puts the integration identified by the supplied type on your company
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-notification-integrations.put
+      with:
+        type: tools.type
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: idempotently-deletes-integration-associated-your
+      description: Idempotently deletes the integration associated with your company, identified by the supplied type
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-notification-integrations.delete
+      with:
+        type: tools.type
+      outputParameters:
+      - type: object
+        mapping: $.

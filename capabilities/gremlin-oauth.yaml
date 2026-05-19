@@ -1,0 +1,133 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — oauth
+  description: 'Gremlin API — oauth. 2 operations. Lead operation: Handle receiving a code from an OAuth flow.. Self-contained
+    Naftiko capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - oauth
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-oauth
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — oauth business capability. Self-contained, no shared references.
+    resources:
+    - name: oauth-callback
+      path: /oauth/callback
+      operations:
+      - name: oauthcallback
+        method: GET
+        description: Handle receiving a code from an OAuth flow.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: code
+          in: query
+          type: string
+          description: The code from authenticating with the oauth provider
+          required: true
+        - name: state
+          in: query
+          type: string
+          description: The state value set when initiating the OAuth login
+          required: true
+    - name: oauth-login
+      path: /oauth/login
+      operations:
+      - name: oauthlogin
+        method: GET
+        description: Initiates a OAuth login.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: companyName
+          in: query
+          type: string
+          description: The name of the company to authenticate too
+          required: true
+        - name: redirectUri
+          in: query
+          type: string
+          description: Where to redirect the user to after authenticating, for use when authenticating via OAuth in the Gremlin
+            UI
+  exposes:
+  - type: rest
+    namespace: gremlin-oauth-rest
+    port: 8080
+    description: REST adapter for Gremlin API — oauth. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/oauth/callback
+      name: oauth-callback
+      description: REST surface for oauth-callback.
+      operations:
+      - method: GET
+        name: oauthcallback
+        description: Handle receiving a code from an OAuth flow.
+        call: gremlin-oauth.oauthcallback
+        with:
+          code: rest.code
+          state: rest.state
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/oauth/login
+      name: oauth-login
+      description: REST surface for oauth-login.
+      operations:
+      - method: GET
+        name: oauthlogin
+        description: Initiates a OAuth login.
+        call: gremlin-oauth.oauthlogin
+        with:
+          companyName: rest.companyName
+          redirectUri: rest.redirectUri
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-oauth-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — oauth. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: handle-receiving-code-oauth-flow
+      description: Handle receiving a code from an OAuth flow.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-oauth.oauthcallback
+      with:
+        code: tools.code
+        state: tools.state
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: initiates-oauth-login
+      description: Initiates a OAuth login.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-oauth.oauthlogin
+      with:
+        companyName: tools.companyName
+        redirectUri: tools.redirectUri
+      outputParameters:
+      - type: object
+        mapping: $.

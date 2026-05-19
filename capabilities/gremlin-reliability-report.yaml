@@ -1,0 +1,90 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — reliability-report
+  description: 'Gremlin API — reliability-report. 1 operations. Lead operation: Get the reliability report for a specified
+    service.. Self-contained Naftiko capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - reliability-report
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-reliability-report
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — reliability-report business capability. Self-contained, no shared references.
+    resources:
+    - name: policies-serviceId-reliability-report
+      path: /policies/{serviceId}/reliability-report
+      operations:
+      - name: getreliabilityresults
+        method: GET
+        description: Get the reliability report for a specified service.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          description: The serviceId within the requested team
+          required: true
+        - name: date
+          in: query
+          type: string
+          description: The date for the report
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-reliability-report-rest
+    port: 8080
+    description: REST adapter for Gremlin API — reliability-report. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/policies/{serviceid}/reliability-report
+      name: policies-serviceid-reliability-report
+      description: REST surface for policies-serviceId-reliability-report.
+      operations:
+      - method: GET
+        name: getreliabilityresults
+        description: Get the reliability report for a specified service.
+        call: gremlin-reliability-report.getreliabilityresults
+        with:
+          serviceId: rest.serviceId
+          date: rest.date
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-reliability-report-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — reliability-report. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-reliability-report-specified-service
+      description: Get the reliability report for a specified service.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-reliability-report.getreliabilityresults
+      with:
+        serviceId: tools.serviceId
+        date: tools.date
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,1515 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — companies
+  description: 'Gremlin API — companies. 33 operations. Lead operation: Allows a user to create a new Company. Self-contained
+    Naftiko capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - companies
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-companies
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — companies business capability. Self-contained, no shared references.
+    resources:
+    - name: companies
+      path: /companies
+      operations:
+      - name: create1
+        method: POST
+        description: Allows a user to create a new Company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: companies-invite
+      path: /companies/invite
+      operations:
+      - name: invite
+        method: POST
+        description: Invites the specified email to create a new Company.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: companies-trial
+      path: /companies/trial
+      operations:
+      - name: trial
+        method: POST
+        description: Allows an invited user to create a new Company for a trial.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: companies-zones
+      path: /companies/zones
+      operations:
+      - name: getzones
+        method: GET
+        description: Gets all names of configured and detected zones
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: addzonesetting
+        method: POST
+        description: Create a zone
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: companies-zones-zoneId
+      path: /companies/zones/{zoneId}
+      operations:
+      - name: getzonesetting
+        method: GET
+        description: Get a zone setting
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: zoneId
+          in: path
+          type: string
+          required: true
+      - name: editzonesetting
+        method: PUT
+        description: Update a zone
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: zoneId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deletezonesetting
+        method: DELETE
+        description: Delete zone setting
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: zoneId
+          in: path
+          type: string
+          required: true
+    - name: companies-identifier
+      path: /companies/{identifier}
+      operations:
+      - name: getcompany
+        method: GET
+        description: Gets a Company by its supplied guid
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: skipTeams
+          in: query
+          type: boolean
+      - name: updatecompanyprefs
+        method: PATCH
+        description: Update the prefs for company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: companies-identifier-auth-prefs
+      path: /companies/{identifier}/auth/prefs
+      operations:
+      - name: updateauthmethodprefs
+        method: POST
+        description: Updates the authentication preferences associated with this Company.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: companies-identifier-clients
+      path: /companies/{identifier}/clients
+      operations:
+      - name: getclientsforcompany
+        method: GET
+        description: Returns all clients for the supplied company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+    - name: companies-identifier-invites
+      path: /companies/{identifier}/invites
+      operations:
+      - name: inviteuserstocompany
+        method: POST
+        description: Invite one or more users to join your Gremlin company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: companies-identifier-invites-email
+      path: /companies/{identifier}/invites/{email}
+      operations:
+      - name: rbacrevokeinvite
+        method: DELETE
+        description: Revoke a pending user invite.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: email
+          in: path
+          type: string
+          required: true
+    - name: companies-identifier-mfaPrefs
+      path: /companies/{identifier}/mfaPrefs
+      operations:
+      - name: updatemfaprefs
+        method: POST
+        description: Updates the MFA preferences associated with this Company.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: companies-identifier-oauth-settings
+      path: /companies/{identifier}/oauth/settings
+      operations:
+      - name: updateoauthsettings
+        method: POST
+        description: Updates the OAuth settings for this Company.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: companies-identifier-prefs
+      path: /companies/{identifier}/prefs
+      operations:
+      - name: updateprefs
+        method: POST
+        description: Updates the preferences associated with this Company.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: companies-identifier-saml-claim-aliases
+      path: /companies/{identifier}/saml/claim-aliases
+      operations:
+      - name: getclaimaliasesforcompany
+        method: GET
+        description: Returns all aliases for a company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+      - name: createalias
+        method: POST
+        description: Creates a claim alias for the company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: companies-identifier-saml-claim-aliases-aliasId
+      path: /companies/{identifier}/saml/claim-aliases/{aliasId}
+      operations:
+      - name: getclaimalias
+        method: GET
+        description: Returns an alias for a company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: aliasId
+          in: path
+          type: string
+          required: true
+      - name: updatealias
+        method: PUT
+        description: Updates a claim alias for the company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: aliasId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deletealias
+        method: DELETE
+        description: Deletes a claim alias for the company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: aliasId
+          in: path
+          type: string
+          required: true
+    - name: companies-identifier-saml-props
+      path: /companies/{identifier}/saml/props
+      operations:
+      - name: updatesamlproperties
+        method: POST
+        description: Updates the preferences associated with this Company.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: companies-identifier-users
+      path: /companies/{identifier}/users
+      operations:
+      - name: getusersforcompany
+        method: GET
+        description: Returns all users for the supplied company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+      - name: createuserfrominvite
+        method: POST
+        description: Create a new user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: companies-identifier-users-active-paged
+      path: /companies/{identifier}/users/active/paged
+      operations:
+      - name: getactiveusersforcompanypaginated
+        method: GET
+        description: Returns paginated active users for the supplied company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: pageToken
+          in: query
+          type: string
+          description: Token corresponding to the last page of active company users retrieved. Pass the pageToken to get the
+            next page of active company users
+    - name: companies-identifier-users-invited-paged
+      path: /companies/{identifier}/users/invited/paged
+      operations:
+      - name: getinvitedusersforcompanypaginated
+        method: GET
+        description: Returns paginated invited users for the supplied company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: pageToken
+          in: query
+          type: string
+          description: Token corresponding to the last page of invited company users retrieved. Pass the pageToken to get
+            the next page of invited company users
+    - name: companies-identifier-users-paged
+      path: /companies/{identifier}/users/paged
+      operations:
+      - name: getusersforcompanypaginated
+        method: GET
+        description: Returns paginated users for the supplied company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: pageToken
+          in: query
+          type: string
+          description: Token corresponding to the last page of company users retrieved. Pass the pageToken to get the next
+            page of company users
+    - name: companies-identifier-users-revoked-paged
+      path: /companies/{identifier}/users/revoked/paged
+      operations:
+      - name: getrevokedusersforcompanypaginated
+        method: GET
+        description: Returns paginated revoked users for the supplied company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: pageToken
+          in: query
+          type: string
+          description: Token corresponding to the last page of revoked company users retrieved. Pass the pageToken to get
+            the next page of revoked company users
+    - name: companies-identifier-users-email
+      path: /companies/{identifier}/users/{email}
+      operations:
+      - name: rbacupdate
+        method: PUT
+        description: Update roles of existing user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: email
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: companies-identifier-users-email-active
+      path: /companies/{identifier}/users/{email}/active
+      operations:
+      - name: rbacunrevoke
+        method: POST
+        description: User must exist. This is primarily used to reactivate a deactivated user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: email
+          in: path
+          type: string
+          required: true
+      - name: rbacrevoke
+        method: DELETE
+        description: Deactivates a user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: email
+          in: path
+          type: string
+          required: true
+    - name: companies-identifier-users-email-api-key-api-key-id
+      path: /companies/{identifier}/users/{email}/api-key/{api-key-id}
+      operations:
+      - name: userapikeyrevoke
+        method: DELETE
+        description: Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: email
+          in: path
+          type: string
+          required: true
+        - name: api-key-id
+          in: path
+          type: string
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-companies-rest
+    port: 8080
+    description: REST adapter for Gremlin API — companies. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/companies
+      name: companies
+      description: REST surface for companies.
+      operations:
+      - method: POST
+        name: create1
+        description: Allows a user to create a new Company
+        call: gremlin-companies.create1
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/invite
+      name: companies-invite
+      description: REST surface for companies-invite.
+      operations:
+      - method: POST
+        name: invite
+        description: Invites the specified email to create a new Company.
+        call: gremlin-companies.invite
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/trial
+      name: companies-trial
+      description: REST surface for companies-trial.
+      operations:
+      - method: POST
+        name: trial
+        description: Allows an invited user to create a new Company for a trial.
+        call: gremlin-companies.trial
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/zones
+      name: companies-zones
+      description: REST surface for companies-zones.
+      operations:
+      - method: GET
+        name: getzones
+        description: Gets all names of configured and detected zones
+        call: gremlin-companies.getzones
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: addzonesetting
+        description: Create a zone
+        call: gremlin-companies.addzonesetting
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/zones/{zoneid}
+      name: companies-zones-zoneid
+      description: REST surface for companies-zones-zoneId.
+      operations:
+      - method: GET
+        name: getzonesetting
+        description: Get a zone setting
+        call: gremlin-companies.getzonesetting
+        with:
+          zoneId: rest.zoneId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: editzonesetting
+        description: Update a zone
+        call: gremlin-companies.editzonesetting
+        with:
+          zoneId: rest.zoneId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletezonesetting
+        description: Delete zone setting
+        call: gremlin-companies.deletezonesetting
+        with:
+          zoneId: rest.zoneId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}
+      name: companies-identifier
+      description: REST surface for companies-identifier.
+      operations:
+      - method: GET
+        name: getcompany
+        description: Gets a Company by its supplied guid
+        call: gremlin-companies.getcompany
+        with:
+          identifier: rest.identifier
+          skipTeams: rest.skipTeams
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatecompanyprefs
+        description: Update the prefs for company
+        call: gremlin-companies.updatecompanyprefs
+        with:
+          identifier: rest.identifier
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/auth/prefs
+      name: companies-identifier-auth-prefs
+      description: REST surface for companies-identifier-auth-prefs.
+      operations:
+      - method: POST
+        name: updateauthmethodprefs
+        description: Updates the authentication preferences associated with this Company.
+        call: gremlin-companies.updateauthmethodprefs
+        with:
+          identifier: rest.identifier
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/clients
+      name: companies-identifier-clients
+      description: REST surface for companies-identifier-clients.
+      operations:
+      - method: GET
+        name: getclientsforcompany
+        description: Returns all clients for the supplied company
+        call: gremlin-companies.getclientsforcompany
+        with:
+          identifier: rest.identifier
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/invites
+      name: companies-identifier-invites
+      description: REST surface for companies-identifier-invites.
+      operations:
+      - method: POST
+        name: inviteuserstocompany
+        description: Invite one or more users to join your Gremlin company
+        call: gremlin-companies.inviteuserstocompany
+        with:
+          identifier: rest.identifier
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/invites/{email}
+      name: companies-identifier-invites-email
+      description: REST surface for companies-identifier-invites-email.
+      operations:
+      - method: DELETE
+        name: rbacrevokeinvite
+        description: Revoke a pending user invite.
+        call: gremlin-companies.rbacrevokeinvite
+        with:
+          identifier: rest.identifier
+          email: rest.email
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/mfaprefs
+      name: companies-identifier-mfaprefs
+      description: REST surface for companies-identifier-mfaPrefs.
+      operations:
+      - method: POST
+        name: updatemfaprefs
+        description: Updates the MFA preferences associated with this Company.
+        call: gremlin-companies.updatemfaprefs
+        with:
+          identifier: rest.identifier
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/oauth/settings
+      name: companies-identifier-oauth-settings
+      description: REST surface for companies-identifier-oauth-settings.
+      operations:
+      - method: POST
+        name: updateoauthsettings
+        description: Updates the OAuth settings for this Company.
+        call: gremlin-companies.updateoauthsettings
+        with:
+          identifier: rest.identifier
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/prefs
+      name: companies-identifier-prefs
+      description: REST surface for companies-identifier-prefs.
+      operations:
+      - method: POST
+        name: updateprefs
+        description: Updates the preferences associated with this Company.
+        call: gremlin-companies.updateprefs
+        with:
+          identifier: rest.identifier
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/saml/claim-aliases
+      name: companies-identifier-saml-claim-aliases
+      description: REST surface for companies-identifier-saml-claim-aliases.
+      operations:
+      - method: GET
+        name: getclaimaliasesforcompany
+        description: Returns all aliases for a company
+        call: gremlin-companies.getclaimaliasesforcompany
+        with:
+          identifier: rest.identifier
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createalias
+        description: Creates a claim alias for the company
+        call: gremlin-companies.createalias
+        with:
+          identifier: rest.identifier
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/saml/claim-aliases/{aliasid}
+      name: companies-identifier-saml-claim-aliases-aliasid
+      description: REST surface for companies-identifier-saml-claim-aliases-aliasId.
+      operations:
+      - method: GET
+        name: getclaimalias
+        description: Returns an alias for a company
+        call: gremlin-companies.getclaimalias
+        with:
+          identifier: rest.identifier
+          aliasId: rest.aliasId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatealias
+        description: Updates a claim alias for the company
+        call: gremlin-companies.updatealias
+        with:
+          identifier: rest.identifier
+          aliasId: rest.aliasId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletealias
+        description: Deletes a claim alias for the company
+        call: gremlin-companies.deletealias
+        with:
+          identifier: rest.identifier
+          aliasId: rest.aliasId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/saml/props
+      name: companies-identifier-saml-props
+      description: REST surface for companies-identifier-saml-props.
+      operations:
+      - method: POST
+        name: updatesamlproperties
+        description: Updates the preferences associated with this Company.
+        call: gremlin-companies.updatesamlproperties
+        with:
+          identifier: rest.identifier
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/users
+      name: companies-identifier-users
+      description: REST surface for companies-identifier-users.
+      operations:
+      - method: GET
+        name: getusersforcompany
+        description: Returns all users for the supplied company
+        call: gremlin-companies.getusersforcompany
+        with:
+          identifier: rest.identifier
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createuserfrominvite
+        description: Create a new user.
+        call: gremlin-companies.createuserfrominvite
+        with:
+          identifier: rest.identifier
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/users/active/paged
+      name: companies-identifier-users-active-paged
+      description: REST surface for companies-identifier-users-active-paged.
+      operations:
+      - method: GET
+        name: getactiveusersforcompanypaginated
+        description: Returns paginated active users for the supplied company
+        call: gremlin-companies.getactiveusersforcompanypaginated
+        with:
+          identifier: rest.identifier
+          pageSize: rest.pageSize
+          pageToken: rest.pageToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/users/invited/paged
+      name: companies-identifier-users-invited-paged
+      description: REST surface for companies-identifier-users-invited-paged.
+      operations:
+      - method: GET
+        name: getinvitedusersforcompanypaginated
+        description: Returns paginated invited users for the supplied company
+        call: gremlin-companies.getinvitedusersforcompanypaginated
+        with:
+          identifier: rest.identifier
+          pageSize: rest.pageSize
+          pageToken: rest.pageToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/users/paged
+      name: companies-identifier-users-paged
+      description: REST surface for companies-identifier-users-paged.
+      operations:
+      - method: GET
+        name: getusersforcompanypaginated
+        description: Returns paginated users for the supplied company
+        call: gremlin-companies.getusersforcompanypaginated
+        with:
+          identifier: rest.identifier
+          pageSize: rest.pageSize
+          pageToken: rest.pageToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/users/revoked/paged
+      name: companies-identifier-users-revoked-paged
+      description: REST surface for companies-identifier-users-revoked-paged.
+      operations:
+      - method: GET
+        name: getrevokedusersforcompanypaginated
+        description: Returns paginated revoked users for the supplied company
+        call: gremlin-companies.getrevokedusersforcompanypaginated
+        with:
+          identifier: rest.identifier
+          pageSize: rest.pageSize
+          pageToken: rest.pageToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/users/{email}
+      name: companies-identifier-users-email
+      description: REST surface for companies-identifier-users-email.
+      operations:
+      - method: PUT
+        name: rbacupdate
+        description: Update roles of existing user.
+        call: gremlin-companies.rbacupdate
+        with:
+          identifier: rest.identifier
+          email: rest.email
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/users/{email}/active
+      name: companies-identifier-users-email-active
+      description: REST surface for companies-identifier-users-email-active.
+      operations:
+      - method: POST
+        name: rbacunrevoke
+        description: User must exist. This is primarily used to reactivate a deactivated user.
+        call: gremlin-companies.rbacunrevoke
+        with:
+          identifier: rest.identifier
+          email: rest.email
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: rbacrevoke
+        description: Deactivates a user.
+        call: gremlin-companies.rbacrevoke
+        with:
+          identifier: rest.identifier
+          email: rest.email
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{identifier}/users/{email}/api-key/{api-key-id}
+      name: companies-identifier-users-email-api-key-api-key-id
+      description: REST surface for companies-identifier-users-email-api-key-api-key-id.
+      operations:
+      - method: DELETE
+        name: userapikeyrevoke
+        description: Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        call: gremlin-companies.userapikeyrevoke
+        with:
+          identifier: rest.identifier
+          email: rest.email
+          api-key-id: rest.api-key-id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-companies-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — companies. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: allows-user-create-new-company
+      description: Allows a user to create a new Company
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-companies.create1
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: invites-specified-email-create-new
+      description: Invites the specified email to create a new Company.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-companies.invite
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: allows-invited-user-create-new
+      description: Allows an invited user to create a new Company for a trial.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-companies.trial
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gets-all-names-configured-and
+      description: Gets all names of configured and detected zones
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-companies.getzones
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-zone
+      description: Create a zone
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-companies.addzonesetting
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-zone-setting
+      description: Get a zone setting
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-companies.getzonesetting
+      with:
+        zoneId: tools.zoneId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-zone
+      description: Update a zone
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-companies.editzonesetting
+      with:
+        zoneId: tools.zoneId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-zone-setting
+      description: Delete zone setting
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-companies.deletezonesetting
+      with:
+        zoneId: tools.zoneId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gets-company-its-supplied-guid
+      description: Gets a Company by its supplied guid
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-companies.getcompany
+      with:
+        identifier: tools.identifier
+        skipTeams: tools.skipTeams
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-prefs-company
+      description: Update the prefs for company
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-companies.updatecompanyprefs
+      with:
+        identifier: tools.identifier
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updates-authentication-preferences-associated-this
+      description: Updates the authentication preferences associated with this Company.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-companies.updateauthmethodprefs
+      with:
+        identifier: tools.identifier
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-all-clients-supplied-company
+      description: Returns all clients for the supplied company
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-companies.getclientsforcompany
+      with:
+        identifier: tools.identifier
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: invite-one-more-users-join
+      description: Invite one or more users to join your Gremlin company
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-companies.inviteuserstocompany
+      with:
+        identifier: tools.identifier
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: revoke-pending-user-invite
+      description: Revoke a pending user invite.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-companies.rbacrevokeinvite
+      with:
+        identifier: tools.identifier
+        email: tools.email
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updates-mfa-preferences-associated-this
+      description: Updates the MFA preferences associated with this Company.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-companies.updatemfaprefs
+      with:
+        identifier: tools.identifier
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updates-oauth-settings-this-company
+      description: Updates the OAuth settings for this Company.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-companies.updateoauthsettings
+      with:
+        identifier: tools.identifier
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updates-preferences-associated-this-company
+      description: Updates the preferences associated with this Company.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-companies.updateprefs
+      with:
+        identifier: tools.identifier
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-all-aliases-company
+      description: Returns all aliases for a company
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-companies.getclaimaliasesforcompany
+      with:
+        identifier: tools.identifier
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: creates-claim-alias-company
+      description: Creates a claim alias for the company
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-companies.createalias
+      with:
+        identifier: tools.identifier
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-alias-company
+      description: Returns an alias for a company
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-companies.getclaimalias
+      with:
+        identifier: tools.identifier
+        aliasId: tools.aliasId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updates-claim-alias-company
+      description: Updates a claim alias for the company
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-companies.updatealias
+      with:
+        identifier: tools.identifier
+        aliasId: tools.aliasId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletes-claim-alias-company
+      description: Deletes a claim alias for the company
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-companies.deletealias
+      with:
+        identifier: tools.identifier
+        aliasId: tools.aliasId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updates-preferences-associated-this-company-2
+      description: Updates the preferences associated with this Company.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-companies.updatesamlproperties
+      with:
+        identifier: tools.identifier
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-all-users-supplied-company
+      description: Returns all users for the supplied company
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-companies.getusersforcompany
+      with:
+        identifier: tools.identifier
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-user
+      description: Create a new user.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-companies.createuserfrominvite
+      with:
+        identifier: tools.identifier
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-paginated-active-users-supplied
+      description: Returns paginated active users for the supplied company
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-companies.getactiveusersforcompanypaginated
+      with:
+        identifier: tools.identifier
+        pageSize: tools.pageSize
+        pageToken: tools.pageToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-paginated-invited-users-supplied
+      description: Returns paginated invited users for the supplied company
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-companies.getinvitedusersforcompanypaginated
+      with:
+        identifier: tools.identifier
+        pageSize: tools.pageSize
+        pageToken: tools.pageToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-paginated-users-supplied-company
+      description: Returns paginated users for the supplied company
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-companies.getusersforcompanypaginated
+      with:
+        identifier: tools.identifier
+        pageSize: tools.pageSize
+        pageToken: tools.pageToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-paginated-revoked-users-supplied
+      description: Returns paginated revoked users for the supplied company
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-companies.getrevokedusersforcompanypaginated
+      with:
+        identifier: tools.identifier
+        pageSize: tools.pageSize
+        pageToken: tools.pageToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-roles-existing-user
+      description: Update roles of existing user.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-companies.rbacupdate
+      with:
+        identifier: tools.identifier
+        email: tools.email
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: user-must-exist-this-is
+      description: User must exist. This is primarily used to reactivate a deactivated user.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-companies.rbacunrevoke
+      with:
+        identifier: tools.identifier
+        email: tools.email
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deactivates-user
+      description: Deactivates a user.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-companies.rbacrevoke
+      with:
+        identifier: tools.identifier
+        email: tools.email
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: requires-privilege-company-users-write-https
+      description: Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-companies.userapikeyrevoke
+      with:
+        identifier: tools.identifier
+        email: tools.email
+        api-key-id: tools.api-key-id
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,347 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — users.auth
+  description: 'Gremlin API — users.auth. 8 operations. Lead operation: Authenticate a user.. Self-contained Naftiko capability
+    covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - users.auth
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-users-auth
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — users.auth business capability. Self-contained, no shared references.
+    resources:
+    - name: users-auth
+      path: /users/auth
+      operations:
+      - name: auth1
+        method: POST
+        description: Authenticate a user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: getCompanySession
+          in: query
+          type: boolean
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: invalidate
+        method: DELETE
+        description: Invalidates a user's current session, if it exists.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: users-auth-emailCompanies
+      path: /users/auth/emailCompanies
+      operations:
+      - name: companyaffiliationsemail
+        method: GET
+        description: Email active company affiliations.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: email
+          in: query
+          type: string
+          required: true
+    - name: users-auth-password
+      path: /users/auth/password
+      operations:
+      - name: passwordreset1
+        method: PUT
+        description: Update an authenticated user's password directly.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: passwordupdate
+        method: POST
+        description: Update a user's password.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: users-auth-password-reset
+      path: /users/auth/password/reset
+      operations:
+      - name: passwordreset
+        method: POST
+        description: Reset a user's password via email.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: users-auth-saml-failures
+      path: /users/auth/saml/failures
+      operations:
+      - name: samlfailures
+        method: GET
+        description: View SAML auth failures for the current company and optional user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: email
+          in: query
+          type: string
+    - name: users-auth-saml-metadata
+      path: /users/auth/saml/metadata
+      operations:
+      - name: samlmetadata
+        method: GET
+        description: Gets SAML Service Provider metadata.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: companyName
+          in: query
+          type: string
+  exposes:
+  - type: rest
+    namespace: gremlin-users-auth-rest
+    port: 8080
+    description: REST adapter for Gremlin API — users.auth. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/users/auth
+      name: users-auth
+      description: REST surface for users-auth.
+      operations:
+      - method: POST
+        name: auth1
+        description: Authenticate a user.
+        call: gremlin-users-auth.auth1
+        with:
+          getCompanySession: rest.getCompanySession
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: invalidate
+        description: Invalidates a user's current session, if it exists.
+        call: gremlin-users-auth.invalidate
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/auth/emailcompanies
+      name: users-auth-emailcompanies
+      description: REST surface for users-auth-emailCompanies.
+      operations:
+      - method: GET
+        name: companyaffiliationsemail
+        description: Email active company affiliations.
+        call: gremlin-users-auth.companyaffiliationsemail
+        with:
+          email: rest.email
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/auth/password
+      name: users-auth-password
+      description: REST surface for users-auth-password.
+      operations:
+      - method: PUT
+        name: passwordreset1
+        description: Update an authenticated user's password directly.
+        call: gremlin-users-auth.passwordreset1
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: passwordupdate
+        description: Update a user's password.
+        call: gremlin-users-auth.passwordupdate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/auth/password/reset
+      name: users-auth-password-reset
+      description: REST surface for users-auth-password-reset.
+      operations:
+      - method: POST
+        name: passwordreset
+        description: Reset a user's password via email.
+        call: gremlin-users-auth.passwordreset
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/auth/saml/failures
+      name: users-auth-saml-failures
+      description: REST surface for users-auth-saml-failures.
+      operations:
+      - method: GET
+        name: samlfailures
+        description: View SAML auth failures for the current company and optional user.
+        call: gremlin-users-auth.samlfailures
+        with:
+          email: rest.email
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/auth/saml/metadata
+      name: users-auth-saml-metadata
+      description: REST surface for users-auth-saml-metadata.
+      operations:
+      - method: GET
+        name: samlmetadata
+        description: Gets SAML Service Provider metadata.
+        call: gremlin-users-auth.samlmetadata
+        with:
+          companyName: rest.companyName
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-users-auth-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — users.auth. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: authenticate-user
+      description: Authenticate a user.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-users-auth.auth1
+      with:
+        getCompanySession: tools.getCompanySession
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: invalidates-user-s-current-session-if
+      description: Invalidates a user's current session, if it exists.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-users-auth.invalidate
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: email-active-company-affiliations
+      description: Email active company affiliations.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-users-auth.companyaffiliationsemail
+      with:
+        email: tools.email
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-authenticated-user-s-password-directly
+      description: Update an authenticated user's password directly.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-users-auth.passwordreset1
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-user-s-password
+      description: Update a user's password.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-users-auth.passwordupdate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reset-user-s-password-email
+      description: Reset a user's password via email.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gremlin-users-auth.passwordreset
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: view-saml-auth-failures-current
+      description: View SAML auth failures for the current company and optional user.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-users-auth.samlfailures
+      with:
+        email: tools.email
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gets-saml-service-provider-metadata
+      description: Gets SAML Service Provider metadata.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-users-auth.samlmetadata
+      with:
+        companyName: tools.companyName
+      outputParameters:
+      - type: object
+        mapping: $.

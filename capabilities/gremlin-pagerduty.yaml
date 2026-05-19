@@ -1,0 +1,164 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — pagerduty
+  description: 'Gremlin API — pagerduty. 2 operations. Lead operation: Get incidents from a service. Self-contained Naftiko
+    capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - pagerduty
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-pagerduty
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — pagerduty business capability. Self-contained, no shared references.
+    resources:
+    - name: pagerduty-incidents
+      path: /pagerduty/incidents
+      operations:
+      - name: incidentsforservice
+        method: GET
+        description: Get incidents from a service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: query
+          type: string
+        - name: serviceId
+          in: query
+          type: string
+        - name: incidentId
+          in: query
+          type: string
+        - name: statuses
+          in: query
+          type: array
+        - name: limit
+          in: query
+          type: integer
+        - name: offset
+          in: query
+          type: integer
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: pagerduty-services
+      path: /pagerduty/services
+      operations:
+      - name: services
+        method: GET
+        description: Get all services
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: query
+          type: string
+        - name: limit
+          in: query
+          type: integer
+        - name: offset
+          in: query
+          type: integer
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-pagerduty-rest
+    port: 8080
+    description: REST adapter for Gremlin API — pagerduty. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/pagerduty/incidents
+      name: pagerduty-incidents
+      description: REST surface for pagerduty-incidents.
+      operations:
+      - method: GET
+        name: incidentsforservice
+        description: Get incidents from a service
+        call: gremlin-pagerduty.incidentsforservice
+        with:
+          name: rest.name
+          serviceId: rest.serviceId
+          incidentId: rest.incidentId
+          statuses: rest.statuses
+          limit: rest.limit
+          offset: rest.offset
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/pagerduty/services
+      name: pagerduty-services
+      description: REST surface for pagerduty-services.
+      operations:
+      - method: GET
+        name: services
+        description: Get all services
+        call: gremlin-pagerduty.services
+        with:
+          name: rest.name
+          limit: rest.limit
+          offset: rest.offset
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-pagerduty-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — pagerduty. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-incidents-service
+      description: Get incidents from a service
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-pagerduty.incidentsforservice
+      with:
+        name: tools.name
+        serviceId: tools.serviceId
+        incidentId: tools.incidentId
+        statuses: tools.statuses
+        limit: tools.limit
+        offset: tools.offset
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-services
+      description: Get all services
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-pagerduty.services
+      with:
+        name: tools.name
+        limit: tools.limit
+        offset: tools.offset
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,494 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Gremlin API — teams
+  description: 'Gremlin API — teams. 11 operations. Lead operation: Gets all Teams associated with the current Company.. Self-contained
+    Naftiko capability covering one Gremlin business surface.'
+  tags:
+  - Gremlin
+  - teams
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GREMLIN_API_KEY: GREMLIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gremlin-teams
+    baseUri: https://api.gremlin.com/v1
+    description: Gremlin API — teams business capability. Self-contained, no shared references.
+    resources:
+    - name: teams
+      path: /teams
+      operations:
+      - name: get6
+        method: GET
+        description: Gets all Teams associated with the current Company.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: teams-client-install
+      path: /teams/client/install
+      operations:
+      - name: downloadclientconfig
+        method: GET
+        description: Generates a config.yaml file with populated values for authenticating the client
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: teams-helm-install
+      path: /teams/helm/install
+      operations:
+      - name: downloadhelmvalues
+        method: GET
+        description: Generates a teams-specific values file to be passed to a helm install command
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: teams-kubernetes-install
+      path: /teams/kubernetes/install
+      operations:
+      - name: combinedkubernetes
+        method: GET
+        description: Generates a kubernetes installation manifest for passing to kubectl
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+    - name: teams-paged
+      path: /teams/paged
+      operations:
+      - name: getpaged
+        method: GET
+        description: Gets paged response for teams associated with the current Company. Default page size is 20
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pageSize
+          in: query
+          type: integer
+          description: This value determines how many results will be returned per call.
+        - name: pageToken
+          in: query
+          type: string
+          description: Token corresponding to the last page of teams retrieved. Pass the pageToken to get the next page of
+            teams
+    - name: teams-identifier
+      path: /teams/{identifier}
+      operations:
+      - name: delete3
+        method: DELETE
+        description: Idempotently deletes an existing team.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+      - name: update1
+        method: PATCH
+        description: Idempotently updates an existing team.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier
+          in: path
+          type: string
+          required: true
+        - name: teamId
+          in: query
+          type: string
+          description: Required when using company session token.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: teams-teamIdOrName
+      path: /teams/{teamIdOrName}
+      operations:
+      - name: getbyidorname
+        method: GET
+        description: Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamIdOrName
+          in: path
+          type: string
+          required: true
+    - name: teams-teamId-profile
+      path: /teams/{teamId}/profile
+      operations:
+      - name: getprofile
+        method: GET
+        description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: path
+          type: string
+          required: true
+      - name: putprofile
+        method: PUT
+        description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: teams-teamId-profile-prompt
+      path: /teams/{teamId}/profile/prompt
+      operations:
+      - name: getprofileprompt
+        method: GET
+        description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: teamId
+          in: path
+          type: string
+          required: true
+  exposes:
+  - type: rest
+    namespace: gremlin-teams-rest
+    port: 8080
+    description: REST adapter for Gremlin API — teams. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/teams
+      name: teams
+      description: REST surface for teams.
+      operations:
+      - method: GET
+        name: get6
+        description: Gets all Teams associated with the current Company.
+        call: gremlin-teams.get6
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/teams/client/install
+      name: teams-client-install
+      description: REST surface for teams-client-install.
+      operations:
+      - method: GET
+        name: downloadclientconfig
+        description: Generates a config.yaml file with populated values for authenticating the client
+        call: gremlin-teams.downloadclientconfig
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/teams/helm/install
+      name: teams-helm-install
+      description: REST surface for teams-helm-install.
+      operations:
+      - method: GET
+        name: downloadhelmvalues
+        description: Generates a teams-specific values file to be passed to a helm install command
+        call: gremlin-teams.downloadhelmvalues
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/teams/kubernetes/install
+      name: teams-kubernetes-install
+      description: REST surface for teams-kubernetes-install.
+      operations:
+      - method: GET
+        name: combinedkubernetes
+        description: Generates a kubernetes installation manifest for passing to kubectl
+        call: gremlin-teams.combinedkubernetes
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/teams/paged
+      name: teams-paged
+      description: REST surface for teams-paged.
+      operations:
+      - method: GET
+        name: getpaged
+        description: Gets paged response for teams associated with the current Company. Default page size is 20
+        call: gremlin-teams.getpaged
+        with:
+          pageSize: rest.pageSize
+          pageToken: rest.pageToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/teams/{identifier}
+      name: teams-identifier
+      description: REST surface for teams-identifier.
+      operations:
+      - method: DELETE
+        name: delete3
+        description: Idempotently deletes an existing team.
+        call: gremlin-teams.delete3
+        with:
+          identifier: rest.identifier
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: update1
+        description: Idempotently updates an existing team.
+        call: gremlin-teams.update1
+        with:
+          identifier: rest.identifier
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/teams/{teamidorname}
+      name: teams-teamidorname
+      description: REST surface for teams-teamIdOrName.
+      operations:
+      - method: GET
+        name: getbyidorname
+        description: Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        call: gremlin-teams.getbyidorname
+        with:
+          teamIdOrName: rest.teamIdOrName
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/teams/{teamid}/profile
+      name: teams-teamid-profile
+      description: REST surface for teams-teamId-profile.
+      operations:
+      - method: GET
+        name: getprofile
+        description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        call: gremlin-teams.getprofile
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: putprofile
+        description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        call: gremlin-teams.putprofile
+        with:
+          teamId: rest.teamId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/teams/{teamid}/profile/prompt
+      name: teams-teamid-profile-prompt
+      description: REST surface for teams-teamId-profile-prompt.
+      operations:
+      - method: GET
+        name: getprofileprompt
+        description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+        call: gremlin-teams.getprofileprompt
+        with:
+          teamId: rest.teamId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gremlin-teams-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Gremlin API — teams. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: gets-all-teams-associated-current
+      description: Gets all Teams associated with the current Company.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-teams.get6
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: generates-config-yaml-file-populated-values
+      description: Generates a config.yaml file with populated values for authenticating the client
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-teams.downloadclientconfig
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: generates-teams-specific-values-file
+      description: Generates a teams-specific values file to be passed to a helm install command
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-teams.downloadhelmvalues
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: generates-kubernetes-installation-manifest-passing
+      description: Generates a kubernetes installation manifest for passing to kubectl
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-teams.combinedkubernetes
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gets-paged-response-teams-associated
+      description: Gets paged response for teams associated with the current Company. Default page size is 20
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-teams.getpaged
+      with:
+        pageSize: tools.pageSize
+        pageToken: tools.pageToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: idempotently-deletes-existing-team
+      description: Idempotently deletes an existing team.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gremlin-teams.delete3
+      with:
+        identifier: tools.identifier
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: idempotently-updates-existing-team
+      description: Idempotently updates an existing team.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-teams.update1
+      with:
+        identifier: tools.identifier
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: requires-privilege-teams-read-https-www-gremlin-com
+      description: Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-teams.getbyidorname
+      with:
+        teamIdOrName: tools.teamIdOrName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: requires-privilege-minimum-company-privileges-https
+      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-teams.getprofile
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: requires-privilege-minimum-company-privileges-https-2
+      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gremlin-teams.putprofile
+      with:
+        teamId: tools.teamId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: requires-privilege-minimum-company-privileges-https-3
+      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gremlin-teams.getprofileprompt
+      with:
+        teamId: tools.teamId
+      outputParameters:
+      - type: object
+        mapping: $.
