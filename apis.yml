@@ -169,6 +169,8 @@ common:
     url: https://www.gremlin.com/support
   - type: Integrations
     url: https://www.gremlin.com/partners
+  - type: LLMsTxt
+    url: https://www.gremlin.com/llms.txt
 integrations:
   - name: Arrow
   - name: Linkedin
