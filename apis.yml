@@ -41,6 +41,8 @@ apis:
       - type: JSONSchema
         url: json-schema/gremlin-schema-index.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/gremlin-agentic-access.yml
   - type: TrustCenter
     url: security/gremlin-trust-center.yml
   - type: VulnerabilityDisclosure
