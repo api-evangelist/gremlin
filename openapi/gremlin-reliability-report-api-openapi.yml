@@ -1,0 +1,198 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents reliability-report API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: reliability-report
+  description: Retrieve reliability report for a given service
+paths:
+  /policies/{serviceId}/reliability-report:
+    get:
+      tags:
+      - reliability-report
+      summary: Get the reliability report for a specified service.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getReliabilityResults
+      parameters:
+      - name: serviceId
+        in: path
+        description: The serviceId within the requested team
+        required: true
+        schema:
+          type: string
+        example: 11111111-1111-1111-111111111111
+      - name: date
+        in: query
+        description: The date for the report
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReliabilityReportResponse'
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+components:
+  schemas:
+    ScoreSummaryResponse:
+      type: object
+      properties:
+        category:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        maxScore:
+          type: number
+          format: double
+        score:
+          type: number
+          format: double
+        previousIntervalScore:
+          type: number
+          format: double
+        rank:
+          type: integer
+          format: int32
+    PolicyEvaluation:
+      type: object
+      properties:
+        policyId:
+          type: string
+        reliabilityTestId:
+          type: string
+        serviceId:
+          type: string
+        dependencyId:
+          type: string
+        dependencyName:
+          type: string
+        failureFlagName:
+          type: string
+        evaluationTime:
+          type: integer
+          format: int64
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        staleness:
+          type: integer
+          format: int64
+        result:
+          type: string
+          enum:
+          - PASSED
+          - FAILED
+          - EXPIRED
+          - NEVER_RUN
+        order:
+          type: integer
+          format: int32
+        scenarioId:
+          type: string
+        runNumber:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        passCriteria:
+          type: string
+          enum:
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
+        diagnosisAvailable:
+          type: boolean
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        triggeredBy:
+          type: string
+    ReliabilityReportResponse:
+      type: object
+      properties:
+        reliability:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ReliabilityCategorySummary'
+        testSuiteId:
+          type: string
+        score:
+          type: number
+          format: double
+        previousIntervalScore:
+          type: number
+          format: double
+        categoryScores:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ScoreSummaryResponse'
+    ReliabilityCategorySummary:
+      type: object
+      properties:
+        category:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        policyTarget:
+          type: string
+          enum:
+          - SERVICE
+          - SERVICE_DEPENDENCY
+        policyStates:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyEvaluation'
+        rank:
+          type: integer
+          format: int32
+        score:
+          type: number
+          format: double
+        maxScore:
+          type: number
+          format: double

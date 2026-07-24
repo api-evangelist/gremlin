@@ -1,0 +1,425 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents integration-invocations API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: integration-invocations
+  description: Used for interacting with the Private Network Integration
+paths:
+  /integration-invocations:
+    get:
+      tags:
+      - integration-invocations
+      summary: Returns recent private network invocations
+      description: 'This operation will return a list of matching invocations
+
+        Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: list_1
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateNetworkInvocationModelResponse'
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+    post:
+      tags:
+      - integration-invocations
+      summary: Creates a webhook invocation based on the endpoint configuration
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: createInvocation
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: JSON request to create a private network integration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePrivateNetworkInvocationRequest'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /integration-invocations/{invocationId}/run-test-endpoint:
+    post:
+      tags:
+      - integration-invocations
+      summary: Test an endpoint configuration.
+      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: testEndpointConfiguration
+      parameters:
+      - name: invocationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '404':
+          description: Not found
+        '500':
+          description: Internal error
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+  /integration-invocations/{invocationId}/run-test-evaluation:
+    post:
+      tags:
+      - integration-invocations
+      summary: Test an evaluation configuration.
+      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: testEvaluationConfiguration
+      parameters:
+      - name: invocationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Request containing the evaluation configuration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestPrivateNetworkEvaluationConfigurationRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+        '404':
+          description: Not found
+        '204':
+          description: No Content
+        '500':
+          description: Internal error
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+components:
+  schemas:
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
+      type: object
+      properties:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
+    PrivateNetworkInvocationModel:
+      type: object
+      properties:
+        companyId:
+          type: string
+        invocationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - SUCCESS
+          - ERROR
+          - TIMEOUT
+          - AGENT_TIMEOUT
+          - UNKNOWN
+          - PENDING
+          - RUNNING
+        webhookId:
+          type: string
+        requestProperties:
+          $ref: '#/components/schemas/PrivateNetworkRequestPropertiesModel'
+        responses:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkResponsePropertiesModel'
+        noOfRetries:
+          type: integer
+          format: int32
+        timeout:
+          type: integer
+          format: int32
+        retryWaitTime:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        executedByClientID:
+          type: string
+        errorMessage:
+          type: string
+        teamId:
+          type: string
+        tags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    EvaluationConfiguration:
+      required:
+      - okStatusCodes
+      type: object
+      properties:
+        okLatencyMaxMs:
+          type: integer
+          description: The maximum latency in milliseconds for a successful status check
+          format: int32
+        okStatusCodes:
+          type: array
+          description: The list of successful response status codes for a successful status check
+          items:
+            type: string
+            description: The list of successful response status codes for a successful status check
+        responseBodyEvaluation:
+          $ref: '#/components/schemas/ResponseBodyEvaluation'
+      description: The configuration for evaluating the success/failure of a status check
+    PrivateNetworkResponsePropertiesModel:
+      type: object
+      properties:
+        invocationTime:
+          type: string
+          format: date-time
+        httpStatusCode:
+          type: integer
+          format: int32
+        requestLatencyMs:
+          type: integer
+          format: int32
+        responseBody:
+          type: string
+        contentType:
+          type: string
+        responseHeaders:
+          type: object
+          additionalProperties:
+            type: string
+    TeamExternalIntegrationReference:
+      title: StatusCheckRequest.TeamExternalIntegrationReference
+      required:
+      - name
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of the external integration for the health check to be created/updated
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+        observabilityToolType:
+          type: string
+          description: The observability tool type of the external integration for the health check to be created/updated
+          enum:
+          - DATADOG
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - AWS
+          - AZURE
+        domain:
+          type: string
+          description: The domain of the observability tool type of the external integration for the health check to be created/updated
+        name:
+          type: string
+          description: The name of the external integration for the health check to be created/updated
+      description: Represents the configuration for referencing an external integration
+    CreatePrivateNetworkInvocationRequest:
+      required:
+      - endpointConfiguration
+      type: object
+      properties:
+        endpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+        webhookId:
+          type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    PrivateNetworkInvocationModelResponse:
+      type: object
+      properties:
+        invocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkInvocationModel'
+    HasCompareFunctionObject:
+      type: object
+    PrivateNetworkRequestPropertiesModel:
+      type: object
+      properties:
+        uri:
+          type: string
+          format: url
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+        payload:
+          type: string
+        headersArn:
+          type: string
+    TestPrivateNetworkEvaluationConfigurationRequest:
+      required:
+      - evaluationConfiguration
+      type: object
+      properties:
+        evaluationConfiguration:
+          $ref: '#/components/schemas/EvaluationConfiguration'
+    EndpointConfiguration:
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          type: string
+          description: The URL of the status check
+          format: url
+        method:
+          type: string
+          description: The method type of the status check
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Optional request headers to be used when the status check is invoked
+          description: Optional request headers to be used when the status check is invoked
+        payload:
+          type: string
+          description: Payload for POST type of request
+        headersArn:
+          type: string
+          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers

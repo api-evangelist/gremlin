@@ -1,0 +1,672 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents failure-flags.experiments API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: failure-flags.experiments
+  description: Get, list, and protect experiments
+paths:
+  /failure-flags/experiments/{id}/runs:
+    get:
+      tags:
+      - failure-flags.experiments
+      summary: List all runs of an Experiment by team and ID.
+      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: allRunsForExperiment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List all runs of an Experiment by team and ID
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExperimentRunSummary'
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+  /failure-flags/experiments:
+    get:
+      tags:
+      - failure-flags.experiments
+      summary: Get all Experiments for a team.
+      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getExperimentsForTeam
+      parameters:
+      - name: includeScenarios
+        in: query
+        schema:
+          type: boolean
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all Experiments for a team
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Experiment'
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+    post:
+      tags:
+      - failure-flags.experiments
+      summary: Create an Experiment.
+      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: createExperiment
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Experiment'
+      responses:
+        '201':
+          description: Create an Experiment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Experiment'
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_WRITE
+  /failure-flags/experiments/{id}:
+    get:
+      tags:
+      - failure-flags.experiments
+      summary: Get Experiment by ID.
+      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getExperimentForTeamAndId
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get an Experiment by team and ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Experiment'
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+    delete:
+      tags:
+      - failure-flags.experiments
+      summary: Delete an Experiment by team and ID.
+      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: deleteExperiment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Delete an Experiment by team and ID
+        '404':
+          description: Not found
+        '409':
+          description: Cannot delete an Experiment while it is running
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_WRITE
+  /failure-flags/experiments/active:
+    get:
+      tags:
+      - failure-flags.experiments
+      summary: Get all active Experiments for a team.
+      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getActiveExperimentsForTeam
+      parameters:
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+        example: 20
+      - name: pageToken
+        in: query
+        description: Token corresponding to the last page of team summaries retrieved. Pass the pageToken to get the next page of team summaries
+        schema:
+          type: string
+        example: None (returns first page)
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all active Experiments for a team
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExperimentPagedResponse'
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+  /failure-flags/experiments/completed/paged:
+    get:
+      tags:
+      - failure-flags.experiments
+      summary: Get all completed Experiments for a team.
+      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getCompletedExperimentsForTeam
+      parameters:
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+          default: 1000
+        example: 20
+      - name: pageToken
+        in: query
+        description: Token corresponding to the last page of team summaries retrieved. Pass the pageToken to get the next page of team summaries
+        schema:
+          type: string
+        example: None (returns first page)
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all completed Experiments for a team
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompletedExperimentPagedResponse'
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+  /failure-flags/experiments/{id}/run/{startTime}:
+    get:
+      tags:
+      - failure-flags.experiments
+      summary: Get details for a single Experiment run by ID and run start time.
+      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getExperimentRunDetailsForIdAndStartTime
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: startTime
+        in: path
+        description: Epoch MS timestamp of the start of the experiment
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get an Experiment by team and ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Experiment'
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+  /failure-flags/experiments/{id}/halt:
+    post:
+      tags:
+      - failure-flags.experiments
+      summary: Halt an Experiment by team and ID.
+      description: Requires the privilege [`HALT_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: haltExperiment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Halt an Experiment by team and ID
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: HALT_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - HALT_WRITE
+  /failure-flags/experiments/{id}/protect:
+    post:
+      tags:
+      - failure-flags.experiments
+      summary: Protect an Experiment by team and ID.
+      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: protectExperiment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Protect an Experiment by team and ID
+        '404':
+          description: Not found
+        '409':
+          description: Cannot protect an Experiment while it is running
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_WRITE
+  /failure-flags/experiments/{id}/run:
+    post:
+      tags:
+      - failure-flags.experiments
+      summary: Run an Experiment by team and ID.
+      description: Requires the privilege [`EXPERIMENTS_RUN`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: runExperiment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Run an Experiment by team and ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Experiment'
+        '404':
+          description: Not found
+        '409':
+          description: Cannot run a protected Experiment
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_RUN'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_RUN
+  /failure-flags/experiments/{id}/unprotect:
+    post:
+      tags:
+      - failure-flags.experiments
+      summary: Unprotect an Experiment by team and ID.
+      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: unprotectExperiment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Unprotect an Experiment by team and ID
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_WRITE
+components:
+  schemas:
+    ExperimentPagedResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Experiment'
+    CompletedRunSummaryResponse:
+      type: object
+      properties:
+        teamId:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        stopTime:
+          type: string
+          format: date-time
+        deliveries:
+          type: integer
+          format: int32
+        impacts:
+          type: integer
+          format: int32
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        triggeredBy:
+          type: string
+        app:
+          $ref: '#/components/schemas/Selector'
+        flag:
+          $ref: '#/components/schemas/Selector'
+    ExperimentRun:
+      type: object
+      properties:
+        startTime:
+          type: string
+          format: date-time
+        impactSeries:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeriesMinute'
+        deliverySeries:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeriesMinute'
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        triggeredBy:
+          type: string
+      readOnly: true
+    TargetSampling:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    SeriesMinute:
+      type: object
+      properties:
+        minute:
+          type: integer
+          format: int32
+        count:
+          type: integer
+          format: int32
+    Selector:
+      required:
+      - labels
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: array
+            description: Label selectors for matching resources
+            example:
+              foo:
+              - bar
+              - baz
+            items:
+              type: string
+              description: Label selectors for matching resources
+              example: '{"foo":["bar","baz"]}'
+          description: Label selectors for matching resources
+          example:
+            foo:
+            - bar
+            - baz
+    ExperimentRunSummary:
+      type: object
+      properties:
+        startTime:
+          type: string
+          format: date-time
+        stopTime:
+          type: string
+          format: date-time
+        impacts:
+          type: integer
+          format: int32
+        deliveries:
+          type: integer
+          format: int32
+    CompletedExperimentPagedResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompletedRunSummaryResponse'
+    Experiment:
+      required:
+      - app
+      - duration
+      - flag
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+        teamId:
+          type: string
+        name:
+          pattern: ^[-a-zA-Z0-9_. ]{1,64}$
+          type: string
+        staticTargeting:
+          type: boolean
+        app:
+          $ref: '#/components/schemas/Selector'
+        flag:
+          $ref: '#/components/schemas/Selector'
+        appInstanceSampling:
+          $ref: '#/components/schemas/TargetSampling'
+        duration:
+          pattern: ^[1-9]\d*[mhd]$
+          type: string
+          description: "The duration expressed as a variant of ISO 8601 with the following simplifications:\n 1. no leading 'PT' (eg. 5m or 10h)\n 2. valid time units are exclusively: m, h, d, s\n"
+          example: 30m
+        rate:
+          type: number
+          format: float
+        effect:
+          type: object
+        recentHistory:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/ExperimentRunSummary'
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        startTime:
+          type: string
+          format: date-time
+          readOnly: true
+        currentRun:
+          $ref: '#/components/schemas/ExperimentRun'
+        protected:
+          type: boolean
+          readOnly: true

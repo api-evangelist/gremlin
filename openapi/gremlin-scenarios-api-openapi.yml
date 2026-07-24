@@ -1,0 +1,2140 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents scenarios API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: scenarios
+  description: Create, update, run, halt, and list scenarios
+paths:
+  /scenarios/{scenarioId}/runs/{runNumber}/images/{imageName}:
+    delete:
+      tags:
+      - scenarios
+      summary: Deletes a given images associated with a given scenario
+      description: Requires the privilege [`IMAGES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: deleteImage
+      parameters:
+      - name: imageName
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: scenarioId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: runNumber
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege for target team: IMAGES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - IMAGES_WRITE
+    patch:
+      tags:
+      - scenarios
+      summary: Uploads an image to a given scenario
+      description: "This takes an image as a multipart/form-data (parameter name \"file\") and uploads it to Gremlin's backend and associates it with a given ScenarioRun. \nNOTE: imageNames must be S3 compatible strings ([a-zA-Z0-9!-_'\\(\\)]) with under 1000 characters (including file type)\nRequires the privilege [`IMAGES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+      operationId: addImage
+      parameters:
+      - name: imageName
+        in: path
+        required: true
+        schema:
+          maxLength: 987
+          minLength: 0
+          pattern: '[a-zA-Z0-9\!\-\_\.\*\''\(\)\ ]+'
+          type: string
+      - name: scenarioId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: runNumber
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  $ref: '#/components/schemas/FormDataContentDisposition'
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege for target team: IMAGES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - IMAGES_WRITE
+  /scenarios/{guid}/archive:
+    post:
+      tags:
+      - scenarios
+      summary: Archive a scenario.
+      description: Requires the privilege [`SCENARIOS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: archive
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Indicates the scenario updated in place. Call GET v1/scenario/{guid} to retrieve the latest state
+        '404':
+          description: scenario not found
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_WRITE
+  /scenarios:
+    get:
+      tags:
+      - scenarios
+      summary: List all runnable scenarios.
+      description: Requires the privilege [`SCENARIOS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getRunnable
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScenarioResponse'
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+    post:
+      tags:
+      - scenarios
+      summary: Create a new scenario.
+      description: 'Creates a new scenario based on the Scenario Graph provided
+
+        Requires the privilege [`SCENARIOS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: createNewScenario
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateScenarioRequest'
+      responses:
+        '200':
+          description: The id for the created scenario
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Bad Request
+        '402':
+          description: Payment Required
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_WRITE
+  /scenarios/shared:
+    get:
+      tags:
+      - scenarios
+      summary: Get all scenarios shared with this team.
+      description: Requires the privilege [`SCENARIOS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getScenariosSharedWithTeam
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SharedScenarioResponse'
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SharedScenarioResponse'
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+    post:
+      tags:
+      - scenarios
+      summary: Create new shared scenarios.
+      description: Requires the privilege [`SCENARIO_SHARE_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: createNewSharedScenario
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        '201':
+          description: Shared scenarios created
+        '400':
+          description: Bad request
+        '403':
+          description: 'User requires privilege for target team: SCENARIO_SHARE_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIO_SHARE_WRITE
+  /scenarios/{guid}:
+    get:
+      tags:
+      - scenarios
+      summary: Get details about a scenario.
+      description: Requires the privilege [`SCENARIOS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getScenario
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScenarioResponse'
+        '404':
+          description: scenario not found
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+    put:
+      tags:
+      - scenarios
+      summary: Update a scenario
+      description: Requires the privilege [`SCENARIOS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: updateScenario
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateScenarioRequest'
+      responses:
+        '200':
+          description: Indicates the scenario updated in place. Call GET v1/scenario/{guid} to retrieve the latest state
+        '400':
+          description: Bad Request
+        '402':
+          description: Payment Required
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_WRITE
+    delete:
+      tags:
+      - scenarios
+      summary: Delete a scenario.
+      description: Requires the privilege [`SCENARIOS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: delete_4
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '404':
+          description: scenario not found
+        '400':
+          description: scenario cannot be deleted until it is unshared
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_WRITE
+  /scenarios/active:
+    get:
+      tags:
+      - scenarios
+      summary: List all active scenarios.
+      description: Requires the privilege [`SCENARIOS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getActive_1
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScenarioResponse'
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+  /scenarios/active-runs:
+    get:
+      tags:
+      - scenarios
+      summary: List all active scenarios.
+      description: Requires the privilege [`SCENARIOS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getActiveRuns
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponseScenarioRunResponse'
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+  /scenarios/runs:
+    get:
+      tags:
+      - scenarios
+      summary: List all scenario runs for your team.
+      description: Requires the privilege [`SCENARIOS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getAllRunsForTeam
+      parameters:
+      - name: state
+        in: query
+        schema:
+          type: string
+      - name: includeArchived
+        in: query
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScenarioRunResponse'
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+  /scenarios/archived:
+    get:
+      tags:
+      - scenarios
+      summary: List all archived scenarios.
+      description: Requires the privilege [`SCENARIOS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getArchived
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScenarioResponse'
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+  /scenarios/drafts:
+    get:
+      tags:
+      - scenarios
+      summary: List all draft scenarios.
+      description: Requires the privilege [`SCENARIOS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getDrafts
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScenarioResponse'
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+  /scenarios/active/paged:
+    get:
+      tags:
+      - scenarios
+      summary: Get a team's active FI scenario runs ordered by start time desc.
+      description: Requires the privilege [`SCENARIOS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getPaginatedActiveRuns
+      parameters:
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+          default: 1000
+        example: None (defaults to 1000)
+      - name: pageToken
+        in: query
+        description: Pass the pageToken to get the next page of active FI scenario runs
+        schema:
+          type: string
+        example: None (returns first page)
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponseScenarioRunResponse'
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+  /scenarios/completed/paged:
+    get:
+      tags:
+      - scenarios
+      summary: Get a team's completed FI scenario runs ordered by start time desc.
+      description: Requires the privilege [`SCENARIOS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getPaginatedCompletedScenarioRuns
+      parameters:
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+          default: 1000
+        example: None (defaults to 1000)
+      - name: pageToken
+        in: query
+        description: Pass the pageToken to get the next page of completed reliability test runs
+        schema:
+          type: string
+        example: None (returns first page)
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponseCompletedScenarioRunResponse'
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+  /scenarios/{guid}/runs:
+    get:
+      tags:
+      - scenarios
+      summary: List all runs for a scenario.
+      description: Requires the privilege [`SCENARIOS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getRuns
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScenarioRunResponse'
+        '404':
+          description: scenario not found
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+    post:
+      tags:
+      - scenarios
+      summary: Run a scenario.
+      description: Requires the privilege [`SCENARIOS_RUN`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: runScenario
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunScenarioRequest'
+      responses:
+        '200':
+          description: The run number for the new run in-progress
+          content:
+            text/plain:
+              schema:
+                type: integer
+                format: int64
+        '400':
+          description: Bad Request
+        '402':
+          description: Payment Required
+        '404':
+          description: '{guid} not found'
+        '409':
+          description: Scenario run number {runNumber} is in progress
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_RUN'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_RUN
+  /scenarios/{guid}/runs/paged:
+    get:
+      tags:
+      - scenarios
+      summary: Paged list runs for a scenario.  Scenarios are monotonically increasing and use their run number as the pagination key
+      description: Requires the privilege [`SCENARIOS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getRunsPaged
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: runNumber
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 1000
+      - name: forward
+        in: query
+        description: Used to indicate querying forward or backwards from the supplied runNumber (defaults to forward)
+        schema:
+          type: boolean
+          default: true
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '404':
+          description: scenario not found, or no runs found for that scenario
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+  /scenarios/{guid}/runs/{runNumber}:
+    get:
+      tags:
+      - scenarios
+      summary: Get details about a scenario run.
+      description: Requires the privilege [`SCENARIOS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getScenarioRun
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: runNumber
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScenarioRunResponse'
+        '400':
+          description: Bad Request
+        '402':
+          description: Payment Required
+        '404':
+          description: scenario run not found
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+  /scenarios/{guid}/schedules:
+    get:
+      tags:
+      - scenarios
+      summary: Get all schedules for a scenario.
+      description: Requires the privilege [`SCENARIOS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getScenarioSchedules
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScenarioScheduleResponse'
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+  /scenarios/shared/{guid}:
+    get:
+      tags:
+      - scenarios
+      summary: Get details on a shared scenarios.
+      description: Requires the privilege [`SCENARIOS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getSharedScenario
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedScenarioResponse'
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SharedScenarioResponse'
+        '400':
+          description: Bad Request
+        '404':
+          description: shared scenario not found
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+    delete:
+      tags:
+      - scenarios
+      summary: Unshare a company shared scenario.
+      description: Requires the privilege [`SCENARIO_SHARE_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: unshareScenario
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '400':
+          description: Bad Request
+        '404':
+          description: shared scenario not found
+        '403':
+          description: 'User requires privilege for target team: SCENARIO_SHARE_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIO_SHARE_WRITE
+  /scenarios/halt:
+    post:
+      tags:
+      - scenarios
+      summary: Idempotently halt all scenario runs and active attacks.
+      operationId: haltAsPost_2
+      parameters:
+      - name: teamId
+        in: query
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HaltRequest'
+      responses:
+        '202':
+          description: Scenario has begun halting
+        '403':
+          description: 'User requires privilege: HALT_ALL'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+  /scenarios/halt/{guid}/runs/{runNumber}:
+    post:
+      tags:
+      - scenarios
+      summary: Idempotently halt the specified scenario run.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: haltAsPost_3
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: runNumber
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HaltRequest'
+      responses:
+        '202':
+          description: Scenario has begun halting
+        '404':
+          description: scenario not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /scenarios/{guid}/restore:
+    post:
+      tags:
+      - scenarios
+      summary: Restore an archived scenario.
+      description: Requires the privilege [`SCENARIOS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: restore
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Indicates the scenario updated in place. Call GET v1/scenario/{guid} to retrieve the latest state
+        '404':
+          description: scenario not found
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_WRITE
+  /scenarios/{guid}/runs/{runNumber}/resultFlags:
+    put:
+      tags:
+      - scenarios
+      summary: This functionality has been replaced by PUT /{guid}/runs/{runNumber}/results.
+      description: Requires the privilege [`SCENARIOS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: setScenarioRunResultFlags
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: runNumber
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: object
+      responses:
+        '400':
+          description: Bad Request
+        '404':
+          description: scenario run not found
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      deprecated: true
+      security:
+      - privilege:
+        - SCENARIOS_WRITE
+  /scenarios/{guid}/runs/{runNumber}/resultNotes:
+    put:
+      tags:
+      - scenarios
+      summary: Update the result notes of a scenario run.
+      description: Requires the privilege [`SCENARIOS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: setScenarioRunResultNotes
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: runNumber
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Indicates the scenario run updated in place. Call GET v1/scenario/{guid}/runs/{runNumber} to retrieve the latest state
+        '400':
+          description: Bad Request
+        '404':
+          description: scenario run not found
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+  /scenarios/{guid}/runs/{runNumber}/results:
+    put:
+      tags:
+      - scenarios
+      summary: Update the results of a scenario run.
+      description: Requires the privilege [`SCENARIOS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: setScenarioRunResults
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: runNumber
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScenarioRunResults'
+      responses:
+        '200':
+          description: Indicates the scenario run updated in place. Call GET v1/scenario/{guid}/runs/{runNumber} to retrieve the latest state
+        '400':
+          description: Bad Request
+        '404':
+          description: scenario run not found
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_WRITE
+components:
+  schemas:
+    ExternalActionNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          externalActionRequest:
+            $ref: '#/components/schemas/ExternalActionRequest'
+          state:
+            $ref: '#/components/schemas/State'
+          stateDetails:
+            $ref: '#/components/schemas/ExternalCallFailedException'
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body
+    StatusCheckNodeRequest:
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    ScenarioRunResults:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - Passed
+          - Failed
+          - Unsure
+        incidentDetected:
+          type: boolean
+        incidentMitigated:
+          type: boolean
+    CreateScenarioRequest:
+      title: Scenario.Input
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        hypothesis:
+          type: string
+        passCriteria:
+          type: string
+          enum:
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
+        graph:
+          $ref: '#/components/schemas/ScenarioGraph'
+        recommendedScenarioId:
+          type: string
+        createdFromType:
+          type: string
+          enum:
+          - Recommended
+          - Shared
+        createdFromId:
+          type: string
+    ScenarioRunResponse:
+      type: object
+      properties:
+        scenarioId:
+          type: string
+        runNumber:
+          type: integer
+          format: int64
+        orgId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        hypothesis:
+          type: string
+        stageInfo:
+          type: object
+          additionalProperties:
+            type: object
+        createdBy:
+          type: string
+        createdByFirstName:
+          type: string
+        createdByLastName:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        createSource:
+          type: string
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        graph:
+          $ref: '#/components/schemas/ScenarioRunGraph'
+        resultNotes:
+          type: string
+        resultFlags:
+          type: object
+          additionalProperties:
+            type: boolean
+        results:
+          $ref: '#/components/schemas/ScenarioRunResults'
+        scheduleId:
+          type: string
+        scenarioEditCounterAtRunTime:
+          type: integer
+          format: int32
+        scenarioRunImages:
+          type: array
+          items:
+            type: string
+        gameDayInfo:
+          $ref: '#/components/schemas/GameDayInfo'
+        passCriteria:
+          type: string
+          enum:
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
+        largeScaleTestId:
+          type: string
+    HaltRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: The reason why this halt this requested.
+        reference:
+          type: string
+          description: A reference to why this halt was requested.
+    RunScenarioRequest:
+      title: ScenarioRun.Input
+      type: object
+      properties:
+        hypothesis:
+          type: string
+    HasCompareFunctionObject:
+      type: object
+    EndpointConfiguration:
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          type: string
+          description: The URL of the status check
+          format: url
+        method:
+          type: string
+          description: The method type of the status check
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Optional request headers to be used when the status check is invoked
+          description: Optional request headers to be used when the status check is invoked
+        payload:
+          type: string
+          description: Payload for POST type of request
+        headersArn:
+          type: string
+          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
+    FormDataContentDisposition:
+      type: object
+      properties:
+        type:
+          type: string
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+        fileName:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        readDate:
+          type: string
+          format: date-time
+        size:
+          type: integer
+          format: int64
+        name:
+          type: string
+    ExternalActionRequest:
+      required:
+      - type
+      type: object
+      properties:
+        semanticType:
+          type: string
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    PagedResponseCompletedScenarioRunResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompletedScenarioRunResponse'
+    StatusCheckNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          state:
+            $ref: '#/components/schemas/State'
+          name:
+            type: string
+          description:
+            type: string
+          thirdPartyPresets:
+            type: string
+          category:
+            type: string
+            enum:
+            - ERRORS
+            - LATENCY
+            - REQUESTS
+            - UNKNOWN
+          requestConfiguration:
+            $ref: '#/components/schemas/StatusCheckNodeRequest'
+          endpointConfiguration:
+            $ref: '#/components/schemas/EndpointConfiguration'
+          rawEndpointConfiguration:
+            $ref: '#/components/schemas/EndpointConfiguration'
+          evaluationConfiguration:
+            $ref: '#/components/schemas/EvaluationConfiguration'
+          statusCheckId:
+            type: string
+          externalIntegrationId:
+            type: string
+          statusCheckReferenceId:
+            type: string
+          isPrivateNetwork:
+            type: boolean
+          isHaltable:
+            type: boolean
+          payload:
+            type: string
+          isAutoGenerated:
+            type: boolean
+          autoGeneratedStatusCheckId:
+            type: string
+          resourceIdentifier:
+            type: string
+          statusCheckRequest:
+            $ref: '#/components/schemas/StatusCheckNodeRequest'
+          intervalSeconds:
+            type: integer
+            format: int32
+          additionalTimeInSecsToRunAfterCompletion:
+            type: integer
+            format: int32
+    ServiceTarget:
+      required:
+      - targetingStrategy
+      type: object
+      properties:
+        serviceId:
+          type: string
+        targetingStrategy:
+          $ref: '#/components/schemas/TargetingStrategy'
+    RollbackExternalActionNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          referenceExternalActionId:
+            type: string
+          state:
+            $ref: '#/components/schemas/State'
+          stateDetails:
+            $ref: '#/components/schemas/ExternalCallFailedException'
+          externalActionRequest:
+            $ref: '#/components/schemas/ExternalActionRequest'
+          externalActionLifecycle:
+            type: string
+            enum:
+            - NotStarted
+            - Active
+            - HaltRequested
+            - Successful
+            - Halted
+            - Failed
+          didExternalActionNoOp:
+            type: boolean
+    GraphNodeObject:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Concurrent
+          - ContinuousStatusCheck
+          - StatusCheckNode
+          - Delay
+          - InfraAttack
+          - SynchronousStatusCheck
+          - Continuous
+          - FailureFlag
+          - ExternalAction
+          - RollbackExternalAction
+        id:
+          type: string
+        state:
+          type: object
+          readOnly: true
+        guid:
+          type: string
+        next:
+          type: string
+      discriminator:
+        propertyName: type
+    ScenarioScheduleResponse:
+      type: object
+      properties:
+        orgId:
+          type: string
+        guid:
+          type: string
+        scenarioId:
+          type: string
+        scenarioName:
+          type: string
+        trigger:
+          type: object
+          properties:
+            windowType:
+              type: string
+              enum:
+              - Once
+              - Random
+            type:
+              type: string
+            templateId:
+              type: string
+            optionalTemplateId:
+              type: string
+            empty:
+              type: boolean
+          additionalProperties:
+            type: object
+        createdBy:
+          type: string
+        createSource:
+          type: string
+          enum:
+          - WebApp
+          - Api
+          - Scheduled
+          - Manual
+          - Spinnaker
+          - Concord
+          - GremlinFeeder
+          - GremlinSdkPython
+          - Scenario
+          - Chao
+          - K8sBackend
+          - Website
+          - Neotys
+          - IntegrationClient
+          - Validation
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        enabled:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        nextTriggerTime:
+          type: string
+          format: date-time
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTarget'
+        failureFlagTargets:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailureFlagTarget'
+    PagedResponseScenarioRunResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioRunResponse'
+    TargetSampling:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    CompletedScenarioRunResponse:
+      type: object
+      properties:
+        scenarioId:
+          type: string
+        scenarioName:
+          type: string
+        runNumber:
+          type: integer
+          format: int64
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTarget'
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        triggeredBy:
+          type: string
+        status:
+          type: string
+          enum:
+          - Passed
+          - Failed
+          - Unsure
+        createdAt:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        failureFlagTargets:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailureFlagTarget'
+        passCriteria:
+          type: string
+          enum:
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
+    SharedScenarioResponse:
+      type: object
+      properties:
+        sharedByTeam:
+          type: string
+        guid:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        hypothesis:
+          type: string
+        graph:
+          $ref: '#/components/schemas/ScenarioGraph'
+        sharedBy:
+          type: string
+        sharedFromScenario:
+          type: string
+        createSource:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        recommendedScenarioId:
+          type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        editCounter:
+          type: integer
+          format: int32
+        passCriteria:
+          type: string
+          enum:
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
+    TargetingStrategy:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    ScenarioRunGraph:
+      type: object
+      properties:
+        nodes:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/GraphNodeObject'
+        start_id:
+          type: string
+          writeOnly: true
+        observers:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusCheckNode'
+        current_id:
+          type: string
+          writeOnly: true
+        external_actions:
+          type: array
+          writeOnly: true
+          items:
+            $ref: '#/components/schemas/ExternalActionNode'
+        external_rollbacks:
+          type: array
+          writeOnly: true
+          items:
+            $ref: '#/components/schemas/RollbackExternalActionNode'
+        startId:
+          type: string
+        externalActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalActionNode'
+        externalRollbacks:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/RollbackExternalActionNode'
+        currentId:
+          type: string
+          readOnly: true
+        next:
+          $ref: '#/components/schemas/GraphNodeObject'
+        nextId:
+          type: string
+        nodesRecursive:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphNodeObject'
+        expectedLengthWithDelays:
+          type: integer
+          format: int32
+          readOnly: true
+        eligibleForServiceCreation:
+          type: boolean
+        expectedLength:
+          type: integer
+          format: int32
+          readOnly: true
+        attackTypeQuantity:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+            readOnly: true
+          readOnly: true
+        providersCountForNodes:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+            readOnly: true
+          readOnly: true
+    State:
+      type: object
+      properties:
+        lifecycle:
+          type: string
+          enum:
+          - NotStarted
+          - Active
+          - HaltRequested
+          - Successful
+          - Halted
+          - Failed
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        failedReason:
+          type: string
+        nodeHaltedByGuid:
+          type: string
+        nodeHaltedById:
+          type: string
+      readOnly: true
+    EvaluationConfiguration:
+      required:
+      - okStatusCodes
+      type: object
+      properties:
+        okLatencyMaxMs:
+          type: integer
+          description: The maximum latency in milliseconds for a successful status check
+          format: int32
+        okStatusCodes:
+          type: array
+          description: The list of successful response status codes for a successful status check
+          items:
+            type: string
+            description: The list of successful response status codes for a successful status check
+        responseBodyEvaluation:
+          $ref: '#/components/schemas/ResponseBodyEvaluation'
+      description: The configuration for evaluating the success/failure of a status check
+    Selector:
+      required:
+      - labels
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: array
+            description: Label selectors for matching resources
+            example:
+              foo:
+              - bar
+              - baz
+            items:
+              type: string
+              description: Label selectors for matching resources
+              example: '{"foo":["bar","baz"]}'
+          description: Label selectors for matching resources
+          example:
+            foo:
+            - bar
+            - baz
+    GameDayInfo:
+      type: object
+      properties:
+        guid:
+          type: string
+        name:
+          type: string
+    ScenarioResponse:
+      type: object
+      properties:
+        orgId:
+          type: string
+        guid:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        hypothesis:
+          type: string
+        steps:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: object
+        graph:
+          $ref: '#/components/schemas/ScenarioGraph'
+        state:
+          type: string
+        createSource:
+          type: string
+        createdBy:
+          type: string
+        updatedBy:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        lastRunAt:
+          type: string
+        recommendedScenarioId:
+          type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        createdFromType:
+          type: string
+          enum:
+          - Recommended
+          - Shared
+        createdFromId:
+          type: string
+        editCounter:
+          type: integer
+          format: int32
+        version:
+          type: integer
+          format: int64
+        passCriteria:
+          type: string
+          enum:
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
+        eligibleForServiceCreation:
+          type: boolean
+    UpdateScenarioRequest:
+      title: UpdateScenario.Input
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        hypothesis:
+          type: string
+        passCriteria:
+          type: string
+          enum:
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
+        graph:
+          $ref: '#/components/schemas/ScenarioGraph'
+    FailureFlagTarget:
+      type: object
+      properties:
+        app:
+          $ref: '#/components/schemas/Selector'
+        flag:
+          $ref: '#/components/schemas/Selector'
+        appInstanceSampling:
+          $ref: '#/components/schemas/TargetSampling'
+        resolvedAppInstanceIds:
+          type: array
+          items:
+            type: string
+    ExternalCallFailedException:
+      type: object
+      properties:
+        cause:
+          type: object
+          properties:
+            stackTrace:
+              type: array
+              items:
+                type: object
+                properties:
+                  classLoaderName:
+                    type: string
+                  moduleName:
+                    type: string
+                  moduleVersion:
+                    type: string
+                  methodName:
+                    type: string
+                  fileName:
+                    type: string
+                  lineNumber:
+                    type: integer
+                    format: int32
+                  className:
+                    type: string
+                  nativeMethod:
+                    type: boolean
+            message:
+              type: string
+            localizedMessage:
+              type: string
+        stackTrace:
+          type: array
+          items:
+            type: object
+            properties:
+              classLoaderName:
+                type: string
+              moduleName:
+                type: string
+              moduleVersion:
+                type: string
+              methodName:
+                type: string
+              fileName:
+                type: string
+              lineNumber:
+                type: integer
+                format: int32
+              className:
+                type: string
+              nativeMethod:
+                type: boolean
+        errorCode:
+          type: string
+        requestId:
+          type: string
+        statusCode:
+          type: integer
+          format: int32
+        message:
+          type: string
+        suppressed:
+          type: array
+          items:
+            type: object
+            properties:
+              stackTrace:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    classLoaderName:
+                      type: string
+                    moduleName:
+                      type: string
+                    moduleVersion:
+                      type: string
+                    methodName:
+                      type: string
+                    fileName:
+                      type: string
+                    lineNumber:
+                      type: integer
+                      format: int32
+                    className:
+                      type: string
+                    nativeMethod:
+                      type: boolean
+              message:
+                type: string
+              localizedMessage:
+                type: string
+        localizedMessage:
+          type: string
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
+      type: object
+      properties:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
+    ScenarioGraph:
+      type: object
+      properties:
+        nodes:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/GraphNodeObject'
+        startId:
+          type: string
+        observers:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusCheckNode'
+        externalActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalActionNode'
+        externalRollbacks:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/RollbackExternalActionNode'
+        nodesRecursive:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphNodeObject'
+        expectedLengthWithDelays:
+          type: integer
+          format: int32
+          readOnly: true
+        eligibleForServiceCreation:
+          type: boolean
+        expectedLength:
+          type: integer
+          format: int32
+          readOnly: true
+        attackTypeQuantity:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+            readOnly: true
+          readOnly: true
+        providersCountForNodes:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+            readOnly: true
+          readOnly: true

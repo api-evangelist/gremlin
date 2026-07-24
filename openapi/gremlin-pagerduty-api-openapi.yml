@@ -1,0 +1,117 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents pagerduty API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: pagerduty
+  description: Get Pagerduty services and incidents
+paths:
+  /pagerduty/incidents:
+    get:
+      tags:
+      - pagerduty
+      summary: Get incidents from a service
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: incidentsForService
+      parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+      - name: serviceId
+        in: query
+        schema:
+          type: string
+      - name: incidentId
+        in: query
+        schema:
+          type: string
+      - name: statuses
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - TRIGGERED
+            - ACKNOWLEDGED
+            - RESOLVED
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: offset
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns all incidents from a service
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /pagerduty/services:
+    get:
+      tags:
+      - pagerduty
+      summary: Get all services
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: services
+      parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: offset
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns all services
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES

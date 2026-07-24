@@ -1,0 +1,165 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: agents
+  description: List and modify all infrastructure and failure flag agents
+paths:
+  /agents/summary:
+    get:
+      tags:
+      - agents
+      summary: Aggregate summary of infrastructure and failure flag agents
+      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getAgentSummary
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentSummaryResponse'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_READ
+  /agents:
+    get:
+      tags:
+      - agents
+      summary: Paginated list of infrastructure and failure flag agents
+      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getPaginatedAgents
+      parameters:
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+          default: 500
+      - name: pageToken
+        in: query
+        description: Pass the pageToken to get the next page of agents
+        schema:
+          $ref: '#/components/schemas/PageToken'
+        example: None (returns first page)
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponseAgentResponse'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_READ
+components:
+  schemas:
+    PageToken:
+      type: object
+      properties:
+        cacheKey:
+          type: string
+        lastEvaluatedSK:
+          type: string
+    PagedResponseAgentResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentResponse'
+    AgentSummaryResponse:
+      type: object
+      properties:
+        active:
+          type: integer
+          format: int32
+        warnings:
+          type: integer
+          format: int32
+        deactivated:
+          type: integer
+          format: int32
+        idle:
+          type: integer
+          format: int32
+    AgentResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - Infrastructure
+          - FailureFlag
+        status:
+          type: string
+          enum:
+          - Active
+          - Idle
+          - Deactivated
+        warningCount:
+          type: integer
+          format: int32
+        instanceCount:
+          type: integer
+          description: For Failure Flags applications this is the recent/active instance count for that application. This value may be null when the count is unknown or unavailable (for example, legacy apps or not yet computed). For Infra this field is null.
+          format: int32
+        tags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string

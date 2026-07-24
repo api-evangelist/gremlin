@@ -1,0 +1,703 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents external-integrations API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: external-integrations
+  description: Used for managing authentication for Status Checks and Load Generators
+paths:
+  /external-integrations:
+    get:
+      tags:
+      - external-integrations
+      summary: Get external integrations by type.
+      description: Requires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: get_4
+      parameters:
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalIntegrationResponse'
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_READ
+    delete:
+      tags:
+      - external-integrations
+      summary: Delete an external integration.
+      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: revoke
+      parameters:
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+  /external-integrations/load-generator:
+    get:
+      tags:
+      - external-integrations
+      summary: Get team integrations that are compatible with Load Generators.
+      description: Requires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getLoadGeneratorIntegrations
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamExternalIntegrationsResponse'
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_READ
+    put:
+      tags:
+      - external-integrations
+      summary: Update a team integration that is compatible with Load Generators.
+      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: updateLoadGeneratorIntegration
+      parameters:
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamExternalIntegrationRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamExternalIntegrationResponse'
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+    post:
+      tags:
+      - external-integrations
+      summary: Create new team integration that is compatible with Load Generators.
+      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: createLoadGeneratorIntegration
+      parameters:
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamExternalIntegrationRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamExternalIntegrationResponse'
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+    delete:
+      tags:
+      - external-integrations
+      summary: Remove a team integration that is compatible with Load Generators.
+      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: removeLoadGeneratorIntegration
+      parameters:
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+  /external-integrations/status-check:
+    get:
+      tags:
+      - external-integrations
+      summary: Get team integrations that are compatible with Health Checks.
+      description: Requires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getStatusCheckIntegrations
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamExternalIntegrationsResponse'
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_READ
+    put:
+      tags:
+      - external-integrations
+      summary: Update a team integration that is compatible with Health Checks.
+      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: updateStatusCheckIntegration
+      parameters:
+      - name: type
+        in: query
+        schema:
+          type: string
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+      - name: observabilityToolType
+        in: query
+        schema:
+          type: string
+          enum:
+          - DATADOG
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - AWS
+          - AZURE
+      - name: domain
+        in: query
+        schema:
+          maxLength: 255
+          minLength: 0
+          type: string
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamExternalIntegrationRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamExternalIntegrationResponse'
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+    post:
+      tags:
+      - external-integrations
+      summary: Create new team integration that is compatible with Health Checks.
+      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: createStatusCheckIntegration
+      parameters:
+      - name: type
+        in: query
+        schema:
+          type: string
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+      - name: observabilityToolType
+        in: query
+        schema:
+          type: string
+          enum:
+          - DATADOG
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - AWS
+          - AZURE
+      - name: domain
+        in: query
+        schema:
+          maxLength: 255
+          minLength: 0
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamExternalIntegrationRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamExternalIntegrationResponse'
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+    delete:
+      tags:
+      - external-integrations
+      summary: Remove a team integration that is compatible with Health Checks.
+      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: removeStatusCheckIntegration
+      parameters:
+      - name: type
+        in: query
+        schema:
+          type: string
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+      - name: observabilityToolType
+        in: query
+        schema:
+          type: string
+          enum:
+          - DATADOG
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - AWS
+          - AZURE
+      - name: domain
+        in: query
+        schema:
+          maxLength: 255
+          minLength: 0
+          type: string
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+components:
+  schemas:
+    CreateTeamExternalIntegrationRequest:
+      required:
+      - lastAuthenticationStatus
+      - name
+      - privateNetwork
+      type: object
+      properties:
+        url:
+          type: string
+          description: Uri of the configuration
+          format: url
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Headers of configuration
+          description: Headers of configuration
+        headersArn:
+          type: string
+          description: Arn of remote header configuration
+        name:
+          type: string
+          description: Name of configuration
+        privateNetwork:
+          type: boolean
+          description: Is private network
+        lastAuthenticationStatus:
+          type: string
+          description: Last authentication status
+          enum:
+          - AUTHENTICATED
+          - UNAUTHENTICATED
+          - UNTESTED
+        integrationSpecificValues:
+          type: object
+          additionalProperties:
+            type: string
+            description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+          description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            description: The tags associated with this integration
+            items:
+              type: string
+              description: The tags associated with this integration
+          description: The tags associated with this integration
+      description: Represents the configuration for an external integration
+    ExternalIntegrationResponse:
+      type: object
+      properties:
+        userId:
+          type: string
+        type:
+          type: string
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+        accountId:
+          type: string
+        url:
+          type: string
+    TeamExternalIntegrationsResponse:
+      type: object
+      properties:
+        integrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamExternalIntegrationResponse'
+    TeamExternalIntegrationResponse:
+      type: object
+      properties:
+        identifier:
+          type: string
+        userId:
+          type: string
+        type:
+          type: string
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+        observabilityToolType:
+          type: string
+          enum:
+          - DATADOG
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - AWS
+          - AZURE
+        domain:
+          type: string
+        url:
+          type: string
+          format: url
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+        headersArn:
+          type: string
+        name:
+          type: string
+        teamId:
+          type: string
+        privateNetwork:
+          type: boolean
+        canBeUsedAsStatusCheck:
+          type: boolean
+        lastAuthenticationStatus:
+          type: string
+          enum:
+          - AUTHENTICATED
+          - UNAUTHENTICATED
+          - UNTESTED
+        integrationSpecificValues:
+          type: object
+          additionalProperties:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string

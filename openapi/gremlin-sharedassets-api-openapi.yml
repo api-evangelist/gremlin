@@ -1,0 +1,677 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents sharedAssets API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: sharedAssets
+  description: Used for sharing agent assets (eg. K8s Namespaces) between teams
+paths:
+  /sharedAssets/requests/{requestId}/approve:
+    post:
+      tags:
+      - sharedAssets
+      summary: Approves a sharing request to a resource you own
+      description: 'The {requestId} parameter _must_ be urlencoded
+
+        Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: approveAccess
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedAsset'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_WRITE
+  /sharedAssets/requests/approve:
+    post:
+      tags:
+      - sharedAssets
+      summary: Approves a sharing request to a resource you own
+      description: Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: approveAccessRequests
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAllRequests'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedAssetUpdate'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_WRITE
+  /sharedAssets/requests/delete:
+    post:
+      tags:
+      - sharedAssets
+      summary: Deletes a sharing request your team has made to an asset you don't control
+      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: deleteAccessRequests
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAllRequests'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedAssetUpdate'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_READ
+  /sharedAssets/requests/{requestId}:
+    delete:
+      tags:
+      - sharedAssets
+      summary: Deletes an existing request for Access
+      description: 'The {requestId} parameter _must_ be urlencoded
+
+        Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: deleteRequest
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedAsset'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_READ
+  /sharedAssets/requests/{requestId}/deny:
+    post:
+      tags:
+      - sharedAssets
+      summary: Denies or Revokes a sharing request to a resource you own
+      description: 'The {requestId} parameter _must_ be urlencoded
+
+        Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: denyAccess
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedAsset'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_WRITE
+  /sharedAssets/requests/deny:
+    post:
+      tags:
+      - sharedAssets
+      summary: Denies or Revokes a sharing request to a resource you own
+      description: Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: denyAccessRequests
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAllRequests'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedAssetUpdate'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_WRITE
+  /sharedAssets/withMe:
+    get:
+      tags:
+      - sharedAssets
+      summary: List assets currently shared with your team
+      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: listAssetsSharedWithMe
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedAssetUpdate'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_READ
+  /sharedAssets:
+    get:
+      tags:
+      - sharedAssets
+      summary: List available assets for sharing and all incoming and outgoing requests
+      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: listAvailableAssetsWithRequests
+      parameters:
+      - name: assetId
+        in: query
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharableAssetsWithRequestsResponse'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_READ
+  /sharedAssets/requests:
+    get:
+      tags:
+      - sharedAssets
+      summary: List my requests for assets to be shared with my team
+      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: listMyRequests
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutstandingRequests'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_READ
+    post:
+      tags:
+      - sharedAssets
+      summary: Request access to a given asset
+      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: requestAccess
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewRequestRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedAssetUpdate'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_READ
+  /sharedAssets/requests/toMe:
+    get:
+      tags:
+      - sharedAssets
+      summary: List other team's requests to my team for sharing assets my team controls
+      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: listRequestsToMe
+      parameters:
+      - name: assetId
+        in: query
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutstandingRequests'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_READ
+  /sharedAssets/requests/{requestId}/delete:
+    post:
+      tags:
+      - sharedAssets
+      summary: Deletes an existing request for Access
+      description: 'The {requestId} parameter _must_ be urlencoded
+
+        Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: postDeleteRequest
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedAsset'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_READ
+  /sharedAssets/{owningTeam}/{assetId}:
+    post:
+      tags:
+      - sharedAssets
+      summary: Request access to a given asset owned by another team
+      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: requestAccessToAsset
+      parameters:
+      - name: owningTeam
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: assetId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: namespace
+        in: query
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedAsset'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_READ
+components:
+  schemas:
+    SharedAsset:
+      type: object
+      properties:
+        companyId:
+          type: string
+        owningTeamId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        approver:
+          type: string
+        requester:
+          type: string
+        assetName:
+          type: string
+        currentStatus:
+          type: string
+          enum:
+          - REQUESTED
+          - APPROVED
+          - DENIED
+          - REVOKED
+          - DELETED
+        assetId:
+          type: string
+        sharedTeam:
+          type: string
+        namespace:
+          type: string
+        requestId:
+          type: string
+    SharableAssetsWithRequestsResponse:
+      type: object
+      properties:
+        availableClusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableClusterResponse'
+        myClusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/MyClusterResponse'
+    OutstandingRequests:
+      type: object
+      properties:
+        assetToRequestMap:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/SharedAsset'
+        idToTeamMapping:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SharedTeam'
+    UpdateAllRequests:
+      required:
+      - requestIds
+      type: object
+      properties:
+        requestIds:
+          type: array
+          items:
+            type: string
+    SharedAssetUpdate:
+      type: object
+      properties:
+        assetToRequestMap:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/SharedAsset'
+    SemanticVersion:
+      type: object
+      properties:
+        major:
+          type: integer
+          format: int32
+        minor:
+          type: integer
+          format: int32
+        patch:
+          type: integer
+          format: int32
+    MyClusterResponse:
+      type: object
+      properties:
+        assetId:
+          type: string
+        clusterName:
+          type: string
+        owningTeamId:
+          type: string
+        availableNamespaces:
+          type: array
+          items:
+            type: string
+        currentlySharedNamespaces:
+          type: array
+          items:
+            type: string
+        semanticVersion:
+          $ref: '#/components/schemas/SemanticVersion'
+        isOutdated:
+          type: boolean
+        lastAttacked:
+          type: string
+          format: date-time
+        requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/TheirRequest'
+    SharedTeam:
+      type: object
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        usersCount:
+          type: integer
+          format: int64
+    NewRequestRequest:
+      required:
+      - newRequests
+      type: object
+      properties:
+        newRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessRequest'
+    MyRequest:
+      type: object
+      properties:
+        requestId:
+          type: string
+        namespace:
+          type: string
+        currentStatus:
+          type: string
+          enum:
+          - REQUESTED
+          - APPROVED
+          - DENIED
+          - REVOKED
+          - DELETED
+        requester:
+          type: string
+        approver:
+          type: string
+    TheirRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        teamId:
+          type: string
+        teamName:
+          type: string
+        namespace:
+          type: string
+        currentStatus:
+          type: string
+          enum:
+          - REQUESTED
+          - APPROVED
+          - DENIED
+          - REVOKED
+          - DELETED
+        requester:
+          type: string
+        approver:
+          type: string
+    AccessRequest:
+      type: object
+      properties:
+        owningTeamId:
+          type: string
+        assetId:
+          type: string
+        namespace:
+          type: string
+        teamToShareWith:
+          type: string
+    AvailableClusterResponse:
+      type: object
+      properties:
+        assetId:
+          type: string
+        clusterName:
+          type: string
+        owningTeamId:
+          type: string
+        availableNamespaces:
+          type: array
+          items:
+            type: string
+        currentlySharedNamespaces:
+          type: array
+          items:
+            type: string
+        semanticVersion:
+          $ref: '#/components/schemas/SemanticVersion'
+        isOutdated:
+          type: boolean
+        lastAttacked:
+          type: string
+          format: date-time
+        owningTeamName:
+          type: string
+        requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/MyRequest'

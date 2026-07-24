@@ -1,0 +1,93 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents reports.security API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: reports.security
+  description: Endpoints for receiving access and event logs
+paths:
+  /reports/security/access:
+    get:
+      tags:
+      - reports.security
+      summary: 'Loads the Access Summary for the specified company in the time period requested (max: 1 hour). Returned in JSON format'
+      description: 'COMPANY_OWNER and COMPANY_ADMIN users only
+
+        Requires the privilege [`SECURITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: accessSummary
+      parameters:
+      - name: start
+        in: query
+        description: Start time in format 'yyyy-mm-ddThh:mm:ss.sssZ'
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - name: end
+        in: query
+        description: End time in format 'yyyy-mm-ddThh:mm:ss.sssZ'
+        required: true
+        schema:
+          type: string
+          format: date-time
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: SECURITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SECURITY_REPORTS_READ
+  /reports/security/event:
+    get:
+      tags:
+      - reports.security
+      summary: 'Loads the Experiment Summary for the specified company in the time period requested (max: 1 hour) and the recent scenario runs. Returned in JSON format'
+      description: 'COMPANY_OWNER and COMPANY_ADMIN users only
+
+        Requires the privilege [`SECURITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: eventSummary
+      parameters:
+      - name: start
+        in: query
+        description: Start time in format 'yyyy-mm-ddThh:mm:ss.sssZ'
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - name: end
+        in: query
+        description: End time in format 'yyyy-mm-ddThh:mm:ss.sssZ'
+        required: true
+        schema:
+          type: string
+          format: date-time
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: SECURITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SECURITY_REPORTS_READ

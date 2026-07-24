@@ -1,0 +1,459 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents clients API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: clients
+  description: List and modify all clients
+paths:
+  /clients/{identifier}/activate:
+    put:
+      tags:
+      - clients
+      summary: Activate a client.
+      description: Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: activate
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the client to activate
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Client successfully activated.
+        '400':
+          description: Bad Request
+        '402':
+          description: Payment Required
+        '404':
+          description: Not Found
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_WRITE
+  /clients/active:
+    get:
+      tags:
+      - clients
+      summary: Return all active clients within a team
+      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: active_2
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_READ
+  /clients:
+    get:
+      tags:
+      - clients
+      summary: Returns all clients within a team.
+      description: 'This operation will return all active, idle, and recently inactive clients.
+
+        Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: all_2
+      parameters:
+      - name: teamId
+        in: query
+        description: The identifier of the team for which to retrieve clients
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_READ
+  /clients/{identifier}:
+    get:
+      tags:
+      - clients
+      summary: Get a client by identifier
+      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getClientByIdentifier
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the client to get
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_READ
+    delete:
+      tags:
+      - clients
+      summary: Deactivate a client
+      description: Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: revoke_1
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the client to revoke
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_WRITE
+components:
+  schemas:
+    VersionInfo:
+      type: object
+      properties:
+        gremlind:
+          $ref: '#/components/schemas/SemanticVersion'
+        gremlin:
+          $ref: '#/components/schemas/SemanticVersion'
+    NetworkInterfaceData:
+      type: object
+      properties:
+        interfaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/NetworkInterface'
+    NetworkInterface:
+      required:
+      - ip_addresses
+      type: object
+      properties:
+        name:
+          type: string
+        ip_addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPAddress'
+        is_default:
+          type: boolean
+        is_physical:
+          type: boolean
+        is_virtual:
+          type: boolean
+    SemanticVersion:
+      type: object
+      properties:
+        major:
+          type: integer
+          format: int32
+        minor:
+          type: integer
+          format: int32
+        patch:
+          type: integer
+          format: int32
+    Client:
+      type: object
+      properties:
+        orgId:
+          type: string
+        identifier:
+          type: string
+        lastSeen:
+          type: string
+          format: date-time
+        state:
+          type: string
+          enum:
+          - ACTIVE
+          - IDLE
+          - REVOKED
+          - INVITED
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        revokedBy:
+          type: string
+        authType:
+          type: string
+          enum:
+          - SECRET
+          - CERTIFICATE
+        containerHash:
+          type: integer
+          format: int32
+        networkInterfaceDataHash:
+          type: integer
+          format: int32
+        networkInterfaceData:
+          $ref: '#/components/schemas/NetworkInterfaceData'
+        osName:
+          type: string
+        osVersion:
+          type: string
+        dockerVersion:
+          type: string
+        containerDriver:
+          type: string
+        containerRuntime:
+          type: string
+        containerRuntimeVersion:
+          type: string
+        containerRuntimeApiVersion:
+          type: string
+        containers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Container'
+        kubernetesVersion:
+          type: string
+        metricsEnabled:
+          type: boolean
+        processCollectionEnabled:
+          type: boolean
+        collectDnsEnabled:
+          type: boolean
+        usedProxy:
+          type: boolean
+        hardwareInfo:
+          $ref: '#/components/schemas/HardwareInfo'
+        instanceStartTime:
+          type: string
+        offsetInMinutesAfterBucketStart:
+          type: integer
+          format: int32
+        validationResults:
+          $ref: '#/components/schemas/ValidationAttack'
+        targetType:
+          type: string
+          enum:
+          - Host
+          - Container
+          - Docker
+          - Kubernetes
+        lastActiveEmitted:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        companyId:
+          type: string
+        versionInfo:
+          $ref: '#/components/schemas/VersionInfo'
+        dnsServers:
+          type: array
+          items:
+            type: string
+        proxyUrl:
+          type: string
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Warning'
+        pushPodCidrTags:
+          type: boolean
+        pushZoneCidrTags:
+          type: boolean
+        osType:
+          type: string
+          enum:
+          - Linux
+          - Windows
+    HardwareInfo:
+      type: object
+      properties:
+        cpu_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CpuInfo'
+        memory_size:
+          type: integer
+          format: int64
+        gpu_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GpuInfo'
+    ValidationAttack:
+      type: object
+      properties:
+        agentTimestamp:
+          type: integer
+          format: int64
+        clientVersion:
+          type: string
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationAttackResult'
+        clientStatus:
+          type: string
+          enum:
+          - HEALTHY
+          - IMPAIRED
+          - UNHEALTHY
+    GpuInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        driver:
+          type: string
+        memory_size:
+          type: integer
+          format: int64
+    Warning:
+      type: object
+      properties:
+        key:
+          type: string
+          enum:
+          - W000
+          - W001
+          - W002
+          - W003
+          - Unknown
+        link:
+          type: string
+        summary:
+          type: string
+    CpuInfo:
+      type: object
+      properties:
+        name:
+          type: string
+    IPAddress:
+      type: object
+      properties:
+        ip:
+          type: string
+        protocolFamily:
+          type: string
+          enum:
+          - INET
+          - INET6
+          - UNIX
+    Container:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        image:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        dns_servers:
+          type: array
+          writeOnly: true
+          items:
+            type: string
+        dnsServers:
+          type: array
+          items:
+            type: string
+    ValidationAttackResult:
+      type: object
+      properties:
+        attackType:
+          type: string
+        status:
+          type: string
+          enum:
+          - SUCCESS
+          - ERROR
+        rawErrors:
+          type: array
+          items:
+            type: string
+        targeting:
+          type: string
+          enum:
+          - CONTAINER
+          - HOST

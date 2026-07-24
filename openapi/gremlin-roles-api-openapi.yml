@@ -1,0 +1,498 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents roles API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: roles
+  description: List and modify roles
+paths:
+  /roles:
+    get:
+      tags:
+      - roles
+      summary: Returns all roles and privileges
+      description: This operation will return all possible roles at both the team and company levels, along with their associated privileges.
+      operationId: getRolesAndPrivileges
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolesResponse'
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS
+    post:
+      tags:
+      - roles
+      summary: Create a new custom role
+      description: 'This operation will create a new custom role.
+
+        Requires the privilege [`ROLES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: createCustomRole
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCustomRoleRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleResponse'
+        '400':
+          description: Bad arguments
+          content:
+            application/json:
+              schema:
+                type: string
+        '403':
+          description: 'User requires privilege: ROLES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - ROLES_WRITE
+  /roles/{roleId}:
+    get:
+      tags:
+      - roles
+      summary: Get a custom role
+      description: This operation will return a custom role.
+      operationId: getRole
+      parameters:
+      - name: roleId
+        in: path
+        description: identifier of the role
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleResponse'
+        '400':
+          description: Bad arguments
+          content:
+            application/json:
+              schema:
+                type: string
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS
+    delete:
+      tags:
+      - roles
+      summary: Delete a custom role
+      description: 'This operation will delete a custom role.
+
+        Requires the privilege [`ROLES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: deleteCustomRole
+      parameters:
+      - name: roleId
+        in: path
+        description: identifier of the role
+        required: true
+        schema:
+          type: string
+      responses:
+        '400':
+          description: Bad arguments
+          content:
+            application/json:
+              schema:
+                type: string
+        '403':
+          description: 'User requires privilege: ROLES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - ROLES_WRITE
+    patch:
+      tags:
+      - roles
+      summary: Update a custom role
+      description: 'This operation will update a custom role.
+
+        Requires the privilege [`ROLES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: updateCustomRole
+      parameters:
+      - name: roleId
+        in: path
+        description: identifier of the role
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCustomRoleRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleResponse'
+        '400':
+          description: Bad arguments
+          content:
+            application/json:
+              schema:
+                type: string
+        '403':
+          description: 'User requires privilege: ROLES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - ROLES_WRITE
+components:
+  schemas:
+    CreateCustomRoleRequest:
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+          enum:
+          - Company
+          - Team
+        privileges:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - ADMIN
+            - DEV
+            - ALL_API_KEYS_READ
+            - API_KEYS_READ
+            - API_KEYS_WRITE
+            - COMPANIES_READ
+            - COMPANIES_WRITE
+            - COMPANY_INTEGRATIONS_READ
+            - COMPANY_INTEGRATIONS_WRITE
+            - COMPANY_PREFERENCES_WRITE
+            - COMPANY_SECURITY_WRITE
+            - COMPANY_SECURITY_READ
+            - COMPANY_SAMLCLAIM_ALIAS_READ
+            - COMPANY_SAMLCLAIM_ALIAS_WRITE
+            - COMPANY_USERS_READ
+            - COMPANY_USERS_WRITE
+            - HALT_ALL
+            - LARGE_SCALE_TESTS_READ
+            - LARGE_SCALE_TESTS_WRITE
+            - DISASTER_RECOVERY_TESTS_READ
+            - DISASTER_RECOVERY_TESTS_WRITE
+            - MINIMUM_COMPANY_PRIVILEGES
+            - PROMOTE_DEMOTE_OWNER
+            - RELIABILITY_REPORTS_READ
+            - REPORTS_READ
+            - ROLES_WRITE
+            - SECURITY_REPORTS_READ
+            - TEAMS_READ
+            - TEST_SUITES_READ
+            - TEST_SUITES_WRITE
+            - CLIENTS_READ
+            - CLIENTS_WRITE
+            - EXPERIMENTS_READ
+            - EXPERIMENTS_RUN
+            - EXPERIMENTS_WRITE
+            - FAULT_CPU
+            - FAULT_IO
+            - FAULT_MEMORY
+            - FAULT_DISK
+            - FAULT_BLACKHOLE
+            - FAULT_DNS
+            - FAULT_LATENCY
+            - FAULT_PACKET_LOSS
+            - FAULT_COLLECT_CERTS
+            - FAULT_SHUTDOWN
+            - FAULT_TIME_TRAVEL
+            - FAULT_PROCESS_KILLER
+            - FAULT_PROCESS_EXHAUSTION
+            - FAULT_GPU
+            - HALT_WRITE
+            - IMAGES_READ
+            - IMAGES_WRITE
+            - INTEGRATIONS_READ
+            - INTEGRATIONS_WRITE
+            - MINIMUM_TEAM_PRIVILEGES
+            - SCENARIO_SHARE_WRITE
+            - SCENARIOS_READ
+            - SCENARIOS_RUN
+            - SCENARIOS_WRITE
+            - SERVICES_READ
+            - SERVICES_RUN
+            - SERVICES_WRITE
+            - TEAM_SECURITY_READ
+            - TEAM_SECURITY_WRITE
+            - TEAMS_WRITE
+            - USERS_READ
+            - USERS_WRITE
+            - WEBHOOKS_READ
+            - WEBHOOKS_WRITE
+    RoleResponse:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+          enum:
+          - Company
+          - Team
+        privileges:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - ADMIN
+            - DEV
+            - ALL_API_KEYS_READ
+            - API_KEYS_READ
+            - API_KEYS_WRITE
+            - COMPANIES_READ
+            - COMPANIES_WRITE
+            - COMPANY_INTEGRATIONS_READ
+            - COMPANY_INTEGRATIONS_WRITE
+            - COMPANY_PREFERENCES_WRITE
+            - COMPANY_SECURITY_WRITE
+            - COMPANY_SECURITY_READ
+            - COMPANY_SAMLCLAIM_ALIAS_READ
+            - COMPANY_SAMLCLAIM_ALIAS_WRITE
+            - COMPANY_USERS_READ
+            - COMPANY_USERS_WRITE
+            - HALT_ALL
+            - LARGE_SCALE_TESTS_READ
+            - LARGE_SCALE_TESTS_WRITE
+            - DISASTER_RECOVERY_TESTS_READ
+            - DISASTER_RECOVERY_TESTS_WRITE
+            - MINIMUM_COMPANY_PRIVILEGES
+            - PROMOTE_DEMOTE_OWNER
+            - RELIABILITY_REPORTS_READ
+            - REPORTS_READ
+            - ROLES_WRITE
+            - SECURITY_REPORTS_READ
+            - TEAMS_READ
+            - TEST_SUITES_READ
+            - TEST_SUITES_WRITE
+            - CLIENTS_READ
+            - CLIENTS_WRITE
+            - EXPERIMENTS_READ
+            - EXPERIMENTS_RUN
+            - EXPERIMENTS_WRITE
+            - FAULT_CPU
+            - FAULT_IO
+            - FAULT_MEMORY
+            - FAULT_DISK
+            - FAULT_BLACKHOLE
+            - FAULT_DNS
+            - FAULT_LATENCY
+            - FAULT_PACKET_LOSS
+            - FAULT_COLLECT_CERTS
+            - FAULT_SHUTDOWN
+            - FAULT_TIME_TRAVEL
+            - FAULT_PROCESS_KILLER
+            - FAULT_PROCESS_EXHAUSTION
+            - FAULT_GPU
+            - HALT_WRITE
+            - IMAGES_READ
+            - IMAGES_WRITE
+            - INTEGRATIONS_READ
+            - INTEGRATIONS_WRITE
+            - MINIMUM_TEAM_PRIVILEGES
+            - SCENARIO_SHARE_WRITE
+            - SCENARIOS_READ
+            - SCENARIOS_RUN
+            - SCENARIOS_WRITE
+            - SERVICES_READ
+            - SERVICES_RUN
+            - SERVICES_WRITE
+            - TEAM_SECURITY_READ
+            - TEAM_SECURITY_WRITE
+            - TEAMS_WRITE
+            - USERS_READ
+            - USERS_WRITE
+            - WEBHOOKS_READ
+            - WEBHOOKS_WRITE
+    Roles:
+      type: object
+      properties:
+        company:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/RoleResponse'
+        team:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/RoleResponse'
+    PrivilegeDefinition:
+      type: object
+      properties:
+        key:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+          enum:
+          - NONE
+          - REQUIRED
+          - ADMINISTRATIVE
+          - ALL_API_KEYS
+          - API_KEYS
+          - CLIENTS
+          - COMPANIES
+          - COMPANY_PREFERENCES
+          - COMPANY_SECURITY
+          - COMPANY_USERS
+          - EXPERIMENTS
+          - FAULT
+          - HALT
+          - HALT_ALL
+          - IMAGES
+          - INTEGRATIONS
+          - DISASTER_RECOVERY_TESTS
+          - RELIABILITY_REPORTS
+          - REPORTS
+          - ROLES
+          - SCENARIOS
+          - SCENARIO_SHARE
+          - SECURITY_REPORTS
+          - SERVICES
+          - TEAMS
+          - TEAM_SECURITY
+          - TEST_SUITES
+          - USERS
+          - WEBHOOKS
+    RolesResponse:
+      type: object
+      properties:
+        customRoles:
+          $ref: '#/components/schemas/Roles'
+        roles:
+          $ref: '#/components/schemas/Roles'
+        privileges:
+          $ref: '#/components/schemas/Privileges'
+    Privileges:
+      type: object
+      properties:
+        company:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/PrivilegeDefinition'
+        team:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/PrivilegeDefinition'
+    UpdateCustomRoleRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        privileges:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - ADMIN
+            - DEV
+            - ALL_API_KEYS_READ
+            - API_KEYS_READ
+            - API_KEYS_WRITE
+            - COMPANIES_READ
+            - COMPANIES_WRITE
+            - COMPANY_INTEGRATIONS_READ
+            - COMPANY_INTEGRATIONS_WRITE
+            - COMPANY_PREFERENCES_WRITE
+            - COMPANY_SECURITY_WRITE
+            - COMPANY_SECURITY_READ
+            - COMPANY_SAMLCLAIM_ALIAS_READ
+            - COMPANY_SAMLCLAIM_ALIAS_WRITE
+            - COMPANY_USERS_READ
+            - COMPANY_USERS_WRITE
+            - HALT_ALL
+            - LARGE_SCALE_TESTS_READ
+            - LARGE_SCALE_TESTS_WRITE
+            - DISASTER_RECOVERY_TESTS_READ
+            - DISASTER_RECOVERY_TESTS_WRITE
+            - MINIMUM_COMPANY_PRIVILEGES
+            - PROMOTE_DEMOTE_OWNER
+            - RELIABILITY_REPORTS_READ
+            - REPORTS_READ
+            - ROLES_WRITE
+            - SECURITY_REPORTS_READ
+            - TEAMS_READ
+            - TEST_SUITES_READ
+            - TEST_SUITES_WRITE
+            - CLIENTS_READ
+            - CLIENTS_WRITE
+            - EXPERIMENTS_READ
+            - EXPERIMENTS_RUN
+            - EXPERIMENTS_WRITE
+            - FAULT_CPU
+            - FAULT_IO
+            - FAULT_MEMORY
+            - FAULT_DISK
+            - FAULT_BLACKHOLE
+            - FAULT_DNS
+            - FAULT_LATENCY
+            - FAULT_PACKET_LOSS
+            - FAULT_COLLECT_CERTS
+            - FAULT_SHUTDOWN
+            - FAULT_TIME_TRAVEL
+            - FAULT_PROCESS_KILLER
+            - FAULT_PROCESS_EXHAUSTION
+            - FAULT_GPU
+            - HALT_WRITE
+            - IMAGES_READ
+            - IMAGES_WRITE
+            - INTEGRATIONS_READ
+            - INTEGRATIONS_WRITE
+            - MINIMUM_TEAM_PRIVILEGES
+            - SCENARIO_SHARE_WRITE
+            - SCENARIOS_READ
+            - SCENARIOS_RUN
+            - SCENARIOS_WRITE
+            - SERVICES_READ
+            - SERVICES_RUN
+            - SERVICES_WRITE
+            - TEAM_SECURITY_READ
+            - TEAM_SECURITY_WRITE
+            - TEAMS_WRITE
+            - USERS_READ
+            - USERS_WRITE
+            - WEBHOOKS_READ
+            - WEBHOOKS_WRITE

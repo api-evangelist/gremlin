@@ -1,0 +1,756 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents disaster-recovery-tests API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: disaster-recovery-tests
+  description: Create, get, list, run, and complete disaster recovery tests
+paths:
+  /disaster-recovery-tests/{identifier}/complete:
+    post:
+      tags:
+      - disaster-recovery-tests
+      summary: Marks a disaster recovery test for a company as completed, generating a report
+      description: Requires the privilege [`DISASTER_RECOVERY_TESTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: completeLargeScaleTest
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LargeScaleTestResponse'
+        '403':
+          description: 'User requires privilege: DISASTER_RECOVERY_TESTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - DISASTER_RECOVERY_TESTS_WRITE
+  /disaster-recovery-tests:
+    post:
+      tags:
+      - disaster-recovery-tests
+      summary: Creates a disaster recovery test for a company
+      description: Requires the privilege [`DISASTER_RECOVERY_TESTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: createLargeScaleTest
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateLargeScaleTestRequest'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LargeScaleTestResponse'
+        '403':
+          description: 'User requires privilege: DISASTER_RECOVERY_TESTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - DISASTER_RECOVERY_TESTS_WRITE
+  /disaster-recovery-tests/{identifier}:
+    get:
+      tags:
+      - disaster-recovery-tests
+      summary: Gets a disaster recovery test, complete with service details
+      description: Requires the privilege [`DISASTER_RECOVERY_TESTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getLargeScaleTest_1
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LargeScaleTestResponse'
+        '403':
+          description: 'User requires privilege: DISASTER_RECOVERY_TESTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - DISASTER_RECOVERY_TESTS_READ
+    put:
+      tags:
+      - disaster-recovery-tests
+      summary: Updates a disaster recovery test for a company
+      description: Requires the privilege [`DISASTER_RECOVERY_TESTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: updateLargeScaleTest
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateLargeScaleTestRequest'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: DISASTER_RECOVERY_TESTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - DISASTER_RECOVERY_TESTS_WRITE
+    delete:
+      tags:
+      - disaster-recovery-tests
+      summary: Submits a task to delete a disaster recovery test for a company
+      description: Requires the privilege [`DISASTER_RECOVERY_TESTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: deleteLargeScaleTest
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: DISASTER_RECOVERY_TESTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - DISASTER_RECOVERY_TESTS_WRITE
+  /disaster-recovery-tests/active:
+    get:
+      tags:
+      - disaster-recovery-tests
+      summary: Gets all active disaster recovery tests for a company
+      description: Requires the privilege [`DISASTER_RECOVERY_TESTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getActiveLargeScaleTests
+      parameters: []
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLargeScaleTestsResponse'
+        '403':
+          description: 'User requires privilege: DISASTER_RECOVERY_TESTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - DISASTER_RECOVERY_TESTS_READ
+  /disaster-recovery-tests/draft:
+    get:
+      tags:
+      - disaster-recovery-tests
+      summary: Gets all draft disaster recovery tests for a company
+      description: Requires the privilege [`DISASTER_RECOVERY_TESTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getDraftLargeScaleTests
+      parameters: []
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLargeScaleTestsResponse'
+        '403':
+          description: 'User requires privilege: DISASTER_RECOVERY_TESTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - DISASTER_RECOVERY_TESTS_READ
+  /disaster-recovery-tests/{identifier}/halt-all:
+    post:
+      tags:
+      - disaster-recovery-tests
+      summary: Halts all active scenario runs for all services for the disaster recovery test
+      description: Requires the privilege [`DISASTER_RECOVERY_TESTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: haltAllServiceRuns
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HaltRequest'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: DISASTER_RECOVERY_TESTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - DISASTER_RECOVERY_TESTS_WRITE
+  /disaster-recovery-tests/{identifier}/run-all:
+    post:
+      tags:
+      - disaster-recovery-tests
+      summary: Creates scenario runs for all eligible services for the disaster recovery test
+      description: Requires the privilege [`DISASTER_RECOVERY_TESTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: runTestForAllServices
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunScenarioTestResponse'
+        '403':
+          description: 'User requires privilege: DISASTER_RECOVERY_TESTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - DISASTER_RECOVERY_TESTS_WRITE
+  /disaster-recovery-tests/{identifier}/run:
+    post:
+      tags:
+      - disaster-recovery-tests
+      summary: Creates a scenario run for the specified service as part of the disaster recovery test
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: runTestForSingleService
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunScenarioTestRequest'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScenarioRunDetails'
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+components:
+  schemas:
+    TestSuiteScenario:
+      required:
+      - description
+      - name
+      - policyCategory
+      - scenarioToPromote
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        policyCategory:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        scenarioToPromote:
+          $ref: '#/components/schemas/ScenarioToPromote'
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body
+    StatusCheckNodeRequest:
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    RunScenarioTestRequest:
+      type: object
+      properties:
+        serviceId:
+          type: string
+        teamId:
+          type: string
+    HaltRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: The reason why this halt this requested.
+        reference:
+          type: string
+          description: A reference to why this halt was requested.
+    HasCompareFunctionObject:
+      type: object
+    ServiceRunDetails:
+      type: object
+      properties:
+        teamId:
+          type: string
+        teamName:
+          type: string
+        serviceId:
+          type: string
+        serviceName:
+          type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        scenarioRunId:
+          type: string
+        scenarioRunNumber:
+          type: integer
+          format: int64
+        scenarioRunStage:
+          type: string
+        scenarioPassCriteria:
+          type: string
+          enum:
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
+        scenarioRunStatus:
+          type: string
+        scenarioRunStartTime:
+          type: string
+          format: date-time
+        scenarioRunEndTime:
+          type: string
+          format: date-time
+    RunScenarioTestResponse:
+      type: object
+      properties:
+        runDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioRunDetails'
+        errorsPerService:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceScenarioRunError'
+    EndpointConfiguration:
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          type: string
+          description: The URL of the status check
+          format: url
+        method:
+          type: string
+          description: The method type of the status check
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Optional request headers to be used when the status check is invoked
+          description: Optional request headers to be used when the status check is invoked
+        payload:
+          type: string
+          description: Payload for POST type of request
+        headersArn:
+          type: string
+          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
+    TeamServiceKey:
+      type: object
+      properties:
+        teamId:
+          type: string
+        serviceId:
+          type: string
+    ServiceScenarioRunError:
+      type: object
+      properties:
+        teamId:
+          type: string
+        serviceId:
+          type: string
+        errorType:
+          type: string
+          enum:
+          - HALT_IN_PROGRESS
+          - RUN_IN_PROGRESS
+          - INELIGIBLE_SERVICE
+          - HEALTH_CHECK_IN_ALARM
+        errorMessage:
+          type: string
+    LargeScaleTestResponse:
+      type: object
+      properties:
+        companyId:
+          type: string
+        identifier:
+          type: string
+        name:
+          type: string
+        state:
+          type: string
+          enum:
+          - DRAFT
+          - ACTIVE
+          - COMPLETED
+        reliabilityTestId:
+          type: string
+        reliabilityTestName:
+          type: string
+        estimatedDuration:
+          type: integer
+          format: int64
+        startDateTime:
+          type: string
+          format: date-time
+        endDateTime:
+          type: string
+          format: date-time
+        latestServiceRuns:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceRunDetails'
+        statusChecks:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusCheckNode'
+        scenarioOverrides:
+          $ref: '#/components/schemas/ScenarioOverrides'
+    StatusCheckNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          state:
+            $ref: '#/components/schemas/State'
+          name:
+            type: string
+          description:
+            type: string
+          thirdPartyPresets:
+            type: string
+          category:
+            type: string
+            enum:
+            - ERRORS
+            - LATENCY
+            - REQUESTS
+            - UNKNOWN
+          requestConfiguration:
+            $ref: '#/components/schemas/StatusCheckNodeRequest'
+          endpointConfiguration:
+            $ref: '#/components/schemas/EndpointConfiguration'
+          rawEndpointConfiguration:
+            $ref: '#/components/schemas/EndpointConfiguration'
+          evaluationConfiguration:
+            $ref: '#/components/schemas/EvaluationConfiguration'
+          statusCheckId:
+            type: string
+          externalIntegrationId:
+            type: string
+          statusCheckReferenceId:
+            type: string
+          isPrivateNetwork:
+            type: boolean
+          isHaltable:
+            type: boolean
+          payload:
+            type: string
+          isAutoGenerated:
+            type: boolean
+          autoGeneratedStatusCheckId:
+            type: string
+          resourceIdentifier:
+            type: string
+          statusCheckRequest:
+            $ref: '#/components/schemas/StatusCheckNodeRequest'
+          intervalSeconds:
+            type: integer
+            format: int32
+          additionalTimeInSecsToRunAfterCompletion:
+            type: integer
+            format: int32
+    ScenarioOverrides:
+      type: object
+      properties:
+        zones:
+          type: array
+          items:
+            type: string
+        dns:
+          type: string
+        failureFlag:
+          $ref: '#/components/schemas/Selector'
+    GraphNodeObject:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Concurrent
+          - ContinuousStatusCheck
+          - StatusCheckNode
+          - Delay
+          - InfraAttack
+          - SynchronousStatusCheck
+          - Continuous
+          - FailureFlag
+          - ExternalAction
+          - RollbackExternalAction
+        id:
+          type: string
+        state:
+          type: object
+          readOnly: true
+        guid:
+          type: string
+        next:
+          type: string
+      discriminator:
+        propertyName: type
+    StatusCheckInput:
+      required:
+      - statusCheck
+      type: object
+      properties:
+        teamId:
+          type: string
+        statusCheck:
+          $ref: '#/components/schemas/StatusCheckNode'
+    EvaluationConfiguration:
+      required:
+      - okStatusCodes
+      type: object
+      properties:
+        okLatencyMaxMs:
+          type: integer
+          description: The maximum latency in milliseconds for a successful status check
+          format: int32
+        okStatusCodes:
+          type: array
+          description: The list of successful response status codes for a successful status check
+          items:
+            type: string
+            description: The list of successful response status codes for a successful status check
+        responseBodyEvaluation:
+          $ref: '#/components/schemas/ResponseBodyEvaluation'
+      description: The configuration for evaluating the success/failure of a status check
+    ScenarioRunDetails:
+      type: object
+      properties:
+        teamId:
+          type: string
+        serviceId:
+          type: string
+        runNumber:
+          type: integer
+          format: int64
+    State:
+      type: object
+      properties:
+        lifecycle:
+          type: string
+          enum:
+          - NotStarted
+          - Active
+          - HaltRequested
+          - Successful
+          - Halted
+          - Failed
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        failedReason:
+          type: string
+        nodeHaltedByGuid:
+          type: string
+        nodeHaltedById:
+          type: string
+      readOnly: true
+    CreateOrUpdateLargeScaleTestRequest:
+      title: CreateOrUpdateLargeScaleTestRequest.Input
+      required:
+      - name
+      - serviceKeys
+      - statusChecks
+      type: object
+      properties:
+        identifier:
+          type: string
+        companyId:
+          type: string
+        name:
+          type: string
+        scenario:
+          $ref: '#/components/schemas/TestSuiteScenario'
+        reliabilityTestId:
+          type: string
+        scenarioOverrides:
+          $ref: '#/components/schemas/ScenarioOverrides'
+        statusChecks:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusCheckInput'
+        serviceKeys:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamServiceKey'
+      description: Create a request to create or update a disaster recovery test for a company
+    Selector:
+      required:
+      - labels
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: array
+            description: Label selectors for matching resources
+            example:
+              foo:
+              - bar
+              - baz
+            items:
+              type: string
+              description: Label selectors for matching resources
+              example: '{"foo":["bar","baz"]}'
+          description: Label selectors for matching resources
+          example:
+            foo:
+            - bar
+            - baz
+    ScenarioToPromote:
+      required:
+      - scenarioId
+      - scenarioType
+      type: object
+      properties:
+        scenarioId:
+          type: string
+        scenarioType:
+          type: string
+          enum:
+          - RECOMMENDED
+          - SHARED
+          - GENERAL
+        teamId:
+          type: string
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
+      type: object
+      properties:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
+    GetLargeScaleTestsResponse:
+      type: object
+      properties:
+        disasterRecoveryTests:
+          type: array
+          items:
+            $ref: '#/components/schemas/LargeScaleTestResponse'

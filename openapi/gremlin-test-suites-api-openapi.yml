@@ -1,0 +1,387 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents test-suites API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: test-suites
+  description: Create custom test suites
+paths:
+  /test-suites:
+    get:
+      tags:
+      - test-suites
+      summary: Gets all reliability test suites for a company, starting with Gremlin's default global test suite, followed by other global suites and company's custom test suites
+      description: Requires the privilege [`TEST_SUITES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getAllTestSuites
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestSuiteResponse'
+        '403':
+          description: 'User requires privilege: TEST_SUITES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEST_SUITES_READ
+    post:
+      tags:
+      - test-suites
+      summary: Creates a reliability test suite
+      description: Requires the privilege [`TEST_SUITES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: createTestSuite
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTestSuiteRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestSuiteResponse'
+        '403':
+          description: 'User requires privilege: TEST_SUITES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEST_SUITES_WRITE
+  /test-suites/{testSuiteId}:
+    get:
+      tags:
+      - test-suites
+      summary: Gets a reliability test suite
+      description: Requires the privilege [`TEST_SUITES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getTestSuite
+      parameters:
+      - name: testSuiteId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestSuiteResponse'
+        '403':
+          description: 'User requires privilege: TEST_SUITES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEST_SUITES_READ
+    delete:
+      tags:
+      - test-suites
+      summary: Delete a Test Suite.
+      description: Requires the privilege [`TEST_SUITES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: deleteTestSuite
+      parameters:
+      - name: testSuiteId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '404':
+          description: test suite not found
+        '403':
+          description: 'User requires privilege: TEST_SUITES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEST_SUITES_WRITE
+    patch:
+      tags:
+      - test-suites
+      summary: Updates a reliability test suite
+      description: Requires the privilege [`TEST_SUITES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: updateTestSuite
+      parameters:
+      - name: testSuiteId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTestSuiteRequest'
+        required: true
+      responses:
+        '200':
+          description: Updates a test suite.
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege: TEST_SUITES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEST_SUITES_WRITE
+  /test-suites/detected-risks:
+    get:
+      tags:
+      - test-suites
+      summary: Retrieve the default list of available risks to add to a given TestSuite
+      description: Requires the privilege [`TEST_SUITES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getRisks
+      parameters: []
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RiskResponse'
+        '403':
+          description: 'User requires privilege: TEST_SUITES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEST_SUITES_READ
+components:
+  schemas:
+    TestSuiteScenario:
+      required:
+      - description
+      - name
+      - policyCategory
+      - scenarioToPromote
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        policyCategory:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        scenarioToPromote:
+          $ref: '#/components/schemas/ScenarioToPromote'
+    ScenarioInfo:
+      required:
+      - description
+      - name
+      - policyCategory
+      - scenarioId
+      - scenarioType
+      type: object
+      properties:
+        scenarioId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        policyCategory:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        scenarioType:
+          type: string
+          enum:
+          - RECOMMENDED
+          - SHARED
+          - GENERAL
+        reliabilityTestId:
+          type: string
+        teamId:
+          type: string
+    RiskResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        mappingExpression:
+          type: string
+        evaluationExpression:
+          type: string
+        document:
+          type: string
+        queryType:
+          type: string
+          enum:
+          - KUBERNETES_OBJECT
+          - AGENT
+          - AWS_LOAD_BALANCER
+          - AWS_AUTO_SCALING_GROUP
+        disabled:
+          type: boolean
+    TestSuiteResponse:
+      type: object
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        testResponses:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestResponse'
+        targetTeamIds:
+          type: array
+          items:
+            type: string
+        excludedRiskIds:
+          type: array
+          items:
+            type: string
+        default:
+          type: boolean
+        isDefault:
+          type: boolean
+        official:
+          type: boolean
+        isOfficial:
+          type: boolean
+    TestPolicyResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        policyCategory:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        policyTarget:
+          type: string
+          enum:
+          - SERVICE
+          - SERVICE_DEPENDENCY
+        reliabilityTestId:
+          type: string
+    UpdateTestSuiteRequest:
+      title: UpdateTestSuiteRequest.Input
+      type: object
+      properties:
+        name:
+          type: string
+        targetTeamIds:
+          type: array
+          items:
+            type: string
+        scenarios:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioInfo'
+        excludedRiskIds:
+          type: array
+          items:
+            type: string
+      description: Update a test suite for a team
+    ScenarioToPromote:
+      required:
+      - scenarioId
+      - scenarioType
+      type: object
+      properties:
+        scenarioId:
+          type: string
+        scenarioType:
+          type: string
+          enum:
+          - RECOMMENDED
+          - SHARED
+          - GENERAL
+        teamId:
+          type: string
+    CreateTestSuiteRequest:
+      title: CreateTestSuiteRequest.Input
+      required:
+      - name
+      - scenarios
+      type: object
+      properties:
+        name:
+          type: string
+        targetTeamIds:
+          type: array
+          items:
+            type: string
+        scenarios:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestSuiteScenario'
+        excludedRiskIds:
+          type: array
+          items:
+            type: string
+      description: Create a request to create a test suite for a team
+    TestResponse:
+      type: object
+      properties:
+        testPolicy:
+          $ref: '#/components/schemas/TestPolicyResponse'
+        sourceScenarioId:
+          type: string
+        sourceScenarioType:
+          type: string
+          enum:
+          - RECOMMENDED
+          - SHARED
+          - GENERAL
+        sourceScenarioEditCounter:
+          type: integer
+          format: int32

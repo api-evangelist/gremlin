@@ -1,0 +1,184 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents Notification Integrations API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: Notification Integrations
+  description: Manage company level integrations with Slack/Datadog
+paths:
+  /integrations/{type}:
+    get:
+      tags:
+      - Notification Integrations
+      summary: Get the integration for your company that is identified by the supplied type
+      description: Requires the privilege [`COMPANY_INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: get_2
+      parameters:
+      - name: type
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationIntegrationResponse'
+        '403':
+          description: 'User requires privilege: COMPANY_INTEGRATIONS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_INTEGRATIONS_READ
+    put:
+      tags:
+      - Notification Integrations
+      summary: Puts the integration identified by the supplied type on your company
+      description: Requires the privilege [`COMPANY_INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: put
+      parameters:
+      - name: type
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateIntegrationRequest'
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: COMPANY_INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_INTEGRATIONS_WRITE
+    delete:
+      tags:
+      - Notification Integrations
+      summary: Idempotently deletes the integration associated with your company, identified by the supplied type
+      description: Requires the privilege [`COMPANY_INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: delete
+      parameters:
+      - name: type
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: COMPANY_INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_INTEGRATIONS_WRITE
+  /integrations:
+    get:
+      tags:
+      - Notification Integrations
+      summary: List all integrations associated with your company
+      description: Requires the privilege [`COMPANY_INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: list
+      parameters: []
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationIntegrationResponse'
+        '403':
+          description: 'User requires privilege: COMPANY_INTEGRATIONS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_INTEGRATIONS_READ
+components:
+  schemas:
+    TeamData:
+      type: object
+      properties:
+        team_id:
+          type: string
+        executable_events:
+          type: array
+          items:
+            type: string
+            enum:
+            - START
+            - END
+            - STAGE_TRANSITION
+            - ERROR
+    CreateIntegrationRequest:
+      required:
+      - teams
+      type: object
+      properties:
+        hostname:
+          type: string
+        webhook:
+          type: string
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamData'
+        api_key:
+          type: string
+    Data:
+      type: object
+      properties:
+        webhook:
+          type: string
+        baseUrl:
+          type: string
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamData'
+        api_key:
+          type: string
+    NotificationIntegrationResponse:
+      type: object
+      properties:
+        integration_id:
+          type: string
+        company_id:
+          type: string
+        foreign_id:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: '#/components/schemas/Data'

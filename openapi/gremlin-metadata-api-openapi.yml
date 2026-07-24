@@ -1,0 +1,187 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents metadata API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: metadata
+  description: Get metadata about the Gremlin commands.
+paths:
+  /metadata:
+    get:
+      tags:
+      - metadata
+      summary: Get metadata about the Gremlin commands.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: metadata
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InfraAttackMetadata'
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+components:
+  schemas:
+    DisplayConfig:
+      type: object
+      properties:
+        grouped_args:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+        arg_groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArgGroup'
+        values:
+          type: array
+          items:
+            type: string
+    InfraAttackMetadata:
+      type: object
+      properties:
+        name:
+          type: string
+        revision:
+          type: integer
+          format: int32
+        type:
+          type: string
+          enum:
+          - Network
+          - Resource
+          - State
+        args:
+          type: array
+          items:
+            $ref: '#/components/schemas/InfraAttackArgObject'
+        info:
+          type: string
+        usage:
+          type: string
+        command:
+          type: string
+        versions:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Versioning'
+        display:
+          $ref: '#/components/schemas/DisplayConfig'
+        doc:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        error:
+          type: object
+          additionalProperties:
+            type: string
+    InfraAttackArgObject:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        info:
+          type: string
+        multiple:
+          type: boolean
+        usage:
+          type: string
+        options:
+          type: object
+          additionalProperties:
+            type: string
+        advanced:
+          type: boolean
+        required:
+          type: boolean
+        subinfo:
+          type: string
+        type:
+          type: string
+          enum:
+          - Boolean
+          - Enum
+          - Float
+          - Integer
+          - IP
+          - String
+          - URL
+        validatorDynamo:
+          $ref: '#/components/schemas/ValidatorObject'
+        display:
+          $ref: '#/components/schemas/DisplayConfig'
+        error:
+          type: object
+          additionalProperties:
+            type: string
+        versions:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Versioning'
+        long:
+          type: string
+        short:
+          type: string
+        infraCommandArgKey:
+          type: string
+        default:
+          type: object
+        validator:
+          type: object
+          additionalProperties:
+            type: object
+    Versioning:
+      type: object
+      properties:
+        version:
+          type: string
+        deprecated:
+          type: boolean
+    ArgGroup:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        args:
+          type: array
+          items:
+            type: string
+    ValidatorObject:
+      type: object

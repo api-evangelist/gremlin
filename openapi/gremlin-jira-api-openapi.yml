@@ -1,0 +1,439 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents jira API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: jira
+  description: Create, read Jira tickets
+paths:
+  /jira/issues:
+    get:
+      tags:
+      - jira
+      summary: Returns issues for entity ids with details.
+      description: Requires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: issuesForGremlinEntityIds
+      parameters:
+      - name: gremlinEntityIds
+        in: query
+        description: A list of Gremlin entity ids
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns issues created for entity ids
+        '400':
+          description: Bad request
+        '404':
+          description: No Jira integration exists
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_READ
+    post:
+      tags:
+      - jira
+      summary: Creates new issue.
+      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: issue
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateJiraIssueRequest'
+        required: true
+      responses:
+        '200':
+          description: Issue successfully created
+        '400':
+          description: Bad request
+        '404':
+          description: No Jira integration exists
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+  /jira/issues/count:
+    get:
+      tags:
+      - jira
+      summary: Returns total issues for entity ids with details.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: issueCount
+      parameters:
+      - name: gremlinEntityIds
+        in: query
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns total issues created for entity ids
+        '400':
+          description: Bad request
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /jira/issue-meta:
+    get:
+      tags:
+      - jira
+      summary: Returns the fields and data available and required for creating issues.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: issueMeta
+      parameters:
+      - name: projectId
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: issueTypeId
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the fields and data by project id or key and issue type id or key
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /jira/issues/services:
+    get:
+      tags:
+      - jira
+      summary: Returns issues for an entity id with details.
+      description: Requires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: issuesForGremlinEntityIdOfType
+      parameters:
+      - name: gremlinEntityId
+        in: query
+        description: A Gremlin entity id
+        required: true
+        schema:
+          type: string
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - SCENARIO_RUN
+          - GAME_DAY
+          - SERVICE
+          - ATTACK
+          - SCENARIO
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns issues created for an entity id
+        '400':
+          description: Bad request
+        '404':
+          description: No Jira integration exists
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_READ
+  /jira/labels:
+    get:
+      tags:
+      - jira
+      summary: Returns all labels of Jira instance.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: labels
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns all jira labels
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /jira/priorities:
+    get:
+      tags:
+      - jira
+      summary: Returns the list of issue priorities.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: priorities
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JiraPriority'
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /jira/projects/{projectIdOrKey}:
+    get:
+      tags:
+      - jira
+      summary: Returns project with given id or key.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: projectById
+      parameters:
+      - name: projectIdOrKey
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns projects by id or key
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /jira/projects:
+    get:
+      tags:
+      - jira
+      summary: Search for projects.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: projectSearch
+      parameters:
+      - name: query
+        in: query
+        schema:
+          type: string
+      - name: startAt
+        in: query
+        schema:
+          type: integer
+          format: int64
+      - name: maxResults
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns projects
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /jira/projects/{projectIdOrKey}/users:
+    get:
+      tags:
+      - jira
+      summary: Returns users assignable to given project.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: projectUsers
+      parameters:
+      - name: projectIdOrKey
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: startAt
+        in: query
+        schema:
+          type: integer
+          format: int64
+      - name: maxResults
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns users assignable to given project
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+components:
+  schemas:
+    CreateJiraIssueFields:
+      required:
+      - issuetype
+      - project
+      - summary
+      type: object
+      properties:
+        summary:
+          type: string
+        description:
+          type: string
+        issuetype:
+          $ref: '#/components/schemas/JiraId'
+        assignee:
+          $ref: '#/components/schemas/JiraId'
+        priority:
+          $ref: '#/components/schemas/JiraId'
+        project:
+          $ref: '#/components/schemas/JiraId'
+        labels:
+          type: array
+          items:
+            type: string
+    JiraId:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+    JiraPriority:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        iconUrl:
+          type: string
+    GremlinEntityReference:
+      required:
+      - id
+      - type
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - SCENARIO_RUN
+          - GAME_DAY
+          - SERVICE
+          - ATTACK
+          - SCENARIO
+        serviceEntityType:
+          type: boolean
+    CreateJiraIssueRequest:
+      required:
+      - entity
+      - fields
+      type: object
+      properties:
+        entity:
+          $ref: '#/components/schemas/GremlinEntityReference'
+        fields:
+          $ref: '#/components/schemas/CreateJiraIssueFields'

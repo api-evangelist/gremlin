@@ -1,0 +1,72 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents oauth API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: oauth
+  description: OAuth callback endpoints
+paths:
+  /oauth/callback:
+    get:
+      tags:
+      - oauth
+      summary: Handle receiving a code from an OAuth flow.
+      operationId: oAuthCallback
+      parameters:
+      - name: code
+        in: query
+        description: The code from authenticating with the oauth provider
+        required: true
+        schema:
+          type: string
+      - name: state
+        in: query
+        description: The state value set when initiating the OAuth login
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+            text/plain: {}
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS
+  /oauth/login:
+    get:
+      tags:
+      - oauth
+      summary: Initiates a OAuth login.
+      operationId: oAuthLogin
+      parameters:
+      - name: companyName
+        in: query
+        description: The name of the company to authenticate too
+        required: true
+        schema:
+          type: string
+      - name: redirectUri
+        in: query
+        description: Where to redirect the user to after authenticating, for use when authenticating via OAuth in the Gremlin UI
+        schema:
+          type: string
+          format: uri
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS

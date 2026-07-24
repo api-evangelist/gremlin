@@ -1,0 +1,177 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents failure-flags.flags API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: failure-flags.flags
+  description: Get, list, and protect failure flags
+paths:
+  /failure-flags/flags/{name}:
+    get:
+      tags:
+      - failure-flags.flags
+      summary: Get Failure Flag by name.
+      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getFailureFlagForTeamAndName
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get a Failure Flag by name and team
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailureFlag'
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+  /failure-flags/flags:
+    get:
+      tags:
+      - failure-flags.flags
+      summary: List Failure Flags by team.
+      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getFailureFlagsForTeam
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List Failure Flags details by team
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FailureFlag'
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+  /failure-flags/flags/{name}/protect:
+    post:
+      tags:
+      - failure-flags.flags
+      summary: Protect Failure Flag by name and team.
+      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: protectFailureFlag
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Protect a Failure Flag by name and team
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_WRITE
+  /failure-flags/flags/{name}/unprotect:
+    post:
+      tags:
+      - failure-flags.flags
+      summary: Unprotect Failure Flag by name and team.
+      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: unprotectFailureFlag
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Unprotect a Failure Flag by name and team
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_WRITE
+components:
+  schemas:
+    FailureFlag:
+      type: object
+      properties:
+        teamId:
+          type: string
+        name:
+          type: string
+        labelKeys:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+        lastSeen:
+          type: string
+          format: date-time
+        protected:
+          type: boolean
+        apps:
+          type: array
+          items:
+            type: string
+        experiments:
+          type: array
+          items:
+            type: string

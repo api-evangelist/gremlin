@@ -1,0 +1,212 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents aws.metadata API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: aws.metadata
+  description: Get metadata about the AWS IAM role creation for health checks
+paths:
+  /aws/metadata/autoscaling-groups:
+    get:
+      tags:
+      - aws.metadata
+      summary: Queries Gremlin's view of Autoscaling Groups in a given AWS account
+      description: "This endpoint returns Gremlin's view of Autoscaling Groups in a given AWS account.  The `domain` parameter refers to the AWS AccountId.  \nNOTE: This endpoint may (or may not) return Autoscaling Groups which have already been assigned to Gremlin Services, or ones which we cannot assign to Gremlin Services\nRequires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+      operationId: getAutoscalingGroupsForAccount
+      parameters:
+      - name: domain
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: mode
+        in: query
+        schema:
+          type: string
+          enum:
+          - Onboarding
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsAutoscalingGroupsForAccount'
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /aws/metadata/iam-role:
+    get:
+      tags:
+      - aws.metadata
+      summary: Returns the policy document necessary for Gremlin to access AWS resources.
+      description: "This endpoint provides the policy document and associated trust policies so that Gremlin can access an arbitrary AWS account. This endpoint also provides a link to a CloudFormationTemplate for applying this to your AWS account. \nSee: https://www.gremlin.com/docs/aws-quick-start-guide for more info\n\nRequires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+      operationId: getAwsMetadataIamRole
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsMetadataIamRoleResponse'
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /aws/metadata/load-balancers:
+    get:
+      tags:
+      - aws.metadata
+      summary: Queries Gremlin's view of Load balancers in a given AWS account
+      description: "This endpoint returns Gremlin's view of Load Balancers in a given AWS account.  These can then be used to create Gremlin Services or Intelligent Health checks.  \nThe `domain` parameter refers to the AWS AccountId.  \nNOTE: This endpoint may (or may not) return Load Balancers which have already been assigned to Gremlin Services, or ones which we cannot assign to Gremlin Services (eg. LBs with no hosts behind them)\nRequires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+      operationId: getLoadBalancersForAccount
+      parameters:
+      - name: domain
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: mode
+        in: query
+        schema:
+          type: string
+          enum:
+          - Onboarding
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsLoadBalancersForAccount'
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+components:
+  schemas:
+    AwsAutoscalingGroupsForAccount:
+      type: object
+      properties:
+        domain:
+          type: string
+        autoscalingGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/AwsAutoscalingGroupResponse'
+    TargetingStrategy:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    AwsLoadBalancersForAccount:
+      type: object
+      properties:
+        domain:
+          type: string
+        loadBalancers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AwsLoadBalancerResponse'
+    AwsLoadBalancerResponse:
+      type: object
+      properties:
+        type:
+          type: string
+        name:
+          type: string
+        arn:
+          type: string
+        dnsName:
+          type: string
+        region:
+          type: string
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        serviceIds:
+          type: array
+          items:
+            type: string
+        targetingStrategy:
+          $ref: '#/components/schemas/TargetingStrategy'
+        targetingStrategyDetectionScore:
+          type: number
+          format: double
+        discoveredAt:
+          type: string
+          format: date-time
+    AwsMetadataIamRoleResponse:
+      type: object
+      properties:
+        cfnTemplateLink:
+          type: string
+        permissionPolicy:
+          type: string
+        managedPolicies:
+          type: array
+          items:
+            type: string
+        trustPolicy:
+          type: string
+    AwsAutoscalingGroupResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        arn:
+          type: string
+        region:
+          type: string
+        serviceIds:
+          type: array
+          items:
+            type: string
+        discoveredAt:
+          type: string
+          format: date-time

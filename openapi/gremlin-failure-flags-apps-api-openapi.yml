@@ -1,0 +1,192 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents failure-flags.apps API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: failure-flags.apps
+  description: Get, list, and protect applications
+paths:
+  /failure-flags/apps/{name}:
+    get:
+      tags:
+      - failure-flags.apps
+      summary: Get Application by name.
+      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getApplicationForNameAndTeam
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get an Application by name and team
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+  /failure-flags/apps:
+    get:
+      tags:
+      - failure-flags.apps
+      summary: List Applications by team.
+      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getApplicationsForTeam
+      parameters:
+      - name: onlyWithMetricsEnabled
+        in: query
+        schema:
+          type: boolean
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List Applications by team
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Application'
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+  /failure-flags/apps/{name}/protect:
+    post:
+      tags:
+      - failure-flags.apps
+      summary: Protect Application by name.
+      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: protectApplication
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Protect an Application by name and team
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_WRITE
+  /failure-flags/apps/{name}/unprotect:
+    post:
+      tags:
+      - failure-flags.apps
+      summary: Unprotect Application by name.
+      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: unprotectApplication
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Protect an Application by name and team
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_WRITE
+components:
+  schemas:
+    Application:
+      type: object
+      properties:
+        teamId:
+          type: string
+        name:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/ApplicationLabel'
+        createdAt:
+          type: string
+          format: date-time
+        lastSeen:
+          type: string
+          format: date-time
+        state:
+          type: string
+          enum:
+          - Active
+          - Idle
+        protected:
+          type: boolean
+        experiments:
+          type: array
+          items:
+            type: string
+    ApplicationLabel:
+      type: object
+      properties:
+        value:
+          type: string
+        cardinality:
+          type: integer
+          format: int32

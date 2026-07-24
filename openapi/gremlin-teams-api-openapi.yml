@@ -1,0 +1,609 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents teams API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: teams
+  description: Create, Retrieve, Update, and Delete endpoints for Teams
+paths:
+  /teams/{teamId}/profile:
+    get:
+      tags:
+      - teams
+      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getProfile
+      parameters:
+      - name: teamId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamProfile'
+        '403':
+          description: 'User requires privilege: MINIMUM_COMPANY_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_COMPANY_PRIVILEGES
+    put:
+      tags:
+      - teams
+      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: putProfile
+      parameters:
+      - name: teamId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamProfile'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*': {}
+        '403':
+          description: 'User requires privilege: MINIMUM_COMPANY_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_COMPANY_PRIVILEGES
+  /teams/{teamId}/profile/prompt:
+    get:
+      tags:
+      - teams
+      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getProfilePrompt
+      parameters:
+      - name: teamId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamProfilePrompt'
+        '403':
+          description: 'User requires privilege: MINIMUM_COMPANY_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_COMPANY_PRIVILEGES
+  /teams/kubernetes/install:
+    get:
+      tags:
+      - teams
+      summary: Generates a kubernetes installation manifest for passing to kubectl
+      description: Requires the privilege [`TEAM_SECURITY_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: combinedKubernetes
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/x-yaml:
+              schema:
+                type: string
+        '403':
+          description: 'User requires privilege for target team: TEAM_SECURITY_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEAM_SECURITY_READ
+  /teams/{identifier}:
+    delete:
+      tags:
+      - teams
+      summary: Idempotently deletes an existing team.
+      description: Requires the privilege [`COMPANIES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: delete_3
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamResponse'
+        '403':
+          description: 'User requires privilege: COMPANIES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANIES_WRITE
+    patch:
+      tags:
+      - teams
+      summary: Idempotently updates an existing team.
+      description: Requires the privilege [`TEAMS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: update_1
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTeamRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege for target team: TEAMS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEAMS_WRITE
+  /teams/client/install:
+    get:
+      tags:
+      - teams
+      summary: Generates a config.yaml file with populated values for authenticating the client
+      description: Requires the privilege [`TEAM_SECURITY_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: downloadClientConfig
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/octet-stream: {}
+        '403':
+          description: 'User requires privilege for target team: TEAM_SECURITY_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEAM_SECURITY_READ
+  /teams/helm/install:
+    get:
+      tags:
+      - teams
+      summary: Generates a teams-specific values file to be passed to a helm install command
+      description: Requires the privilege [`TEAM_SECURITY_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: downloadHelmValues
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/x-yaml:
+              schema:
+                type: string
+        '403':
+          description: 'User requires privilege for target team: TEAM_SECURITY_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEAM_SECURITY_READ
+  /teams:
+    get:
+      tags:
+      - teams
+      summary: Gets all Teams associated with the current Company.
+      description: Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: get_6
+      parameters: []
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamResponse'
+        '403':
+          description: 'User requires privilege: TEAMS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEAMS_READ
+  /teams/{teamIdOrName}:
+    get:
+      tags:
+      - teams
+      description: Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getByIdOrName
+      parameters:
+      - name: teamIdOrName
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamResponse'
+        '403':
+          description: 'User requires privilege: TEAMS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEAMS_READ
+  /teams/paged:
+    get:
+      tags:
+      - teams
+      summary: Gets paged response for teams associated with the current Company. Default page size is 20
+      description: Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getPaged
+      parameters:
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+        example: 20
+      - name: pageToken
+        in: query
+        description: Token corresponding to the last page of teams retrieved. Pass the pageToken to get the next page of teams
+        schema:
+          type: string
+        example: None (returns first page)
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponseTeamResponse'
+        '403':
+          description: 'User requires privilege: TEAMS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEAMS_READ
+components:
+  schemas:
+    UpdateTeamRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name for the team
+        production:
+          type: boolean
+          description: Flag to determine if team is marked for production
+        defaultTeamRole:
+          type: string
+          description: The default team role
+        prefs:
+          $ref: '#/components/schemas/PrefsPatch'
+      description: A request to update an team
+    Prefs:
+      type: object
+      properties:
+        autoAddUsers:
+          type: boolean
+        domain:
+          type: string
+        testRunRestrictionWindows:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunRestrictionWindow'
+      description: Prefs for team
+    SemanticVersion:
+      type: object
+      properties:
+        major:
+          type: integer
+          format: int32
+        minor:
+          type: integer
+          format: int32
+        patch:
+          type: integer
+          format: int32
+    PrefsPatch:
+      type: object
+      properties:
+        testRunRestrictionWindows:
+          maxItems: 7
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunRestrictionWindow'
+      description: Prefs on team level
+    TeamResponse:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The identifier of this Team.
+        companyId:
+          type: string
+          description: The identifier of the company to which this Team belongs.
+        name:
+          type: string
+          description: The name of this Team.
+        state:
+          type: string
+          description: The state of this Team.
+        clientVersions:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ClientVersionRange'
+          description: A Map representing the minimum and maximum client versions authenticated with this Team.
+        certificate:
+          type: string
+          description: The PEM encoded certificate associated with this Team.
+        certificateSetAt:
+          type: string
+          description: The time of creation for the certificate credentials associated with this Team.
+          format: date-time
+        certificateSetBy:
+          type: string
+          description: The account that set the certificate credentials associated with this Team.
+        secretSetAt:
+          type: string
+          description: The time of creation of the secret associated with this Team.
+          format: date-time
+        secretSetBy:
+          type: string
+          description: The account that set the secret associated with this Team.
+        production:
+          type: boolean
+          description: Flag to determine if team is marked for production
+        prefs:
+          $ref: '#/components/schemas/Prefs'
+        defaultTeamRole:
+          type: string
+          description: The default team role
+        createdAt:
+          type: string
+          description: An ISO8601 timestamp representing the time at which this team was created
+          format: date-time
+    ScheduleWindow:
+      required:
+      - end
+      - start
+      type: object
+      properties:
+        start:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+        end:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+    TestRunRestrictionWindow:
+      required:
+      - dayOfWeek
+      - windowsForDay
+      type: object
+      properties:
+        dayOfWeek:
+          type: string
+          enum:
+          - M
+          - T
+          - W
+          - Th
+          - F
+          - S
+          - Su
+        windowsForDay:
+          maxItems: 3
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleWindow'
+    Prompt:
+      type: object
+      properties:
+        prefix:
+          type: string
+        suffix:
+          type: string
+    TeamProfile:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int32
+        experience:
+          type: string
+        goal:
+          type: array
+          items:
+            type: string
+        databases:
+          type: array
+          items:
+            type: string
+        messaging:
+          type: array
+          items:
+            type: string
+        containers:
+          type: array
+          items:
+            type: string
+        cloudProvider:
+          type: array
+          items:
+            type: string
+        monitoring:
+          type: array
+          items:
+            type: string
+        completedByUsers:
+          type: array
+          items:
+            type: string
+        skippedByUsers:
+          type: array
+          items:
+            type: string
+        updatedBy:
+          type: string
+        logging:
+          type: array
+          items:
+            type: string
+        paging:
+          type: array
+          items:
+            type: string
+        incidents:
+          type: array
+          items:
+            type: string
+        updatedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+    ClientVersionRange:
+      type: object
+      properties:
+        minimum:
+          $ref: '#/components/schemas/SemanticVersion'
+        maximum:
+          $ref: '#/components/schemas/SemanticVersion'
+      description: A Map representing the minimum and maximum client versions authenticated with this Team.
+    TeamProfilePrompt:
+      type: object
+      properties:
+        updated_by:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field'
+        completedByUsers:
+          type: array
+          items:
+            type: string
+        skippedByUsers:
+          type: array
+          items:
+            type: string
+    Field:
+      type: object
+      properties:
+        field:
+          type: string
+        presets:
+          type: array
+          items:
+            type: string
+        multiple:
+          type: boolean
+        answer:
+          type: array
+          items:
+            type: string
+        prompt:
+          $ref: '#/components/schemas/Prompt'
+    PagedResponseTeamResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamResponse'

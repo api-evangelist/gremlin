@@ -1,0 +1,244 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents users.auth.mfa API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: users.auth.mfa
+  description: Endpoints for multi-factor user auth (MFA) and for managing MFA providers and secrets
+paths:
+  /users/auth/mfa/auth:
+    post:
+      tags:
+      - users.auth.mfa
+      summary: Authenticate a user with MFA.
+      operationId: auth
+      parameters:
+      - name: getCompanySession
+        in: query
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - email
+              - password
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                token:
+                  maximum: 999999
+                  type: integer
+                  format: int32
+                companyName:
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS
+  /users/auth/mfa/disable:
+    post:
+      tags:
+      - users.auth.mfa
+      summary: Removes the MFA provider and secret, disabling MFA login.
+      operationId: disable
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - email
+              - password
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                token:
+                  maximum: 999999
+                  type: integer
+                  format: int32
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS
+  /users/auth/mfa/enable:
+    post:
+      tags:
+      - users.auth.mfa
+      summary: Generate a secret key and enables it for the user.
+      operationId: enable
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - email
+              - password
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MfaEnableResponse'
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS
+  /users/auth/mfa/forceDisable:
+    post:
+      tags:
+      - users.auth.mfa
+      summary: Removes the MFA provider and secret, disabling MFA login.
+      description: 'COMPANY_OWNER and COMPANY_ADMIN users only
+
+        Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: forceDisable
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - email
+              type: object
+              properties:
+                email:
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_WRITE
+  /users/auth/mfa/info:
+    get:
+      tags:
+      - users.auth.mfa
+      summary: Returns the enabled/disabled status and provider if set, of MFA for the user.
+      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getInfo
+      parameters: []
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MfaInfoResponse'
+        '403':
+          description: 'User requires privilege: MINIMUM_COMPANY_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_COMPANY_PRIVILEGES
+  /users/auth/mfa/{email}/enabled:
+    get:
+      tags:
+      - users.auth.mfa
+      summary: Returns the enabled/disabled status of MFA for a user.
+      description: 'Company Owners and Admins users only
+
+        Requires the privilege [`SECURITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: isEnabled
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '403':
+          description: 'User requires privilege: SECURITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SECURITY_REPORTS_READ
+  /users/auth/mfa/validate:
+    post:
+      tags:
+      - users.auth.mfa
+      summary: Validate a MFA token for a user
+      operationId: validate
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - email
+              type: object
+              properties:
+                email:
+                  type: string
+                token:
+                  maximum: 999999
+                  type: integer
+                  format: int32
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS
+components:
+  schemas:
+    MfaInfoResponse:
+      type: object
+      properties:
+        enabled:
+          type: string
+        provider:
+          type: string
+    MfaEnableResponse:
+      type: object
+      properties:
+        secretKey:
+          type: string
+        qrUrl:
+          type: string
+          format: uri

@@ -1,0 +1,1684 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents attacks API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: attacks
+  description: Create, halt, and list attacks
+paths:
+  /attacks/active:
+    get:
+      tags:
+      - attacks
+      summary: List all active attacks.
+      description: 'This endpoint will return all active attacks for the team.
+
+        Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: active
+      parameters:
+      - name: source
+        in: query
+        description: Filter attacks to either adhoc or scenario.
+        schema:
+          type: string
+          enum:
+          - Adhoc
+          - Scenario
+        example: Adhoc
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskResponse'
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+  /attacks/active/paged:
+    get:
+      tags:
+      - attacks
+      summary: Return a page of active ad-hoc experiments.
+      description: 'This endpoint will return a paged response of active ad-hoc experiments for a team.
+
+        Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: activePaged
+      parameters:
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+          default: 1000
+        example: None (defaults to 1000)
+      - name: pageToken
+        in: query
+        description: Pass the pageToken to get the next page of active ad-hoc experiments
+        schema:
+          type: string
+        example: None (returns first page)
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponseExperimentsResponse'
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+  /attacks/{guid}/annotations:
+    put:
+      tags:
+      - attacks
+      summary: Add annotations to an attack
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: addAnnotations
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttackAnnotationsInputRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /attacks:
+    get:
+      tags:
+      - attacks
+      summary: List all attacks.
+      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: all
+      parameters:
+      - name: source
+        in: query
+        description: Filter attacks to either adhoc or scenario.
+        schema:
+          type: string
+          enum:
+          - Adhoc
+          - Scenario
+        example: Adhoc
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskResponse'
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+    post:
+      tags:
+      - attacks
+      summary: Create a new attack.
+      description: 'Create a new attack by specifying the attack configuration, targets and sampling configuration
+
+        Requires the privilege [`EXPERIMENTS_RUN`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: createNewAttack
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAttackRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AttackForServiceResponse'
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AttackForServiceResponse'
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_RUN'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_RUN
+    delete:
+      tags:
+      - attacks
+      summary: Idempotently halt all active attacks
+      operationId: halt
+      parameters: []
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskResponse'
+        '403':
+          description: 'User requires privilege: HALT_ALL'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+  /attacks/range:
+    get:
+      tags:
+      - attacks
+      summary: List all attacks in a given time range (defaults to all attacks up to now)
+      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: allAttacksInRange
+      parameters:
+      - name: startTime
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: endTime
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+      - name: pageToken
+        in: query
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponseTaskResponse'
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+  /attacks/completed:
+    get:
+      tags:
+      - attacks
+      summary: List all completed attacks.
+      description: 'This endpoint will return all completed attacks that the team has performed.
+
+        Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: completed
+      parameters:
+      - name: source
+        in: query
+        description: Filter attacks to either adhoc or scenario.
+        schema:
+          type: string
+          enum:
+          - Adhoc
+          - Scenario
+        example: Adhoc
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskResponse'
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+  /attacks/completed/paged:
+    get:
+      tags:
+      - attacks
+      summary: Return a page of completed ad-hoc experiments.
+      description: 'This endpoint will return a paged response of completed ad-hoc experiments for a team.
+
+        Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: completedPaged
+      parameters:
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+          default: 1000
+        example: None (defaults to 1000)
+      - name: pageToken
+        in: query
+        description: Pass the pageToken to get the next page of completed ad-hoc experiments
+        schema:
+          type: string
+        example: None (returns first page)
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponseExperimentsResponse'
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+  /attacks/new:
+    post:
+      tags:
+      - attacks
+      summary: Legacy Create Attack.
+      description: 'Note that this endpoint is considered deprecated but is maintained for existing consumers.  Please consider using the new `POST /attacks` endpoint instead.
+
+
+        For a list of attack parameters, please visit: https://www.gremlin.com/docs/infrastructure-layer/attacks/#parameter-reference.
+
+        Please note that if the `labels` or `tags` fields are not provided, no filtering will be employed and an attack will target all active clients within your team.
+
+        For more information on creating a new attack using the API, please visit: https://www.gremlin.com/docs/api-reference/examples/
+
+        Requires the privilege [`EXPERIMENTS_RUN`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: create
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAttackInput'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain:
+              schema:
+                type: string
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_RUN'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      deprecated: true
+      security:
+      - privilege:
+        - EXPERIMENTS_RUN
+  /attacks/{guid}:
+    get:
+      tags:
+      - attacks
+      summary: Get details about an attack.
+      description: 'This endpoint will allow you to get info on a specific attack based on its guid.
+
+        Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: get
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+    delete:
+      tags:
+      - attacks
+      summary: Idempotently halt the specified active attack.
+      description: Requires the privilege [`HALT_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: halt_1
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskResponse'
+        '403':
+          description: 'User requires privilege for target team: HALT_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - HALT_WRITE
+  /attacks/halt:
+    post:
+      tags:
+      - attacks
+      summary: Idempotently halt all active attacks.  This is a POST version of the DELETE operation.
+      operationId: haltAsPost
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HaltRequest'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskResponse'
+        '403':
+          description: 'User requires privilege: HALT_ALL'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+  /attacks/{guid}/halt:
+    post:
+      tags:
+      - attacks
+      summary: Idempotently halt the specified active attack.
+      description: Requires the privilege [`HALT_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: haltAsPost_1
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HaltRequest'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskResponse'
+        '403':
+          description: 'User requires privilege for target team: HALT_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - HALT_WRITE
+components:
+  schemas:
+    K8sContainerResponse:
+      type: object
+      properties:
+        uid:
+          type: string
+        unifiedUid:
+          type: string
+        name:
+          type: string
+        state:
+          type: string
+          enum:
+          - WAITING
+          - RUNNING
+          - TERMINATED
+          - UNKNOWN
+    HaltRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: The reason why this halt this requested.
+        reference:
+          type: string
+          description: A reference to why this halt was requested.
+    Strategy:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Exact
+          - RandomCount
+          - RandomPercent
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        multiSelectLabels:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        allHosts:
+          type: boolean
+        allContainers:
+          type: boolean
+        hostIds:
+          type: array
+          items:
+            type: string
+        containerIds:
+          type: array
+          items:
+            type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    TargetK8sObjectResponse:
+      type: object
+      properties:
+        strategy:
+          $ref: '#/components/schemas/StrategyK8sObjectResponse'
+    CreateAttackInput:
+      title: Task.Input
+      type: object
+      properties:
+        includeNewTargets:
+          type: boolean
+        continueOnEmptyTargets:
+          type: boolean
+        command:
+          type: object
+          properties:
+            providers:
+              type: array
+              items:
+                type: string
+            args:
+              type: array
+              items:
+                type: string
+            trafficImpactMapping:
+              $ref: '#/components/schemas/TaskTrafficImpactMappingInput'
+            trafficImpactFromWithSelectTags:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+              writeOnly: true
+            trafficImpactWithDependencyIds:
+              type: array
+              writeOnly: true
+              items:
+                type: string
+            type:
+              type: string
+            templateId:
+              type: string
+            optionalTemplateId:
+              type: string
+            empty:
+              type: boolean
+          additionalProperties:
+            type: object
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        multiSelectLabels:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        target:
+          type: object
+          properties:
+            multiSelectTags:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+            strategyInput:
+              $ref: '#/components/schemas/TargetStrategy'
+            multiSelectLabels:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+            type:
+              type: string
+            templateId:
+              type: string
+            optionalTemplateId:
+              type: string
+            empty:
+              type: boolean
+            tags:
+              type: object
+              additionalProperties:
+                type: string
+              writeOnly: true
+          additionalProperties:
+            type: object
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        source:
+          type: string
+          enum:
+          - WebApp
+          - Api
+          - Scheduled
+          - Manual
+          - Spinnaker
+          - Concord
+          - GremlinFeeder
+          - GremlinSdkPython
+          - Scenario
+          - Chao
+          - K8sBackend
+          - Website
+          - Neotys
+          - IntegrationClient
+          - Validation
+    CreateAttackRequest:
+      required:
+      - attackConfiguration
+      type: object
+      properties:
+        attackConfiguration:
+          $ref: '#/components/schemas/AttackConfiguration'
+        includeNewTargets:
+          type: boolean
+        continueOnEmptyTargets:
+          type: boolean
+    TrafficImpactMapping:
+      type: object
+      properties:
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        dependencyIds:
+          type: array
+          items:
+            type: string
+    AttackForServiceResponse:
+      type: object
+      properties:
+        serviceId:
+          type: string
+        type:
+          type: string
+          enum:
+          - Host
+          - Container
+          - Kubernetes
+        attackId:
+          type: string
+        k8sAttackId:
+          type: string
+    TaskResponse:
+      type: object
+      properties:
+        orgId:
+          type: string
+        guid:
+          type: string
+        args:
+          type: array
+          items:
+            type: string
+        stage:
+          type: string
+          enum:
+          - InvalidArgument
+          - TargetNotFound
+          - Successful
+          - UserHalted
+          - ClientAborted
+          - LostCommunication
+          - InitializationFailed
+          - TeardownFailed
+          - HaltFailed
+          - Failed
+          - Pending
+          - Distributed
+          - Initializing
+          - HaltDistributed
+          - InterruptTriggered
+          - RollbackTriggered
+          - RollbackStarted
+          - Running
+          - TearingDown
+          - Halt
+        createSource:
+          type: string
+          enum:
+          - WebApp
+          - Api
+          - Scheduled
+          - Manual
+          - Spinnaker
+          - Concord
+          - GremlinFeeder
+          - GremlinSdkPython
+          - Scenario
+          - Chao
+          - K8sBackend
+          - Website
+          - Neotys
+          - IntegrationClient
+          - Validation
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        kind:
+          type: string
+          enum:
+          - WebApp
+          - Api
+          - Scheduled
+          - Manual
+          - Spinnaker
+          - Concord
+          - GremlinFeeder
+          - GremlinSdkPython
+          - Scenario
+          - Chao
+          - K8sBackend
+          - Website
+          - Neotys
+          - IntegrationClient
+          - Validation
+        owningTeamId:
+          type: string
+        createSourceDetail:
+          type: string
+          enum:
+          - Onboarding
+        infraTarget:
+          type: object
+          additionalProperties:
+            type: object
+        infraCommand:
+          type: object
+          additionalProperties:
+            type: object
+        targets:
+          type: array
+          items:
+            type: string
+        targetContainers:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        stageLifecycle:
+          type: string
+          enum:
+          - Active
+          - Halting
+          - Complete
+          - Error
+        createUser:
+          type: string
+        executionSummaries:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ExecutionSummary'
+        executionStageSummary:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        multiSelectLabels:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        targetType:
+          type: string
+          enum:
+          - Host
+          - Container
+          - Docker
+          - Kubernetes
+        attackConfiguration:
+          $ref: '#/components/schemas/AttackConfiguration'
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        initializationEndTime:
+          type: string
+          format: date-time
+        commandTemplateId:
+          type: string
+        targetTemplateId:
+          type: string
+        scenarioId:
+          type: string
+        scenarioRunNumber:
+          type: integer
+          format: int64
+        scenarioStepNumber:
+          type: integer
+          format: int32
+        scenarioNodeGuid:
+          type: string
+        serviceId:
+          type: string
+        k8sAttackId:
+          type: string
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        totalClients:
+          type: integer
+          format: int32
+        clientMetricsEnabledCount:
+          type: integer
+          format: int32
+        providers:
+          type: array
+          items:
+            type: string
+        trafficImpactMapping:
+          $ref: '#/components/schemas/TrafficImpactMapping'
+        includeNewClients:
+          type: boolean
+        continueOnEmptyTargets:
+          type: boolean
+        dynamicallyResolvedIps:
+          type: array
+          items:
+            type: string
+        displayErrorMessage:
+          type: string
+        executionFailureReasons:
+          $ref: '#/components/schemas/ExecutionFailureReasons'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    PagedResponseExperimentsResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExperimentsResponse'
+    AttackAnnotationsInputRequest:
+      title: Represents a request to add annotations to an attack
+      type: object
+      properties:
+        otherAnnotations:
+          type: object
+          additionalProperties:
+            type: string
+          writeOnly: true
+        notes:
+          type: string
+          description: Notes about the attack
+        metrics:
+          type: string
+          description: Link to metrics about the impact of the attack
+    ExecutionSummary:
+      type: object
+      properties:
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        stage:
+          type: string
+          enum:
+          - InvalidArgument
+          - TargetNotFound
+          - Successful
+          - UserHalted
+          - ClientAborted
+          - LostCommunication
+          - InitializationFailed
+          - TeardownFailed
+          - HaltFailed
+          - Failed
+          - Pending
+          - Distributed
+          - Initializing
+          - HaltDistributed
+          - InterruptTriggered
+          - RollbackTriggered
+          - RollbackStarted
+          - Running
+          - TearingDown
+          - Halt
+        version:
+          type: integer
+          format: int64
+    ServiceTarget:
+      required:
+      - targetingStrategy
+      type: object
+      properties:
+        serviceId:
+          type: string
+        targetingStrategy:
+          $ref: '#/components/schemas/TargetingStrategy'
+    StrategyK8sObjectResponse:
+      type: object
+      properties:
+        k8sObjects:
+          type: array
+          items:
+            $ref: '#/components/schemas/K8sObjectResponse'
+        containerSelection:
+          $ref: '#/components/schemas/ContainerSelection'
+        k8sObjectsInternal:
+          type: array
+          items:
+            $ref: '#/components/schemas/K8sObjectOnAttack'
+        count:
+          type: integer
+          format: int32
+        percentage:
+          type: integer
+          format: int32
+    ExecutionFailureReasons:
+      type: object
+      properties:
+        executionIdToReason:
+          type: object
+          additionalProperties:
+            type: string
+    TargetSampling:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    ContainerSelection:
+      type: object
+      properties:
+        selectionType:
+          type: string
+          enum:
+          - EXACT
+          - ALL
+          - ANY
+        containerNames:
+          type: array
+          items:
+            type: string
+    TargetingStrategy:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    InfraCommandArgs:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - CPU
+          - IO
+          - Memory
+          - Disk
+          - Thread_Bomb
+          - Blackhole
+          - DNS
+          - Latency
+          - Packet_Loss
+          - Collect_Certs
+          - Shutdown
+          - Time_Travel
+          - Process_Killer
+          - Process_Exhaustion
+          - GPU
+          - Unknown
+        unknownArgs:
+          type: object
+          additionalProperties:
+            type: string
+        duplicateArgs:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: string
+        cliArgs:
+          type: array
+          items:
+            type: string
+        lengthOrZero:
+          type: integer
+          format: int32
+    TargetStrategy:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Exact
+          - Regex
+          - Random
+        strategy:
+          $ref: '#/components/schemas/Strategy'
+        containerLabels:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        hostTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        allContainers:
+          type: boolean
+        allHosts:
+          type: boolean
+        hostIds:
+          type: array
+          items:
+            type: string
+        containerIds:
+          type: array
+          items:
+            type: string
+        hostsInput:
+          type: object
+        containersInput:
+          type: object
+    K8sObjectOnAttack:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        uid:
+          type: string
+        namespace:
+          type: string
+        name:
+          type: string
+        kind:
+          type: string
+          enum:
+          - DEPLOYMENT
+          - REPLICASET
+          - POD
+          - DAEMONSET
+          - STATEFULSET
+          - SERVICE
+          - INGRESS
+          - DEPLOYMENTCONFIG
+          - REPLICATIONCONTROLLER
+          - ROLLOUT
+          - HORIZONTALPODAUTOSCALER
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        ownerReferences:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        resolvedContainers:
+          type: array
+          items:
+            type: string
+        data:
+          type: string
+        clientId:
+          type: string
+        teamId:
+          type: string
+        resolved:
+          type: boolean
+        attackUid:
+          type: string
+    K8sObjectResponse:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        ownerReferences:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        resolvedContainers:
+          type: array
+          items:
+            type: string
+        uid:
+          type: string
+        namespace:
+          type: string
+        name:
+          type: string
+        kind:
+          type: string
+          enum:
+          - DEPLOYMENT
+          - REPLICASET
+          - POD
+          - DAEMONSET
+          - STATEFULSET
+          - SERVICE
+          - INGRESS
+          - DEPLOYMENTCONFIG
+          - REPLICATIONCONTROLLER
+          - ROLLOUT
+          - HORIZONTALPODAUTOSCALER
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        podPhase:
+          type: string
+          enum:
+          - Pending
+          - Running
+          - Succeeded
+          - Failed
+          - Unknown
+        hostId:
+          type: string
+        availableContainers:
+          type: array
+          items:
+            $ref: '#/components/schemas/K8sContainerResponse'
+        targetType:
+          type: string
+          enum:
+          - Host
+          - Container
+          - Docker
+          - Kubernetes
+    ServiceCommand:
+      type: object
+      properties:
+        infraCommandType:
+          type: string
+          enum:
+          - CPU
+          - IO
+          - Memory
+          - Disk
+          - Thread_Bomb
+          - Blackhole
+          - DNS
+          - Latency
+          - Packet_Loss
+          - Collect_Certs
+          - Shutdown
+          - Time_Travel
+          - Process_Killer
+          - Process_Exhaustion
+          - GPU
+          - Unknown
+        infraCommandArgs:
+          $ref: '#/components/schemas/InfraCommandArgs'
+    TaskTrafficImpactMappingInput:
+      type: object
+      properties:
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        dependencyIds:
+          type: array
+          items:
+            type: string
+    ExperimentsResponse:
+      type: object
+      properties:
+        orgId:
+          type: string
+        guid:
+          type: string
+        args:
+          type: array
+          items:
+            type: string
+        stage:
+          type: string
+          enum:
+          - InvalidArgument
+          - TargetNotFound
+          - Successful
+          - UserHalted
+          - ClientAborted
+          - LostCommunication
+          - InitializationFailed
+          - TeardownFailed
+          - HaltFailed
+          - Failed
+          - Pending
+          - Distributed
+          - Initializing
+          - HaltDistributed
+          - InterruptTriggered
+          - RollbackTriggered
+          - RollbackStarted
+          - Running
+          - TearingDown
+          - Halt
+        createSource:
+          type: string
+          enum:
+          - WebApp
+          - Api
+          - Scheduled
+          - Manual
+          - Spinnaker
+          - Concord
+          - GremlinFeeder
+          - GremlinSdkPython
+          - Scenario
+          - Chao
+          - K8sBackend
+          - Website
+          - Neotys
+          - IntegrationClient
+          - Validation
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        kind:
+          type: string
+          enum:
+          - WebApp
+          - Api
+          - Scheduled
+          - Manual
+          - Spinnaker
+          - Concord
+          - GremlinFeeder
+          - GremlinSdkPython
+          - Scenario
+          - Chao
+          - K8sBackend
+          - Website
+          - Neotys
+          - IntegrationClient
+          - Validation
+        owningTeamId:
+          type: string
+        createSourceDetail:
+          type: string
+          enum:
+          - Onboarding
+        infraTarget:
+          type: object
+          additionalProperties:
+            type: object
+        infraCommand:
+          type: object
+          additionalProperties:
+            type: object
+        targets:
+          type: array
+          items:
+            type: string
+        targetContainers:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        stageLifecycle:
+          type: string
+          enum:
+          - Active
+          - Halting
+          - Complete
+          - Error
+        createUser:
+          type: string
+        executionSummaries:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ExecutionSummary'
+        executionStageSummary:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        multiSelectLabels:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        targetType:
+          type: string
+          enum:
+          - Host
+          - Container
+          - Docker
+          - Kubernetes
+        attackConfiguration:
+          $ref: '#/components/schemas/AttackConfiguration'
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        initializationEndTime:
+          type: string
+          format: date-time
+        commandTemplateId:
+          type: string
+        targetTemplateId:
+          type: string
+        scenarioId:
+          type: string
+        scenarioRunNumber:
+          type: integer
+          format: int64
+        scenarioStepNumber:
+          type: integer
+          format: int32
+        scenarioNodeGuid:
+          type: string
+        serviceId:
+          type: string
+        k8sAttackId:
+          type: string
+        k8sObjectResponse:
+          $ref: '#/components/schemas/AttackK8sObjectResponse'
+        k8sStage:
+          type: string
+          enum:
+          - RESOLVING
+          - ERROR
+          - LAUNCHED
+          - USER_HALTED
+        k8sAttackCreatedAt:
+          type: string
+          format: date-time
+        k8sAttackUpdatedAt:
+          type: string
+          format: date-time
+        k8sError:
+          type: string
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        totalClients:
+          type: integer
+          format: int32
+        clientMetricsEnabledCount:
+          type: integer
+          format: int32
+        providers:
+          type: array
+          items:
+            type: string
+        trafficImpactMapping:
+          $ref: '#/components/schemas/TrafficImpactMapping'
+        includeNewClients:
+          type: boolean
+        dynamicallyResolvedIps:
+          type: array
+          items:
+            type: string
+        displayErrorMessage:
+          type: string
+        executionFailureReasons:
+          $ref: '#/components/schemas/ExecutionFailureReasons'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    Command:
+      type: object
+      properties:
+        providers:
+          type: array
+          items:
+            type: string
+        args:
+          type: array
+          items:
+            type: string
+        trafficImpactMapping:
+          $ref: '#/components/schemas/TaskTrafficImpactMappingInput'
+        trafficImpactFromWithSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          writeOnly: true
+        trafficImpactWithDependencyIds:
+          type: array
+          writeOnly: true
+          items:
+            type: string
+        type:
+          type: string
+        templateId:
+          type: string
+        optionalTemplateId:
+          type: string
+        empty:
+          type: boolean
+      additionalProperties:
+        type: object
+    AttackConfiguration:
+      required:
+      - command
+      - targets
+      type: object
+      properties:
+        command:
+          $ref: '#/components/schemas/ServiceCommand'
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTarget'
+        sampling:
+          $ref: '#/components/schemas/TargetSampling'
+    PagedResponseTaskResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskResponse'
+    AttackK8sObjectResponse:
+      type: object
+      properties:
+        impactDefinition:
+          $ref: '#/components/schemas/Command'
+        targetDefinition:
+          $ref: '#/components/schemas/TargetK8sObjectResponse'
+        includeNewTargets:
+          type: boolean
+        continueOnEmptyTargets:
+          type: boolean

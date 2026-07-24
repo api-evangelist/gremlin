@@ -1,0 +1,478 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents webhooks API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: webhooks
+  description: Create, read, update, and delete webhooks
+paths:
+  /webhooks:
+    get:
+      tags:
+      - webhooks
+      description: Requires the privilege [`WEBHOOKS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getWebhooks
+      parameters:
+      - name: state
+        in: query
+        description: Filter webhooks by state
+        schema:
+          type: string
+          enum:
+          - ACTIVE
+          - DEACTIVATED
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Webhook'
+        '403':
+          description: 'User requires privilege for target team: WEBHOOKS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - WEBHOOKS_READ
+    post:
+      tags:
+      - webhooks
+      summary: Create a webhook
+      description: Requires the privilege [`WEBHOOKS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: createWebhook_1
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: webhook to create
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*': {}
+        '403':
+          description: 'User requires privilege for target team: WEBHOOKS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - WEBHOOKS_WRITE
+  /webhooks/{guid}:
+    get:
+      tags:
+      - webhooks
+      summary: Retrieve webhook by id
+      description: Requires the privilege [`WEBHOOKS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getWebhookById
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+        '403':
+          description: 'User requires privilege for target team: WEBHOOKS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - WEBHOOKS_READ
+    put:
+      tags:
+      - webhooks
+      summary: Update a webhook by id
+      description: Requires the privilege [`WEBHOOKS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: updateWebhook
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: webhook update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*': {}
+        '403':
+          description: 'User requires privilege for target team: WEBHOOKS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - WEBHOOKS_WRITE
+    delete:
+      tags:
+      - webhooks
+      summary: Delete a Webhook
+      description: Requires the privilege [`WEBHOOKS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: deleteWebhook
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*': {}
+        '403':
+          description: 'User requires privilege for target team: WEBHOOKS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - WEBHOOKS_WRITE
+components:
+  schemas:
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
+      type: object
+      properties:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
+    Webhook:
+      type: object
+      properties:
+        teamId:
+          type: string
+          description: The identifier of the team to which this webhook belongs
+        identifier:
+          type: string
+          description: The identifier of this webhook
+        type:
+          type: string
+          description: The type of this webhook
+          enum:
+          - TASK
+          - STATUS_CHECK
+          - LOAD_GENERATOR_TRIGGER
+          - LOAD_GENERATOR_STATUS_CHECK
+          - PREREQUISITE
+        webhookEndpoint:
+          $ref: '#/components/schemas/WebhookEndpoint'
+        name:
+          type: string
+          description: The name of this webhook
+        description:
+          type: string
+          description: The description of this webhook
+        createdBy:
+          type: string
+          description: The identifier of the user that created this webhook
+        createdAt:
+          type: string
+          description: The time of creation of this webhook
+          format: date-time
+        updatedBy:
+          type: string
+          description: The identifier of the user that most recently updated this webhook (if applicable)
+        updatedAt:
+          type: string
+          description: The time of the most recent update for this webhook (if applicable)
+          format: date-time
+        isPrivateNetwork:
+          type: boolean
+          description: Is this webhook executed in a private network
+        triggerEvents:
+          type: array
+          description: The types of events that will trigger this webhook to fire
+          items:
+            type: string
+            description: The types of events that will trigger this webhook to fire
+            enum:
+            - INITIALIZING
+            - RUNNING
+            - FINISHED
+        state:
+          type: string
+          description: The state of this webhook (ACTIVE / DEACTIVATED
+          enum:
+          - ACTIVE
+          - DEACTIVATED
+        payload:
+          type: string
+          description: The payload to be sent when the webhook is invoked
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+        evaluationConfiguration:
+          $ref: '#/components/schemas/EvaluationConfiguration'
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            description: The tags associated with this webhook
+            items:
+              type: string
+              description: The tags associated with this webhook
+          description: The tags associated with this webhook
+    EvaluationConfiguration:
+      required:
+      - okStatusCodes
+      type: object
+      properties:
+        okLatencyMaxMs:
+          type: integer
+          description: The maximum latency in milliseconds for a successful status check
+          format: int32
+        okStatusCodes:
+          type: array
+          description: The list of successful response status codes for a successful status check
+          items:
+            type: string
+            description: The list of successful response status codes for a successful status check
+        responseBodyEvaluation:
+          $ref: '#/components/schemas/ResponseBodyEvaluation'
+      description: The configuration for evaluating the success/failure of a status check
+    TeamExternalIntegrationReference:
+      title: StatusCheckRequest.TeamExternalIntegrationReference
+      required:
+      - name
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of the external integration for the health check to be created/updated
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+        observabilityToolType:
+          type: string
+          description: The observability tool type of the external integration for the health check to be created/updated
+          enum:
+          - DATADOG
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - AWS
+          - AZURE
+        domain:
+          type: string
+          description: The domain of the observability tool type of the external integration for the health check to be created/updated
+        name:
+          type: string
+          description: The name of the external integration for the health check to be created/updated
+      description: Represents the configuration for referencing an external integration
+    HasCompareFunctionObject:
+      type: object
+    WebhookRequest:
+      required:
+      - method
+      - name
+      - uri
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The identifier of this webhook
+        name:
+          type: string
+          description: The name of the webhook to be created/updated
+        description:
+          type: string
+          description: The description of the webhook to be created/updated
+        isPrivateNetwork:
+          type: boolean
+        uri:
+          type: string
+          description: The URI of the webhook
+          format: url
+        method:
+          type: string
+          description: The HTTP request method to use when the webhook is invoked
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Optional request headers to be used when the webhook is invoked
+          description: Optional request headers to be used when the webhook is invoked
+        triggerEvents:
+          type: array
+          description: The list of attack events that should cause the webhook to be invoked
+          items:
+            type: string
+            description: The list of attack events that should cause the webhook to be invoked
+            enum:
+            - INITIALIZING
+            - RUNNING
+            - FINISHED
+        state:
+          type: string
+          description: State (active/deactivated) of the webhook
+          enum:
+          - ACTIVE
+          - DEACTIVATED
+        payload:
+          type: string
+          description: The payload to be sent when the webhook is invoked
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+        evaluationConfiguration:
+          $ref: '#/components/schemas/EvaluationConfiguration'
+        type:
+          type: string
+          description: The type of this webhook
+          enum:
+          - TASK
+          - STATUS_CHECK
+          - LOAD_GENERATOR_TRIGGER
+          - LOAD_GENERATOR_STATUS_CHECK
+          - PREREQUISITE
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            description: The tags associated with this webhook
+            items:
+              type: string
+              description: The tags associated with this webhook
+          description: The tags associated with this webhook
+    WebhookEndpoint:
+      type: object
+      properties:
+        uri:
+          type: string
+          description: The uri of this webhook endpoint
+          format: url
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: The request headers to be included when invoking this webhook endpoint
+          description: The request headers to be included when invoking this webhook endpoint
+        method:
+          type: string
+          description: The request method to be used when invoking this webhook endpoint
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+      description: The webhook endpoint configuration for this webhook

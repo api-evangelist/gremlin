@@ -1,0 +1,118 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents datadog API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: datadog
+  description: Read Datadog items
+paths:
+  /datadog/monitors/{monitorId}:
+    get:
+      tags:
+      - datadog
+      summary: Get a monitor by id.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getMonitor
+      parameters:
+      - name: monitorId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: datadogIntegrationName
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: domain
+        in: query
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns monitor if exists
+        '400':
+          description: Bad request
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '429':
+          description: Datadog rate limit exceeded
+        '404':
+          description: Datadog resource not found
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /datadog/monitors:
+    get:
+      tags:
+      - datadog
+      summary: Search for monitors.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: searchMonitors
+      parameters:
+      - name: searchString
+        in: query
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: perPage
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: sort
+        in: query
+        schema:
+          type: string
+      - name: datadogIntegrationName
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: domain
+        in: query
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns monitors
+        '400':
+          description: Bad request
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '429':
+          description: Datadog rate limit exceeded
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES

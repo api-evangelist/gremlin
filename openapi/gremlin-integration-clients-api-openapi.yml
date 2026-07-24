@@ -1,0 +1,265 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents integration-clients API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: integration-clients
+  description: Handle client integrations
+paths:
+  /integration-clients/{identifier}/activate:
+    put:
+      tags:
+      - integration-clients
+      summary: Activates an integration client.
+      description: Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: activate_1
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the integration client to modify.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '400':
+          description: Bad Request
+        '402':
+          description: Payment Required
+        '404':
+          description: Not Found
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_WRITE
+  /integration-clients/active:
+    get:
+      tags:
+      - integration-clients
+      summary: Get all active integration clients.
+      description: Requires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: active_3
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PrivateNetworkClient'
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_READ
+  /integration-clients:
+    get:
+      tags:
+      - integration-clients
+      summary: Returns all integration clients within a company or team.
+      description: 'This operation will return all active, idle, and recently inactive integration clients.
+
+        Requires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: all_3
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentitiesPrivateNetworkClient'
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_READ
+  /integration-clients/matches-tags:
+    post:
+      tags:
+      - integration-clients
+      summary: Returns list of clients which match the given tags
+      description: Requires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: matchesTags
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateNetworkClientTagMatchResponse'
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_READ
+  /integration-clients/{identifier}:
+    delete:
+      tags:
+      - integration-clients
+      summary: Deactivates an integration client.
+      description: 'This operation will deactivate the specified integration client. The specified client will no longer be able to be used as a target.
+
+        Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: revoke_2
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the integration client to modify.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_WRITE
+components:
+  schemas:
+    PrivateNetworkClientTagMatchResponse:
+      type: object
+      properties:
+        matchingAgents:
+          type: array
+          items:
+            type: string
+    IdentitiesPrivateNetworkClient:
+      type: object
+      properties:
+        active:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkClient'
+        idle:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkClient'
+        inactive:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkClient'
+    PrivateNetworkClient:
+      type: object
+      properties:
+        companyId:
+          type: string
+        identifier:
+          type: string
+        lastSeen:
+          type: string
+          format: date-time
+        orgId:
+          type: string
+        state:
+          type: string
+          enum:
+          - ACTIVE
+          - IDLE
+          - REVOKED
+          - INVITED
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        revokedBy:
+          type: string
+        authType:
+          type: string
+          enum:
+          - SECRET
+          - CERTIFICATE
+        osType:
+          type: string
+        osName:
+          type: string
+        osVersion:
+          type: string
+        usedProxy:
+          type: boolean
+        instanceStartTime:
+          type: string
+        lastActiveEmitted:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        active:
+          type: boolean
+        revoked:
+          type: boolean
+        idle:
+          type: boolean
+        gremlinClientVersion:
+          type: string

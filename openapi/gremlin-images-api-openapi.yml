@@ -1,0 +1,116 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents images API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: images
+  description: Manage images for different entities
+paths:
+  /images/{imageName}:
+    get:
+      tags:
+      - images
+      summary: retrieve a given image
+      description: Requires the privilege [`IMAGES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: get_5
+      parameters:
+      - name: imageName
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/octet-stream: {}
+        '403':
+          description: 'User requires privilege for target team: IMAGES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - IMAGES_READ
+    delete:
+      tags:
+      - images
+      summary: delete a given image
+      description: Requires the privilege [`IMAGES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: delete_2
+      parameters:
+      - name: imageName
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*': {}
+        '403':
+          description: 'User requires privilege for target team: IMAGES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - IMAGES_WRITE
+  /images/{parentId}/{imageName}:
+    get:
+      tags:
+      - images
+      summary: Retrieve a given image for an associated Scenario or Gameday
+      description: Requires the privilege [`IMAGES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getWithParent
+      parameters:
+      - name: imageName
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: parentId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/octet-stream: {}
+        '403':
+          description: 'User requires privilege for target team: IMAGES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - IMAGES_READ

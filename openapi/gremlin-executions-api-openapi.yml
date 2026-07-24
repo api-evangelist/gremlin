@@ -1,0 +1,295 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents executions API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: executions
+paths:
+  /executions:
+    get:
+      tags:
+      - executions
+      summary: Get a list of executions associated with an attack.
+      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: forAttack
+      parameters:
+      - name: taskId
+        in: query
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExecutionResponse'
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+components:
+  schemas:
+    ServiceStateStage:
+      type: object
+      properties:
+        stage:
+          type: string
+          enum:
+          - InvalidArgument
+          - TargetNotFound
+          - Successful
+          - UserHalted
+          - ClientAborted
+          - LostCommunication
+          - InitializationFailed
+          - TeardownFailed
+          - HaltFailed
+          - Failed
+          - Pending
+          - Distributed
+          - Initializing
+          - HaltDistributed
+          - InterruptTriggered
+          - RollbackTriggered
+          - RollbackStarted
+          - Running
+          - TearingDown
+          - Halt
+        timestamp:
+          type: string
+          format: date-time
+      description: A collection of states
+    ExecutionResponse:
+      title: Execution
+      type: object
+      properties:
+        orgId:
+          type: string
+          description: The teamId associated with the execution
+        guid:
+          type: string
+          description: Unique identifier associated with the execution
+        targetType:
+          type: string
+          enum:
+          - Host
+          - Container
+          - Docker
+          - Kubernetes
+        infraTarget:
+          type: object
+          additionalProperties:
+            type: object
+        serviceStates:
+          type: array
+          description: A collection of states
+          items:
+            $ref: '#/components/schemas/ServiceStateStage'
+        clientId:
+          type: string
+          description: The unique agent identifier associated with the execution. For host-level experiments, this value represents the agent on the host where the execution is running. For container-level experiments, this value represents the agent that is running on the same host as the targeted container.
+        clientStates:
+          type: array
+          description: A collection of states an execution goes through during its lifecycle, along with their corresponding timestamps. This list can be used to create a timeline of what happened to a particular target during an experiment. Meanings of specific state values can be found at https://www.gremlin.com/docs/fault-injection-experiments#experiment-stages
+          items:
+            $ref: '#/components/schemas/ClientState'
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        multiSelectLabels:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        clientStatus:
+          type: string
+          enum:
+          - HEALTHY
+          - IMPAIRED
+          - UNHEALTHY
+        clientVersion:
+          type: string
+        error:
+          type: string
+          description: If any critical error occurs during the execution's lifecycle, it is stored here.
+        output:
+          type: string
+          description: Raw logging output from the gremlin experiment process while the execution runs.
+        infraCommand:
+          type: object
+          additionalProperties:
+            type: object
+        guestId:
+          type: string
+          description: If execution is running against a container target, this field is populated with the containerId
+        createSource:
+          type: string
+          enum:
+          - WebApp
+          - Api
+          - Scheduled
+          - Manual
+          - Spinnaker
+          - Concord
+          - GremlinFeeder
+          - GremlinSdkPython
+          - Scenario
+          - Chao
+          - K8sBackend
+          - Website
+          - Neotys
+          - IntegrationClient
+          - Validation
+        attackContainerId:
+          type: string
+        stage:
+          type: string
+          enum:
+          - InvalidArgument
+          - TargetNotFound
+          - Successful
+          - UserHalted
+          - ClientAborted
+          - LostCommunication
+          - InitializationFailed
+          - TeardownFailed
+          - HaltFailed
+          - Failed
+          - Pending
+          - Distributed
+          - Initializing
+          - HaltDistributed
+          - InterruptTriggered
+          - RollbackTriggered
+          - RollbackStarted
+          - Running
+          - TearingDown
+          - Halt
+        stageLifecycle:
+          type: string
+          description: One of `Active`, `Halting`, `Complete`, or `Error`, this field describes where this execution is in its overall lifecycle. Values `Complete` and `Error` indicate the execution has finished.
+          enum:
+          - Active
+          - Halting
+          - Complete
+          - Error
+        owningTeamId:
+          type: string
+        runasUser:
+          type: string
+        taskId:
+          type: string
+        kind:
+          type: string
+          enum:
+          - WebApp
+          - Api
+          - Scheduled
+          - Manual
+          - Spinnaker
+          - Concord
+          - GremlinFeeder
+          - GremlinSdkPython
+          - Scenario
+          - Chao
+          - K8sBackend
+          - Website
+          - Neotys
+          - IntegrationClient
+          - Validation
+        args:
+          type: array
+          items:
+            type: string
+        startTime:
+          type: string
+          description: The time at which this execution was created. For more fine-grained information about when exactly impact was applied, see `client_states`.
+          format: date-time
+        endTime:
+          type: string
+          description: The time at which this execution finished. For more fine-grained information about when exactly impact was removed, see `client_states`.
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        eventCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventCode'
+        metricsLinks:
+          type: object
+          additionalProperties:
+            type: string
+        scopeDetails:
+          type: array
+          description: Detailed information about the scope of this experiment. This contains information such as which containerId or Linux namespace is targeted.
+          items:
+            $ref: '#/components/schemas/ScopeDetail'
+      description: An execution represents a portion of an experiment, run against a specific target. There is one target associated with every target of an experiment.
+    ScopeDetail:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+      description: Detailed information about the scope of this experiment. This contains information such as which containerId or Linux namespace is targeted.
+    EventCode:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        code:
+          type: string
+        message:
+          type: string
+        link:
+          type: string
+    ClientState:
+      type: object
+      properties:
+        stage:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+      description: A collection of states an execution goes through during its lifecycle, along with their corresponding timestamps. This list can be used to create a timeline of what happened to a particular target during an experiment. Meanings of specific state values can be found at https://www.gremlin.com/docs/fault-injection-experiments#experiment-stages

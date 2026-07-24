@@ -1,0 +1,1853 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents services API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: services
+  description: Get metrics about intelligent health check target for a service
+paths:
+  /services/{serviceId}/metrics/{awsResource}:
+    get:
+      tags:
+      - services
+      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getMetrics
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: awsResource
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: startTime
+        in: query
+        schema:
+          type: integer
+          format: int64
+      - name: endTime
+        in: query
+        schema:
+          type: integer
+          format: int64
+      - name: statusCheck
+        in: query
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MetricResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
+  /services/{serviceId}/dependencies:
+    get:
+      tags:
+      - services
+      summary: Paginated endpoint for listing active dependencies for a given service
+      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getActiveDependencies
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+        example: None (unlimited)
+      - name: pageToken
+        in: query
+        description: Token corresponding to the last page of customer services retrieved. Pass the pageToken to get the next page of customer services. Only pageNumber or pageToken accepted along with pageSize
+        schema:
+          type: string
+        example: None (returns first page)
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponseDependencyResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
+    post:
+      tags:
+      - services
+      summary: Manually define a new dependency for a given Service
+      description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: defineDependency
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DefineDependencyRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DependencyResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_WRITE
+  /services/{serviceId}/dependencies/discovered:
+    delete:
+      tags:
+      - services
+      summary: Deletes all discovered dependencies, including those marked as ignored, for the specified service. Halts any active runs if necessary and updates the service's reliability score.
+      description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: deleteAllDiscoveredDependencies
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: confirm
+        in: query
+        schema:
+          type: boolean
+          default: false
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_WRITE
+  /services/{serviceId}/dependencies/ignored:
+    get:
+      tags:
+      - services
+      summary: Paginated endpoint for listing ignored dependencies for a given service
+      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getIgnoredDependencies
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+        example: None (unlimited)
+      - name: pageToken
+        in: query
+        description: Token corresponding to the last page of customer services retrieved. Pass the pageToken to get the next page of customer services. Only pageNumber or pageToken accepted along with pageSize
+        schema:
+          type: string
+        example: None (returns first page)
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponseDependencyResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
+    delete:
+      tags:
+      - services
+      summary: Delete all dependencies that are marked ignored
+      description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: deleteAllIgnoredDependencies
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_WRITE
+  /services/{serviceId}/dependencies/{dependencyId}:
+    delete:
+      tags:
+      - services
+      summary: Mark a dependency as ignored, removing it from the list of active dependencies and reliability score.
+      description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: deleteDependency
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: dependencyId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*': {}
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_WRITE
+    patch:
+      tags:
+      - services
+      summary: Update a dependency's name and/or isSPOF flag. We deliberately do not allow updating a dependency's endpoint, i.e. address and port, because updating either of these values effectively changes the dependency. To change these values, refer to delete and define APIs.
+      description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: updateDependency
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: dependencyId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/UpdateDependencyRequest'
+        required: true
+      responses:
+        '200':
+          description: Updates dependency's name and/or isSPOF flag
+        '400':
+          description: Bad Request
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+      security:
+      - privilege:
+        - SERVICES_WRITE
+  /services/{serviceId}/dependencies/ignored/{dependencyId}:
+    delete:
+      tags:
+      - services
+      summary: Delete a dependency that is marked as ignored
+      description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: deleteIgnoredDependency
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: dependencyId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*': {}
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_WRITE
+  /services/{serviceId}/dependencies/{dependencyId}/name:
+    put:
+      tags:
+      - services
+      description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: renameDependency
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: dependencyId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              maxLength: 253
+              minLength: 0
+              type: string
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*': {}
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      deprecated: true
+      security:
+      - privilege:
+        - SERVICES_WRITE
+  /services:
+    get:
+      tags:
+      - services
+      summary: Paginated endpoint for fetching services for a given team
+      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getAllServices
+      parameters:
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+        example: None (unlimited)
+      - name: pageToken
+        in: query
+        description: Token corresponding to the last page of customer services retrieved. Pass the pageToken to get the next page of customer services
+        schema:
+          type: string
+        example: None (returns first page)
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponseUserDefinedServiceResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
+    post:
+      tags:
+      - services
+      summary: Create a service
+      description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: createService
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDefinedServiceRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: string
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_WRITE
+    patch:
+      tags:
+      - services
+      summary: Bulk add a given Status Check to all services
+      description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: bulkAddHealthChecksToServices
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: Bulk updates services with health checks
+        '400':
+          description: Bad Request
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+      security:
+      - privilege:
+        - SERVICES_WRITE
+  /services/bulk-create-with-load-balancers:
+    post:
+      tags:
+      - services
+      summary: Bulk create services based on AWS Load balancers
+      description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: bulkCreateWithLoadBalancers
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkCreateServicesFromLoadBalancersRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_WRITE
+  /services/bulk-delete:
+    post:
+      tags:
+      - services
+      summary: Bulk delete services
+      description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: bulkDeleteServices
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkDeleteRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_WRITE
+  /services/service-creation-readiness/clients:
+    post:
+      tags:
+      - services
+      summary: Retrieves clients for a potential service definition
+      description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: computeServiceReadinessAgentsFromPodUIDs
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceReadinessAgentsFromPodUIDsRequest'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceReadinessClientsResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_WRITE
+  /services/{serviceId}:
+    get:
+      tags:
+      - services
+      summary: Retrieve a service by id
+      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getService
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '404':
+          description: Not Found
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
+    delete:
+      tags:
+      - services
+      summary: Permanently delete a service
+      description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: delete_6
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_WRITE
+    patch:
+      tags:
+      - services
+      summary: Update a service, editing some fields
+      description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: update_4
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: Updates a Service.
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_WRITE
+  /services/all-for-company:
+    get:
+      tags:
+      - services
+      summary: Paginated endpoint for fetching services for a given company
+      description: Requires the privilege [`DISASTER_RECOVERY_TESTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getAllServicesForCompany
+      parameters:
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+          default: 1000
+        example: None (defaults to 1000)
+      - name: pageToken
+        in: query
+        description: Token corresponding to the last page of customer services retrieved. Pass the pageToken to get the next page of customer services
+        schema:
+          type: string
+        example: None (returns first page)
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponseUserDefinedServiceResponse'
+        '403':
+          description: 'User requires privilege: DISASTER_RECOVERY_TESTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - DISASTER_RECOVERY_TESTS_WRITE
+  /services/{id}/risk-summary:
+    get:
+      tags:
+      - services
+      summary: Load risk evaluations for service. Re-evaluate risks if service has been deployed since the last evaluation.
+      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getRiskSummary
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailedServiceRiskSummaryResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
+  /services/service-creation-readiness/{targetType}:
+    get:
+      tags:
+      - services
+      description: Requires the privilege [`SERVICES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getServiceCreationReadiness
+      parameters:
+      - name: targetType
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceCreationReadinessForOwnedAndSharedAssetsResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      deprecated: true
+      security:
+      - privilege:
+        - SERVICES_WRITE
+  /services/{serviceId}/score:
+    get:
+      tags:
+      - services
+      summary: Retrieve a service's score in plain/text
+      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getServiceScore
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '404':
+          description: Not Found
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
+  /services/{serviceId}/status-checks:
+    get:
+      tags:
+      - services
+      summary: Fetch Status Checks associated with a given service
+      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getStatusChecksForService
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceStatusCheckResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
+  /services/{serviceId}/baseline:
+    post:
+      tags:
+      - services
+      summary: Run RM tests for a given service
+      description: "By default this endpoint initiates all RM Tests in your Test Suite for this service and every one of it's dependencies. \nYou may also supply a list of RM tests in the body if you which to constrain to a subset of all tests, but they *must* be in the active Test Suite for your team\nRequires the privilege [`SERVICES_RUN`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+      operationId: runAllTests
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartBaselineRequest'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestSeriesRunResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_RUN'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_RUN
+components:
+  schemas:
+    PagedResponseDependencyResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DependencyResponse'
+    ServiceStatusCheckResponse:
+      type: object
+      properties:
+        serviceStatusChecks:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceStatusCheck'
+        autoGremlinAwsStatusChecks:
+          type: array
+          items:
+            $ref: '#/components/schemas/GremlinAwsStatusCheckMetadata'
+        loadBalancerStates:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoadBalancerState'
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body
+    UserDefinedServiceResponse:
+      type: object
+      properties:
+        teamId:
+          type: string
+        serviceId:
+          type: string
+        targetingStrategy:
+          $ref: '#/components/schemas/TargetingStrategy'
+        applicationSelector:
+          $ref: '#/components/schemas/ApplicationSelector'
+        processId:
+          type: string
+        processName:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        modifiedDate:
+          type: string
+          format: date-time
+        statusCheckIds:
+          type: array
+          items:
+            type: string
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        serviceOwner:
+          $ref: '#/components/schemas/ServiceOwner'
+        scheduleSettings:
+          $ref: '#/components/schemas/ScheduleSettings'
+        schedulableTests:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestEligibleToRun'
+        autoCreatingJiraTicketsEnabled:
+          type: boolean
+        defaultJiraIssueFields:
+          $ref: '#/components/schemas/DefaultJiraIssueFields'
+        jiraUserId:
+          type: string
+        loadGenerators:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoadGenerator'
+        riskSummaryStats:
+          $ref: '#/components/schemas/RiskSummaryStats'
+        awsTargets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AwsTarget'
+        teamOwningProcess:
+          type: string
+        cachedScore:
+          type: number
+          format: double
+        intelligentHealthCheckTargetIds:
+          type: array
+          items:
+            type: string
+        eligibleForAWSIntelligentHealthCheck:
+          type: boolean
+        eligibleForAzureIntelligentHealthCheck:
+          type: boolean
+        eligibleForGCPIntelligentHealthCheck:
+          type: boolean
+        eligibleForFFProxyIntelligentHealthCheck:
+          type: boolean
+        enabledGremlinAwsStatusCheck:
+          type: boolean
+        eligibleForGremlinAwsStatusCheck:
+          type: boolean
+        createdFromOnboarding:
+          type: boolean
+    ServiceCreationReadinessResponse:
+      type: object
+      properties:
+        hasProcesses:
+          type: boolean
+        processCollectionOn:
+          type: boolean
+    TestSeriesRunResponse:
+      type: object
+      properties:
+        teamId:
+          type: string
+        serviceId:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        pauseUntil:
+          type: string
+          format: date-time
+        pauseReason:
+          type: string
+        tests:
+          type: array
+          items:
+            type: string
+        currentTestIndex:
+          type: integer
+          format: int64
+        createdBy:
+          type: string
+        state:
+          type: string
+          enum:
+          - PENDING
+          - ACTIVE
+          - FINISHED
+          - HALTED
+          - FAILED
+    ServiceReadinessClientsResponse:
+      type: object
+      properties:
+        clientIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+    Graph:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        numOfDataPoints:
+          type: integer
+          format: int32
+        statsByDate:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatsByDateTime'
+    ServiceStatusCheck:
+      type: object
+      properties:
+        id:
+          type: string
+        integration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+        name:
+          type: string
+        evaluationConfiguration:
+          $ref: '#/components/schemas/EvaluationConfiguration'
+        isContinuous:
+          type: boolean
+        isAutogenerated:
+          type: boolean
+        description:
+          type: string
+        autoGeneratedFromIdentifier:
+          type: string
+        category:
+          type: string
+          enum:
+          - ERRORS
+          - LATENCY
+          - REQUESTS
+          - UNKNOWN
+        categoryAudit:
+          $ref: '#/components/schemas/CategoryAudit'
+    HasCompareFunctionObject:
+      type: object
+    StatsByDateTime:
+      type: object
+      properties:
+        trackingDate:
+          type: string
+          format: date-time
+        value:
+          type: number
+          format: double
+    RiskSummaryStats:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+        atRisk:
+          type: integer
+          format: int32
+        previousIntervalAtRisk:
+          type: integer
+          format: int32
+        evaluationState:
+          type: string
+          enum:
+          - RISKS_NOT_SUPPORTED
+          - NO_DEPLOYMENT_FOUND
+          - EVALUATED
+          - RISKS_NOT_INCLUDED
+    TestEligibleToRun:
+      type: object
+      properties:
+        reliabilityTestId:
+          type: string
+        dependencyId:
+          type: string
+        failureFlagName:
+          type: string
+        status:
+          type: string
+          enum:
+          - Passed
+          - RunOnce
+          - Always
+    LoadBalancerState:
+      type: object
+      properties:
+        accountId:
+          type: string
+        name:
+          type: string
+        arn:
+          type: string
+        state:
+          type: string
+          enum:
+          - ACTIVE
+          - IDLE
+          - DISAPPEARED
+    ServiceFromLoadBalancerRequest:
+      required:
+      - arn
+      - name
+      - targetingStrategy
+      type: object
+      properties:
+        arn:
+          type: string
+        name:
+          type: string
+        targetingStrategy:
+          $ref: '#/components/schemas/TargetingStrategy'
+    Trigger:
+      required:
+      - dayOfWeek
+      - scheduleWindows
+      type: object
+      properties:
+        dayOfWeek:
+          type: string
+          enum:
+          - M
+          - T
+          - W
+          - Th
+          - F
+          - S
+          - Su
+        scheduleWindows:
+          maxItems: 1
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleWindow'
+    UpdateDependencyRequest:
+      type: object
+      properties:
+        name:
+          maxLength: 253
+          minLength: 1
+          type: string
+          description: Updated name of dependency
+        isSpof:
+          type: boolean
+          description: Boolean to denote if a dependency is a single point of failure
+    TeamExternalIntegrationReference:
+      title: StatusCheckRequest.TeamExternalIntegrationReference
+      required:
+      - name
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of the external integration for the health check to be created/updated
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+        observabilityToolType:
+          type: string
+          description: The observability tool type of the external integration for the health check to be created/updated
+          enum:
+          - DATADOG
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - AWS
+          - AZURE
+        domain:
+          type: string
+          description: The domain of the observability tool type of the external integration for the health check to be created/updated
+        name:
+          type: string
+          description: The name of the external integration for the health check to be created/updated
+      description: Represents the configuration for referencing an external integration
+    DefineDependencyRequest:
+      required:
+      - endpoints
+      - name
+      type: object
+      properties:
+        endpoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/DependencyEndpoint'
+        name:
+          maxLength: 253
+          minLength: 1
+          type: string
+        discoveredDependencyId:
+          type: string
+        isSpof:
+          type: boolean
+          description: Boolean to denote if a dependency is a single point of failure
+    DefaultJiraIssueFields:
+      required:
+      - assignee
+      - issuetype
+      - priority
+      - project
+      type: object
+      properties:
+        summary:
+          type: string
+        description:
+          type: string
+        issuetype:
+          type: string
+        assignee:
+          type: string
+        priority:
+          type: string
+        project:
+          type: string
+        labels:
+          type: array
+          items:
+            type: string
+    SpofAudit:
+      type: object
+      properties:
+        markedAsSpofOn:
+          type: string
+          format: date-time
+        markedAsSpofBy:
+          type: string
+    LoadGenerator:
+      type: object
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        webhookStartLoadTriggerId:
+          type: string
+        webhookStatusCheckId:
+          type: string
+        webhookStopLoadTriggerId:
+          type: string
+        active:
+          type: boolean
+        loadGeneratorWebhooks:
+          type: array
+          items:
+            type: string
+    BulkDeleteRequest:
+      required:
+      - serviceIds
+      type: object
+      properties:
+        serviceIds:
+          maxItems: 2147483647
+          minItems: 1
+          type: array
+          items:
+            type: string
+    ServiceOwner:
+      type: object
+      properties:
+        identifier:
+          type: string
+    DetailedServiceRiskSummaryResponse:
+      type: object
+      properties:
+        serviceId:
+          type: string
+        evaluations:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskEvaluationResponse'
+        lastEvaluatedAt:
+          type: string
+          format: date-time
+    BulkUpdateRequest:
+      required:
+      - serviceIds
+      - statusCheckIdsToAttach
+      type: object
+      properties:
+        serviceIds:
+          maxItems: 2147483647
+          minItems: 1
+          type: array
+          items:
+            type: string
+        statusCheckIdsToAttach:
+          maxItems: 2147483647
+          minItems: 1
+          type: array
+          items:
+            type: string
+    ThresholdStrategy:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    TargetingStrategy:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    EvaluationConfiguration:
+      required:
+      - okStatusCodes
+      type: object
+      properties:
+        okLatencyMaxMs:
+          type: integer
+          description: The maximum latency in milliseconds for a successful status check
+          format: int32
+        okStatusCodes:
+          type: array
+          description: The list of successful response status codes for a successful status check
+          items:
+            type: string
+            description: The list of successful response status codes for a successful status check
+        responseBodyEvaluation:
+          $ref: '#/components/schemas/ResponseBodyEvaluation'
+      description: The configuration for evaluating the success/failure of a status check
+    BulkCreateServicesFromLoadBalancersRequest:
+      type: object
+      properties:
+        serviceFromLoadBalancerRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceFromLoadBalancerRequest'
+        accountId:
+          type: string
+    StartBaselineRequest:
+      title: StartBaselineRequest
+      type: object
+      properties:
+        tests:
+          type: array
+          items:
+            type: string
+      description: Represents a request to run all tests
+    ServiceUpdateRequest:
+      type: object
+      properties:
+        name:
+          maxLength: 64
+          minLength: 0
+          type: string
+        description:
+          maxLength: 1024
+          minLength: 0
+          type: string
+        statusCheckIds:
+          type: array
+          items:
+            type: string
+        scheduleSettings:
+          $ref: '#/components/schemas/ScheduleSettings'
+        autoCreatingJiraTicketsEnabled:
+          type: boolean
+        defaultJiraIssueFields:
+          $ref: '#/components/schemas/DefaultJiraIssueFields'
+        loadGenerators:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoadGenerator'
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        awsTargetsArn:
+          type: array
+          items:
+            type: string
+        serviceOwner:
+          $ref: '#/components/schemas/ServiceOwner'
+        intelligentHealthCheckTargetIds:
+          type: array
+          items:
+            type: string
+        enabledGremlinAwsStatusCheck:
+          type: boolean
+    ApplicationSelector:
+      required:
+      - applicationName
+      type: object
+      properties:
+        applicationName:
+          type: string
+    DependencyEndpoint:
+      type: object
+      properties:
+        address:
+          type: string
+        port:
+          type: string
+    DependencyResponse:
+      type: object
+      properties:
+        serviceId:
+          type: string
+        guid:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        ignored:
+          type: boolean
+        characteristics:
+          type: object
+          additionalProperties:
+            type: string
+        teamId:
+          type: string
+        discoveredPorts:
+          type: array
+          items:
+            type: integer
+            format: int32
+        spofAudit:
+          $ref: '#/components/schemas/SpofAudit'
+        createdBy:
+          type: string
+        updatedBy:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        lastSeenAt:
+          type: string
+          format: date-time
+        isSpof:
+          type: boolean
+    ScheduleSettings:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        scheduleType:
+          type: string
+          enum:
+          - OnlyOnce
+          - Random
+        triggerType:
+          type: string
+          enum:
+          - Passed
+          - RunOnce
+          - Always
+        triggers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Trigger'
+    PagedResponseUserDefinedServiceResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDefinedServiceResponse'
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
+      type: object
+      properties:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
+    MetricDataQuery:
+      type: object
+    UserDefinedServiceRequest:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        targetingStrategy:
+          $ref: '#/components/schemas/TargetingStrategy'
+        applicationSelector:
+          $ref: '#/components/schemas/ApplicationSelector'
+        statusCheckIds:
+          type: array
+          items:
+            type: string
+        scheduleSettings:
+          $ref: '#/components/schemas/ScheduleSettings'
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        serviceOwner:
+          $ref: '#/components/schemas/ServiceOwner'
+        startBaselineRequest:
+          $ref: '#/components/schemas/StartBaselineRequest'
+        awsTargetsArn:
+          type: array
+          items:
+            type: string
+        intelligentHealthCheckTargetIds:
+          type: array
+          items:
+            type: string
+        enabledGremlinAwsStatusCheck:
+          type: boolean
+        originatingScenarioId:
+          type: string
+    AwsHealthCheckDefinition:
+      type: object
+      properties:
+        resultId:
+          type: string
+        evaluationQuery:
+          type: string
+        evaluationComparator:
+          type: string
+          enum:
+          - EQU
+          - EQUALS
+          - NEQ
+          - NOT_EQUALS
+          - LES
+          - LESS_THAN
+          - LEQ
+          - LESS_THAN_OR_EQUAL_TO
+          - GRT
+          - GREATER_THAN
+          - GEQ
+          - GREATER_THAN_OR_EQUAL_TO
+        metricDataQueries:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetricDataQuery'
+        thresholdStrategy:
+          $ref: '#/components/schemas/ThresholdStrategy'
+    ScheduleWindow:
+      required:
+      - end
+      - start
+      type: object
+      properties:
+        start:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+        end:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+    AwsTarget:
+      type: object
+      properties:
+        arn:
+          type: string
+        name:
+          type: string
+        resourceType:
+          type: string
+          enum:
+          - LOAD_BALANCER
+          - TARGET_GROUP
+          - AUTO_SCALING_GROUP
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        dnsName:
+          type: string
+        region:
+          type: string
+        suggested:
+          type: boolean
+    CategoryAudit:
+      type: object
+      properties:
+        categorySetOn:
+          type: string
+          format: date-time
+        categorySetBy:
+          type: string
+    ServiceCreationReadinessForOwnedAndSharedAssetsResponse:
+      type: object
+      properties:
+        hasProcesses:
+          type: boolean
+        processCollectionOn:
+          type: boolean
+        sharedAssetsReadiness:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ServiceCreationReadinessResponse'
+    ServiceReadinessAgentsFromPodUIDsRequest:
+      type: object
+      properties:
+        owningTeamId:
+          type: string
+        podUIDs:
+          maxItems: 2147483647
+          minItems: 1
+          type: array
+          items:
+            type: string
+    MetricResponse:
+      type: object
+      properties:
+        awsResource:
+          type: string
+        graphs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Graph'
+    GremlinAwsStatusCheckMetadata:
+      type: object
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        definition:
+          $ref: '#/components/schemas/AwsHealthCheckDefinition'
+        enabled:
+          type: boolean
+        category:
+          type: string
+          enum:
+          - ERRORS
+          - LATENCY
+          - REQUESTS
+          - UNKNOWN
+    RiskEvaluationResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        evaluatedAt:
+          type: string
+          format: date-time
+        notes:
+          type: string
+        document:
+          type: string
+        isAtRisk:
+          type: boolean

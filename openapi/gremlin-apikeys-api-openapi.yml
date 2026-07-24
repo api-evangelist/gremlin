@@ -1,0 +1,260 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents apikeys API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: apikeys
+  description: Create, delete, activate, deactivate and list apikeys
+paths:
+  /apikeys/{identifier}/activate:
+    put:
+      tags:
+      - apikeys
+      summary: Un-Revoke an existing API Key
+      description: Requires the privilege [`API_KEYS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: activate_2
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*': {}
+        '403':
+          description: 'User requires privilege: API_KEYS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - API_KEYS_WRITE
+  /apikeys:
+    get:
+      tags:
+      - apikeys
+      summary: List all API Keys
+      description: Requires the privilege [`API_KEYS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: listAll
+      parameters: []
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiKeyJson'
+        '403':
+          description: 'User requires privilege: API_KEYS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - API_KEYS_READ
+    post:
+      tags:
+      - apikeys
+      summary: Create a new API Key
+      description: Requires the privilege [`API_KEYS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: createNew
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApiKeysRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: API_KEYS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - API_KEYS_WRITE
+  /apikeys/{identifier}/expiration:
+    put:
+      tags:
+      - apikeys
+      summary: Set a new expiration on key
+      description: Requires the privilege [`API_KEYS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: expiration
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: expiresAt
+        in: query
+        schema:
+          type: string
+          format: date-time
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*': {}
+        '403':
+          description: 'User requires privilege: API_KEYS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - API_KEYS_WRITE
+  /apikeys/active:
+    get:
+      tags:
+      - apikeys
+      summary: List active API Keys
+      description: Requires the privilege [`API_KEYS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: listActive
+      parameters: []
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiKeyJson'
+        '403':
+          description: 'User requires privilege: API_KEYS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - API_KEYS_READ
+  /apikeys/all-for-company:
+    get:
+      tags:
+      - apikeys
+      summary: List all API Keys for company
+      description: Requires the privilege [`ALL_API_KEYS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: listAllForCompany
+      parameters: []
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiKeyJson'
+        '403':
+          description: 'User requires privilege: ALL_API_KEYS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - ALL_API_KEYS_READ
+  /apikeys/{identifier}:
+    delete:
+      tags:
+      - apikeys
+      summary: Revoke an existing API Key
+      description: Requires the privilege [`API_KEYS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: revoke_3
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*': {}
+        '403':
+          description: 'User requires privilege: API_KEYS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - API_KEYS_WRITE
+components:
+  schemas:
+    ApiKeyJson:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The identifier of this API key.
+        description:
+          type: string
+          description: The description for the API key.
+        created_at:
+          type: string
+          description: The date when this API key was created.
+          format: date-time
+        created_by:
+          type: string
+          description: The user who created this API key.
+        expires_at:
+          type: string
+          description: The date when this API key expires.
+          format: date-time
+        revoked_by:
+          type: string
+          description: The user who revoked this API key.
+        state:
+          type: string
+          description: The current state this API key is in.
+          enum:
+          - ACTIVE
+          - IDLE
+          - REVOKED
+          - INVITED
+        value:
+          type: string
+          description: The API keys value. The core piece that is used for authentication
+        org_id:
+          type: string
+          description: The identifier of the team this API key is tied to.
+        updated_at:
+          type: string
+          description: The date this API key was last updated.
+          format: date-time
+        last_used_at:
+          type: string
+          description: The date this API key was last used.
+          format: date-time
+    CreateApiKeysRequest:
+      required:
+      - identifier
+      type: object
+      properties:
+        identifier:
+          maxLength: 100
+          minLength: 0
+          pattern: ^[a-zA-Z0-9 -]*$
+          type: string
+        description:
+          maxLength: 256
+          minLength: 0
+          type: string
+        expiresAt:
+          type: string
+          format: date-time

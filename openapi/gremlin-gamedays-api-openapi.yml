@@ -1,0 +1,1175 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents gamedays API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: gamedays
+  description: Create, update and run GameDays
+paths:
+  /gamedays:
+    get:
+      tags:
+      - gamedays
+      summary: Get all GameDays by team.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getGameDaysForTeam
+      parameters:
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+        example: None (unlimited)
+      - name: pageNumber
+        in: query
+        description: Get the specific page of GameDays. Only pageNumber or pageToken accepted along with pageSize
+        schema:
+          type: integer
+          format: int32
+        example: 1
+      - name: pageToken
+        in: query
+        description: Token corresponding to the last page of GameDays. Pass the pageToken to get the next page of GameDays. Only pageNumber or pageToken accepted along with pageSize
+        schema:
+          type: string
+        example: None (returns first page)
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get all GameDays by team.
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+    post:
+      tags:
+      - gamedays
+      summary: Create new GameDay plan.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: createGameDayPlan
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGameDayPlanRequest'
+        required: true
+      responses:
+        '201':
+          description: New GameDay plan created
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /gamedays/{gameDayId}/summary/images/{imageName}:
+    delete:
+      tags:
+      - gamedays
+      summary: Remove an image associated with a gameday
+      description: 'Deletes a specific image associated with a gameday.  This does delete the image on the backend so there is *no* recovery
+
+        Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: delete_1
+      parameters:
+      - name: imageName
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: gameDayId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*': {}
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+    patch:
+      tags:
+      - gamedays
+      summary: Upload an image to a given gameday
+      description: "This takes an image as a multipart/form-data (parameter name \"file\") and uploads it to Gremlin's backend and associates it with a given Gameday. \nNOTE: imageNames must be S3 compatible strings ([a-zA-Z0-9!-_'\\(\\)]) with under 1000 characters (including file type)\nRequires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+      operationId: put_1
+      parameters:
+      - name: imageName
+        in: path
+        required: true
+        schema:
+          maxLength: 987
+          minLength: 0
+          pattern: '[a-zA-Z0-9\!\-\_\.\*\''\(\)\ ]+'
+          type: string
+      - name: gameDayId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  $ref: '#/components/schemas/FormDataContentDisposition'
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GameDayResponse'
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /gamedays/{gameDayId}/summary/export:
+    get:
+      tags:
+      - gamedays
+      summary: Exports GameDay Summary PDF file.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: export
+      parameters:
+      - name: gameDayId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: GameDay Summary PDF file
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /gamedays/{gameDayId}:
+    get:
+      tags:
+      - gamedays
+      summary: Get GameDay details by id.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getGameDay
+      parameters:
+      - name: gameDayId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get GameDay details by id
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+    patch:
+      tags:
+      - gamedays
+      summary: Updates a GameDay plan.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: updateGameDay
+      parameters:
+      - name: gameDayId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGameDayPlanRequest'
+        required: true
+      responses:
+        '200':
+          description: Updates a GameDay plan.
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /gamedays/{gameDayId}/runs/{scenarioId}:
+    post:
+      tags:
+      - gamedays
+      summary: Runs specific Scenario associated with GameDay.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: runScenarioForGameDay
+      parameters:
+      - name: gameDayId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: scenarioId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: scenarioVersion
+        in: query
+        description: Expected version of scenario. If the current version is different this will receive a 418 with the correct version
+        schema:
+          type: integer
+          format: int32
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Runs specific Scenario associated with GameDay
+        '404':
+          description: Not found
+        '409':
+          description: Conflicting execution in progress
+        '418':
+          description: Mismatch of current version of scenario with the one passed
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /gamedays/{gameDayId}/summary:
+    patch:
+      tags:
+      - gamedays
+      summary: Updates a GameDay summary.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: updateGameDaySummary
+      parameters:
+      - name: gameDayId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGameDaySummaryRequest'
+        required: true
+      responses:
+        '200':
+          description: Updates a GameDay summary.
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+components:
+  schemas:
+    ExternalActionNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          externalActionRequest:
+            $ref: '#/components/schemas/ExternalActionRequest'
+          state:
+            $ref: '#/components/schemas/State'
+          stateDetails:
+            $ref: '#/components/schemas/ExternalCallFailedException'
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body
+    StatusCheckNodeRequest:
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    ScenarioRunResults:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - Passed
+          - Failed
+          - Unsure
+        incidentDetected:
+          type: boolean
+        incidentMitigated:
+          type: boolean
+    GameDayPlan:
+      type: object
+      properties:
+        name:
+          type: string
+        goal:
+          type: string
+        type:
+          type: string
+          enum:
+          - Exploratory
+          - TrainTeams
+          - ValidatePastOutages
+          - TuneObservability
+          - Other
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        participants:
+          type: array
+          items:
+            $ref: '#/components/schemas/Participant'
+        scenarios:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioSummary'
+        environment:
+          type: string
+        dashboards:
+          type: array
+          items:
+            type: string
+            format: uri
+        runbooks:
+          type: array
+          items:
+            type: string
+            format: uri
+    GameDaySummary:
+      type: object
+      properties:
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        notes:
+          type: string
+        actions:
+          type: string
+        gameDayImages:
+          type: array
+          items:
+            type: string
+    ScenarioRunResponse:
+      type: object
+      properties:
+        scenarioId:
+          type: string
+        runNumber:
+          type: integer
+          format: int64
+        orgId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        hypothesis:
+          type: string
+        stageInfo:
+          type: object
+          additionalProperties:
+            type: object
+        createdBy:
+          type: string
+        createdByFirstName:
+          type: string
+        createdByLastName:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        createSource:
+          type: string
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        graph:
+          $ref: '#/components/schemas/ScenarioRunGraph'
+        resultNotes:
+          type: string
+        resultFlags:
+          type: object
+          additionalProperties:
+            type: boolean
+        results:
+          $ref: '#/components/schemas/ScenarioRunResults'
+        scheduleId:
+          type: string
+        scenarioEditCounterAtRunTime:
+          type: integer
+          format: int32
+        scenarioRunImages:
+          type: array
+          items:
+            type: string
+        gameDayInfo:
+          $ref: '#/components/schemas/GameDayInfo'
+        passCriteria:
+          type: string
+          enum:
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
+        largeScaleTestId:
+          type: string
+    HasCompareFunctionObject:
+      type: object
+    FormDataContentDisposition:
+      type: object
+      properties:
+        type:
+          type: string
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+        fileName:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        readDate:
+          type: string
+          format: date-time
+        size:
+          type: integer
+          format: int64
+        name:
+          type: string
+    EndpointConfiguration:
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          type: string
+          description: The URL of the status check
+          format: url
+        method:
+          type: string
+          description: The method type of the status check
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Optional request headers to be used when the status check is invoked
+          description: Optional request headers to be used when the status check is invoked
+        payload:
+          type: string
+          description: Payload for POST type of request
+        headersArn:
+          type: string
+          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
+    ExternalActionRequest:
+      required:
+      - type
+      type: object
+      properties:
+        semanticType:
+          type: string
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    GameDayResponse:
+      type: object
+      properties:
+        guid:
+          type: string
+        teamId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        plan:
+          $ref: '#/components/schemas/GameDayPlan'
+        summary:
+          $ref: '#/components/schemas/GameDaySummary'
+        execution:
+          $ref: '#/components/schemas/GameDayExecution'
+    CreateGameDayPlanRequest:
+      title: CreateGameDayPlanRequest.Input
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        goal:
+          type: string
+        type:
+          type: string
+          enum:
+          - Exploratory
+          - TrainTeams
+          - ValidatePastOutages
+          - TuneObservability
+          - Other
+        participants:
+          maxItems: 20
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/Participant'
+        scenarioIds:
+          maxItems: 20
+          minItems: 0
+          type: array
+          items:
+            type: string
+        environment:
+          type: string
+        dashboards:
+          maxItems: 20
+          minItems: 0
+          type: array
+          items:
+            type: string
+            format: uri
+        runbooks:
+          maxItems: 20
+          minItems: 0
+          type: array
+          items:
+            type: string
+            format: uri
+      description: Represents a request to create a GameDay plan for a team
+    GameDayExecution:
+      type: object
+      properties:
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        lastRunAt:
+          type: string
+          format: date-time
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExecutionResult'
+    ExecutionResult:
+      type: object
+      properties:
+        scenario:
+          $ref: '#/components/schemas/ScenarioSummary'
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: string
+        runs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioRunResponse'
+        lastResult:
+          type: string
+          enum:
+          - Passed
+          - Failed
+          - Unsure
+          - Completed_Input_Results
+          - Failed_Input_Results
+          - Halted_Input_Results
+          - SetupFailed_Input_Results
+          - Setup
+          - Active
+        lastResultAt:
+          type: string
+          format: date-time
+        lastRunAt:
+          type: string
+          format: date-time
+        lastRunVersion:
+          type: integer
+          format: int32
+    StatusCheckNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          state:
+            $ref: '#/components/schemas/State'
+          name:
+            type: string
+          description:
+            type: string
+          thirdPartyPresets:
+            type: string
+          category:
+            type: string
+            enum:
+            - ERRORS
+            - LATENCY
+            - REQUESTS
+            - UNKNOWN
+          requestConfiguration:
+            $ref: '#/components/schemas/StatusCheckNodeRequest'
+          endpointConfiguration:
+            $ref: '#/components/schemas/EndpointConfiguration'
+          rawEndpointConfiguration:
+            $ref: '#/components/schemas/EndpointConfiguration'
+          evaluationConfiguration:
+            $ref: '#/components/schemas/EvaluationConfiguration'
+          statusCheckId:
+            type: string
+          externalIntegrationId:
+            type: string
+          statusCheckReferenceId:
+            type: string
+          isPrivateNetwork:
+            type: boolean
+          isHaltable:
+            type: boolean
+          payload:
+            type: string
+          isAutoGenerated:
+            type: boolean
+          autoGeneratedStatusCheckId:
+            type: string
+          resourceIdentifier:
+            type: string
+          statusCheckRequest:
+            $ref: '#/components/schemas/StatusCheckNodeRequest'
+          intervalSeconds:
+            type: integer
+            format: int32
+          additionalTimeInSecsToRunAfterCompletion:
+            type: integer
+            format: int32
+    RollbackExternalActionNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          referenceExternalActionId:
+            type: string
+          state:
+            $ref: '#/components/schemas/State'
+          stateDetails:
+            $ref: '#/components/schemas/ExternalCallFailedException'
+          externalActionRequest:
+            $ref: '#/components/schemas/ExternalActionRequest'
+          externalActionLifecycle:
+            type: string
+            enum:
+            - NotStarted
+            - Active
+            - HaltRequested
+            - Successful
+            - Halted
+            - Failed
+          didExternalActionNoOp:
+            type: boolean
+    GraphNodeObject:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Concurrent
+          - ContinuousStatusCheck
+          - StatusCheckNode
+          - Delay
+          - InfraAttack
+          - SynchronousStatusCheck
+          - Continuous
+          - FailureFlag
+          - ExternalAction
+          - RollbackExternalAction
+        id:
+          type: string
+        state:
+          type: object
+          readOnly: true
+        guid:
+          type: string
+        next:
+          type: string
+      discriminator:
+        propertyName: type
+    UpdateGameDayPlanRequest:
+      title: UpdateGameDayPlanRequest.Input
+      type: object
+      properties:
+        name:
+          type: string
+        goal:
+          type: string
+        type:
+          type: string
+          enum:
+          - Exploratory
+          - TrainTeams
+          - ValidatePastOutages
+          - TuneObservability
+          - Other
+        participants:
+          maxItems: 20
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/Participant'
+        scenarioIds:
+          maxItems: 20
+          minItems: 0
+          type: array
+          items:
+            type: string
+        environment:
+          type: string
+        dashboards:
+          maxItems: 20
+          minItems: 0
+          type: array
+          items:
+            type: string
+            format: uri
+        runbooks:
+          maxItems: 20
+          minItems: 0
+          type: array
+          items:
+            type: string
+            format: uri
+      description: Represents a request to update a GameDay plan for a team
+    UpdateGameDaySummaryRequest:
+      title: UpdateGameDaySummaryRequest.Input
+      type: object
+      properties:
+        notes:
+          type: string
+        actions:
+          type: string
+      description: Represents a request to update a GameDay summary for a team
+    ScenarioRunGraph:
+      type: object
+      properties:
+        nodes:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/GraphNodeObject'
+        start_id:
+          type: string
+          writeOnly: true
+        observers:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusCheckNode'
+        current_id:
+          type: string
+          writeOnly: true
+        external_actions:
+          type: array
+          writeOnly: true
+          items:
+            $ref: '#/components/schemas/ExternalActionNode'
+        external_rollbacks:
+          type: array
+          writeOnly: true
+          items:
+            $ref: '#/components/schemas/RollbackExternalActionNode'
+        startId:
+          type: string
+        externalActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalActionNode'
+        externalRollbacks:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/RollbackExternalActionNode'
+        currentId:
+          type: string
+          readOnly: true
+        next:
+          $ref: '#/components/schemas/GraphNodeObject'
+        nextId:
+          type: string
+        nodesRecursive:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphNodeObject'
+        expectedLengthWithDelays:
+          type: integer
+          format: int32
+          readOnly: true
+        eligibleForServiceCreation:
+          type: boolean
+        expectedLength:
+          type: integer
+          format: int32
+          readOnly: true
+        attackTypeQuantity:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+            readOnly: true
+          readOnly: true
+        providersCountForNodes:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+            readOnly: true
+          readOnly: true
+    State:
+      type: object
+      properties:
+        lifecycle:
+          type: string
+          enum:
+          - NotStarted
+          - Active
+          - HaltRequested
+          - Successful
+          - Halted
+          - Failed
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        failedReason:
+          type: string
+        nodeHaltedByGuid:
+          type: string
+        nodeHaltedById:
+          type: string
+      readOnly: true
+    EvaluationConfiguration:
+      required:
+      - okStatusCodes
+      type: object
+      properties:
+        okLatencyMaxMs:
+          type: integer
+          description: The maximum latency in milliseconds for a successful status check
+          format: int32
+        okStatusCodes:
+          type: array
+          description: The list of successful response status codes for a successful status check
+          items:
+            type: string
+            description: The list of successful response status codes for a successful status check
+        responseBodyEvaluation:
+          $ref: '#/components/schemas/ResponseBodyEvaluation'
+      description: The configuration for evaluating the success/failure of a status check
+    GameDayInfo:
+      type: object
+      properties:
+        guid:
+          type: string
+        name:
+          type: string
+    ScenarioSummary:
+      type: object
+      properties:
+        guid:
+          type: string
+        name:
+          type: string
+    Participant:
+      title: CreateGameDayPlanRequest.Participant
+      required:
+      - position
+      type: object
+      properties:
+        position:
+          type: string
+          enum:
+          - Owner
+          - Coordinator
+          - Observer
+          - Reporter
+        email:
+          type: string
+      description: Represents a participant in the GameDay
+    ExternalCallFailedException:
+      type: object
+      properties:
+        cause:
+          type: object
+          properties:
+            stackTrace:
+              type: array
+              items:
+                type: object
+                properties:
+                  classLoaderName:
+                    type: string
+                  moduleName:
+                    type: string
+                  moduleVersion:
+                    type: string
+                  methodName:
+                    type: string
+                  fileName:
+                    type: string
+                  lineNumber:
+                    type: integer
+                    format: int32
+                  className:
+                    type: string
+                  nativeMethod:
+                    type: boolean
+            message:
+              type: string
+            localizedMessage:
+              type: string
+        stackTrace:
+          type: array
+          items:
+            type: object
+            properties:
+              classLoaderName:
+                type: string
+              moduleName:
+                type: string
+              moduleVersion:
+                type: string
+              methodName:
+                type: string
+              fileName:
+                type: string
+              lineNumber:
+                type: integer
+                format: int32
+              className:
+                type: string
+              nativeMethod:
+                type: boolean
+        errorCode:
+          type: string
+        requestId:
+          type: string
+        statusCode:
+          type: integer
+          format: int32
+        message:
+          type: string
+        suppressed:
+          type: array
+          items:
+            type: object
+            properties:
+              stackTrace:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    classLoaderName:
+                      type: string
+                    moduleName:
+                      type: string
+                    moduleVersion:
+                      type: string
+                    methodName:
+                      type: string
+                    fileName:
+                      type: string
+                    lineNumber:
+                      type: integer
+                      format: int32
+                    className:
+                      type: string
+                    nativeMethod:
+                      type: boolean
+              message:
+                type: string
+              localizedMessage:
+                type: string
+        localizedMessage:
+          type: string
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
+      type: object
+      properties:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type

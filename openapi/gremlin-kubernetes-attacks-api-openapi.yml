@@ -1,0 +1,328 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents kubernetes.attacks API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: kubernetes.attacks
+  description: Create, halt, and list Kubernetes attacks
+paths:
+  /kubernetes/attacks/{guid}:
+    get:
+      tags:
+      - kubernetes.attacks
+      summary: Get an attack by it's guid
+      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: attack
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+  /kubernetes/attacks:
+    get:
+      tags:
+      - kubernetes.attacks
+      summary: List all attacks.
+      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: attacks
+      parameters:
+      - name: source
+        in: query
+        description: Filter Kubernetes attacks to either Adhoc or Scenario.
+        schema:
+          type: string
+          enum:
+          - Adhoc
+          - Scenario
+        example: Adhoc
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+  /kubernetes/attacks/new:
+    post:
+      tags:
+      - kubernetes.attacks
+      summary: Legacy endpoint for creating K8s attacks. Please consider `POST /attacks` endpoint instead
+      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: createAttack
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attack'
+      responses:
+        HttpStatus.SC_CREATED:
+          description: Attack created, attackId returned
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      deprecated: true
+      security:
+      - privilege:
+        - EXPERIMENTS_WRITE
+  /kubernetes/attacks/{uid}/halt:
+    post:
+      tags:
+      - kubernetes.attacks
+      summary: Halt an active attack
+      description: Requires the privilege [`HALT_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: halt_2
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HaltRequest'
+      responses:
+        HttpStatus.SC_ACCEPTED:
+          description: Halt successfully triggered
+        '403':
+          description: 'User requires privilege for target team: HALT_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - HALT_WRITE
+  /kubernetes/attacks/halt:
+    post:
+      tags:
+      - kubernetes.attacks
+      summary: Halt all active attacks
+      operationId: haltAll_1
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HaltRequest'
+      responses:
+        '202':
+          description: Halt successfully triggered
+        '403':
+          description: 'User requires privilege: HALT_ALL'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+components:
+  schemas:
+    TaskTrafficImpactMappingInput:
+      type: object
+      properties:
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        dependencyIds:
+          type: array
+          items:
+            type: string
+    StrategyObject:
+      type: object
+      properties:
+        k8sObjects:
+          type: array
+          items:
+            type: object
+        containerSelection:
+          $ref: '#/components/schemas/ContainerSelection'
+        k8sObjectsInternal:
+          type: array
+          items:
+            $ref: '#/components/schemas/K8sObjectOnAttack'
+        count:
+          type: integer
+          format: int32
+        percentage:
+          type: integer
+          format: int32
+    Attack:
+      type: object
+      properties:
+        impactDefinition:
+          $ref: '#/components/schemas/Command'
+        targetDefinition:
+          $ref: '#/components/schemas/TargetObject'
+        includeNewTargets:
+          type: boolean
+        continueOnEmptyTargets:
+          type: boolean
+    Command:
+      type: object
+      properties:
+        providers:
+          type: array
+          items:
+            type: string
+        args:
+          type: array
+          items:
+            type: string
+        trafficImpactMapping:
+          $ref: '#/components/schemas/TaskTrafficImpactMappingInput'
+        trafficImpactFromWithSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          writeOnly: true
+        trafficImpactWithDependencyIds:
+          type: array
+          writeOnly: true
+          items:
+            type: string
+        type:
+          type: string
+        templateId:
+          type: string
+        optionalTemplateId:
+          type: string
+        empty:
+          type: boolean
+      additionalProperties:
+        type: object
+    ContainerSelection:
+      type: object
+      properties:
+        selectionType:
+          type: string
+          enum:
+          - EXACT
+          - ALL
+          - ANY
+        containerNames:
+          type: array
+          items:
+            type: string
+    TargetObject:
+      type: object
+      properties:
+        strategy:
+          $ref: '#/components/schemas/StrategyObject'
+    HaltRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: The reason why this halt this requested.
+        reference:
+          type: string
+          description: A reference to why this halt was requested.
+    K8sObjectOnAttack:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        uid:
+          type: string
+        namespace:
+          type: string
+        name:
+          type: string
+        kind:
+          type: string
+          enum:
+          - DEPLOYMENT
+          - REPLICASET
+          - POD
+          - DAEMONSET
+          - STATEFULSET
+          - SERVICE
+          - INGRESS
+          - DEPLOYMENTCONFIG
+          - REPLICATIONCONTROLLER
+          - ROLLOUT
+          - HORIZONTALPODAUTOSCALER
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        ownerReferences:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        resolvedContainers:
+          type: array
+          items:
+            type: string
+        data:
+          type: string
+        clientId:
+          type: string
+        teamId:
+          type: string
+        resolved:
+          type: boolean
+        attackUid:
+          type: string

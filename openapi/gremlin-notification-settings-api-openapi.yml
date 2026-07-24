@@ -1,0 +1,111 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents notification-settings API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: notification-settings
+  description: View and modify a team's notification settings
+paths:
+  /notification-settings:
+    get:
+      tags:
+      - notification-settings
+      summary: Returns a team's notification settings
+      description: 'This operation will return a team''s notification settings.
+
+        Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: getNotificationSettings
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamNotificationSettings'
+        '403':
+          description: 'User requires privilege: TEAMS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEAMS_READ
+    patch:
+      tags:
+      - notification-settings
+      summary: Updates a team's notification settings
+      description: 'This operation will update a team''s notification settings.
+
+        Requires the privilege [`TEAMS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: putNotificationSettings
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamNotificationSettings'
+        required: true
+      responses:
+        '400':
+          description: Bad arguments
+          content:
+            '*/*':
+              schema:
+                type: string
+        '403':
+          description: 'User requires privilege for target team: TEAMS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEAMS_WRITE
+components:
+  schemas:
+    TeamNotificationSettings:
+      required:
+      - subjects
+      type: object
+      properties:
+        subjects:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SubjectSettings'
+    ChannelSettings:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        updatedBy:
+          type: string
+        updatedAt:
+          type: string
+    ScopeSettings:
+      type: object
+      properties:
+        channels:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ChannelSettings'
+    SubjectSettings:
+      type: object
+      properties:
+        scopes:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ScopeSettings'

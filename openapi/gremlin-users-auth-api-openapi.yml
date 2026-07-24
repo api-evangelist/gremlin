@@ -1,0 +1,218 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents users.auth API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: users.auth
+  description: Endpoints for non-MFA user auth
+paths:
+  /users/auth:
+    post:
+      tags:
+      - users.auth
+      summary: Authenticate a user.
+      operationId: auth_1
+      parameters:
+      - name: getCompanySession
+        in: query
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - email
+              - password
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                companyName:
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS
+    delete:
+      tags:
+      - users.auth
+      summary: Invalidates a user's current session, if it exists.
+      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: invalidate
+      parameters: []
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: MINIMUM_COMPANY_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_COMPANY_PRIVILEGES
+  /users/auth/emailCompanies:
+    get:
+      tags:
+      - users.auth
+      summary: Email active company affiliations.
+      operationId: companyAffiliationsEmail
+      parameters:
+      - name: email
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS
+  /users/auth/password/reset:
+    post:
+      tags:
+      - users.auth
+      summary: Reset a user's password via email.
+      operationId: passwordReset
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - email
+              type: object
+              properties:
+                email:
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS
+  /users/auth/password:
+    put:
+      tags:
+      - users.auth
+      summary: Update an authenticated user's password directly.
+      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: passwordReset_1
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - currentPassword
+              - newPassword
+              type: object
+              properties:
+                currentPassword:
+                  type: string
+                newPassword:
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: MINIMUM_COMPANY_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_COMPANY_PRIVILEGES
+    post:
+      tags:
+      - users.auth
+      summary: Update a user's password.
+      operationId: passwordUpdate
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - code
+              - email
+              - password
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                code:
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS
+  /users/auth/saml/failures:
+    get:
+      tags:
+      - users.auth
+      summary: View SAML auth failures for the current company and optional user.
+      description: Requires the privilege [`COMPANY_SECURITY_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: samlFailures
+      parameters:
+      - name: email
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: COMPANY_SECURITY_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_SECURITY_READ
+  /users/auth/saml/metadata:
+    get:
+      tags:
+      - users.auth
+      summary: Gets SAML Service Provider metadata.
+      operationId: samlMetadata
+      parameters:
+      - name: companyName
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/xml: {}
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS

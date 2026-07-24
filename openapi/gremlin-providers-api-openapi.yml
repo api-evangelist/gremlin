@@ -1,0 +1,130 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents providers API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: providers
+  description: Get a list of supported infrastructure providers and supported services by provider
+paths:
+  /providers/aws:
+    get:
+      tags:
+      - providers
+      summary: Returns the list of supported AWS services.
+      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: aws
+      parameters: []
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: MINIMUM_COMPANY_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_COMPANY_PRIVILEGES
+  /providers/all:
+    get:
+      tags:
+      - providers
+      summary: Returns the list of supported services for all Providers
+      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getAllProviders
+      parameters: []
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvidersResponse'
+        '403':
+          description: 'User requires privilege: MINIMUM_COMPANY_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_COMPANY_PRIVILEGES
+  /providers/{provider}:
+    get:
+      tags:
+      - providers
+      summary: Returns the list of supported services for a given Provider
+      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getProvider
+      parameters:
+      - name: provider
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceListResponse'
+        '403':
+          description: 'User requires privilege: MINIMUM_COMPANY_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_COMPANY_PRIVILEGES
+  /providers:
+    get:
+      tags:
+      - providers
+      summary: Returns a list of supported infrastructure providers.
+      description: 'Currently supports ''aws''
+
+        Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: providers
+      parameters: []
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: MINIMUM_COMPANY_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_COMPANY_PRIVILEGES
+components:
+  schemas:
+    ServiceListResponse:
+      type: object
+      properties:
+        supportedServices:
+          type: array
+          items:
+            type: string
+        providerName:
+          type: string
+    ProvidersResponse:
+      type: object
+      properties:
+        providersToServices:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string

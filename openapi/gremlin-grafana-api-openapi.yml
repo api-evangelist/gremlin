@@ -1,0 +1,162 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents grafana API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: grafana
+  description: Get Grafana alerts
+paths:
+  /grafana/alerts:
+    get:
+      tags:
+      - grafana
+      summary: Get all alerts
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: alerts
+      parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+      - name: grafanaUri
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uri
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns all alerts
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /grafana/dashboards:
+    get:
+      tags:
+      - grafana
+      summary: Get all dashboards
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: dashboards
+      parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+      - name: grafanaUri
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uri
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns all dashboards
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /grafana/rules:
+    get:
+      tags:
+      - grafana
+      summary: Get all rules
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: rules
+      parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+      - name: grafanaUri
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uri
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns all rules
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /grafana/monitors:
+    get:
+      tags:
+      - grafana
+      summary: Searches for Grafana alert monitors
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: searchMonitors_1
+      parameters:
+      - name: searchString
+        in: query
+        schema:
+          type: string
+      - name: grafanaIntegrationName
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns matching monitors
+        '400':
+          description: Bad request
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES

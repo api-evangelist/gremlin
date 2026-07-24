@@ -1,0 +1,591 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents health checks API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: health checks
+  description: Create, read, update, delete health checks as well as test health check endpoint and evaluation configuration
+paths:
+  /status-checks:
+    get:
+      tags:
+      - health checks
+      summary: Retrieve status checks by Id (or all if the query param is empty)
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getStatusChecks
+      parameters:
+      - name: statusCheckIds
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StatusCheck'
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+    post:
+      tags:
+      - health checks
+      summary: Creates a new Status Check
+      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: createWebhook
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: status check to create
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatusCheckRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+  /status-checks/{identifier}:
+    get:
+      tags:
+      - health checks
+      summary: retrieve a status check by id
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getStatusCheck
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusCheck'
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+    put:
+      tags:
+      - health checks
+      summary: Update a given status check
+      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: update_3
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: update status check request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatusCheckRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+    delete:
+      tags:
+      - health checks
+      summary: Delete a given statuscheck by id
+      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: delete_5
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+  /status-checks/{runTestEndpoint}:
+    post:
+      tags:
+      - health checks
+      summary: Test a status check endpoint configuration.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: testEndpointConfiguration_1
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestEndpointConfigurationRequest'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /status-checks/{runTestEvaluation}:
+    post:
+      tags:
+      - health checks
+      summary: Test a status check evaluation configuration.
+      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: testEvaluationConfiguration_1
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestEvaluationConfigurationRequest'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /status-checks/{identifier}/tags:
+    put:
+      tags:
+      - health checks
+      summary: Update a given status check tags
+      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: updateTags
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: update status check tags request
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+components:
+  schemas:
+    EndpointResponse:
+      required:
+      - httpStatusCode
+      - requestLatencyMs
+      - responseBody
+      type: object
+      properties:
+        httpStatusCode:
+          type: integer
+          format: int32
+        requestLatencyMs:
+          type: integer
+          format: int32
+        contentType:
+          type: string
+        responseBody:
+          type: string
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
+      type: object
+      properties:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
+    TestEvaluationConfigurationRequest:
+      required:
+      - evaluationConfiguration
+      type: object
+      properties:
+        endpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        evaluationConfiguration:
+          $ref: '#/components/schemas/EvaluationConfiguration'
+        testEndpointResponse:
+          $ref: '#/components/schemas/EndpointResponse'
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+    TestEndpointConfigurationRequest:
+      required:
+      - endpointConfiguration
+      type: object
+      properties:
+        endpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+        webhookId:
+          type: string
+        integrationSpecificValues:
+          type: object
+          additionalProperties:
+            type: string
+            description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+          description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+    EvaluationConfiguration:
+      required:
+      - okStatusCodes
+      type: object
+      properties:
+        okLatencyMaxMs:
+          type: integer
+          description: The maximum latency in milliseconds for a successful status check
+          format: int32
+        okStatusCodes:
+          type: array
+          description: The list of successful response status codes for a successful status check
+          items:
+            type: string
+            description: The list of successful response status codes for a successful status check
+        responseBodyEvaluation:
+          $ref: '#/components/schemas/ResponseBodyEvaluation'
+      description: The configuration for evaluating the success/failure of a status check
+    TeamExternalIntegrationReference:
+      title: StatusCheckRequest.TeamExternalIntegrationReference
+      required:
+      - name
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of the external integration for the health check to be created/updated
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+        observabilityToolType:
+          type: string
+          description: The observability tool type of the external integration for the health check to be created/updated
+          enum:
+          - DATADOG
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - AWS
+          - AZURE
+        domain:
+          type: string
+          description: The domain of the observability tool type of the external integration for the health check to be created/updated
+        name:
+          type: string
+          description: The name of the external integration for the health check to be created/updated
+      description: Represents the configuration for referencing an external integration
+    StatusCheck:
+      type: object
+      properties:
+        teamId:
+          type: string
+          description: The identifier of the team to which this status check belongs
+        identifier:
+          type: string
+          description: The identifier of this status check
+        isContinuous:
+          type: boolean
+          description: Is this status check continuous
+        isPrivateNetwork:
+          type: boolean
+          description: Is this status check executed in a private network
+        endpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        evaluationConfiguration:
+          $ref: '#/components/schemas/EvaluationConfiguration'
+        rawEndpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        name:
+          type: string
+          description: The name of this status check
+        description:
+          type: string
+          description: The description of this status check
+        thirdPartyPresets:
+          type: string
+          readOnly: true
+        createdBy:
+          type: string
+          description: The identifier of the user that created this status check
+        createdAt:
+          type: string
+          description: The time of creation of this status check
+          format: date-time
+        updatedBy:
+          type: string
+          description: The time of the most recent update for this status check (if applicable)
+        updatedAt:
+          type: string
+          description: The identifier of the user that most recently updated this status check (if applicable)
+          format: date-time
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+        pollingIntervalSeconds:
+          type: integer
+          description: The frequency to poll in seconds, 15s to 60s inclusive
+          format: int32
+        requestParams:
+          type: object
+          additionalProperties:
+            type: string
+            description: The request parameters for this status check
+          description: The request parameters for this status check
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            description: The tags associated with this status check
+            items:
+              type: string
+              description: The tags associated with this status check
+          description: The tags associated with this status check
+    HasCompareFunctionObject:
+      type: object
+    StatusCheckRequest:
+      required:
+      - endpointConfiguration
+      - evaluationConfiguration
+      - name
+      type: object
+      properties:
+        isContinuous:
+          type: boolean
+        isPrivateNetwork:
+          type: boolean
+        name:
+          type: string
+          description: The name of the status check to be created/updated
+        description:
+          type: string
+          description: The description of the status check to be created/updated
+        thirdPartyPresets:
+          type: string
+          readOnly: true
+        endpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        rawEndpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        evaluationConfiguration:
+          $ref: '#/components/schemas/EvaluationConfiguration'
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+        pollingIntervalSeconds:
+          type: integer
+          description: The frequency to poll in seconds, 15s to 60s inclusive
+          format: int32
+        category:
+          type: string
+          description: Status Check category can be one of ERRORS, LATENCY, REQUESTS OR UNKNOWN. The default category will be UNKNOWN.
+          enum:
+          - ERRORS
+          - LATENCY
+          - REQUESTS
+          - UNKNOWN
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            description: The tags associated with this status check
+            items:
+              type: string
+              description: The tags associated with this status check
+          description: The tags associated with this status check
+    EndpointConfiguration:
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          type: string
+          description: The URL of the status check
+          format: url
+        method:
+          type: string
+          description: The method type of the status check
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Optional request headers to be used when the status check is invoked
+          description: Optional request headers to be used when the status check is invoked
+        payload:
+          type: string
+          description: Payload for POST type of request
+        headersArn:
+          type: string
+          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers

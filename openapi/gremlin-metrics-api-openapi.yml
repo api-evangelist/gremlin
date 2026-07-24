@@ -1,0 +1,180 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents metrics API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: metrics
+  description: Metrics for charting purposes
+paths:
+  /metrics/attacks/{attackId}:
+    get:
+      tags:
+      - metrics
+      summary: Get metrics for an attack
+      description: 'This endpoint will allow you to get metrics for a specific attack based on its guid.
+
+        Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: getMetricsForAttack
+      parameters:
+      - name: attackId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttackMetricsDisplayResponse'
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+  /metrics/scenarios/{scenarioId}/runs/{scenarioRunNumber}:
+    get:
+      tags:
+      - metrics
+      summary: Get metrics for a scenario run
+      description: 'This endpoint will allow you to get metrics for a specific scenario run based on its scenario guid and run number.
+
+        Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: getMetricsForScenarioRun
+      parameters:
+      - name: scenarioId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: scenarioRunNumber
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskMetrics'
+        '403':
+          description: 'User requires privilege for target team: EXPERIMENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - EXPERIMENTS_READ
+components:
+  schemas:
+    TaskMetrics:
+      type: object
+      properties:
+        taskId:
+          type: string
+        metrics:
+          $ref: '#/components/schemas/AttackMetricsDisplayResponse'
+    YAxisLine:
+      type: object
+      properties:
+        value:
+          type: number
+          format: double
+        label:
+          type: string
+    AttackMetricsDisplayResponse:
+      type: object
+      properties:
+        state:
+          type: string
+          enum:
+          - DISABLED
+          - PENDING
+          - NO_DATA
+          - PARTIAL
+          - COMPLETE
+        disabledReason:
+          type: string
+        range:
+          $ref: '#/components/schemas/TimeRange'
+        attackRange:
+          $ref: '#/components/schemas/TimeRange'
+        metricData:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/MetricPoint'
+        infraCommandType:
+          type: string
+          enum:
+          - CPU
+          - IO
+          - Memory
+          - Disk
+          - Thread_Bomb
+          - Blackhole
+          - DNS
+          - Latency
+          - Packet_Loss
+          - Collect_Certs
+          - Shutdown
+          - Time_Travel
+          - Process_Killer
+          - Process_Exhaustion
+          - GPU
+          - Unknown
+        chartTitle:
+          type: string
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/YAxisLine'
+    MetricPoint:
+      type: object
+      properties:
+        timestamp:
+          type: integer
+          format: int64
+        value:
+          type: number
+          format: double
+    TimeRange:
+      type: object
+      properties:
+        start:
+          type: integer
+          format: int64
+        end:
+          type: integer
+          format: int64

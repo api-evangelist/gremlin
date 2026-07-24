@@ -1,0 +1,254 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents orgs API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: orgs
+  description: Get and update org preferences. Generate new and delete old client certificates
+paths:
+  /orgs/auth/certificate:
+    get:
+      tags:
+      - orgs
+      summary: Gets the secret key and certificate for this org in PEM format (zipped).
+      description: Requires the privilege [`TEAM_SECURITY_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: downloadClientCredentials
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/octet-stream: {}
+        '403':
+          description: 'User requires privilege for target team: TEAM_SECURITY_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEAM_SECURITY_READ
+    post:
+      tags:
+      - orgs
+      summary: Rolls over to use a new certificate.  The current certificate will be saved and still valid for authentication, providing a transition period.
+      description: 'SUPER users only
+
+        Requires the privilege [`TEAM_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: addNewCertificate
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/octet-stream: {}
+        '403':
+          description: 'User requires privilege for target team: TEAM_SECURITY_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEAM_SECURITY_WRITE
+    delete:
+      tags:
+      - orgs
+      summary: Deletes the current credentials and generates new.  For use when the current credentials are compromised.
+      description: 'SUPER users only
+
+        Requires the privilege [`TEAM_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: replaceCertificate
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/octet-stream: {}
+        '403':
+          description: 'User requires privilege for target team: TEAM_SECURITY_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEAM_SECURITY_WRITE
+  /orgs:
+    get:
+      tags:
+      - orgs
+      summary: Get all Teams.
+      description: Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: info
+      parameters:
+      - name: prefs
+        in: query
+        schema:
+          type: boolean
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: TEAMS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEAMS_READ
+    post:
+      tags:
+      - orgs
+      summary: Creates a new org with provided name.
+      description: Requires the privilege [`COMPANIES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: create_2
+      parameters:
+      - name: addUser
+        in: query
+        schema:
+          type: boolean
+          default: true
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - name
+              type: object
+              properties:
+                name:
+                  maxLength: 50
+                  minLength: 1
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: COMPANIES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANIES_WRITE
+  /orgs/{identifier}:
+    get:
+      tags:
+      - orgs
+      summary: Get the specified Team.
+      description: Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: info_1
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: prefs
+        in: query
+        schema:
+          type: boolean
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: TEAMS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEAMS_READ
+  /orgs/auth/certificate/old:
+    delete:
+      tags:
+      - orgs
+      summary: Deletes the old certificate for this org.  This is intended for when a transition to new certificates has been completed, or when the old certificate has been compromised.
+      description: 'SUPER users only
+
+        Requires the privilege [`TEAM_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: invalidateOldCertificate
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege for target team: TEAM_SECURITY_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEAM_SECURITY_WRITE
+  /orgs/auth/secret/reset:
+    post:
+      tags:
+      - orgs
+      summary: Resets the secret for this Team.
+      description: 'SUPER users only
+
+        Requires the privilege [`TEAM_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: secretReset
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - identifier
+              type: object
+              properties:
+                identifier:
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: TEAM_SECURITY_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEAM_SECURITY_WRITE

@@ -1,0 +1,1531 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents reports API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: reports
+  description: Get users, clients, and attacks summaries
+paths:
+  /reports/attacks:
+    get:
+      tags:
+      - reports
+      summary: Loads the Attacks Summary for the specified time period.
+      description: Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: attackSummary
+      parameters:
+      - name: teamId
+        in: query
+        description: team identifier associated with the requester's team
+        required: true
+        schema:
+          type: string
+        example: '2026-05-01'
+      - name: start
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: end
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: period
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - MONTHS
+          - WEEKS
+          - DAYS
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - REPORTS_READ
+  /reports/clients:
+    get:
+      tags:
+      - reports
+      summary: Loads the Client Summary for the specified time period.
+      description: Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: clientSummary
+      parameters:
+      - name: teamId
+        in: query
+        description: team identifier associated with the requester's team
+        required: true
+        schema:
+          type: string
+        example: '2026-05-01'
+      - name: start
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: end
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: period
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - MONTHS
+          - WEEKS
+          - DAYS
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - REPORTS_READ
+  /reports/companies:
+    get:
+      tags:
+      - reports
+      summary: Loads the Company Summary for the specified month.
+      description: Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: companySummary
+      parameters:
+      - name: startDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: endDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - REPORTS_READ
+  /reports/companies/pdf:
+    get:
+      tags:
+      - reports
+      summary: Loads the Company Summary PDF for the specified time frame.
+      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: companySummaryPdf
+      parameters:
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: numberOfDataPoints
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 12
+      - name: topN
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 3
+      - name: filter
+        in: query
+        schema:
+          type: string
+      - name: groupBy
+        in: query
+        schema:
+          type: string
+          enum:
+          - TEAM
+      responses:
+        default:
+          description: default response
+          content:
+            application/octet-stream: {}
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: RELIABILITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - RELIABILITY_REPORTS_READ
+  /reports/companies/reliability-management:
+    get:
+      tags:
+      - reports
+      summary: Loads the Company Reliability Management Report for the specified time window defaulting to a week.
+      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getCompanyReliabilityManagementReport
+      parameters:
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: topN
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 3
+      - name: includeDailyReport
+        in: query
+        schema:
+          type: boolean
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyReliabilityReportResponse'
+        '403':
+          description: 'User requires privilege: RELIABILITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - RELIABILITY_REPORTS_READ
+  /reports/companies/reliability-management/services:
+    get:
+      tags:
+      - reports
+      summary: Loads the company service list and reliability trend for each service for the specified time window defaulting to a month.
+      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getCompanyReliabilityManagementReport_1
+      parameters:
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: numberOfDataPoints
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 4
+      - name: topN
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 3
+      - name: filter
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyReliabilityReportServiceListResponse'
+        '403':
+          description: 'User requires privilege: RELIABILITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - RELIABILITY_REPORTS_READ
+  /reports/companies/reliability-management/grouped:
+    get:
+      tags:
+      - reports
+      summary: Loads the Company Reliability Management Report grouped by query param value of groupBy - defaults to TEAM.
+      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getCompanyReliabilityManagementReportGrouped
+      parameters:
+      - name: groupBy
+        in: query
+        schema:
+          type: string
+          default: TEAM
+          enum:
+          - TEAM
+      - name: numberOfDataPoints
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 4
+      - name: filter
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyReliabilityReportGroupedResponse'
+        '403':
+          description: 'User requires privilege: RELIABILITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - RELIABILITY_REPORTS_READ
+  /reports/companies/trends:
+    get:
+      tags:
+      - reports
+      summary: Returns the Risk and Score trends for your company across all associated services
+      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getCompanyScoreRiskTrends
+      parameters:
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: numberOfDataPoints
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 12
+      - name: filter
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScoreRiskTrend'
+        '403':
+          description: 'User requires privilege: RELIABILITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - RELIABILITY_REPORTS_READ
+  /reports/team/detected-risk/trend:
+    get:
+      tags:
+      - reports
+      summary: Returns the trend of risks across all services for a given team
+      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getDetectedRisksReportTrendForTeam
+      parameters:
+      - name: teamId
+        in: query
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: numberOfDataPoints
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 12
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportTrend'
+        '403':
+          description: 'User requires privilege: RELIABILITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - RELIABILITY_REPORTS_READ
+  /reports/team/reliability-report:
+    get:
+      tags:
+      - reports
+      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getReliabilityReportForTeam
+      parameters:
+      - name: teamId
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamReliabilityScoreReportResponse'
+        '403':
+          description: 'User requires privilege: RELIABILITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - RELIABILITY_REPORTS_READ
+  /reports/team/reliability-report/pdf:
+    get:
+      tags:
+      - reports
+      summary: Loads the team reliability report PDF for the specified time frame.
+      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getReliabilityReportForTeamPdf
+      parameters:
+      - name: teamId
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: numberOfDataPoints
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 12
+      responses:
+        default:
+          description: default response
+          content:
+            application/octet-stream: {}
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: RELIABILITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - RELIABILITY_REPORTS_READ
+  /reports/services/reliability-management/reliability-report-trend:
+    get:
+      tags:
+      - reports
+      summary: Loads the Reliability report trend for all the services of the team for the specified time period defaulting to 1 months and 4 data points
+      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getReliabilityReportTrendForAllServicesOfTeam
+      parameters:
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: numberOfDataPoints
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 4
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceReliabilityReportTrend'
+        '403':
+          description: 'User requires privilege: RELIABILITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - RELIABILITY_REPORTS_READ
+  /reports/services/{serviceId}/reliability-management/reliability-report-trend:
+    get:
+      tags:
+      - reports
+      summary: Loads the Reliability report trend for the service for the specified time period defaulting to 1 months and 4 data points
+      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getReliabilityReportTrendForService
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: numberOfDataPoints
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 4
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportTrend'
+        '403':
+          description: 'User requires privilege: RELIABILITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - RELIABILITY_REPORTS_READ
+  /reports/team/reliability-report/trend:
+    get:
+      tags:
+      - reports
+      summary: Returns the trend of Reliability Scores across all services for a given team
+      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getReliabilityReportTrendForTeam
+      parameters:
+      - name: teamId
+        in: query
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: numberOfDataPoints
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 12
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportTrend'
+        '403':
+          description: 'User requires privilege: RELIABILITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - RELIABILITY_REPORTS_READ
+  /reports/team/detected-risks-report:
+    get:
+      tags:
+      - reports
+      summary: Loads latest risk evaluation for each eligible service for the team
+      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getRiskEvaluationReportForTeam
+      parameters:
+      - name: teamId
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamRiskReportResponse'
+        '403':
+          description: 'User requires privilege: RELIABILITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - RELIABILITY_REPORTS_READ
+  /reports/team/detected-risks-report/pdf:
+    get:
+      tags:
+      - reports
+      summary: Loads the team risk report PDF for the specified time frame.
+      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getRiskEvaluationReportForTeamPdf
+      parameters:
+      - name: teamId
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: numberOfDataPoints
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 12
+      responses:
+        default:
+          description: default response
+          content:
+            application/octet-stream: {}
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: RELIABILITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - RELIABILITY_REPORTS_READ
+  /reports/team/trends:
+    get:
+      tags:
+      - reports
+      summary: Returns the trend of Reliability Scores across all services for a given team
+      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getScoreRiskTrendsForTeam
+      parameters:
+      - name: teamId
+        in: query
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: numberOfDataPoints
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 12
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScoreRiskTrend'
+        '403':
+          description: 'User requires privilege: RELIABILITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - RELIABILITY_REPORTS_READ
+  /reports/pricing:
+    get:
+      tags:
+      - reports
+      summary: Loads the pricing usage for the specified dates and tracking period.
+      description: Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: pricingReport
+      parameters:
+      - name: startDate
+        in: query
+        description: Start date (yyyy-mm-dd) for the pricing usage. Should be within the current contract duration
+        required: true
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: endDate
+        in: query
+        description: End date (yyyy-mm-dd) for the pricing usage. Should be within the current contract duration
+        required: true
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: trackingPeriod
+        in: query
+        description: Tracking period for the pricing usage. Should be either Daily, Weekly or Monthly based on the contract. Defaults to the currently configured period for the company's plan
+        schema:
+          type: string
+          enum:
+          - Daily
+          - Weekly
+          - Monthly
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PricingReport'
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PricingReport'
+        '403':
+          description: 'User requires privilege: REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - REPORTS_READ
+  /reports/teams:
+    get:
+      tags:
+      - reports
+      summary: This functionality has moved to GET /reports/teams/paged.Loads the Team Summary for the specified month.
+      description: Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: teamSummaries
+      parameters:
+      - name: startDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: endDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: teamId
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      deprecated: true
+      security:
+      - privilege:
+        - REPORTS_READ
+  /reports/teams/paged:
+    get:
+      tags:
+      - reports
+      summary: Loads the Team Summary for the specified month.
+      description: Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: teamSummariesPaged
+      parameters:
+      - name: startDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: endDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+          default: 20
+        example: 20
+      - name: pageToken
+        in: query
+        description: Token corresponding to the last page of team summaries retrieved. Pass the pageToken to get the next page of team summaries
+        schema:
+          type: string
+        example: None (returns first page)
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponseTeamUsageReport'
+        '403':
+          description: 'User requires privilege: REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - REPORTS_READ
+  /reports/users:
+    get:
+      tags:
+      - reports
+      summary: Loads the User Summary for the specified time period.
+      description: Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: userSummary
+      parameters:
+      - name: teamId
+        in: query
+        description: team identifier associated with the requester's team
+        required: true
+        schema:
+          type: string
+        example: '2026-05-01'
+      - name: start
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        example: '2026-05-01'
+      - name: end
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: period
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - MONTHS
+          - WEEKS
+          - DAYS
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - REPORTS_READ
+components:
+  schemas:
+    PolicyEvaluation:
+      type: object
+      properties:
+        policyId:
+          type: string
+        reliabilityTestId:
+          type: string
+        serviceId:
+          type: string
+        dependencyId:
+          type: string
+        dependencyName:
+          type: string
+        failureFlagName:
+          type: string
+        evaluationTime:
+          type: integer
+          format: int64
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        staleness:
+          type: integer
+          format: int64
+        result:
+          type: string
+          enum:
+          - PASSED
+          - FAILED
+          - EXPIRED
+          - NEVER_RUN
+        order:
+          type: integer
+          format: int32
+        scenarioId:
+          type: string
+        runNumber:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        passCriteria:
+          type: string
+          enum:
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
+        diagnosisAvailable:
+          type: boolean
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        triggeredBy:
+          type: string
+    TeamReliabilityReportResponse:
+      type: object
+      properties:
+        rmTestScore:
+          type: number
+          format: double
+        score:
+          type: number
+          format: double
+        previousIntervalScore:
+          type: number
+          format: double
+        maxScore:
+          type: number
+          format: double
+        teamReliabilityCategorySummary:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TeamReliabilityCategorySummary'
+    RiskSummaryStats:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+        atRisk:
+          type: integer
+          format: int32
+        previousIntervalAtRisk:
+          type: integer
+          format: int32
+        evaluationState:
+          type: string
+          enum:
+          - RISKS_NOT_SUPPORTED
+          - NO_DEPLOYMENT_FOUND
+          - EVALUATED
+          - RISKS_NOT_INCLUDED
+    GremlinMetrics:
+      type: object
+      properties:
+        uniqueUsers:
+          type: integer
+          format: int32
+        uniqueActiveUsers:
+          type: integer
+          format: int32
+        attacksRun:
+          type: integer
+          format: int32
+        uniqueHostsAttacked:
+          type: integer
+          format: int32
+        uniqueTargetsHost:
+          type: integer
+          format: int32
+        uniqueTargetsContainer:
+          type: integer
+          format: int32
+        uniqueTargetsApplication:
+          type: integer
+          format: int32
+        reliabilityTestsRun:
+          type: integer
+          format: int32
+        failureFlagExperimentsRun:
+          type: integer
+          format: int32
+        infrastructureAgents:
+          type: integer
+          format: int32
+        failureFlagAgents:
+          type: integer
+          format: int32
+    RunSummaryStats:
+      type: object
+      properties:
+        reliabilityTests:
+          type: integer
+          format: int32
+        previousIntervalReliabilityTests:
+          type: integer
+          format: int32
+        experiments:
+          type: integer
+          format: int32
+        previousIntervalExperiments:
+          type: integer
+          format: int32
+        scenarios:
+          type: integer
+          format: int32
+        previousIntervalScenarios:
+          type: integer
+          format: int32
+        failureFlags:
+          type: integer
+          format: int32
+        previousIntervalFailureFlags:
+          type: integer
+          format: int32
+        gameDays:
+          type: integer
+          format: int32
+        previousIntervalGameDays:
+          type: integer
+          format: int32
+    TeamScoreReport:
+      type: object
+      properties:
+        serviceName:
+          type: string
+        serviceId:
+          type: string
+        reliabilityScore:
+          type: number
+          format: double
+        previousIntervalScore:
+          type: number
+          format: double
+        policyEvaluations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyEvaluation'
+    RunSummaryServiceStats:
+      type: object
+      properties:
+        runs:
+          type: integer
+          format: int32
+        previousIntervalRuns:
+          type: integer
+          format: int32
+    TeamReliabilityCategorySummary:
+      type: object
+      properties:
+        category:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        rmTestScore:
+          type: number
+          format: double
+        maxRMTestScore:
+          type: number
+          format: double
+        score:
+          type: number
+          format: double
+        previousIntervalScore:
+          type: number
+          format: double
+        maxScore:
+          type: number
+          format: double
+        rank:
+          type: integer
+          format: int32
+    PagedResponseTeamUsageReport:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamUsageReport'
+    TeamOwnerDetails:
+      type: object
+      properties:
+        teamId:
+          type: string
+        teamName:
+          type: string
+        teamOwnerEmail:
+          type: string
+        teamOwnerName:
+          type: string
+    PricingUsage:
+      type: object
+      properties:
+        start:
+          type: string
+          description: Start date for usage which could be the start of day, week or month
+        end:
+          type: string
+          description: End date for usage which could be the end of day, week or month
+        uniqueTargetsHost:
+          type: integer
+          description: Count of unique targets of type Host tracked in the day, week or month
+          format: int32
+        uniqueTargetsContainer:
+          type: integer
+          description: Count of unique targets of type Container tracked in the day, week or month
+          format: int32
+        uniqueTargetsApplication:
+          type: integer
+          description: Count of unique targets of type Application tracked in the day, week or month
+          format: int32
+        maxActiveAgents:
+          type: integer
+          description: Maximum number of active agents installed at the same time over the tracking period
+          format: int32
+        maxTargetableApplications:
+          type: integer
+          description: Maximum number of active agents installed at the same time over the tracking period
+          format: int32
+      description: Pricing usage over the duration requested which is tracked over days, weeks or months
+    CompanyReliabilityReportGroupedResponse:
+      type: object
+      properties:
+        groupBy:
+          type: string
+          enum:
+          - TEAM
+        groupedServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupedServiceResponse'
+    GroupedServiceResponse:
+      type: object
+      properties:
+        groupDetails:
+          $ref: '#/components/schemas/GroupDetails'
+        avgScore:
+          type: number
+          format: double
+        previousIntervalAvgScore:
+          type: number
+          format: double
+        numOfServices:
+          type: integer
+          format: int32
+        atRiskTotal:
+          type: integer
+          format: int32
+        previousIntervalAtRiskTotal:
+          type: integer
+          format: int32
+        numOfSpofs:
+          type: integer
+          format: int32
+        reliabilityReportTrend:
+          $ref: '#/components/schemas/ReportTrend'
+        numOfRuns:
+          type: integer
+          format: int32
+        previousIntervalNumOfRuns:
+          type: integer
+          format: int32
+    ServiceReportResponse:
+      type: object
+      properties:
+        serviceId:
+          type: string
+        serviceName:
+          type: string
+        lastModified:
+          type: string
+          format: date-time
+        serviceOwner:
+          $ref: '#/components/schemas/ServiceOwner'
+        teamOwner:
+          $ref: '#/components/schemas/TeamOwnerDetails'
+        score:
+          type: number
+          format: double
+        trendType:
+          type: string
+          enum:
+          - Up
+          - Down
+          - NoChange
+        delta:
+          type: number
+          format: double
+        previousIntervalScore:
+          type: number
+          format: double
+        inTopList:
+          type: boolean
+        reliabilityReportTrend:
+          $ref: '#/components/schemas/ReportTrend'
+        riskSummaryStats:
+          $ref: '#/components/schemas/RiskSummaryStats'
+        runSummaryStats:
+          $ref: '#/components/schemas/RunSummaryServiceStats'
+        targetingStrategy:
+          $ref: '#/components/schemas/TargetingStrategy'
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        numOfSpofs:
+          type: integer
+          format: int32
+    StatsByDate:
+      type: object
+      properties:
+        trackingDate:
+          type: string
+          format: date
+        value:
+          type: number
+          format: double
+        numOfServices:
+          type: integer
+          format: int32
+        score:
+          type: number
+          format: double
+    TeamRiskReport:
+      type: object
+      properties:
+        serviceName:
+          type: string
+        serviceId:
+          type: string
+        riskSummaryStats:
+          $ref: '#/components/schemas/RiskSummaryStats'
+        riskEvaluations:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskEvaluationResponse'
+    ServiceOwner:
+      type: object
+      properties:
+        identifier:
+          type: string
+    ServiceReliabilityReportTrend:
+      type: object
+      properties:
+        serviceId:
+          type: string
+        reliabilityReportTrend:
+          $ref: '#/components/schemas/ReportTrend'
+    ServicesSummary:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date
+        end:
+          type: string
+          format: date
+        topN:
+          type: integer
+          format: int32
+        biggestChangers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceReportResponse'
+    ScoreRiskTrend:
+      type: object
+      properties:
+        reliabilityScoreTrend:
+          $ref: '#/components/schemas/ReportTrend'
+        detectedRisksTrend:
+          $ref: '#/components/schemas/ReportTrend'
+        reliabilityTestsRunTrend:
+          $ref: '#/components/schemas/ReportTrend'
+        runSummaryStats:
+          $ref: '#/components/schemas/RunSummaryStats'
+    TargetingStrategy:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    CompanyReliabilityReportServiceListResponse:
+      type: object
+      properties:
+        topN:
+          type: integer
+          format: int32
+        start:
+          type: string
+          format: date
+        end:
+          type: string
+          format: date
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceReportResponse'
+    TeamReliabilityScoreReportResponse:
+      type: object
+      properties:
+        teamId:
+          type: string
+        teamName:
+          type: string
+        teamScoreReports:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamScoreReport'
+        aggregatedReliabilityReport:
+          $ref: '#/components/schemas/TeamReliabilityReportResponse'
+        lastUpdatedAt:
+          type: string
+          format: date-time
+    ReportTrend:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date
+        end:
+          type: string
+          format: date
+        numOfDataPoints:
+          type: integer
+          format: int32
+        statsByDate:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatsByDate'
+    PricingReport:
+      type: object
+      properties:
+        companyId:
+          type: string
+          description: CompanyId for which the pricing report is generated
+        startDate:
+          type: string
+          description: Start date for the pricing report
+        endDate:
+          type: string
+          description: End date for the pricing report
+        trackingPeriod:
+          type: string
+          description: Tracking period of targets for the pricing report which could be Daily, Weekly or Monthly
+          enum:
+          - Daily
+          - Weekly
+          - Monthly
+        usageByTrackingPeriod:
+          type: array
+          description: Pricing usage over the duration requested which is tracked over days, weeks or months
+          items:
+            $ref: '#/components/schemas/PricingUsage'
+    TeamUsageReport:
+      type: object
+      properties:
+        companyId:
+          type: string
+        teamId:
+          type: string
+        teamName:
+          type: string
+        startDate:
+          type: string
+        endDate:
+          type: string
+        gremlinMetrics:
+          $ref: '#/components/schemas/GremlinMetrics'
+    GroupDetails:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        ownerDetails:
+          $ref: '#/components/schemas/ServiceOwner'
+    RiskEvaluationResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        evaluatedAt:
+          type: string
+          format: date-time
+        notes:
+          type: string
+        document:
+          type: string
+        isAtRisk:
+          type: boolean
+    CompanyReliabilityReportResponse:
+      type: object
+      properties:
+        summary:
+          $ref: '#/components/schemas/ServicesSummary'
+        start:
+          type: string
+          format: date
+        end:
+          type: string
+          format: date
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceReportResponse'
+    TeamRiskReportResponse:
+      type: object
+      properties:
+        teamId:
+          type: string
+        teamName:
+          type: string
+        teamRiskReports:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamRiskReport'

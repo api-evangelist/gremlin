@@ -1,0 +1,51 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents halts API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: halts
+  description: Halt impacts across the Gremlin platform
+paths:
+  /halts:
+    post:
+      tags:
+      - halts
+      summary: Idempotently halt all active impacts across the Gremlin platform
+      operationId: haltAll
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HaltRequest'
+      responses:
+        default:
+          description: default response
+          content:
+            '*/*': {}
+        '403':
+          description: 'User requires privilege: HALT_ALL'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+components:
+  schemas:
+    HaltRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: The reason why this halt this requested.
+        reference:
+          type: string
+          description: A reference to why this halt was requested.

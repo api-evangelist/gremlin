@@ -1,0 +1,1774 @@
+openapi: 3.0.1
+info:
+  title: Gremlin agents companies API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: https://api.gremlin.com/v1
+  description: Gremlin API v1
+tags:
+- name: companies
+  description: Update company preferences, get all users or clients for a company, and get company details
+paths:
+  /companies/zones:
+    get:
+      tags:
+      - companies
+      summary: Gets all names of configured and detected zones
+      description: 'Get all names of configured zone settings, and all zones detected from agents
+
+        Requires the privilege [`TEST_SUITES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: getZones
+      parameters: []
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: TEST_SUITES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEST_SUITES_READ
+    post:
+      tags:
+      - companies
+      summary: Create a zone
+      description: 'Creates a new zone setting of the company
+
+        Requires the privilege [`TEST_SUITES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: addZoneSetting
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zone'
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: TEST_SUITES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEST_SUITES_WRITE
+  /companies:
+    post:
+      tags:
+      - companies
+      summary: Allows a user to create a new Company
+      description: User must have been previously invited
+      operationId: create_1
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCompanyRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS
+  /companies/{identifier}/saml/claim-aliases:
+    get:
+      tags:
+      - companies
+      summary: Returns all aliases for a company
+      description: 'Returns all aliases for a company, ordered alphabetically
+
+        Requires the privilege [`COMPANY_SAMLCLAIM_ALIAS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: getClaimAliasesForCompany
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SamlAliasIDs'
+        '403':
+          description: 'User requires privilege: COMPANY_SAMLCLAIM_ALIAS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_SAMLCLAIM_ALIAS_READ
+    post:
+      tags:
+      - companies
+      summary: Creates a claim alias for the company
+      description: 'Creates a claim alias for the company. If a claim alias already exists, it will not be updated.
+
+        Requires the privilege [`COMPANY_SAMLCLAIM_ALIAS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: createAlias
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateClaimAliasRequest'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SamlAlias'
+        '403':
+          description: 'User requires privilege: COMPANY_SAMLCLAIM_ALIAS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_SAMLCLAIM_ALIAS_WRITE
+  /companies/{identifier}/users:
+    get:
+      tags:
+      - companies
+      summary: Returns all users for the supplied company
+      description: Requires the privilege [`COMPANY_USERS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getUsersForCompany
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_READ
+    post:
+      tags:
+      - companies
+      summary: Create a new user.
+      description: User must have been invited.
+      operationId: createUserFromInvite
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS
+  /companies/{identifier}/saml/claim-aliases/{aliasId}:
+    get:
+      tags:
+      - companies
+      summary: Returns an alias for a company
+      description: 'Returns an alias for a company, with the teams and roles ordered alphabetically
+
+        Requires the privilege [`COMPANY_SAMLCLAIM_ALIAS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: getClaimAlias
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: aliasId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderedSamlAlias'
+        '403':
+          description: 'User requires privilege: COMPANY_SAMLCLAIM_ALIAS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_SAMLCLAIM_ALIAS_READ
+    put:
+      tags:
+      - companies
+      summary: Updates a claim alias for the company
+      description: 'Updates a claim alias for the company, creating it if it doesn''t already exist
+
+        Requires the privilege [`COMPANY_SAMLCLAIM_ALIAS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: updateAlias
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: aliasId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateClaimAliasRequest'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SamlAlias'
+        '403':
+          description: 'User requires privilege: COMPANY_SAMLCLAIM_ALIAS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_SAMLCLAIM_ALIAS_WRITE
+    delete:
+      tags:
+      - companies
+      summary: Deletes a claim alias for the company
+      description: 'Permanently deletes the specified alias for the company
+
+        Requires the privilege [`COMPANY_SAMLCLAIM_ALIAS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: deleteAlias
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: aliasId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: COMPANY_SAMLCLAIM_ALIAS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_SAMLCLAIM_ALIAS_WRITE
+  /companies/zones/{zoneId}:
+    get:
+      tags:
+      - companies
+      summary: Get a zone setting
+      description: 'Get the zone setting
+
+        Requires the privilege [`TEST_SUITES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: getZoneSetting
+      parameters:
+      - name: zoneId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: TEST_SUITES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEST_SUITES_READ
+    put:
+      tags:
+      - companies
+      summary: Update a zone
+      description: 'Update a zone setting of the company
+
+        Requires the privilege [`TEST_SUITES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: editZoneSetting
+      parameters:
+      - name: zoneId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zone'
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: TEST_SUITES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEST_SUITES_WRITE
+    delete:
+      tags:
+      - companies
+      summary: Delete zone setting
+      description: 'Deletes the zone setting from the company
+
+        Requires the privilege [`TEST_SUITES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: deleteZoneSetting
+      parameters:
+      - name: zoneId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: TEST_SUITES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEST_SUITES_WRITE
+  /companies/{identifier}/users/active/paged:
+    get:
+      tags:
+      - companies
+      summary: Returns paginated active users for the supplied company
+      description: Requires the privilege [`COMPANY_USERS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getActiveUsersForCompanyPaginated
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+          default: 10
+        example: None (unlimited)
+      - name: pageToken
+        in: query
+        description: Token corresponding to the last page of active company users retrieved. Pass the pageToken to get the next page of active company users
+        schema:
+          type: string
+        example: None (returns first page)
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_READ
+  /companies/{identifier}/clients:
+    get:
+      tags:
+      - companies
+      summary: Returns all clients for the supplied company
+      description: 'SUPER users only
+
+        Requires the privilege [`COMPANIES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: getClientsForCompany
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: COMPANIES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANIES_READ
+  /companies/{identifier}:
+    get:
+      tags:
+      - companies
+      summary: Gets a Company by its supplied guid
+      description: Requires the privilege [`COMPANIES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getCompany
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: skipTeams
+        in: query
+        schema:
+          type: boolean
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResponse'
+        '403':
+          description: 'User requires privilege: COMPANIES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANIES_READ
+    patch:
+      tags:
+      - companies
+      summary: Update the prefs for company
+      description: 'This endpoint will allow you to update the prefs for a company based on its identifier.
+
+        Requires the privilege [`COMPANY_PREFERENCES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: updateCompanyPrefs
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyPatch'
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: COMPANY_PREFERENCES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_PREFERENCES_WRITE
+  /companies/{identifier}/users/invited/paged:
+    get:
+      tags:
+      - companies
+      summary: Returns paginated invited users for the supplied company
+      description: Requires the privilege [`COMPANY_USERS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getInvitedUsersForCompanyPaginated
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+          default: 10
+        example: None (unlimited)
+      - name: pageToken
+        in: query
+        description: Token corresponding to the last page of invited company users retrieved. Pass the pageToken to get the next page of invited company users
+        schema:
+          type: string
+        example: None (returns first page)
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_READ
+  /companies/{identifier}/users/revoked/paged:
+    get:
+      tags:
+      - companies
+      summary: Returns paginated revoked users for the supplied company
+      description: Requires the privilege [`COMPANY_USERS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getRevokedUsersForCompanyPaginated
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+          default: 10
+        example: None (unlimited)
+      - name: pageToken
+        in: query
+        description: Token corresponding to the last page of revoked company users retrieved. Pass the pageToken to get the next page of revoked company users
+        schema:
+          type: string
+        example: None (returns first page)
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_READ
+  /companies/{identifier}/users/paged:
+    get:
+      tags:
+      - companies
+      summary: Returns paginated users for the supplied company
+      description: Requires the privilege [`COMPANY_USERS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: getUsersForCompanyPaginated
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+          default: 10
+        example: None (unlimited)
+      - name: pageToken
+        in: query
+        description: Token corresponding to the last page of company users retrieved. Pass the pageToken to get the next page of company users
+        schema:
+          type: string
+        example: None (returns first page)
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_READ
+  /companies/invite:
+    post:
+      tags:
+      - companies
+      summary: Invites the specified email to create a new Company.
+      operationId: invite
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InviteUserFromSelfSignupRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyInviteResponse'
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS
+  /companies/{identifier}/invites:
+    post:
+      tags:
+      - companies
+      summary: Invite one or more users to join your Gremlin company
+      description: Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: inviteUsersToCompany
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/InviteUserRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_WRITE
+  /companies/{identifier}/users/{email}/active:
+    post:
+      tags:
+      - companies
+      summary: User must exist. This is primarily used to reactivate a deactivated user.
+      description: 'Activates a user.
+
+        Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: rbacUnrevoke
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_WRITE
+    delete:
+      tags:
+      - companies
+      summary: Deactivates a user.
+      description: 'Once deactivated, user will not be able to do anything on company
+
+        Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: rbacRevoke
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_WRITE
+  /companies/{identifier}/invites/{email}:
+    delete:
+      tags:
+      - companies
+      summary: Revoke a pending user invite.
+      description: Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: rbacRevokeInvite
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_WRITE
+  /companies/{identifier}/users/{email}:
+    put:
+      tags:
+      - companies
+      summary: Update roles of existing user.
+      description: 'User must exist.
+
+        Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: rbacUpdate
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetRolesRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_WRITE
+  /companies/trial:
+    post:
+      tags:
+      - companies
+      summary: Allows an invited user to create a new Company for a trial.
+      description: User must have been previously invited
+      operationId: trial
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - adminEmail
+              - code
+              - name
+              type: object
+              properties:
+                name:
+                  maxLength: 50
+                  minLength: 3
+                  type: string
+                code:
+                  type: string
+                adminEmail:
+                  type: string
+                adminPassword:
+                  type: string
+                allowUsStorage:
+                  type: boolean
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS
+      deprecated: true
+  /companies/{identifier}/auth/prefs:
+    post:
+      tags:
+      - companies
+      summary: Updates the authentication preferences associated with this Company.
+      description: Requires the privilege [`COMPANY_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: updateAuthMethodPrefs
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyAuthMethodPrefsRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_SECURITY_WRITE
+  /companies/{identifier}/mfaPrefs:
+    post:
+      tags:
+      - companies
+      summary: Updates the MFA preferences associated with this Company.
+      description: Requires the privilege [`COMPANY_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: updateMfaPrefs
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                forceMfa:
+                  type: boolean
+                  default: false
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_SECURITY_WRITE
+  /companies/{identifier}/oauth/settings:
+    post:
+      tags:
+      - companies
+      summary: Updates the OAuth settings for this Company.
+      description: Requires the privilege [`COMPANY_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: updateOAuthSettings
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOAuthSettingsRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_SECURITY_WRITE
+  /companies/{identifier}/prefs:
+    post:
+      tags:
+      - companies
+      summary: Updates the preferences associated with this Company.
+      description: 'SUPER users only
+
+        Requires the privilege [`COMPANY_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: updatePrefs
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                domain:
+                  type: string
+                  default: ''
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      deprecated: true
+      security:
+      - privilege:
+        - COMPANY_SECURITY_WRITE
+  /companies/{identifier}/saml/props:
+    post:
+      tags:
+      - companies
+      summary: Updates the preferences associated with this Company.
+      description: 'SUPER users only
+
+        Requires the privilege [`COMPANY_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+      operationId: updateSamlProperties
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - certificate
+              - enabled
+              - entityId
+              - idpUrl
+              type: object
+              properties:
+                enabled:
+                  type: string
+                entityId:
+                  type: string
+                idpUrl:
+                  type: string
+                  format: uri
+                certificate:
+                  type: object
+                  properties:
+                    signature:
+                      type: array
+                      items:
+                        type: string
+                        format: byte
+                    basicConstraints:
+                      type: integer
+                      format: int32
+                    version:
+                      type: integer
+                      format: int32
+                    extendedKeyUsage:
+                      type: array
+                      items:
+                        type: string
+                    issuerAlternativeNames:
+                      type: array
+                      items:
+                        type: array
+                        items:
+                          type: object
+                    sigAlgParams:
+                      type: array
+                      items:
+                        type: string
+                        format: byte
+                    tbscertificate:
+                      type: array
+                      items:
+                        type: string
+                        format: byte
+                    issuerDN:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                    sigAlgOID:
+                      type: string
+                    issuerUniqueID:
+                      type: array
+                      items:
+                        type: boolean
+                    subjectUniqueID:
+                      type: array
+                      items:
+                        type: boolean
+                    keyUsage:
+                      type: array
+                      items:
+                        type: boolean
+                    sigAlgName:
+                      type: string
+                    serialNumber:
+                      type: integer
+                    notBefore:
+                      type: string
+                      format: date-time
+                    notAfter:
+                      type: string
+                      format: date-time
+                    issuerX500Principal:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        encoded:
+                          type: array
+                          items:
+                            type: string
+                            format: byte
+                    subjectX500Principal:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        encoded:
+                          type: array
+                          items:
+                            type: string
+                            format: byte
+                    subjectAlternativeNames:
+                      type: array
+                      items:
+                        type: array
+                        items:
+                          type: object
+                    subjectDN:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                    criticalExtensionOIDs:
+                      uniqueItems: true
+                      type: array
+                      items:
+                        type: string
+                    nonCriticalExtensionOIDs:
+                      uniqueItems: true
+                      type: array
+                      items:
+                        type: string
+                    type:
+                      type: string
+                    encoded:
+                      type: array
+                      items:
+                        type: string
+                        format: byte
+                    publicKey:
+                      type: object
+                      properties:
+                        params:
+                          type: object
+                        encoded:
+                          type: array
+                          items:
+                            type: string
+                            format: byte
+                        format:
+                          type: string
+                        algorithm:
+                          type: string
+                forced:
+                  type: string
+                claimsForced:
+                  type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_SECURITY_WRITE
+  /companies/{identifier}/users/{email}/api-key/{api-key-id}:
+    delete:
+      tags:
+      - companies
+      description: Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      operationId: userApiKeyRevoke
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: api-key-id
+        in: path
+        required: true
+        schema:
+          maxLength: 100
+          minLength: 0
+          pattern: ^[a-zA-Z0-9 -]*$
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_WRITE
+components:
+  schemas:
+    UpdateCompanyAuthMethodPrefsRequest:
+      type: object
+      properties:
+        allowSessionRenewal:
+          type: boolean
+          description: If user sessions are allowed to be renewed. When set to `false`, users must login after their session expires. Default is `true`
+        sessionDuration:
+          type: integer
+          description: If user session duration should be configured (in minutes). Default and max is `720`, min is `5`. If AllowSessionRenewal is set, this field is ignored
+          format: int32
+        passwordEnabled:
+          type: boolean
+          description: If password logins should be enabled
+        mfaRequired:
+          type: boolean
+          description: If MFA should be required for password logins
+        googleEnabled:
+          type: boolean
+          description: If logins via Google should be enabled
+        oauthEnabled:
+          type: boolean
+          description: If logins via OAuth should be enabled
+        samlEnabled:
+          type: boolean
+          description: If logins via SAML should be enabled
+        claimsRequired:
+          type: boolean
+          description: If SAML Claims should be required when logging in via SAML
+        apiKeysEnabled:
+          type: boolean
+          description: If API keys should be enabled
+        apiKeysMaxSecondsToExpireEnabled:
+          type: boolean
+          description: If API keys have a maximum lifespan
+        apiKeysMaxSecondsToExpire:
+          type: integer
+          description: The maximum number of seconds an API key can be valid for
+          format: int32
+        samlAliasesEnabled:
+          type: boolean
+          description: If SAML Claims Aliases should be enabled
+        samlForced:
+          type: boolean
+          description: If logins via SAML should be required
+      description: Represents a request to update the authentication method preferences for a company. When not passed, value of the pref is set to the Gremlin decided default value
+    CreateOrUpdateClaimAliasRequest:
+      type: object
+      properties:
+        aliasId:
+          type: string
+          description: The unique identifier for the alias
+        companyRoles:
+          type: array
+          description: The list of company-level roles for the alias
+          items:
+            type: string
+            description: The list of company-level roles for the alias
+        teamRoles:
+          type: object
+          additionalProperties:
+            type: array
+            description: A mapping of team IDs to the team-level roles for the alias
+            items:
+              type: string
+              description: A mapping of team IDs to the team-level roles for the alias
+          description: A mapping of team IDs to the team-level roles for the alias
+      description: Represents a request to create or update a SAML claims alias on behalf of a user
+    TeamRoles:
+      type: object
+      properties:
+        teamId:
+          type: string
+        teamName:
+          type: string
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssignedRole'
+    CompanyEntitlementsResponse:
+      type: object
+      properties:
+        companyId:
+          type: string
+        companyName:
+          type: string
+        end:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+        internal:
+          type: boolean
+        strict:
+          type: boolean
+        hasAgentBilling:
+          type: boolean
+        hasTrialBanners:
+          type: boolean
+        expired:
+          type: boolean
+        productFlags:
+          type: object
+          additionalProperties:
+            type: boolean
+        limits:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        targetsTrackingPeriod:
+          type: string
+          enum:
+          - Daily
+          - Weekly
+          - Monthly
+    PrefsPatch:
+      type: object
+      properties:
+        testRunRestrictionWindows:
+          maxItems: 7
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunRestrictionWindow'
+      description: Prefs on team level
+    OrderedSamlAlias:
+      type: object
+      properties:
+        aliasId:
+          type: string
+        companyRoles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssignedRole'
+        teamRoles:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamRoles'
+    Info:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        identifier:
+          type: string
+        name:
+          type: string
+        companyId:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        secretSetAt:
+          type: string
+          format: date-time
+        secretSetBy:
+          type: string
+        certificateSetAt:
+          type: string
+          format: date-time
+        certificateSetBy:
+          type: string
+        oldCertificateSetAt:
+          type: string
+          format: date-time
+        oldCertificateSetBy:
+          type: string
+        certificateExpiresOn:
+          type: string
+          format: date-time
+        oldCertificateExpiresOn:
+          type: string
+          format: date-time
+        certificateExpirationImminent:
+          type: boolean
+        oldCertificateExpirationImminent:
+          type: boolean
+        production:
+          type: boolean
+        prefs:
+          $ref: '#/components/schemas/Prefs'
+        defaultTeamRole:
+          type: string
+        anyCertificateExpirationImminent:
+          type: boolean
+    Zone:
+      required:
+      - cidrs
+      - includeAllAgents
+      type: object
+      properties:
+        zoneId:
+          type: string
+          description: The name for the zone
+        cidrs:
+          type: array
+          description: Extra CIDRs to use when running zone-based network experiments
+          items:
+            type: string
+            description: Extra CIDRs to use when running zone-based network experiments
+        includeAllAgents:
+          type: boolean
+          description: Determine if Gremlin agents across company should be used
+      description: A zone setting for zonal tests
+    OAuthSettings:
+      type: object
+      properties:
+        authorizationUri:
+          type: string
+        userInfoUri:
+          type: string
+        tokenUri:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        scope:
+          type: string
+        enabled:
+          type: boolean
+    SamlAlias:
+      type: object
+      properties:
+        companyId:
+          type: string
+        aliasId:
+          type: string
+        companyRoles:
+          type: array
+          items:
+            type: string
+        teamRoles:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    SetRolesRequest:
+      required:
+      - roles
+      type: object
+      properties:
+        roles:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+    SamlAliasIDs:
+      type: object
+      properties:
+        aliasIds:
+          type: array
+          items:
+            type: string
+    SamlIdpPrefs:
+      type: object
+      properties:
+        entityId:
+          type: string
+        url:
+          type: string
+        cert:
+          type: string
+        enabled:
+          type: string
+        forced:
+          type: string
+        claimsForced:
+          type: string
+    AssignedRole:
+      type: object
+      properties:
+        roleKey:
+          type: string
+        roleName:
+          type: string
+        customRole:
+          type: boolean
+    CompanyPatch:
+      title: CompanyPatch.Input
+      type: object
+      properties:
+        prefs:
+          $ref: '#/components/schemas/PrefsPatch'
+        defaultCompanyRole:
+          type: string
+        defaultTeamRole:
+          type: string
+    Prefs:
+      type: object
+      properties:
+        autoAddUsers:
+          type: boolean
+        domain:
+          type: string
+        testRunRestrictionWindows:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunRestrictionWindow'
+      description: Prefs for team
+    UpdateOAuthSettingsRequest:
+      required:
+      - authorizationUri
+      - clientId
+      - clientSecret
+      - tokenUri
+      - userInfoUri
+      type: object
+      properties:
+        authorizationUri:
+          type: string
+          description: OAuth providers authorization endpoint
+          format: uri
+        tokenUri:
+          type: string
+          description: OAuth providers token endpoint
+          format: uri
+        userInfoUri:
+          type: string
+          description: OAuth providers user info endpoint
+          format: uri
+        clientId:
+          type: string
+          description: The clientId created when registering Gremlin with your OAuth provider
+        clientSecret:
+          type: string
+          description: The client secret created when registering Gremlin with your OAuth provider
+        scope:
+          type: string
+          description: The scope to be used for the OAuth authorization request. (default is 'email')
+      description: A request to update the OAuth settings for a company
+    AuthMethodPrefs:
+      type: object
+      properties:
+        allowSessionRenewal:
+          type: boolean
+        passwordEnabled:
+          type: boolean
+        mfaRequired:
+          type: boolean
+        googleEnabled:
+          type: boolean
+        oauthEnabled:
+          type: boolean
+        samlEnabled:
+          type: boolean
+        claimsRequired:
+          type: boolean
+        apiKeysEnabled:
+          type: boolean
+        apiKeysMaxSecondsToExpireEnabled:
+          type: boolean
+        apiKeysMaxSecondsToExpire:
+          type: integer
+          format: int32
+        sessionDuration:
+          type: integer
+          format: int32
+        samlAliasesEnabled:
+          type: boolean
+    CreateCompanyRequest:
+      required:
+      - admin_email
+      - code
+      - company_name
+      - team_name
+      type: object
+      properties:
+        admin_email:
+          type: string
+          description: The email of the user creating the company
+        code:
+          type: string
+          description: The invite code the user received in their email
+        company_name:
+          maxLength: 50
+          minLength: 1
+          type: string
+          description: The name of the company to be created
+        team_name:
+          maxLength: 50
+          minLength: 1
+          type: string
+          description: The name of the team to be created under the company
+        allow_us_storage:
+          type: boolean
+          description: If the user's information is allowed to be stored in U.S. based servers
+        admin_password:
+          type: string
+          description: The password for the user (optional if using SSO)
+      description: Represents a request to create a new Gremlin company
+    InviteUserRequest:
+      required:
+      - identifier
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The unique identifier for the user (user's email)
+        first_name:
+          type: string
+          description: The user's first name
+        last_name:
+          type: string
+          description: The user's last name
+        source_detail:
+          type: string
+          enum:
+          - Onboarding
+        user_principal:
+          $ref: '#/components/schemas/GremlinUserPrincipal'
+      description: Represents a request to invite a user to Gremlin.
+    CompanyResponse:
+      type: object
+      properties:
+        entitlements:
+          $ref: '#/components/schemas/CompanyEntitlementsResponse'
+        identifier:
+          type: string
+        name:
+          type: string
+        prefs:
+          $ref: '#/components/schemas/Prefs'
+        samlIdpPrefs:
+          $ref: '#/components/schemas/SamlIdpPrefs'
+        authMethodPrefs:
+          $ref: '#/components/schemas/AuthMethodPrefs'
+        internal:
+          type: boolean
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        orgs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Info'
+        alias:
+          type: string
+        defaultCompanyRole:
+          type: string
+        defaultTeamRole:
+          type: string
+        haltAllCoolDownEnd:
+          type: string
+          format: date-time
+        oauthSettings:
+          $ref: '#/components/schemas/OAuthSettings'
+    Key:
+      type: object
+      properties:
+        hashKey:
+          type: object
+        sortKey:
+          type: object
+    GremlinUserPrincipal:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/Key'
+        provider:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+    ScheduleWindow:
+      required:
+      - end
+      - start
+      type: object
+      properties:
+        start:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+        end:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+    TestRunRestrictionWindow:
+      required:
+      - dayOfWeek
+      - windowsForDay
+      type: object
+      properties:
+        dayOfWeek:
+          type: string
+          enum:
+          - M
+          - T
+          - W
+          - Th
+          - F
+          - S
+          - Su
+        windowsForDay:
+          maxItems: 3
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleWindow'
+    CreateUserRequest:
+      required:
+      - code
+      - email
+      type: object
+      properties:
+        email:
+          type: string
+          description: The unique identifier for the user (user's email)
+        password:
+          type: string
+          description: The password for the user (optional if using SSO)
+        code:
+          type: string
+          description: The user's invite code they received in their email
+        allow_us_storage:
+          type: boolean
+          description: If the user's information is allowed to be stored in U.S. based servers
+      description: Represents a request to create a new user within the company
+    InviteUserFromSelfSignupRequest:
+      required:
+      - companyName
+      - email
+      type: object
+      properties:
+        email:
+          type: string
+        firstName:
+          maxLength: 50
+          minLength: 1
+          type: string
+        lastName:
+          maxLength: 50
+          minLength: 1
+          type: string
+        companyName:
+          maxLength: 50
+          minLength: 1
+          type: string
+      description: Represents a request to create a new user from the self signup page
+    CompanyInviteResponse:
+      type: object
+      properties:
+        link:
+          type: string
+          format: uri
+        message:
+          type: string
