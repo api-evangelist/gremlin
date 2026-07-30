@@ -4,7 +4,19 @@ description: >-
   Gremlin is a chaos engineering platform that helps teams build more resilient systems by running controlled failure
   experiments. It provides tools to simulate infrastructure failures, network issues, and resource exhaustion to
   identify and fix weaknesses before they cause real outages.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/gremlin.png
 url: https://www.gremlin.com
 created: '2025-01-01'
 modified: '2026-05-19'
@@ -17,29 +29,998 @@ tags:
   - Reliability
   - Site Reliability Engineering
 apis:
-  - aid: gremlin:gremlin-api
-    name: Gremlin API
-    description: >-
-      The Gremlin Failure-as-a-Service API for programmatically running chaos engineering attacks, scenarios,
-      reliability tests, disaster recovery experiments, and managing teams, integrations, and infrastructure targets
-      across cloud, container, and Kubernetes environments.
-    humanURL: https://www.gremlin.com/docs
-    baseURL: https://api.gremlin.com/v1
-    tags:
-      - Chaos Engineering
-      - Fault Injection
-      - Reliability
-    properties:
-      - type: Documentation
-        url: https://www.gremlin.com/docs
-      - type: OpenAPI
-        url: openapi/gremlin-openapi.yml
-      - type: Capabilities
-        url: capabilities/gremlin-capabilities.yml
-      - type: Rules
-        url: rules/gremlin-rules.yml
-      - type: JSONSchema
-        url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-agents-api
+  name: Gremlin agents API
+  description: List and modify all infrastructure and failure flag agents
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - agents
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-agents-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-apikeys-api
+  name: Gremlin apikeys API
+  description: Create, delete, activate, deactivate and list apikeys
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - apikeys
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-apikeys-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-attacks-api
+  name: Gremlin attacks API
+  description: Create, halt, and list attacks
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - attacks
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-attacks-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-aws-metadata-api
+  name: Gremlin aws.metadata API
+  description: Get metadata about the AWS IAM role creation for health checks
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - aws.metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-aws-metadata-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-clients-api
+  name: Gremlin clients API
+  description: List and modify all clients
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - clients
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-clients-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-companies-api
+  name: Gremlin companies API
+  description: >-
+    Update company preferences, get all users or clients for a company, and get company details
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - companies
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-companies-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-containers-api
+  name: Gremlin containers API
+  description: Get all active containers
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - containers
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-containers-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-datadog-api
+  name: Gremlin datadog API
+  description: Read Datadog items
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - datadog
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-datadog-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-disaster-recovery-test-reports-api
+  name: Gremlin disaster-recovery-test-reports API
+  description: Get and list disaster recovery test reports
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - disaster-recovery-test-reports
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-disaster-recovery-test-reports-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-disaster-recovery-tests-api
+  name: Gremlin disaster-recovery-tests API
+  description: Create, get, list, run, and complete disaster recovery tests
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - disaster-recovery-tests
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-disaster-recovery-tests-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-executions-api
+  name: Gremlin executions API
+  description: The executions API from Gremlin — 1 operation(s) for executions.
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - executions
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-executions-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-external-integrations-api
+  name: Gremlin external-integrations API
+  description: Used for managing authentication for Status Checks and Load Generators
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - external-integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-external-integrations-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-failure-flags-apps-api
+  name: Gremlin failure-flags.apps API
+  description: Get, list, and protect applications
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - failure-flags.apps
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-failure-flags-apps-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-failure-flags-experiments-api
+  name: Gremlin failure-flags.experiments API
+  description: Get, list, and protect experiments
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - failure-flags.experiments
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-failure-flags-experiments-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-failure-flags-flags-api
+  name: Gremlin failure-flags.flags API
+  description: Get, list, and protect failure flags
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - failure-flags.flags
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-failure-flags-flags-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-gamedays-api
+  name: Gremlin gamedays API
+  description: Create, update and run GameDays
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - gamedays
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-gamedays-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-google-cloud-integration-api
+  name: Gremlin google-cloud.integration API
+  description: Fetch setup instructions for configuring a Google Cloud integration.
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - google-cloud.integration
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-google-cloud-integration-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-google-cloud-integration-resources-api
+  name: Gremlin google-cloud.integration.resources API
+  description: List resources Gremlin has discovered through a configured integration.
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - google-cloud.integration.resources
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-google-cloud-integration-resources-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-grafana-api
+  name: Gremlin grafana API
+  description: Get Grafana alerts
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - grafana
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-grafana-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-halts-api
+  name: Gremlin halts API
+  description: Halt impacts across the Gremlin platform
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - halts
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-halts-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-health-checks-api
+  name: Gremlin health checks API
+  description: >-
+    Create, read, update, delete health checks as well as test health check endpoint and evaluation configuration
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - health checks
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-health-checks-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-images-api
+  name: Gremlin images API
+  description: Manage images for different entities
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - images
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-images-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-integration-clients-api
+  name: Gremlin integration-clients API
+  description: Handle client integrations
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - integration-clients
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-integration-clients-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-integration-invocations-api
+  name: Gremlin integration-invocations API
+  description: Used for interacting with the Private Network Integration
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - integration-invocations
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-integration-invocations-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-jira-api
+  name: Gremlin jira API
+  description: Create, read Jira tickets
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - jira
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-jira-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-kubernetes-attacks-api
+  name: Gremlin kubernetes.attacks API
+  description: Create, halt, and list Kubernetes attacks
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - kubernetes.attacks
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-kubernetes-attacks-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-kubernetes-targets-api
+  name: Gremlin kubernetes.targets API
+  description: Get information on attackable kubernetes targets
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - kubernetes.targets
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-kubernetes-targets-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-load-generators-api
+  name: Gremlin load-generators API
+  description: Create, read, update, and delete LoadGenerators
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - load-generators
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-load-generators-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-metadata-api
+  name: Gremlin metadata API
+  description: Get metadata about the Gremlin commands.
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-metadata-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-metrics-api
+  name: Gremlin metrics API
+  description: Metrics for charting purposes
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-metrics-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-newrelic-api
+  name: Gremlin newrelic API
+  description: Read New Relic items
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - newrelic
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-newrelic-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-notification-integrations-api
+  name: Gremlin Notification Integrations API
+  description: Manage company level integrations with Slack/Datadog
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - Notification Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-notification-integrations-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-notification-settings-api
+  name: Gremlin notification-settings API
+  description: View and modify a team's notification settings
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - notification-settings
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-notification-settings-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-oauth-api
+  name: Gremlin oauth API
+  description: OAuth callback endpoints
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - oauth
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-oauth-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-orgs-api
+  name: Gremlin orgs API
+  description: Get and update org preferences. Generate new and delete old client certificates
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - orgs
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-orgs-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-pagerduty-api
+  name: Gremlin pagerduty API
+  description: Get Pagerduty services and incidents
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - pagerduty
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-pagerduty-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-providers-api
+  name: Gremlin providers API
+  description: Get a list of supported infrastructure providers and supported services by provider
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - providers
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-providers-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-reliability-management-api
+  name: Gremlin reliability-management API
+  description: API to access resources for reliability management
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - reliability-management
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-reliability-management-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-reliability-report-api
+  name: Gremlin reliability-report API
+  description: Retrieve reliability report for a given service
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - reliability-report
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-reliability-report-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-reliability-tests-api
+  name: Gremlin reliability-tests API
+  description: Get and run reliability tests
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - reliability-tests
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-reliability-tests-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-reports-api
+  name: Gremlin reports API
+  description: Get users, clients, and attacks summaries
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - reports
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-reports-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-reports-security-api
+  name: Gremlin reports.security API
+  description: Endpoints for receiving access and event logs
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - reports.security
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-reports-security-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-roles-api
+  name: Gremlin roles API
+  description: List and modify roles
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - roles
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-roles-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-scenarios-api
+  name: Gremlin scenarios API
+  description: Create, update, run, halt, and list scenarios
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - scenarios
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-scenarios-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-scenarios-recommended-api
+  name: Gremlin scenarios.recommended API
+  description: Get/List recommended scenarios
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - scenarios.recommended
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-scenarios-recommended-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-schedules-api
+  name: Gremlin schedules API
+  description: Get, create, and delete schedules
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-schedules-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-service-overview-api
+  name: Gremlin service-overview API
+  description: Overview of a service, including all activity that impacts a service
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - service-overview
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-service-overview-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-services-api
+  name: Gremlin services API
+  description: Get metrics about intelligent health check target for a service
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - services
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-services-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-sharedassets-api
+  name: Gremlin sharedAssets API
+  description: Used for sharing agent assets (eg. K8s Namespaces) between teams
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - sharedAssets
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-sharedassets-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-teams-api
+  name: Gremlin teams API
+  description: Create, Retrieve, Update, and Delete endpoints for Teams
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - teams
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-teams-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-test-suites-api
+  name: Gremlin test-suites API
+  description: Create custom test suites
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - test-suites
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-test-suites-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-users-api
+  name: Gremlin users API
+  description: Get users (all or active) and activate, deactivate, update, and invite users.
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - users
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-users-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-users-auth-api
+  name: Gremlin users.auth API
+  description: Endpoints for non-MFA user auth
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - users.auth
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-users-auth-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-users-auth-mfa-api
+  name: Gremlin users.auth.mfa API
+  description: Endpoints for multi-factor user auth (MFA) and for managing MFA providers and secrets
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - users.auth.mfa
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-users-auth-mfa-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-webhooks-api
+  name: Gremlin webhooks API
+  description: Create, read, update, and delete webhooks
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Capabilities
+    url: capabilities/gremlin-capabilities.yml
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
 common:
   - type: AgenticAccess
     url: agentic-access/gremlin-agentic-access.yml
