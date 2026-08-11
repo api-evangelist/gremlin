@@ -41,8 +41,6 @@ apis:
     url: openapi/gremlin-agents-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -59,8 +57,6 @@ apis:
     url: openapi/gremlin-apikeys-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -77,8 +73,6 @@ apis:
     url: openapi/gremlin-attacks-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -95,8 +89,6 @@ apis:
     url: openapi/gremlin-aws-metadata-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -113,8 +105,6 @@ apis:
     url: openapi/gremlin-clients-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -132,8 +122,6 @@ apis:
     url: openapi/gremlin-companies-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -150,8 +138,6 @@ apis:
     url: openapi/gremlin-containers-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -168,8 +154,6 @@ apis:
     url: openapi/gremlin-datadog-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -186,8 +170,6 @@ apis:
     url: openapi/gremlin-disaster-recovery-test-reports-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -204,8 +186,6 @@ apis:
     url: openapi/gremlin-disaster-recovery-tests-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -222,8 +202,6 @@ apis:
     url: openapi/gremlin-executions-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -240,8 +218,6 @@ apis:
     url: openapi/gremlin-external-integrations-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -258,8 +234,6 @@ apis:
     url: openapi/gremlin-failure-flags-apps-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -276,8 +250,6 @@ apis:
     url: openapi/gremlin-failure-flags-experiments-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -294,8 +266,6 @@ apis:
     url: openapi/gremlin-failure-flags-flags-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -312,8 +282,6 @@ apis:
     url: openapi/gremlin-gamedays-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -330,8 +298,6 @@ apis:
     url: openapi/gremlin-google-cloud-integration-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -348,8 +314,6 @@ apis:
     url: openapi/gremlin-google-cloud-integration-resources-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -366,8 +330,6 @@ apis:
     url: openapi/gremlin-grafana-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -384,8 +346,6 @@ apis:
     url: openapi/gremlin-halts-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -403,8 +363,6 @@ apis:
     url: openapi/gremlin-health-checks-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -421,8 +379,6 @@ apis:
     url: openapi/gremlin-images-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -439,8 +395,6 @@ apis:
     url: openapi/gremlin-integration-clients-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -457,8 +411,6 @@ apis:
     url: openapi/gremlin-integration-invocations-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -475,8 +427,6 @@ apis:
     url: openapi/gremlin-jira-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -493,8 +443,6 @@ apis:
     url: openapi/gremlin-kubernetes-attacks-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -511,8 +459,6 @@ apis:
     url: openapi/gremlin-kubernetes-targets-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -529,8 +475,6 @@ apis:
     url: openapi/gremlin-load-generators-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -547,8 +491,6 @@ apis:
     url: openapi/gremlin-metadata-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -565,8 +507,6 @@ apis:
     url: openapi/gremlin-metrics-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -583,8 +523,6 @@ apis:
     url: openapi/gremlin-newrelic-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -601,8 +539,6 @@ apis:
     url: openapi/gremlin-notification-integrations-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -619,8 +555,6 @@ apis:
     url: openapi/gremlin-notification-settings-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -637,8 +571,6 @@ apis:
     url: openapi/gremlin-oauth-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -655,8 +587,6 @@ apis:
     url: openapi/gremlin-orgs-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -673,8 +603,6 @@ apis:
     url: openapi/gremlin-pagerduty-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -691,8 +619,6 @@ apis:
     url: openapi/gremlin-providers-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -709,8 +635,6 @@ apis:
     url: openapi/gremlin-reliability-management-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -727,8 +651,6 @@ apis:
     url: openapi/gremlin-reliability-report-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -745,8 +667,6 @@ apis:
     url: openapi/gremlin-reliability-tests-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -763,8 +683,6 @@ apis:
     url: openapi/gremlin-reports-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -781,8 +699,6 @@ apis:
     url: openapi/gremlin-reports-security-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -799,8 +715,6 @@ apis:
     url: openapi/gremlin-roles-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -817,8 +731,6 @@ apis:
     url: openapi/gremlin-scenarios-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -835,8 +747,6 @@ apis:
     url: openapi/gremlin-scenarios-recommended-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -853,8 +763,6 @@ apis:
     url: openapi/gremlin-schedules-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -871,8 +779,6 @@ apis:
     url: openapi/gremlin-service-overview-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -889,8 +795,6 @@ apis:
     url: openapi/gremlin-services-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -907,8 +811,6 @@ apis:
     url: openapi/gremlin-sharedassets-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -925,8 +827,6 @@ apis:
     url: openapi/gremlin-teams-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -943,8 +843,6 @@ apis:
     url: openapi/gremlin-test-suites-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -961,8 +859,6 @@ apis:
     url: openapi/gremlin-users-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -979,8 +875,6 @@ apis:
     url: openapi/gremlin-users-auth-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -997,8 +891,6 @@ apis:
     url: openapi/gremlin-users-auth-mfa-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
@@ -1015,8 +907,6 @@ apis:
     url: openapi/gremlin-webhooks-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
-  - type: Capabilities
-    url: capabilities/gremlin-capabilities.yml
   - type: Rules
     url: rules/gremlin-rules.yml
   - type: JSONSchema
