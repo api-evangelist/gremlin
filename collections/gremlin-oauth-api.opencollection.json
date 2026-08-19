@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gremlin agents oauth API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "oauth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Handle receiving a code from an OAuth flow.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/oauth/callback",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "query",
+                "description": "The code from authenticating with the oauth provider"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "The state value set when initiating the OAuth login"
+              }
+            ]
+          },
+          "docs": "Handle receiving a code from an OAuth flow."
+        },
+        {
+          "info": {
+            "name": "Initiates a OAuth login.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/oauth/login",
+            "params": [
+              {
+                "name": "companyName",
+                "value": "",
+                "type": "query",
+                "description": "The name of the company to authenticate too"
+              },
+              {
+                "name": "redirectUri",
+                "value": "",
+                "type": "query",
+                "description": "Where to redirect the user to after authenticating, for use when authenticating via OAuth in the Gremlin UI"
+              }
+            ]
+          },
+          "docs": "Initiates a OAuth login."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

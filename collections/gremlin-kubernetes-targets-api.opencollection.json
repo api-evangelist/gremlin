@@ -1,0 +1,89 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gremlin agents kubernetes.targets API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "kubernetes.targets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all targetable kubernetes object types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/kubernetes/targets/kinds",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "List all attackable targets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/kubernetes/targets",
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "serviceId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "List all attackable targets that match the given label selector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/kubernetes/targets/by-selector",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

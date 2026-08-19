@@ -1,0 +1,190 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gremlin agents users.auth API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "users.auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticate a user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/users/auth",
+            "params": [
+              {
+                "name": "getCompanySession",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "email",
+                  "value": ""
+                },
+                {
+                  "name": "password",
+                  "value": ""
+                },
+                {
+                  "name": "companyName",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Authenticate a user."
+        },
+        {
+          "info": {
+            "name": "Invalidates a user's current session, if it exists.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.gremlin.com/v1/users/auth"
+          },
+          "docs": "Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Email active company affiliations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/users/auth/emailCompanies",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Email active company affiliations."
+        },
+        {
+          "info": {
+            "name": "Reset a user's password via email.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/users/auth/password/reset",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "email",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Reset a user's password via email."
+        },
+        {
+          "info": {
+            "name": "Update a user's password.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/users/auth/password",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "email",
+                  "value": ""
+                },
+                {
+                  "name": "password",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update a user's password."
+        },
+        {
+          "info": {
+            "name": "Update an authenticated user's password directly.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.gremlin.com/v1/users/auth/password",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "currentPassword",
+                  "value": ""
+                },
+                {
+                  "name": "newPassword",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "View SAML auth failures for the current company and optional user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/users/auth/saml/failures",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`COMPANY_SECURITY_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Gets SAML Service Provider metadata.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/users/auth/saml/metadata",
+            "params": [
+              {
+                "name": "companyName",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Gets SAML Service Provider metadata."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

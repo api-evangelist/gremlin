@@ -1,0 +1,325 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gremlin agents failure-flags.experiments API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "failure-flags.experiments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all runs of an Experiment by team and ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/failure-flags/experiments/:id/runs",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Get all Experiments for a team.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/failure-flags/experiments",
+            "params": [
+              {
+                "name": "includeScenarios",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Create an Experiment.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/failure-flags/experiments",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Get Experiment by ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/failure-flags/experiments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Delete an Experiment by team and ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.gremlin.com/v1/failure-flags/experiments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Get all active Experiments for a team.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/failure-flags/experiments/active",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "20",
+                "type": "query",
+                "description": "This value determines how many results will be returned per call."
+              },
+              {
+                "name": "pageToken",
+                "value": "None (returns first page)",
+                "type": "query",
+                "description": "Token corresponding to the last page of team summaries retrieved. Pass the pageToken to get the next page of team summaries"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Get all completed Experiments for a team.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/failure-flags/experiments/completed/paged",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "20",
+                "type": "query",
+                "description": "This value determines how many results will be returned per call."
+              },
+              {
+                "name": "pageToken",
+                "value": "None (returns first page)",
+                "type": "query",
+                "description": "Token corresponding to the last page of team summaries retrieved. Pass the pageToken to get the next page of team summaries"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Get details for a single Experiment run by ID and run start time.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/failure-flags/experiments/:id/run/:startTime",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "path",
+                "description": "Epoch MS timestamp of the start of the experiment"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Halt an Experiment by team and ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/failure-flags/experiments/:id/halt",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`HALT_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Protect an Experiment by team and ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/failure-flags/experiments/:id/protect",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Run an Experiment by team and ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/failure-flags/experiments/:id/run",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`EXPERIMENTS_RUN`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Unprotect an Experiment by team and ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/failure-flags/experiments/:id/unprotect",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

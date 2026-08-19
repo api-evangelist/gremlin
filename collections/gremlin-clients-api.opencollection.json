@@ -1,0 +1,131 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gremlin agents clients API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "clients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Activate a client.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.gremlin.com/v1/clients/:identifier/activate",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the client to activate"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Return all active clients within a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/clients/active",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Returns all clients within a team.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/clients",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "The identifier of the team for which to retrieve clients"
+              }
+            ]
+          },
+          "docs": "This operation will return all active, idle, and recently inactive clients.\nRequires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Get a client by identifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/clients/:identifier",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the client to get"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Deactivate a client",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.gremlin.com/v1/clients/:identifier",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the client to revoke"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

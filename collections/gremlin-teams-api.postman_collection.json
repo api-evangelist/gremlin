@@ -1,0 +1,1891 @@
+{
+  "item": [
+    {
+      "id": "710743b8-dc31-45f7-b47a-d712e2977796",
+      "name": "teams",
+      "description": {
+        "content": "Create, Retrieve, Update, and Delete endpoints for Teams",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "14e73d28-93f8-468f-ac38-7a890be3046c",
+          "name": "get Profile",
+          "request": {
+            "name": "get Profile",
+            "description": {
+              "content": "Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams",
+                ":teamId",
+                "profile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "teamId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "f9253517-86fb-452b-b010-00cc28452fdd",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teamId",
+                    "profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teamId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0b912a0a-5aa6-4182-9f0e-a78cfefbd365",
+              "name": "User requires privilege: MINIMUM_COMPANY_PRIVILEGES",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teamId",
+                    "profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teamId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9524bef5-ffde-47f2-b8b4-bd740840944a",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teamId",
+                    "profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teamId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"version\": 7945,\n  \"experience\": \"string\",\n  \"goal\": [\n    \"string\",\n    \"string\"\n  ],\n  \"databases\": [\n    \"string\",\n    \"string\"\n  ],\n  \"messaging\": [\n    \"string\",\n    \"string\"\n  ],\n  \"containers\": [\n    \"string\",\n    \"string\"\n  ],\n  \"cloudProvider\": [\n    \"string\",\n    \"string\"\n  ],\n  \"monitoring\": [\n    \"string\",\n    \"string\"\n  ],\n  \"completedByUsers\": [\n    \"string\",\n    \"string\"\n  ],\n  \"skippedByUsers\": [\n    \"string\",\n    \"string\"\n  ],\n  \"updatedBy\": \"string\",\n  \"logging\": [\n    \"string\",\n    \"string\"\n  ],\n  \"paging\": [\n    \"string\",\n    \"string\"\n  ],\n  \"incidents\": [\n    \"string\",\n    \"string\"\n  ],\n  \"updatedAt\": \"2023-01-27T02:50:15.644Z\",\n  \"createdAt\": \"1965-03-14T16:31:58.986Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "da4c8cfe-aaf7-4933-a784-f1ab16935a63",
+          "name": "put Profile",
+          "request": {
+            "name": "put Profile",
+            "description": {
+              "content": "Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams",
+                ":teamId",
+                "profile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "teamId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"<integer>\",\n  \"experience\": \"<string>\",\n  \"goal\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"databases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"messaging\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"containers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cloudProvider\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"monitoring\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"completedByUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"skippedByUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"updatedBy\": \"<string>\",\n  \"logging\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"paging\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"incidents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"updatedAt\": \"<dateTime>\",\n  \"createdAt\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "beb35177-6137-4785-9125-50fe3e43acde",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teamId",
+                    "profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teamId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"version\": \"<integer>\",\n  \"experience\": \"<string>\",\n  \"goal\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"databases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"messaging\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"containers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cloudProvider\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"monitoring\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"completedByUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"skippedByUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"updatedBy\": \"<string>\",\n  \"logging\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"paging\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"incidents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"updatedAt\": \"<dateTime>\",\n  \"createdAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fde34d90-8bdd-4d39-80b3-114d31703b70",
+              "name": "User requires privilege: MINIMUM_COMPANY_PRIVILEGES",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teamId",
+                    "profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teamId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"version\": \"<integer>\",\n  \"experience\": \"<string>\",\n  \"goal\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"databases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"messaging\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"containers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cloudProvider\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"monitoring\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"completedByUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"skippedByUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"updatedBy\": \"<string>\",\n  \"logging\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"paging\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"incidents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"updatedAt\": \"<dateTime>\",\n  \"createdAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6d20cc9b-ca21-4ffd-93f7-0569201c1866",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teamId",
+                    "profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teamId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"version\": \"<integer>\",\n  \"experience\": \"<string>\",\n  \"goal\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"databases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"messaging\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"containers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cloudProvider\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"monitoring\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"completedByUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"skippedByUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"updatedBy\": \"<string>\",\n  \"logging\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"paging\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"incidents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"updatedAt\": \"<dateTime>\",\n  \"createdAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "720b0919-952f-4b5d-bd22-061bc485c763",
+          "name": "get Profile Prompt",
+          "request": {
+            "name": "get Profile Prompt",
+            "description": {
+              "content": "Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams",
+                ":teamId",
+                "profile",
+                "prompt"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "teamId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "efebe8f2-0c38-4742-92d6-346c24cfcfef",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teamId",
+                    "profile",
+                    "prompt"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teamId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "42025880-221a-4b89-b917-ecaa8701868a",
+              "name": "User requires privilege: MINIMUM_COMPANY_PRIVILEGES",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teamId",
+                    "profile",
+                    "prompt"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teamId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6f9f0b78-6bfb-4208-a6ab-b9168685cecf",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teamId",
+                    "profile",
+                    "prompt"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teamId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"updated_by\": \"string\",\n  \"updated_at\": \"1960-01-31T22:45:49.722Z\",\n  \"created_at\": \"1951-02-08T00:57:20.080Z\",\n  \"fields\": [\n    {\n      \"field\": \"string\",\n      \"presets\": [\n        \"string\",\n        \"string\"\n      ],\n      \"multiple\": true,\n      \"answer\": [\n        \"string\",\n        \"string\"\n      ],\n      \"prompt\": {\n        \"prefix\": \"string\",\n        \"suffix\": \"string\"\n      }\n    },\n    {\n      \"field\": \"string\",\n      \"presets\": [\n        \"string\",\n        \"string\"\n      ],\n      \"multiple\": true,\n      \"answer\": [\n        \"string\",\n        \"string\"\n      ],\n      \"prompt\": {\n        \"prefix\": \"string\",\n        \"suffix\": \"string\"\n      }\n    }\n  ],\n  \"completedByUsers\": [\n    \"string\",\n    \"string\"\n  ],\n  \"skippedByUsers\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb6188a8-12cb-4000-a03b-ae084a67d59d",
+          "name": "Generates a kubernetes installation manifest for passing to kubectl",
+          "request": {
+            "name": "Generates a kubernetes installation manifest for passing to kubectl",
+            "description": {
+              "content": "Requires the privilege [`TEAM_SECURITY_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams",
+                "kubernetes",
+                "install"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/x-yaml"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "d349cef2-d55b-441b-84e6-d4ebfcb58a01",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    "kubernetes",
+                    "install"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "97057ece-08da-4545-a8ee-a2eecb23fcd7",
+              "name": "User requires privilege for target team: TEAM_SECURITY_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    "kubernetes",
+                    "install"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6683cfca-1cc7-484f-a88e-97e38f80508b",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    "kubernetes",
+                    "install"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/x-yaml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/x-yaml"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d09a9cd-66e8-43e5-94cc-09b298f64b5f",
+          "name": "Idempotently deletes an existing team.",
+          "request": {
+            "name": "Idempotently deletes an existing team.",
+            "description": {
+              "content": "Requires the privilege [`COMPANIES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams",
+                ":identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "316329a9-ed10-4695-b814-93931d22d3f8",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "298d7d44-af7e-4028-9b3c-a5cc87276ffa",
+              "name": "User requires privilege: COMPANIES_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "93209321-5c54-4a62-8386-132f733aa2a5",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"identifier\": \"string\",\n  \"companyId\": \"string\",\n  \"name\": \"string\",\n  \"state\": \"string\",\n  \"clientVersions\": {\n    \"key_0\": {\n      \"minimum\": {\n        \"major\": 8711,\n        \"minor\": 6214,\n        \"patch\": 2936\n      },\n      \"maximum\": {\n        \"major\": 914,\n        \"minor\": 2689,\n        \"patch\": 3212\n      }\n    },\n    \"key_1\": {\n      \"minimum\": {\n        \"major\": 8211,\n        \"minor\": 3698,\n        \"patch\": 1561\n      },\n      \"maximum\": {\n        \"major\": 5675,\n        \"minor\": 3540,\n        \"patch\": 9196\n      }\n    },\n    \"key_2\": {\n      \"minimum\": {\n        \"major\": 745,\n        \"minor\": 6046,\n        \"patch\": 9214\n      },\n      \"maximum\": {\n        \"major\": 6273,\n        \"minor\": 3636,\n        \"patch\": 390\n      }\n    },\n    \"key_3\": {\n      \"minimum\": {\n        \"major\": 472,\n        \"minor\": 7357,\n        \"patch\": 8270\n      },\n      \"maximum\": {\n        \"major\": 176,\n        \"minor\": 9397,\n        \"patch\": 1611\n      }\n    },\n    \"key_4\": {\n      \"minimum\": {\n        \"major\": 81,\n        \"minor\": 7139,\n        \"patch\": 3721\n      },\n      \"maximum\": {\n        \"major\": 2368,\n        \"minor\": 6419,\n        \"patch\": 9567\n      }\n    }\n  },\n  \"certificate\": \"string\",\n  \"certificateSetAt\": \"1952-06-18T16:37:32.710Z\",\n  \"certificateSetBy\": \"string\",\n  \"secretSetAt\": \"1956-04-03T15:26:50.883Z\",\n  \"secretSetBy\": \"string\",\n  \"production\": true,\n  \"prefs\": {\n    \"autoAddUsers\": true,\n    \"domain\": \"string\",\n    \"testRunRestrictionWindows\": [\n      {\n        \"dayOfWeek\": \"Su\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"Su\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      }\n    ]\n  },\n  \"defaultTeamRole\": \"string\",\n  \"createdAt\": \"2000-10-25T13:53:02.439Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0414b73e-5d3a-4664-bc49-af4581191d72",
+          "name": "Idempotently updates an existing team.",
+          "request": {
+            "name": "Idempotently updates an existing team.",
+            "description": {
+              "content": "Requires the privilege [`TEAMS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams",
+                ":identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"production\": \"<boolean>\",\n  \"defaultTeamRole\": \"<string>\",\n  \"prefs\": {\n    \"testRunRestrictionWindows\": [\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          },\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          },\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          },\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          },\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          },\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          },\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          },\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          },\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          },\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          },\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          },\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          },\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          },\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          },\n          {\n            \"end\": \"<string>\",\n            \"start\": \"<string>\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "46e8ea05-6af7-465f-8deb-3d734d6e660e",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"production\": \"<boolean>\",\n  \"defaultTeamRole\": \"<string>\",\n  \"prefs\": {\n    \"testRunRestrictionWindows\": [\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4e942fae-5b6d-4b5a-aabd-cdf579a94515",
+              "name": "User requires privilege for target team: TEAMS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"production\": \"<boolean>\",\n  \"defaultTeamRole\": \"<string>\",\n  \"prefs\": {\n    \"testRunRestrictionWindows\": [\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8531acae-d485-4f42-ad01-e9ee2aeac145",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"production\": \"<boolean>\",\n  \"defaultTeamRole\": \"<string>\",\n  \"prefs\": {\n    \"testRunRestrictionWindows\": [\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      },\n      {\n        \"dayOfWeek\": \"<string>\",\n        \"windowsForDay\": [\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          },\n          {\n            \"end\": \"14:30\",\n            \"start\": \"14:30\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b42679c3-6e7d-4079-87bc-98f6929a42f4",
+          "name": "Generates a config.yaml file with populated values for authenticating the client",
+          "request": {
+            "name": "Generates a config.yaml file with populated values for authenticating the client",
+            "description": {
+              "content": "Requires the privilege [`TEAM_SECURITY_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams",
+                "client",
+                "install"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "59833dc4-81f0-477b-939c-092cdae76a55",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    "client",
+                    "install"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ce7a8ec2-0e37-4552-87f3-37557a4ac352",
+              "name": "User requires privilege for target team: TEAM_SECURITY_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    "client",
+                    "install"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8ead1bf5-b791-47f8-a6ed-d4a5f47d9ecf",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    "client",
+                    "install"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd1ef047-8f90-49aa-994f-1cd6700d21f9",
+          "name": "Generates a teams-specific values file to be passed to a helm install command",
+          "request": {
+            "name": "Generates a teams-specific values file to be passed to a helm install command",
+            "description": {
+              "content": "Requires the privilege [`TEAM_SECURITY_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams",
+                "helm",
+                "install"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/x-yaml"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "5a09e987-a3bb-4d00-a0a6-2bf6628ed74e",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    "helm",
+                    "install"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "462518ca-976b-4564-9749-a6f8ca969403",
+              "name": "User requires privilege for target team: TEAM_SECURITY_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    "helm",
+                    "install"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fc5adcee-d8cc-465b-a23a-581e7f509e2f",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    "helm",
+                    "install"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/x-yaml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/x-yaml"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8a7551ed-9ffd-4c82-909d-048b724d01d8",
+          "name": "Gets all Teams associated with the current Company.",
+          "request": {
+            "name": "Gets all Teams associated with the current Company.",
+            "description": {
+              "content": "Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "c396c68c-2966-43bc-a5b9-e9862f25b34a",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f2d3ecce-fecc-44f8-abb2-39c6ecf13a8c",
+              "name": "User requires privilege: TEAMS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a77f9861-612e-419c-ae35-1ce10d6f32af",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"identifier\": \"string\",\n    \"companyId\": \"string\",\n    \"name\": \"string\",\n    \"state\": \"string\",\n    \"clientVersions\": {\n      \"key_0\": {\n        \"minimum\": {\n          \"major\": 5337,\n          \"minor\": 7497,\n          \"patch\": 7926\n        },\n        \"maximum\": {\n          \"major\": 9887,\n          \"minor\": 7575,\n          \"patch\": 8376\n        }\n      }\n    },\n    \"certificate\": \"string\",\n    \"certificateSetAt\": \"2005-12-13T09:52:24.016Z\",\n    \"certificateSetBy\": \"string\",\n    \"secretSetAt\": \"1970-12-07T08:46:56.059Z\",\n    \"secretSetBy\": \"string\",\n    \"production\": false,\n    \"prefs\": {\n      \"autoAddUsers\": false,\n      \"domain\": \"string\",\n      \"testRunRestrictionWindows\": [\n        {\n          \"dayOfWeek\": \"<string>\",\n          \"windowsForDay\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"dayOfWeek\": \"<string>\",\n          \"windowsForDay\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ]\n    },\n    \"defaultTeamRole\": \"string\",\n    \"createdAt\": \"1983-02-14T18:47:15.560Z\"\n  },\n  {\n    \"identifier\": \"string\",\n    \"companyId\": \"string\",\n    \"name\": \"string\",\n    \"state\": \"string\",\n    \"clientVersions\": {\n      \"key_0\": {\n        \"minimum\": {\n          \"major\": 2636,\n          \"minor\": 3159,\n          \"patch\": 7059\n        },\n        \"maximum\": {\n          \"major\": 4130,\n          \"minor\": 803,\n          \"patch\": 5858\n        }\n      },\n      \"key_1\": {\n        \"minimum\": {\n          \"major\": 7259,\n          \"minor\": 7837,\n          \"patch\": 9824\n        },\n        \"maximum\": {\n          \"major\": 5091,\n          \"minor\": 5985,\n          \"patch\": 476\n        }\n      }\n    },\n    \"certificate\": \"string\",\n    \"certificateSetAt\": \"1957-06-30T02:07:15.580Z\",\n    \"certificateSetBy\": \"string\",\n    \"secretSetAt\": \"2010-11-21T01:28:25.069Z\",\n    \"secretSetBy\": \"string\",\n    \"production\": false,\n    \"prefs\": {\n      \"autoAddUsers\": false,\n      \"domain\": \"string\",\n      \"testRunRestrictionWindows\": [\n        {\n          \"dayOfWeek\": \"<string>\",\n          \"windowsForDay\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"dayOfWeek\": \"<string>\",\n          \"windowsForDay\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ]\n    },\n    \"defaultTeamRole\": \"string\",\n    \"createdAt\": \"1981-06-24T14:55:34.603Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d4a72e5a-9e5f-4e7b-9aa2-f5ea6831eff8",
+          "name": "get By Id Or Name",
+          "request": {
+            "name": "get By Id Or Name",
+            "description": {
+              "content": "Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams",
+                ":teamIdOrName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "teamIdOrName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "106f3f99-8028-410e-8430-d10d2c522950",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teamIdOrName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teamIdOrName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "55aae297-3336-48ce-9548-3e1b8a5ac954",
+              "name": "User requires privilege: TEAMS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teamIdOrName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teamIdOrName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f3995570-5a46-4db0-87c7-3c99422520d4",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teamIdOrName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teamIdOrName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"identifier\": \"string\",\n    \"companyId\": \"string\",\n    \"name\": \"string\",\n    \"state\": \"string\",\n    \"clientVersions\": {\n      \"key_0\": {\n        \"minimum\": {\n          \"major\": 5337,\n          \"minor\": 7497,\n          \"patch\": 7926\n        },\n        \"maximum\": {\n          \"major\": 9887,\n          \"minor\": 7575,\n          \"patch\": 8376\n        }\n      }\n    },\n    \"certificate\": \"string\",\n    \"certificateSetAt\": \"2005-12-13T09:52:24.016Z\",\n    \"certificateSetBy\": \"string\",\n    \"secretSetAt\": \"1970-12-07T08:46:56.059Z\",\n    \"secretSetBy\": \"string\",\n    \"production\": false,\n    \"prefs\": {\n      \"autoAddUsers\": false,\n      \"domain\": \"string\",\n      \"testRunRestrictionWindows\": [\n        {\n          \"dayOfWeek\": \"<string>\",\n          \"windowsForDay\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"dayOfWeek\": \"<string>\",\n          \"windowsForDay\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ]\n    },\n    \"defaultTeamRole\": \"string\",\n    \"createdAt\": \"1983-02-14T18:47:15.560Z\"\n  },\n  {\n    \"identifier\": \"string\",\n    \"companyId\": \"string\",\n    \"name\": \"string\",\n    \"state\": \"string\",\n    \"clientVersions\": {\n      \"key_0\": {\n        \"minimum\": {\n          \"major\": 2636,\n          \"minor\": 3159,\n          \"patch\": 7059\n        },\n        \"maximum\": {\n          \"major\": 4130,\n          \"minor\": 803,\n          \"patch\": 5858\n        }\n      },\n      \"key_1\": {\n        \"minimum\": {\n          \"major\": 7259,\n          \"minor\": 7837,\n          \"patch\": 9824\n        },\n        \"maximum\": {\n          \"major\": 5091,\n          \"minor\": 5985,\n          \"patch\": 476\n        }\n      }\n    },\n    \"certificate\": \"string\",\n    \"certificateSetAt\": \"1957-06-30T02:07:15.580Z\",\n    \"certificateSetBy\": \"string\",\n    \"secretSetAt\": \"2010-11-21T01:28:25.069Z\",\n    \"secretSetBy\": \"string\",\n    \"production\": false,\n    \"prefs\": {\n      \"autoAddUsers\": false,\n      \"domain\": \"string\",\n      \"testRunRestrictionWindows\": [\n        {\n          \"dayOfWeek\": \"<string>\",\n          \"windowsForDay\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"dayOfWeek\": \"<string>\",\n          \"windowsForDay\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ]\n    },\n    \"defaultTeamRole\": \"string\",\n    \"createdAt\": \"1981-06-24T14:55:34.603Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "130e319a-c724-4af9-b836-42511efad9ee",
+          "name": "Gets paged response for teams associated with the current Company. Default page size is 20",
+          "request": {
+            "name": "Gets paged response for teams associated with the current Company. Default page size is 20",
+            "description": {
+              "content": "Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams",
+                "paged"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "This value determines how many results will be returned per call."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageToken",
+                  "value": "<string>",
+                  "description": "Token corresponding to the last page of teams retrieved. Pass the pageToken to get the next page of teams"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "de847adc-7d3d-4892-9bcc-9a33cebc8bb6",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    "paged"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "20"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "None (returns first page)"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "eb8db1c1-8084-4fe2-9cc8-13b4eb714145",
+              "name": "User requires privilege: TEAMS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    "paged"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "20"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "None (returns first page)"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c458686d-34a1-45e1-8310-949791da468e",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    "paged"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "20"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "None (returns first page)"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pageNumber\": 4052,\n  \"pageSize\": 3794,\n  \"pageToken\": \"string\",\n  \"items\": [\n    {\n      \"identifier\": \"string\",\n      \"companyId\": \"string\",\n      \"name\": \"string\",\n      \"state\": \"string\",\n      \"clientVersions\": {\n        \"key_0\": {\n          \"minimum\": {\n            \"major\": 7683,\n            \"minor\": 9622,\n            \"patch\": 9849\n          },\n          \"maximum\": {\n            \"major\": 3358,\n            \"minor\": 6505,\n            \"patch\": 1740\n          }\n        }\n      },\n      \"certificate\": \"string\",\n      \"certificateSetAt\": \"2018-03-02T02:22:39.992Z\",\n      \"certificateSetBy\": \"string\",\n      \"secretSetAt\": \"1970-08-31T16:56:16.444Z\",\n      \"secretSetBy\": \"string\",\n      \"production\": false,\n      \"prefs\": {\n        \"autoAddUsers\": true,\n        \"domain\": \"string\",\n        \"testRunRestrictionWindows\": [\n          {\n            \"dayOfWeek\": \"<string>\",\n            \"windowsForDay\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"dayOfWeek\": \"<string>\",\n            \"windowsForDay\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      },\n      \"defaultTeamRole\": \"string\",\n      \"createdAt\": \"1969-10-19T15:14:32.903Z\"\n    },\n    {\n      \"identifier\": \"string\",\n      \"companyId\": \"string\",\n      \"name\": \"string\",\n      \"state\": \"string\",\n      \"clientVersions\": {\n        \"key_0\": {\n          \"minimum\": {\n            \"major\": 1469,\n            \"minor\": 7649,\n            \"patch\": 8466\n          },\n          \"maximum\": {\n            \"major\": 1248,\n            \"minor\": 8938,\n            \"patch\": 2215\n          }\n        },\n        \"key_1\": {\n          \"minimum\": {\n            \"major\": 533,\n            \"minor\": 4130,\n            \"patch\": 5635\n          },\n          \"maximum\": {\n            \"major\": 2670,\n            \"minor\": 5276,\n            \"patch\": 2679\n          }\n        }\n      },\n      \"certificate\": \"string\",\n      \"certificateSetAt\": \"2017-04-06T15:38:24.964Z\",\n      \"certificateSetBy\": \"string\",\n      \"secretSetAt\": \"2018-01-10T11:14:15.363Z\",\n      \"secretSetBy\": \"string\",\n      \"production\": true,\n      \"prefs\": {\n        \"autoAddUsers\": false,\n        \"domain\": \"string\",\n        \"testRunRestrictionWindows\": [\n          {\n            \"dayOfWeek\": \"<string>\",\n            \"windowsForDay\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"dayOfWeek\": \"<string>\",\n            \"windowsForDay\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      },\n      \"defaultTeamRole\": \"string\",\n      \"createdAt\": \"1982-07-13T12:32:24.757Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6c71526f-83d9-499d-9173-0519b029df09",
+    "name": "Gremlin agents teams API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

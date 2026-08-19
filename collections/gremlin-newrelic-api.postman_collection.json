@@ -1,0 +1,274 @@
+{
+  "item": [
+    {
+      "id": "3aa6539d-87d1-465e-80fb-72aa344ce8eb",
+      "name": "newrelic",
+      "description": {
+        "content": "Read New Relic items",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0589712b-8ef7-49bd-95e1-3b527352b225",
+          "name": "Get an incident by id.",
+          "request": {
+            "name": "Get an incident by id.",
+            "description": {
+              "content": "Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "newrelic",
+                "incidents",
+                ":incidentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "incidentId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "82233dc1-225f-4e42-951e-b4648935f4d0",
+              "name": "Returns an incident",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newrelic",
+                    "incidents",
+                    ":incidentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "incidentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "60382f92-b09a-454b-b3f3-50a11eef8504",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newrelic",
+                    "incidents",
+                    ":incidentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "incidentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "76b102bb-be5c-4ec1-96a1-1af616822222",
+              "name": "User requires privilege for target team: INTEGRATIONS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newrelic",
+                    "incidents",
+                    ":incidentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "incidentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d771f906-ef84-446a-98ab-7100542e1e71",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "newrelic",
+                    "incidents",
+                    ":incidentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "incidentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "667f55b4-7d0c-41ce-bc3a-24a962ed50a4",
+    "name": "Gremlin agents newrelic API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

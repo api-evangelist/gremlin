@@ -1,0 +1,285 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gremlin agents gamedays API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gamedays",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all GameDays by team.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/gamedays",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "None (unlimited)",
+                "type": "query",
+                "description": "This value determines how many results will be returned per call."
+              },
+              {
+                "name": "pageNumber",
+                "value": "1",
+                "type": "query",
+                "description": "Get the specific page of GameDays. Only pageNumber or pageToken accepted along with pageSize"
+              },
+              {
+                "name": "pageToken",
+                "value": "None (returns first page)",
+                "type": "query",
+                "description": "Token corresponding to the last page of GameDays. Pass the pageToken to get the next page of GameDays. Only pageNumber or pageToken accepted along with pageSize"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Create new GameDay plan.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/gamedays",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Upload an image to a given gameday",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.gremlin.com/v1/gamedays/:gameDayId/summary/images/:imageName",
+            "params": [
+              {
+                "name": "imageName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "gameDayId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This takes an image as a multipart/form-data (parameter name \"file\") and uploads it to Gremlin's backend and associates it with a given Gameday. \nNOTE: imageNames must be S3 compatible strings ([a-zA-Z0-9!-_'\\(\\)]) with under 1000 characters (including file type)\nRequires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Remove an image associated with a gameday",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.gremlin.com/v1/gamedays/:gameDayId/summary/images/:imageName",
+            "params": [
+              {
+                "name": "imageName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "gameDayId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Deletes a specific image associated with a gameday.  This does delete the image on the backend so there is *no* recovery\nRequires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Exports GameDay Summary PDF file.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/gamedays/:gameDayId/summary/export",
+            "params": [
+              {
+                "name": "gameDayId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Get GameDay details by id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/gamedays/:gameDayId",
+            "params": [
+              {
+                "name": "gameDayId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Updates a GameDay plan.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.gremlin.com/v1/gamedays/:gameDayId",
+            "params": [
+              {
+                "name": "gameDayId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Runs specific Scenario associated with GameDay.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/gamedays/:gameDayId/runs/:scenarioId",
+            "params": [
+              {
+                "name": "gameDayId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "scenarioId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "scenarioVersion",
+                "value": "",
+                "type": "query",
+                "description": "Expected version of scenario. If the current version is different this will receive a 418 with the correct version"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Updates a GameDay summary.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.gremlin.com/v1/gamedays/:gameDayId/summary",
+            "params": [
+              {
+                "name": "gameDayId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

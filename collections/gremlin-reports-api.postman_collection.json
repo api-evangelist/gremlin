@@ -1,0 +1,4296 @@
+{
+  "item": [
+    {
+      "id": "1c4e9def-94a6-4181-9c64-e87ffa069394",
+      "name": "reports",
+      "description": {
+        "content": "Get users, clients, and attacks summaries",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "11554090-9bdb-4306-8467-86eca217cdab",
+          "name": "Loads the Attacks Summary for the specified time period.",
+          "request": {
+            "name": "Loads the Attacks Summary for the specified time period.",
+            "description": {
+              "content": "Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "attacks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) team identifier associated with the requester's team"
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "d02c9b68-9ceb-4624-a8e6-fb461657aa57",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "attacks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "start",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "period",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "27ad0768-515c-487e-b7fa-44c6be52b16a",
+              "name": "User requires privilege: REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "attacks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "start",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "period",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7f7a182b-8cef-444e-bd40-d7d823f98be5",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "attacks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "start",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "period",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "594c1574-ba63-455f-bc05-cac37e7c16a8",
+          "name": "Loads the Client Summary for the specified time period.",
+          "request": {
+            "name": "Loads the Client Summary for the specified time period.",
+            "description": {
+              "content": "Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "clients"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) team identifier associated with the requester's team"
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "7ecf19ea-d06f-4de5-bf7a-623c57193269",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "clients"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "start",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "period",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8073a3b3-432f-4d69-ae83-fd139f4cb869",
+              "name": "User requires privilege: REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "clients"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "start",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "period",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f6128734-37b4-4b49-af93-1cc37a54f343",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "clients"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "start",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "period",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e6861532-d2ef-4536-bf9a-2692e9ebb4c2",
+          "name": "Loads the Company Summary for the specified month.",
+          "request": {
+            "name": "Loads the Company Summary for the specified month.",
+            "description": {
+              "content": "Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "companies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "3cc03589-aff1-48ce-a9b3-9cacae2bfc4c",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "55b03e48-c358-4e60-8ec7-ef0d8c6aeb2d",
+              "name": "User requires privilege: REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d57bf620-1028-4cfd-bbbc-d81f56bfa2dd",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d44d1bea-efc4-4313-bba6-190246953c82",
+          "name": "Loads the Company Summary PDF for the specified time frame.",
+          "request": {
+            "name": "Loads the Company Summary PDF for the specified time frame.",
+            "description": {
+              "content": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "companies",
+                "pdf"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "numberOfDataPoints",
+                  "value": "12"
+                },
+                {
+                  "disabled": false,
+                  "key": "topN",
+                  "value": "3"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "groupBy",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "370cc654-f5d7-4aa0-a1fd-02f896346516",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies",
+                    "pdf"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    },
+                    {
+                      "key": "topN",
+                      "value": "3"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupBy",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2bfc360b-b834-44ee-86bb-ddb8b6a4bcc7",
+              "name": "User requires privilege: RELIABILITY_REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies",
+                    "pdf"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    },
+                    {
+                      "key": "topN",
+                      "value": "3"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupBy",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6008f3d0-a40a-4776-925d-cff0c5458857",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies",
+                    "pdf"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    },
+                    {
+                      "key": "topN",
+                      "value": "3"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupBy",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b04524a7-dc2f-4d21-bb84-f882a96783a3",
+          "name": "Loads the Company Reliability Management Report for the specified time window defaulting to a week.",
+          "request": {
+            "name": "Loads the Company Reliability Management Report for the specified time window defaulting to a week.",
+            "description": {
+              "content": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "companies",
+                "reliability-management"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "topN",
+                  "value": "3"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeDailyReport",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "9850bd4a-f8ed-4640-8687-faec67d90244",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies",
+                    "reliability-management"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "topN",
+                      "value": "3"
+                    },
+                    {
+                      "key": "includeDailyReport",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "51270986-9c76-42a5-b139-09d58d7712bd",
+              "name": "User requires privilege: RELIABILITY_REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies",
+                    "reliability-management"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "topN",
+                      "value": "3"
+                    },
+                    {
+                      "key": "includeDailyReport",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8b3a6b5e-2b79-4bc0-99f7-832fd99765ff",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies",
+                    "reliability-management"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "topN",
+                      "value": "3"
+                    },
+                    {
+                      "key": "includeDailyReport",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"summary\": {\n    \"start\": \"2008-09-28\",\n    \"end\": \"1983-12-06\",\n    \"topN\": 3446,\n    \"biggestChangers\": [\n      {\n        \"serviceId\": \"string\",\n        \"serviceName\": \"string\",\n        \"lastModified\": \"1975-11-06T12:40:44.780Z\",\n        \"serviceOwner\": {\n          \"identifier\": \"string\"\n        },\n        \"teamOwner\": {\n          \"teamId\": \"string\",\n          \"teamName\": \"string\",\n          \"teamOwnerEmail\": \"string\",\n          \"teamOwnerName\": \"string\"\n        },\n        \"score\": 3120.3597378958525,\n        \"trendType\": \"Down\",\n        \"delta\": 5030.288905523384,\n        \"previousIntervalScore\": 3986.2253000579863,\n        \"inTopList\": true,\n        \"reliabilityReportTrend\": {\n          \"start\": \"1977-10-13\",\n          \"end\": \"1993-12-05\",\n          \"numOfDataPoints\": 3878,\n          \"statsByDate\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"riskSummaryStats\": {\n          \"total\": 3678,\n          \"atRisk\": 3385,\n          \"previousIntervalAtRisk\": 246,\n          \"evaluationState\": \"EVALUATED\"\n        },\n        \"runSummaryStats\": {\n          \"runs\": 4908,\n          \"previousIntervalRuns\": 2979\n        },\n        \"targetingStrategy\": {\n          \"type\": \"string\"\n        },\n        \"multiSelectTags\": {\n          \"key_0\": [\n            \"string\",\n            \"string\"\n          ],\n          \"key_1\": [\n            \"string\",\n            \"string\"\n          ],\n          \"key_2\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"numOfSpofs\": 2508\n      },\n      {\n        \"serviceId\": \"string\",\n        \"serviceName\": \"string\",\n        \"lastModified\": \"1981-12-09T15:05:37.896Z\",\n        \"serviceOwner\": {\n          \"identifier\": \"string\"\n        },\n        \"teamOwner\": {\n          \"teamId\": \"string\",\n          \"teamName\": \"string\",\n          \"teamOwnerEmail\": \"string\",\n          \"teamOwnerName\": \"string\"\n        },\n        \"score\": 5238.605564788067,\n        \"trendType\": \"Up\",\n        \"delta\": 4274.843394101644,\n        \"previousIntervalScore\": 1483.6233195342597,\n        \"inTopList\": true,\n        \"reliabilityReportTrend\": {\n          \"start\": \"2007-06-24\",\n          \"end\": \"2005-04-16\",\n          \"numOfDataPoints\": 1694,\n          \"statsByDate\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"riskSummaryStats\": {\n          \"total\": 932,\n          \"atRisk\": 8076,\n          \"previousIntervalAtRisk\": 6452,\n          \"evaluationState\": \"RISKS_NOT_INCLUDED\"\n        },\n        \"runSummaryStats\": {\n          \"runs\": 3440,\n          \"previousIntervalRuns\": 7859\n        },\n        \"targetingStrategy\": {\n          \"type\": \"string\"\n        },\n        \"multiSelectTags\": {\n          \"key_0\": [\n            \"string\",\n            \"string\"\n          ],\n          \"key_1\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"numOfSpofs\": 3905\n      }\n    ]\n  },\n  \"start\": \"1976-05-05\",\n  \"end\": \"1963-04-12\",\n  \"services\": [\n    {\n      \"serviceId\": \"string\",\n      \"serviceName\": \"string\",\n      \"lastModified\": \"2001-05-24T21:08:23.540Z\",\n      \"serviceOwner\": {\n        \"identifier\": \"string\"\n      },\n      \"teamOwner\": {\n        \"teamId\": \"string\",\n        \"teamName\": \"string\",\n        \"teamOwnerEmail\": \"string\",\n        \"teamOwnerName\": \"string\"\n      },\n      \"score\": 4128.228702724413,\n      \"trendType\": \"NoChange\",\n      \"delta\": 9578.875269644299,\n      \"previousIntervalScore\": 5384.921689735509,\n      \"inTopList\": true,\n      \"reliabilityReportTrend\": {\n        \"start\": \"1968-05-09\",\n        \"end\": \"1978-06-29\",\n        \"numOfDataPoints\": 6499,\n        \"statsByDate\": [\n          {\n            \"trackingDate\": \"1956-07-15\",\n            \"value\": 1412.4270479524314,\n            \"numOfServices\": 8447,\n            \"score\": 8230.803929042973\n          },\n          {\n            \"trackingDate\": \"2017-03-03\",\n            \"value\": 4943.28683474181,\n            \"numOfServices\": 4658,\n            \"score\": 5888.073494075958\n          }\n        ]\n      },\n      \"riskSummaryStats\": {\n        \"total\": 1528,\n        \"atRisk\": 2385,\n        \"previousIntervalAtRisk\": 3162,\n        \"evaluationState\": \"NO_DEPLOYMENT_FOUND\"\n      },\n      \"runSummaryStats\": {\n        \"runs\": 2546,\n        \"previousIntervalRuns\": 7909\n      },\n      \"targetingStrategy\": {\n        \"type\": \"string\"\n      },\n      \"multiSelectTags\": {\n        \"key_0\": [\n          \"string\",\n          \"string\"\n        ],\n        \"key_1\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"numOfSpofs\": 4485\n    },\n    {\n      \"serviceId\": \"string\",\n      \"serviceName\": \"string\",\n      \"lastModified\": \"1965-12-14T03:04:26.218Z\",\n      \"serviceOwner\": {\n        \"identifier\": \"string\"\n      },\n      \"teamOwner\": {\n        \"teamId\": \"string\",\n        \"teamName\": \"string\",\n        \"teamOwnerEmail\": \"string\",\n        \"teamOwnerName\": \"string\"\n      },\n      \"score\": 8111.890670177009,\n      \"trendType\": \"NoChange\",\n      \"delta\": 2252.016544453541,\n      \"previousIntervalScore\": 5488.337766283346,\n      \"inTopList\": false,\n      \"reliabilityReportTrend\": {\n        \"start\": \"1964-11-26\",\n        \"end\": \"1955-12-20\",\n        \"numOfDataPoints\": 5744,\n        \"statsByDate\": [\n          {\n            \"trackingDate\": \"2019-05-30\",\n            \"value\": 1509.6472458179433,\n            \"numOfServices\": 1588,\n            \"score\": 2874.8375411874595\n          },\n          {\n            \"trackingDate\": \"1967-05-03\",\n            \"value\": 2973.5558970289453,\n            \"numOfServices\": 5332,\n            \"score\": 4622.403698098457\n          }\n        ]\n      },\n      \"riskSummaryStats\": {\n        \"total\": 2075,\n        \"atRisk\": 4759,\n        \"previousIntervalAtRisk\": 9849,\n        \"evaluationState\": \"EVALUATED\"\n      },\n      \"runSummaryStats\": {\n        \"runs\": 51,\n        \"previousIntervalRuns\": 4277\n      },\n      \"targetingStrategy\": {\n        \"type\": \"string\"\n      },\n      \"multiSelectTags\": {\n        \"key_0\": [\n          \"string\",\n          \"string\"\n        ],\n        \"key_1\": [\n          \"string\",\n          \"string\"\n        ],\n        \"key_2\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"numOfSpofs\": 190\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a4aefde6-bf51-41b8-a551-a9e786fe0a6e",
+          "name": "Loads the company service list and reliability trend for each service for the specified time window defaulting to a month.",
+          "request": {
+            "name": "Loads the company service list and reliability trend for each service for the specified time window defaulting to a month.",
+            "description": {
+              "content": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "companies",
+                "reliability-management",
+                "services"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "numberOfDataPoints",
+                  "value": "4"
+                },
+                {
+                  "disabled": false,
+                  "key": "topN",
+                  "value": "3"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "c9df2212-bc4c-4df9-8a81-bb5ba6967918",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies",
+                    "reliability-management",
+                    "services"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "4"
+                    },
+                    {
+                      "key": "topN",
+                      "value": "3"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "30c2d361-071c-4b55-8ee5-e7490f39dcad",
+              "name": "User requires privilege: RELIABILITY_REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies",
+                    "reliability-management",
+                    "services"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "4"
+                    },
+                    {
+                      "key": "topN",
+                      "value": "3"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ce9aac49-b2e5-4e7c-82de-442b5d01da48",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies",
+                    "reliability-management",
+                    "services"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "4"
+                    },
+                    {
+                      "key": "topN",
+                      "value": "3"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"topN\": 2202,\n  \"start\": \"1971-07-20\",\n  \"end\": \"2010-01-11\",\n  \"services\": [\n    {\n      \"serviceId\": \"string\",\n      \"serviceName\": \"string\",\n      \"lastModified\": \"2006-01-12T05:03:01.691Z\",\n      \"serviceOwner\": {\n        \"identifier\": \"string\"\n      },\n      \"teamOwner\": {\n        \"teamId\": \"string\",\n        \"teamName\": \"string\",\n        \"teamOwnerEmail\": \"string\",\n        \"teamOwnerName\": \"string\"\n      },\n      \"score\": 7199.006698470674,\n      \"trendType\": \"Up\",\n      \"delta\": 877.9091359539403,\n      \"previousIntervalScore\": 911.3701960017306,\n      \"inTopList\": true,\n      \"reliabilityReportTrend\": {\n        \"start\": \"1999-05-18\",\n        \"end\": \"1954-01-14\",\n        \"numOfDataPoints\": 9191,\n        \"statsByDate\": [\n          {\n            \"trackingDate\": \"1995-06-16\",\n            \"value\": 702.435738975794,\n            \"numOfServices\": 4134,\n            \"score\": 1491.071550382317\n          },\n          {\n            \"trackingDate\": \"1981-01-20\",\n            \"value\": 6696.576224266487,\n            \"numOfServices\": 5405,\n            \"score\": 6821.14322772104\n          }\n        ]\n      },\n      \"riskSummaryStats\": {\n        \"total\": 1011,\n        \"atRisk\": 1410,\n        \"previousIntervalAtRisk\": 3878,\n        \"evaluationState\": \"RISKS_NOT_INCLUDED\"\n      },\n      \"runSummaryStats\": {\n        \"runs\": 3446,\n        \"previousIntervalRuns\": 1046\n      },\n      \"targetingStrategy\": {\n        \"type\": \"string\"\n      },\n      \"multiSelectTags\": {\n        \"key_0\": [\n          \"string\",\n          \"string\"\n        ],\n        \"key_1\": [\n          \"string\",\n          \"string\"\n        ],\n        \"key_2\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"numOfSpofs\": 493\n    },\n    {\n      \"serviceId\": \"string\",\n      \"serviceName\": \"string\",\n      \"lastModified\": \"2023-06-16T10:42:29.809Z\",\n      \"serviceOwner\": {\n        \"identifier\": \"string\"\n      },\n      \"teamOwner\": {\n        \"teamId\": \"string\",\n        \"teamName\": \"string\",\n        \"teamOwnerEmail\": \"string\",\n        \"teamOwnerName\": \"string\"\n      },\n      \"score\": 275.5528698216858,\n      \"trendType\": \"Down\",\n      \"delta\": 2751.964359653152,\n      \"previousIntervalScore\": 711.8335517261321,\n      \"inTopList\": false,\n      \"reliabilityReportTrend\": {\n        \"start\": \"2021-10-13\",\n        \"end\": \"1977-02-17\",\n        \"numOfDataPoints\": 8403,\n        \"statsByDate\": [\n          {\n            \"trackingDate\": \"2017-05-25\",\n            \"value\": 3370.540341541518,\n            \"numOfServices\": 6211,\n            \"score\": 5378.010119890455\n          },\n          {\n            \"trackingDate\": \"1952-03-27\",\n            \"value\": 2602.2674584081406,\n            \"numOfServices\": 2738,\n            \"score\": 5693.524301825692\n          }\n        ]\n      },\n      \"riskSummaryStats\": {\n        \"total\": 6599,\n        \"atRisk\": 6000,\n        \"previousIntervalAtRisk\": 9072,\n        \"evaluationState\": \"RISKS_NOT_SUPPORTED\"\n      },\n      \"runSummaryStats\": {\n        \"runs\": 3402,\n        \"previousIntervalRuns\": 6318\n      },\n      \"targetingStrategy\": {\n        \"type\": \"string\"\n      },\n      \"multiSelectTags\": {\n        \"key_0\": [\n          \"string\",\n          \"string\"\n        ],\n        \"key_1\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"numOfSpofs\": 6239\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ba2a41b0-5588-42a6-86d8-e8524c36a708",
+          "name": "Loads the Company Reliability Management Report grouped by query param value of groupBy - defaults to TEAM.",
+          "request": {
+            "name": "Loads the Company Reliability Management Report grouped by query param value of groupBy - defaults to TEAM.",
+            "description": {
+              "content": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "companies",
+                "reliability-management",
+                "grouped"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "groupBy",
+                  "value": "TEAM"
+                },
+                {
+                  "disabled": false,
+                  "key": "numberOfDataPoints",
+                  "value": "4"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "39b21f48-83f2-4301-bb5c-e803dda57921",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies",
+                    "reliability-management",
+                    "grouped"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "groupBy",
+                      "value": "TEAM"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "4"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "08a3fe6b-4ab5-4103-bb7f-96d0dbdd5027",
+              "name": "User requires privilege: RELIABILITY_REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies",
+                    "reliability-management",
+                    "grouped"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "groupBy",
+                      "value": "TEAM"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "4"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9c8f0c0f-a26d-438b-82df-52a441710b0b",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies",
+                    "reliability-management",
+                    "grouped"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "groupBy",
+                      "value": "TEAM"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "4"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"groupBy\": \"TEAM\",\n  \"groupedServices\": [\n    {\n      \"groupDetails\": {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"ownerDetails\": {\n          \"identifier\": \"string\"\n        }\n      },\n      \"avgScore\": 2028.5450293896047,\n      \"previousIntervalAvgScore\": 8141.418057052679,\n      \"numOfServices\": 8135,\n      \"atRiskTotal\": 9116,\n      \"previousIntervalAtRiskTotal\": 9953,\n      \"numOfSpofs\": 2758,\n      \"reliabilityReportTrend\": {\n        \"start\": \"1981-08-11\",\n        \"end\": \"1956-02-22\",\n        \"numOfDataPoints\": 6662,\n        \"statsByDate\": [\n          {\n            \"trackingDate\": \"2021-05-19\",\n            \"value\": 8466.72846025107,\n            \"numOfServices\": 7859,\n            \"score\": 8218.511309911704\n          },\n          {\n            \"trackingDate\": \"2021-08-25\",\n            \"value\": 8211.23920330568,\n            \"numOfServices\": 7330,\n            \"score\": 5567.384044536213\n          }\n        ]\n      },\n      \"numOfRuns\": 1958,\n      \"previousIntervalNumOfRuns\": 6639\n    },\n    {\n      \"groupDetails\": {\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"ownerDetails\": {\n          \"identifier\": \"string\"\n        }\n      },\n      \"avgScore\": 1860.1430916428153,\n      \"previousIntervalAvgScore\": 1025.627151219608,\n      \"numOfServices\": 4525,\n      \"atRiskTotal\": 6597,\n      \"previousIntervalAtRiskTotal\": 346,\n      \"numOfSpofs\": 3309,\n      \"reliabilityReportTrend\": {\n        \"start\": \"1988-09-06\",\n        \"end\": \"1959-08-09\",\n        \"numOfDataPoints\": 8239,\n        \"statsByDate\": [\n          {\n            \"trackingDate\": \"2010-04-23\",\n            \"value\": 3871.38392658392,\n            \"numOfServices\": 3935,\n            \"score\": 9298.895637815194\n          },\n          {\n            \"trackingDate\": \"2016-05-04\",\n            \"value\": 3441.585553420455,\n            \"numOfServices\": 546,\n            \"score\": 7345.765769432998\n          }\n        ]\n      },\n      \"numOfRuns\": 4435,\n      \"previousIntervalNumOfRuns\": 9994\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7cf9a207-5f30-4c5e-bb96-73aca932acd5",
+          "name": "Returns the Risk and Score trends for your company across all associated services",
+          "request": {
+            "name": "Returns the Risk and Score trends for your company across all associated services",
+            "description": {
+              "content": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "companies",
+                "trends"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "numberOfDataPoints",
+                  "value": "12"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "c456d5c1-5657-4fee-9661-5df4be1d9872",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies",
+                    "trends"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "20554979-0531-469a-9187-fe598304f32c",
+              "name": "User requires privilege: RELIABILITY_REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies",
+                    "trends"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b80695e5-623c-4998-bf19-0a5860093e8f",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "companies",
+                    "trends"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reliabilityScoreTrend\": {\n    \"start\": \"1969-02-21\",\n    \"end\": \"1980-08-12\",\n    \"numOfDataPoints\": 8008,\n    \"statsByDate\": [\n      {\n        \"trackingDate\": \"1981-02-15\",\n        \"value\": 456.9538561619879,\n        \"numOfServices\": 231,\n        \"score\": 4876.009443759272\n      },\n      {\n        \"trackingDate\": \"1974-12-27\",\n        \"value\": 2799.333795091696,\n        \"numOfServices\": 8143,\n        \"score\": 360.02771862672864\n      }\n    ]\n  },\n  \"detectedRisksTrend\": {\n    \"start\": \"1996-05-19\",\n    \"end\": \"2011-08-19\",\n    \"numOfDataPoints\": 1809,\n    \"statsByDate\": [\n      {\n        \"trackingDate\": \"1969-04-02\",\n        \"value\": 4967.203839315834,\n        \"numOfServices\": 470,\n        \"score\": 1530.9719491306228\n      },\n      {\n        \"trackingDate\": \"2014-02-10\",\n        \"value\": 8130.761229243361,\n        \"numOfServices\": 7447,\n        \"score\": 6516.876089272553\n      }\n    ]\n  },\n  \"reliabilityTestsRunTrend\": {\n    \"start\": \"1972-10-21\",\n    \"end\": \"1997-10-11\",\n    \"numOfDataPoints\": 1016,\n    \"statsByDate\": [\n      {\n        \"trackingDate\": \"1992-01-27\",\n        \"value\": 6028.794939962676,\n        \"numOfServices\": 5349,\n        \"score\": 385.58996572786276\n      },\n      {\n        \"trackingDate\": \"1972-04-13\",\n        \"value\": 6266.990533191407,\n        \"numOfServices\": 2066,\n        \"score\": 4055.512652535034\n      }\n    ]\n  },\n  \"runSummaryStats\": {\n    \"reliabilityTests\": 6456,\n    \"previousIntervalReliabilityTests\": 462,\n    \"experiments\": 7189,\n    \"previousIntervalExperiments\": 8611,\n    \"scenarios\": 6174,\n    \"previousIntervalScenarios\": 6914,\n    \"failureFlags\": 3491,\n    \"previousIntervalFailureFlags\": 1359,\n    \"gameDays\": 7327,\n    \"previousIntervalGameDays\": 8780\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "498e069f-ae07-4e58-a405-6f977363cb0b",
+          "name": "Returns the trend of risks across all services for a given team",
+          "request": {
+            "name": "Returns the trend of risks across all services for a given team",
+            "description": {
+              "content": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "team",
+                "detected-risk",
+                "trend"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "numberOfDataPoints",
+                  "value": "12"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "ef6d39ff-c266-45cc-9d34-42d552505f80",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "detected-risk",
+                    "trend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "83c5a260-22ff-430f-a48e-c228c975f87b",
+              "name": "User requires privilege: RELIABILITY_REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "detected-risk",
+                    "trend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5411c5ca-8ab0-455d-9068-c08d79a9b927",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "detected-risk",
+                    "trend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"start\": \"1999-12-04\",\n  \"end\": \"1991-12-03\",\n  \"numOfDataPoints\": 8117,\n  \"statsByDate\": [\n    {\n      \"trackingDate\": \"2021-10-17\",\n      \"value\": 259.4066547244045,\n      \"numOfServices\": 4294,\n      \"score\": 934.2397056688578\n    },\n    {\n      \"trackingDate\": \"1955-03-26\",\n      \"value\": 6513.109331711216,\n      \"numOfServices\": 6396,\n      \"score\": 9880.433410935495\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2635889d-a30c-4516-8c1f-6a822f4bd252",
+          "name": "get Reliability Report For Team",
+          "request": {
+            "name": "get Reliability Report For Team",
+            "description": {
+              "content": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "team",
+                "reliability-report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "de912f01-5864-4e56-8a07-8e917453602a",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "reliability-report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6f0c8473-00b4-4981-9f5f-73607b1950c8",
+              "name": "User requires privilege: RELIABILITY_REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "reliability-report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "09c1236e-f60a-469d-abca-996fe32db947",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "reliability-report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"teamId\": \"string\",\n  \"teamName\": \"string\",\n  \"teamScoreReports\": [\n    {\n      \"serviceName\": \"string\",\n      \"serviceId\": \"string\",\n      \"reliabilityScore\": 9860.295177175627,\n      \"previousIntervalScore\": 4159.299180027535,\n      \"policyEvaluations\": [\n        {\n          \"policyId\": \"string\",\n          \"reliabilityTestId\": \"string\",\n          \"serviceId\": \"string\",\n          \"dependencyId\": \"string\",\n          \"dependencyName\": \"string\",\n          \"failureFlagName\": \"string\",\n          \"evaluationTime\": 8,\n          \"startTime\": \"1946-11-24T18:10:17.003Z\",\n          \"endTime\": \"2017-02-26T14:11:14.738Z\",\n          \"staleness\": 9344,\n          \"result\": \"FAILED\",\n          \"order\": 2710,\n          \"scenarioId\": \"string\",\n          \"runNumber\": 8645,\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"passCriteria\": \"ALL_PASS\",\n          \"diagnosisAvailable\": true,\n          \"triggerSource\": \"RUN_ALL\",\n          \"triggeredBy\": \"string\"\n        },\n        {\n          \"policyId\": \"string\",\n          \"reliabilityTestId\": \"string\",\n          \"serviceId\": \"string\",\n          \"dependencyId\": \"string\",\n          \"dependencyName\": \"string\",\n          \"failureFlagName\": \"string\",\n          \"evaluationTime\": 7238,\n          \"startTime\": \"2017-07-20T20:14:11.379Z\",\n          \"endTime\": \"1984-10-01T12:34:14.365Z\",\n          \"staleness\": 1903,\n          \"result\": \"NEVER_RUN\",\n          \"order\": 8523,\n          \"scenarioId\": \"string\",\n          \"runNumber\": 2571,\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"passCriteria\": \"ALL_PASS\",\n          \"diagnosisAvailable\": true,\n          \"triggerSource\": \"SCHEDULED\",\n          \"triggeredBy\": \"string\"\n        }\n      ]\n    },\n    {\n      \"serviceName\": \"string\",\n      \"serviceId\": \"string\",\n      \"reliabilityScore\": 6716.595349359178,\n      \"previousIntervalScore\": 7846.739647071394,\n      \"policyEvaluations\": [\n        {\n          \"policyId\": \"string\",\n          \"reliabilityTestId\": \"string\",\n          \"serviceId\": \"string\",\n          \"dependencyId\": \"string\",\n          \"dependencyName\": \"string\",\n          \"failureFlagName\": \"string\",\n          \"evaluationTime\": 4095,\n          \"startTime\": \"2006-10-11T13:37:37.233Z\",\n          \"endTime\": \"1967-05-22T21:47:24.249Z\",\n          \"staleness\": 328,\n          \"result\": \"EXPIRED\",\n          \"order\": 8118,\n          \"scenarioId\": \"string\",\n          \"runNumber\": 6620,\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"passCriteria\": \"AT_LEAST_ONE_FAILED\",\n          \"diagnosisAvailable\": false,\n          \"triggerSource\": \"SCHEDULED\",\n          \"triggeredBy\": \"string\"\n        },\n        {\n          \"policyId\": \"string\",\n          \"reliabilityTestId\": \"string\",\n          \"serviceId\": \"string\",\n          \"dependencyId\": \"string\",\n          \"dependencyName\": \"string\",\n          \"failureFlagName\": \"string\",\n          \"evaluationTime\": 7429,\n          \"startTime\": \"2006-09-01T10:40:07.095Z\",\n          \"endTime\": \"2022-01-14T13:58:52.513Z\",\n          \"staleness\": 4319,\n          \"result\": \"PASSED\",\n          \"order\": 3498,\n          \"scenarioId\": \"string\",\n          \"runNumber\": 5687,\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"passCriteria\": \"AT_LEAST_ONE_FAILED\",\n          \"diagnosisAvailable\": false,\n          \"triggerSource\": \"MANUAL\",\n          \"triggeredBy\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"aggregatedReliabilityReport\": {\n    \"rmTestScore\": 4574.81392039084,\n    \"score\": 8279.917352656219,\n    \"previousIntervalScore\": 3221.9343569650314,\n    \"maxScore\": 2564.8899777847023,\n    \"teamReliabilityCategorySummary\": {\n      \"key_0\": {\n        \"category\": \"DEPENDENCIES\",\n        \"rmTestScore\": 26.22305272239389,\n        \"maxRMTestScore\": 8439.480316856581,\n        \"score\": 2882.5262297964714,\n        \"previousIntervalScore\": 2836.395811903334,\n        \"maxScore\": 7077.597388661388,\n        \"rank\": 7575\n      }\n    }\n  },\n  \"lastUpdatedAt\": \"1947-08-09T03:28:08.861Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "603d3b02-13d2-4138-b6b7-c1ce29e8622a",
+          "name": "Loads the team reliability report PDF for the specified time frame.",
+          "request": {
+            "name": "Loads the team reliability report PDF for the specified time frame.",
+            "description": {
+              "content": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "team",
+                "reliability-report",
+                "pdf"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "numberOfDataPoints",
+                  "value": "12"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "6d8b9889-4ad1-4013-ad89-f44360a2b176",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "reliability-report",
+                    "pdf"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6aead3e7-824c-4fd0-9d43-3012eaa438a2",
+              "name": "User requires privilege: RELIABILITY_REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "reliability-report",
+                    "pdf"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0a602d0b-90cd-4523-a55f-ffef3b1f786d",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "reliability-report",
+                    "pdf"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58bb0b19-e58e-49c9-b1ce-a4141e95626b",
+          "name": "Loads the Reliability report trend for all the services of the team for the specified time period defaulting to 1 months and 4 data points",
+          "request": {
+            "name": "Loads the Reliability report trend for all the services of the team for the specified time period defaulting to 1 months and 4 data points",
+            "description": {
+              "content": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "services",
+                "reliability-management",
+                "reliability-report-trend"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "numberOfDataPoints",
+                  "value": "4"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "007a36b3-cb25-40a1-bd54-591dfbd653c8",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "services",
+                    "reliability-management",
+                    "reliability-report-trend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "4"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4df65479-7190-46ac-a46d-83198c99266f",
+              "name": "User requires privilege: RELIABILITY_REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "services",
+                    "reliability-management",
+                    "reliability-report-trend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "4"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9aeb4e3f-f042-4584-b507-7cc9886d4bd5",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "services",
+                    "reliability-management",
+                    "reliability-report-trend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "4"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"serviceId\": \"string\",\n    \"reliabilityReportTrend\": {\n      \"start\": \"1970-05-27\",\n      \"end\": \"1979-04-27\",\n      \"numOfDataPoints\": 7779,\n      \"statsByDate\": [\n        {\n          \"trackingDate\": \"2004-03-03\",\n          \"value\": 3879.174307604254,\n          \"numOfServices\": 3799,\n          \"score\": 8471.863398980458\n        },\n        {\n          \"trackingDate\": \"2002-02-13\",\n          \"value\": 4606.6101483829525,\n          \"numOfServices\": 7746,\n          \"score\": 3344.088613621623\n        }\n      ]\n    }\n  },\n  {\n    \"serviceId\": \"string\",\n    \"reliabilityReportTrend\": {\n      \"start\": \"1952-12-03\",\n      \"end\": \"1970-12-23\",\n      \"numOfDataPoints\": 3159,\n      \"statsByDate\": [\n        {\n          \"trackingDate\": \"1955-02-19\",\n          \"value\": 652.1263586054349,\n          \"numOfServices\": 292,\n          \"score\": 1043.5345688486852\n        },\n        {\n          \"trackingDate\": \"1991-06-10\",\n          \"value\": 4863.318289125602,\n          \"numOfServices\": 4434,\n          \"score\": 6347.263873953364\n        }\n      ]\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5137a3f5-5bad-4891-9275-7649bae23be4",
+          "name": "Loads the Reliability report trend for the service for the specified time period defaulting to 1 months and 4 data points",
+          "request": {
+            "name": "Loads the Reliability report trend for the service for the specified time period defaulting to 1 months and 4 data points",
+            "description": {
+              "content": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "services",
+                ":serviceId",
+                "reliability-management",
+                "reliability-report-trend"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "numberOfDataPoints",
+                  "value": "4"
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serviceId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "d3e17000-637c-4e6e-b94b-af291a595848",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "services",
+                    ":serviceId",
+                    "reliability-management",
+                    "reliability-report-trend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "4"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9da0072e-966f-4cec-90d3-f9112daedb1e",
+              "name": "User requires privilege: RELIABILITY_REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "services",
+                    ":serviceId",
+                    "reliability-management",
+                    "reliability-report-trend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "4"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c2ae6fc5-f11a-48c7-a90a-18640b36a425",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "services",
+                    ":serviceId",
+                    "reliability-management",
+                    "reliability-report-trend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "4"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"start\": \"1999-12-04\",\n  \"end\": \"1991-12-03\",\n  \"numOfDataPoints\": 8117,\n  \"statsByDate\": [\n    {\n      \"trackingDate\": \"2021-10-17\",\n      \"value\": 259.4066547244045,\n      \"numOfServices\": 4294,\n      \"score\": 934.2397056688578\n    },\n    {\n      \"trackingDate\": \"1955-03-26\",\n      \"value\": 6513.109331711216,\n      \"numOfServices\": 6396,\n      \"score\": 9880.433410935495\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f6e33096-e489-4bdf-b1b3-de3d6f3a8c97",
+          "name": "Returns the trend of Reliability Scores across all services for a given team",
+          "request": {
+            "name": "Returns the trend of Reliability Scores across all services for a given team",
+            "description": {
+              "content": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "team",
+                "reliability-report",
+                "trend"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "numberOfDataPoints",
+                  "value": "12"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "33234ce8-febf-4db8-a35e-a151894209e4",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "reliability-report",
+                    "trend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "aa76ece3-a81e-4229-bf94-06105613bbbc",
+              "name": "User requires privilege: RELIABILITY_REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "reliability-report",
+                    "trend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dcf40d39-b842-41d4-8a5e-904e0e55f9f2",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "reliability-report",
+                    "trend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"start\": \"1999-12-04\",\n  \"end\": \"1991-12-03\",\n  \"numOfDataPoints\": 8117,\n  \"statsByDate\": [\n    {\n      \"trackingDate\": \"2021-10-17\",\n      \"value\": 259.4066547244045,\n      \"numOfServices\": 4294,\n      \"score\": 934.2397056688578\n    },\n    {\n      \"trackingDate\": \"1955-03-26\",\n      \"value\": 6513.109331711216,\n      \"numOfServices\": 6396,\n      \"score\": 9880.433410935495\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d4b7415-3d6d-40b0-8bae-9c31aad93af2",
+          "name": "Loads latest risk evaluation for each eligible service for the team",
+          "request": {
+            "name": "Loads latest risk evaluation for each eligible service for the team",
+            "description": {
+              "content": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "team",
+                "detected-risks-report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "f89a6565-6637-46b4-9a11-3385199f5f81",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "detected-risks-report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ead14f5f-1864-42d9-afd7-6a95bb67e8e3",
+              "name": "User requires privilege: RELIABILITY_REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "detected-risks-report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b0f7203f-e2a4-424f-b111-1c5c2aec9a8a",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "detected-risks-report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"teamId\": \"string\",\n  \"teamName\": \"string\",\n  \"teamRiskReports\": [\n    {\n      \"serviceName\": \"string\",\n      \"serviceId\": \"string\",\n      \"riskSummaryStats\": {\n        \"total\": 7346,\n        \"atRisk\": 5893,\n        \"previousIntervalAtRisk\": 109,\n        \"evaluationState\": \"RISKS_NOT_SUPPORTED\"\n      },\n      \"riskEvaluations\": [\n        {\n          \"name\": \"string\",\n          \"id\": \"string\",\n          \"evaluatedAt\": \"2018-12-30T04:29:29.325Z\",\n          \"notes\": \"string\",\n          \"document\": \"string\",\n          \"isAtRisk\": false\n        },\n        {\n          \"name\": \"string\",\n          \"id\": \"string\",\n          \"evaluatedAt\": \"1964-02-18T01:59:39.422Z\",\n          \"notes\": \"string\",\n          \"document\": \"string\",\n          \"isAtRisk\": false\n        }\n      ]\n    },\n    {\n      \"serviceName\": \"string\",\n      \"serviceId\": \"string\",\n      \"riskSummaryStats\": {\n        \"total\": 8350,\n        \"atRisk\": 7802,\n        \"previousIntervalAtRisk\": 5628,\n        \"evaluationState\": \"NO_DEPLOYMENT_FOUND\"\n      },\n      \"riskEvaluations\": [\n        {\n          \"name\": \"string\",\n          \"id\": \"string\",\n          \"evaluatedAt\": \"1963-06-03T07:06:14.289Z\",\n          \"notes\": \"string\",\n          \"document\": \"string\",\n          \"isAtRisk\": false\n        },\n        {\n          \"name\": \"string\",\n          \"id\": \"string\",\n          \"evaluatedAt\": \"1951-02-04T22:18:03.348Z\",\n          \"notes\": \"string\",\n          \"document\": \"string\",\n          \"isAtRisk\": false\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1a79b639-3f84-4b64-ab11-06049c19d4a8",
+          "name": "Loads the team risk report PDF for the specified time frame.",
+          "request": {
+            "name": "Loads the team risk report PDF for the specified time frame.",
+            "description": {
+              "content": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "team",
+                "detected-risks-report",
+                "pdf"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "numberOfDataPoints",
+                  "value": "12"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "09c7ff49-b24c-4095-9b1f-bd9f671973cf",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "detected-risks-report",
+                    "pdf"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "75348599-cdbe-4235-9b94-d24edaa9a6d1",
+              "name": "User requires privilege: RELIABILITY_REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "detected-risks-report",
+                    "pdf"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "224d381c-e61b-4bde-a42c-15a67784852e",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "detected-risks-report",
+                    "pdf"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "134589af-d3b6-4535-85a5-15b7a6df4feb",
+          "name": "Returns the trend of Reliability Scores across all services for a given team",
+          "request": {
+            "name": "Returns the trend of Reliability Scores across all services for a given team",
+            "description": {
+              "content": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "team",
+                "trends"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "numberOfDataPoints",
+                  "value": "12"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "48706102-7c0a-47d1-a993-5383672d6b4b",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "trends"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e0706512-5af0-4a4b-b167-feb0afbad10e",
+              "name": "User requires privilege: RELIABILITY_REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "trends"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0f9483c9-0d0a-4e54-afb0-8c04b9705fab",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "team",
+                    "trends"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "numberOfDataPoints",
+                      "value": "12"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reliabilityScoreTrend\": {\n    \"start\": \"1969-02-21\",\n    \"end\": \"1980-08-12\",\n    \"numOfDataPoints\": 8008,\n    \"statsByDate\": [\n      {\n        \"trackingDate\": \"1981-02-15\",\n        \"value\": 456.9538561619879,\n        \"numOfServices\": 231,\n        \"score\": 4876.009443759272\n      },\n      {\n        \"trackingDate\": \"1974-12-27\",\n        \"value\": 2799.333795091696,\n        \"numOfServices\": 8143,\n        \"score\": 360.02771862672864\n      }\n    ]\n  },\n  \"detectedRisksTrend\": {\n    \"start\": \"1996-05-19\",\n    \"end\": \"2011-08-19\",\n    \"numOfDataPoints\": 1809,\n    \"statsByDate\": [\n      {\n        \"trackingDate\": \"1969-04-02\",\n        \"value\": 4967.203839315834,\n        \"numOfServices\": 470,\n        \"score\": 1530.9719491306228\n      },\n      {\n        \"trackingDate\": \"2014-02-10\",\n        \"value\": 8130.761229243361,\n        \"numOfServices\": 7447,\n        \"score\": 6516.876089272553\n      }\n    ]\n  },\n  \"reliabilityTestsRunTrend\": {\n    \"start\": \"1972-10-21\",\n    \"end\": \"1997-10-11\",\n    \"numOfDataPoints\": 1016,\n    \"statsByDate\": [\n      {\n        \"trackingDate\": \"1992-01-27\",\n        \"value\": 6028.794939962676,\n        \"numOfServices\": 5349,\n        \"score\": 385.58996572786276\n      },\n      {\n        \"trackingDate\": \"1972-04-13\",\n        \"value\": 6266.990533191407,\n        \"numOfServices\": 2066,\n        \"score\": 4055.512652535034\n      }\n    ]\n  },\n  \"runSummaryStats\": {\n    \"reliabilityTests\": 6456,\n    \"previousIntervalReliabilityTests\": 462,\n    \"experiments\": 7189,\n    \"previousIntervalExperiments\": 8611,\n    \"scenarios\": 6174,\n    \"previousIntervalScenarios\": 6914,\n    \"failureFlags\": 3491,\n    \"previousIntervalFailureFlags\": 1359,\n    \"gameDays\": 7327,\n    \"previousIntervalGameDays\": 8780\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e682d99e-75f1-4ad4-9a6f-5ae38bfe2543",
+          "name": "Loads the pricing usage for the specified dates and tracking period.",
+          "request": {
+            "name": "Loads the pricing usage for the specified dates and tracking period.",
+            "description": {
+              "content": "Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "pricing"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "(Required) Start date (yyyy-mm-dd) for the pricing usage. Should be within the current contract duration"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "(Required) End date (yyyy-mm-dd) for the pricing usage. Should be within the current contract duration"
+                },
+                {
+                  "disabled": false,
+                  "key": "trackingPeriod",
+                  "value": "<string>",
+                  "description": "Tracking period for the pricing usage. Should be either Daily, Weekly or Monthly based on the contract. Defaults to the currently configured period for the company's plan"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "c46bab4c-5251-4b08-8633-7b5824509bd2",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "pricing"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "trackingPeriod",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "488720ca-0dfa-49cb-bb86-807b98d4c860",
+              "name": "User requires privilege: REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "pricing"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "trackingPeriod",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cd3d9d31-36ad-4fac-aa0f-3a62e2a379d9",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "pricing"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "trackingPeriod",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"companyId\": \"string\",\n  \"startDate\": \"string\",\n  \"endDate\": \"string\",\n  \"trackingPeriod\": \"Weekly\",\n  \"usageByTrackingPeriod\": [\n    {\n      \"start\": \"string\",\n      \"end\": \"string\",\n      \"uniqueTargetsHost\": 3785,\n      \"uniqueTargetsContainer\": 4689,\n      \"uniqueTargetsApplication\": 2816,\n      \"maxActiveAgents\": 2747,\n      \"maxTargetableApplications\": 5649\n    },\n    {\n      \"start\": \"string\",\n      \"end\": \"string\",\n      \"uniqueTargetsHost\": 5530,\n      \"uniqueTargetsContainer\": 6033,\n      \"uniqueTargetsApplication\": 2154,\n      \"maxActiveAgents\": 475,\n      \"maxTargetableApplications\": 4144\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "72ef26c1-76b1-4ccf-8d52-c866cbd15cc6",
+          "name": "This functionality has moved to GET /reports/teams/paged.Loads the Team Summary for the specified month.",
+          "request": {
+            "name": "This functionality has moved to GET /reports/teams/paged.Loads the Team Summary for the specified month.",
+            "description": {
+              "content": "Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "teams"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "b574f35f-4e71-4d29-9503-9eeaa89bd54b",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "teams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "57dcf13b-14a4-4fe6-8944-aa703dc986aa",
+              "name": "User requires privilege: REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "teams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "eddaf045-e96f-409f-9a75-289881240ac1",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "teams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d8077f91-e27d-4b30-afdd-6e477d81d11f",
+          "name": "Loads the Team Summary for the specified month.",
+          "request": {
+            "name": "Loads the Team Summary for the specified month.",
+            "description": {
+              "content": "Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "teams",
+                "paged"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "20",
+                  "description": "This value determines how many results will be returned per call."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageToken",
+                  "value": "<string>",
+                  "description": "Token corresponding to the last page of team summaries retrieved. Pass the pageToken to get the next page of team summaries"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "804ca913-d5ee-4cdf-9513-35262639a552",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "teams",
+                    "paged"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "20"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "None (returns first page)"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e428f67f-7fab-4652-82cc-b6761df2f29d",
+              "name": "User requires privilege: REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "teams",
+                    "paged"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "20"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "None (returns first page)"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "48231d3a-c2cd-4546-af30-94f6d5701c69",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "teams",
+                    "paged"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "20"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "None (returns first page)"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pageNumber\": 2707,\n  \"pageSize\": 7442,\n  \"pageToken\": \"string\",\n  \"items\": [\n    {\n      \"companyId\": \"string\",\n      \"teamId\": \"string\",\n      \"teamName\": \"string\",\n      \"startDate\": \"string\",\n      \"endDate\": \"string\",\n      \"gremlinMetrics\": {\n        \"uniqueUsers\": 2087,\n        \"uniqueActiveUsers\": 138,\n        \"attacksRun\": 5924,\n        \"uniqueHostsAttacked\": 1519,\n        \"uniqueTargetsHost\": 4798,\n        \"uniqueTargetsContainer\": 5766,\n        \"uniqueTargetsApplication\": 7445,\n        \"reliabilityTestsRun\": 5051,\n        \"failureFlagExperimentsRun\": 3821,\n        \"infrastructureAgents\": 5834,\n        \"failureFlagAgents\": 6944\n      }\n    },\n    {\n      \"companyId\": \"string\",\n      \"teamId\": \"string\",\n      \"teamName\": \"string\",\n      \"startDate\": \"string\",\n      \"endDate\": \"string\",\n      \"gremlinMetrics\": {\n        \"uniqueUsers\": 1400,\n        \"uniqueActiveUsers\": 1600,\n        \"attacksRun\": 8777,\n        \"uniqueHostsAttacked\": 9568,\n        \"uniqueTargetsHost\": 7849,\n        \"uniqueTargetsContainer\": 1875,\n        \"uniqueTargetsApplication\": 7667,\n        \"reliabilityTestsRun\": 8755,\n        \"failureFlagExperimentsRun\": 5435,\n        \"infrastructureAgents\": 1797,\n        \"failureFlagAgents\": 3032\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1dbd502a-9544-4427-87c0-82cd256bdecf",
+          "name": "Loads the User Summary for the specified time period.",
+          "request": {
+            "name": "Loads the User Summary for the specified time period.",
+            "description": {
+              "content": "Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) team identifier associated with the requester's team"
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "9f308975-46fc-444a-91c7-7d2c03ae40f2",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "start",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "period",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a4a02a5d-047d-4b59-bc73-4d32a43c903f",
+              "name": "User requires privilege: REPORTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "start",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "period",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "79049db0-8446-497d-b162-74be78a52814",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "start",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "period",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "eaa80871-f485-49d2-a60c-02b2c4d0a130",
+    "name": "Gremlin agents reports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

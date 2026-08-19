@@ -1,0 +1,279 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gremlin agents jira API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "jira",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns issues for entity ids with details.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/jira/issues",
+            "params": [
+              {
+                "name": "gremlinEntityIds",
+                "value": "",
+                "type": "query",
+                "description": "A list of Gremlin entity ids"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Creates new issue.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/jira/issues",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Returns total issues for entity ids with details.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/jira/issues/count",
+            "params": [
+              {
+                "name": "gremlinEntityIds",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Returns the fields and data available and required for creating issues.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/jira/issue-meta",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "issueTypeId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Returns issues for an entity id with details.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/jira/issues/services",
+            "params": [
+              {
+                "name": "gremlinEntityId",
+                "value": "",
+                "type": "query",
+                "description": "A Gremlin entity id"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Returns all labels of Jira instance.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/jira/labels",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Returns the list of issue priorities.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/jira/priorities",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Returns project with given id or key.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/jira/projects/:projectIdOrKey",
+            "params": [
+              {
+                "name": "projectIdOrKey",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Search for projects.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/jira/projects",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startAt",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "maxResults",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Returns users assignable to given project.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/jira/projects/:projectIdOrKey/users",
+            "params": [
+              {
+                "name": "projectIdOrKey",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startAt",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "maxResults",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

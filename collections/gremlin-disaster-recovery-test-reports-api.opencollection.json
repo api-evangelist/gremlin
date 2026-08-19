@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gremlin agents disaster-recovery-test-reports API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "disaster-recovery-test-reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gets a disaster recovery test report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/disaster-recovery-test-reports/:identifier",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`DISASTER_RECOVERY_TESTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Gets a disaster recovery test report as PDF",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/disaster-recovery-test-reports/:identifier/pdf",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`DISASTER_RECOVERY_TESTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Gets a page of disaster recovery test reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/disaster-recovery-test-reports",
+            "params": [
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "This value determines how many results will be returned per call."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`DISASTER_RECOVERY_TESTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

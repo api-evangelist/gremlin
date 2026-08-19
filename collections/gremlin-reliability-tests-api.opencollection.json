@@ -1,0 +1,352 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gremlin agents reliability-tests API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "reliability-tests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get active reliability tests.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reliability-tests/active",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Get all reliability test runs ordered by createdDate desc.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reliability-tests/runs",
+            "params": [
+              {
+                "name": "serviceId",
+                "value": "",
+                "type": "query",
+                "description": "serviceId for which to look for runs"
+              },
+              {
+                "name": "pageSize",
+                "value": "None (unlimited)",
+                "type": "query",
+                "description": "This value determines how many results will be returned per call."
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Get all reliability test runs for a reliabilityTest ordered by createdDate desc.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reliability-tests/:reliabilityTestId/runs",
+            "params": [
+              {
+                "name": "reliabilityTestId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "serviceId",
+                "value": "",
+                "type": "query",
+                "description": "serviceId for which to look for runs"
+              },
+              {
+                "name": "dependencyId",
+                "value": "",
+                "type": "query",
+                "description": "dependency for which to look for runs"
+              },
+              {
+                "name": "failureFlagName",
+                "value": "",
+                "type": "query",
+                "description": "failureFlagName for which to look for runs"
+              },
+              {
+                "name": "pageSize",
+                "value": "None (unlimited)",
+                "type": "query",
+                "description": "This value determines how many results will be returned per call."
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Run a reliability test for a service.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/reliability-tests/:reliabilityTestId/runs",
+            "params": [
+              {
+                "name": "reliabilityTestId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Requires the privilege [`SERVICES_RUN`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Get all reliability tests.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reliability-tests",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Get all notifications for a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reliability-tests/notifications",
+            "params": [
+              {
+                "name": "sinceDays",
+                "value": "7",
+                "type": "query",
+                "description": "Notifications since days"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Get a team's active reliability tests in descending order by start time.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reliability-tests/active/paged",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "None (defaults to 1000)",
+                "type": "query",
+                "description": "This value determines how many results will be returned per call."
+              },
+              {
+                "name": "pageToken",
+                "value": "None (returns first page)",
+                "type": "query",
+                "description": "Pass the pageToken to get the next page of active reliability test runs"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Get a team's completed reliability test runs ordered by start time desc.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reliability-tests/completed/paged",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "None (defaults to 1000)",
+                "type": "query",
+                "description": "This value determines how many results will be returned per call."
+              },
+              {
+                "name": "pageToken",
+                "value": "None (returns first page)",
+                "type": "query",
+                "description": "Pass the pageToken to get the next page of completed reliability test runs"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Get pending reliability test runs for service, ordered by expected trigger time via schedule or Run All.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reliability-tests/next-runs",
+            "params": [
+              {
+                "name": "serviceId",
+                "value": "",
+                "type": "query",
+                "description": "serviceId for which to look for runs"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Get recently completed reliability test runs ordered by endDate desc. for a service",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reliability-tests/recent-runs",
+            "params": [
+              {
+                "name": "serviceId",
+                "value": "",
+                "type": "query",
+                "description": "serviceId for which to look for runs"
+              },
+              {
+                "name": "pageSize",
+                "value": "None (defaults to 1000)",
+                "type": "query",
+                "description": "This value determines how many results will be returned per call."
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Get a single company-scoped reliability test.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reliability-tests/:reliabilityTestId",
+            "params": [
+              {
+                "name": "reliabilityTestId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`TEST_SUITES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Takes a given scenario and transforms it for turning into a reliability test",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reliability-tests/preview",
+            "params": [
+              {
+                "name": "scenarioType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "scenarioId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "policyCategory",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "This endpoint provides a preview of the translation between scenarios and ReliabilityTests. As such it can be used to understand what modifications are made when a given Scenario is promoted to a ReliabilityTest and debug them\nRequires the privilege [`TEST_SUITES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

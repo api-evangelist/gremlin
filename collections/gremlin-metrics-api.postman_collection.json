@@ -1,0 +1,446 @@
+{
+  "item": [
+    {
+      "id": "5379c039-de07-4c26-be99-ed751abc19cf",
+      "name": "metrics",
+      "description": {
+        "content": "Metrics for charting purposes",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2081ee39-e34f-4ac0-8d8c-40c8edff7df7",
+          "name": "Get metrics for an attack",
+          "request": {
+            "name": "Get metrics for an attack",
+            "description": {
+              "content": "This endpoint will allow you to get metrics for a specific attack based on its guid.\nRequires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metrics",
+                "attacks",
+                ":attackId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "attackId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "0d1792f8-f025-419f-bd9e-e66ca827c08c",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    "attacks",
+                    ":attackId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attackId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d8e149ad-88f0-4e9a-99e4-ba9f7bd8dfd4",
+              "name": "User requires privilege for target team: EXPERIMENTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    "attacks",
+                    ":attackId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attackId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cdf1382a-02d2-41a9-8f07-6f90adf8e13e",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    "attacks",
+                    ":attackId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attackId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"state\": \"PARTIAL\",\n  \"disabledReason\": \"string\",\n  \"range\": {\n    \"start\": 3938,\n    \"end\": 294\n  },\n  \"attackRange\": {\n    \"start\": 3588,\n    \"end\": 4546\n  },\n  \"metricData\": {\n    \"key_0\": [\n      {\n        \"timestamp\": 8819,\n        \"value\": 7154.922851885114\n      },\n      {\n        \"timestamp\": 2965,\n        \"value\": 2410.981285027883\n      }\n    ],\n    \"key_1\": [\n      {\n        \"timestamp\": 5174,\n        \"value\": 2945.4226048018327\n      },\n      {\n        \"timestamp\": 9616,\n        \"value\": 6091.5176635109565\n      }\n    ]\n  },\n  \"infraCommandType\": \"Latency\",\n  \"chartTitle\": \"string\",\n  \"lines\": [\n    {\n      \"value\": 8868.05116979786,\n      \"label\": \"string\"\n    },\n    {\n      \"value\": 6693.1399527511885,\n      \"label\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6ff4d1c7-aa2a-4aff-b853-7c30b2ead4c8",
+          "name": "Get metrics for a scenario run",
+          "request": {
+            "name": "Get metrics for a scenario run",
+            "description": {
+              "content": "This endpoint will allow you to get metrics for a specific scenario run based on its scenario guid and run number.\nRequires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metrics",
+                "scenarios",
+                ":scenarioId",
+                "runs",
+                ":scenarioRunNumber"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scenarioId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "scenarioRunNumber",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "4cb78d9a-c7cc-4a85-9747-c1ddb792b9b4",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    "scenarios",
+                    ":scenarioId",
+                    "runs",
+                    ":scenarioRunNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scenarioId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "scenarioRunNumber",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c6de61cd-2589-4194-8fae-1da099c2fc2f",
+              "name": "User requires privilege for target team: EXPERIMENTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    "scenarios",
+                    ":scenarioId",
+                    "runs",
+                    ":scenarioRunNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scenarioId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "scenarioRunNumber",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "25673066-9660-4891-9c90-fa95a895faa6",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    "scenarios",
+                    ":scenarioId",
+                    "runs",
+                    ":scenarioRunNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scenarioId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "scenarioRunNumber",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"taskId\": \"string\",\n    \"metrics\": {\n      \"state\": \"DISABLED\",\n      \"disabledReason\": \"string\",\n      \"range\": {\n        \"start\": 2030,\n        \"end\": 1246\n      },\n      \"attackRange\": {\n        \"start\": 2543,\n        \"end\": 4642\n      },\n      \"metricData\": {\n        \"key_0\": [\n          {\n            \"timestamp\": 4634,\n            \"value\": 1155.9934283970342\n          },\n          {\n            \"timestamp\": 1338,\n            \"value\": 5790.793665320034\n          }\n        ],\n        \"key_1\": [\n          {\n            \"timestamp\": 1861,\n            \"value\": 1340.2572881157826\n          },\n          {\n            \"timestamp\": 4608,\n            \"value\": 2297.9039479390904\n          }\n        ]\n      },\n      \"infraCommandType\": \"Process_Killer\",\n      \"chartTitle\": \"string\",\n      \"lines\": [\n        {\n          \"value\": 8263.852539374904,\n          \"label\": \"string\"\n        },\n        {\n          \"value\": 2096.126469873153,\n          \"label\": \"string\"\n        }\n      ]\n    }\n  },\n  {\n    \"taskId\": \"string\",\n    \"metrics\": {\n      \"state\": \"PENDING\",\n      \"disabledReason\": \"string\",\n      \"range\": {\n        \"start\": 516,\n        \"end\": 8997\n      },\n      \"attackRange\": {\n        \"start\": 4567,\n        \"end\": 8316\n      },\n      \"metricData\": {\n        \"key_0\": [\n          {\n            \"timestamp\": 5353,\n            \"value\": 9295.085926898973\n          },\n          {\n            \"timestamp\": 948,\n            \"value\": 9819.249356109023\n          }\n        ],\n        \"key_1\": [\n          {\n            \"timestamp\": 8375,\n            \"value\": 37.870430670357\n          },\n          {\n            \"timestamp\": 6389,\n            \"value\": 9377.298339634926\n          }\n        ],\n        \"key_2\": [\n          {\n            \"timestamp\": 4067,\n            \"value\": 9997.187665957132\n          },\n          {\n            \"timestamp\": 40,\n            \"value\": 6029.807269655206\n          }\n        ]\n      },\n      \"infraCommandType\": \"Time_Travel\",\n      \"chartTitle\": \"string\",\n      \"lines\": [\n        {\n          \"value\": 3806.7777129303136,\n          \"label\": \"string\"\n        },\n        {\n          \"value\": 4858.426003833598,\n          \"label\": \"string\"\n        }\n      ]\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4e63165d-d713-4b8c-9c4e-c6cce88ac726",
+    "name": "Gremlin agents metrics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

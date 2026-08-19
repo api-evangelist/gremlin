@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gremlin agents reliability-report API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "reliability-report",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the reliability report for a specified service.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/policies/:serviceId/reliability-report",
+            "params": [
+              {
+                "name": "serviceId",
+                "value": "11111111-1111-1111-111111111111",
+                "type": "path",
+                "description": "The serviceId within the requested team"
+              },
+              {
+                "name": "date",
+                "value": "2026-05-01",
+                "type": "query",
+                "description": "The date for the report"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

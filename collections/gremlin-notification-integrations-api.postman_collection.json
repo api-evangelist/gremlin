@@ -1,0 +1,685 @@
+{
+  "item": [
+    {
+      "id": "42c9670f-3ef4-40d8-a56c-cd6d952ab58e",
+      "name": "Notification Integrations",
+      "description": {
+        "content": "Manage company level integrations with Slack/Datadog",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "091ce8c1-cdc8-4341-a44c-9142cef4aa36",
+          "name": "Get the integration for your company that is identified by the supplied type",
+          "request": {
+            "name": "Get the integration for your company that is identified by the supplied type",
+            "description": {
+              "content": "Requires the privilege [`COMPANY_INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integrations",
+                ":type"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "7671ee38-7db6-4982-a38f-0f56fe0297ed",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4ec0f384-e18c-4be8-95bb-59e567dd7b1f",
+              "name": "User requires privilege: COMPANY_INTEGRATIONS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "02fd7959-2f42-4ca1-bd71-ab60bff9728f",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"integration_id\": \"string\",\n  \"company_id\": \"string\",\n  \"foreign_id\": \"string\",\n  \"updated_at\": \"2010-11-05T19:26:09.315Z\",\n  \"created_at\": \"1997-12-28T08:17:49.078Z\",\n  \"data\": {\n    \"webhook\": \"string\",\n    \"baseUrl\": \"string\",\n    \"teams\": [\n      {\n        \"team_id\": \"string\",\n        \"executable_events\": [\n          \"STAGE_TRANSITION\",\n          \"START\"\n        ]\n      },\n      {\n        \"team_id\": \"string\",\n        \"executable_events\": [\n          \"STAGE_TRANSITION\",\n          \"STAGE_TRANSITION\"\n        ]\n      }\n    ],\n    \"api_key\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0859a336-96a3-4d5f-ab48-292d37530852",
+          "name": "Puts the integration identified by the supplied type on your company",
+          "request": {
+            "name": "Puts the integration identified by the supplied type on your company",
+            "description": {
+              "content": "Requires the privilege [`COMPANY_INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integrations",
+                ":type"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teams\": [\n    {\n      \"team_id\": \"<string>\",\n      \"executable_events\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"team_id\": \"<string>\",\n      \"executable_events\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"hostname\": \"<string>\",\n  \"webhook\": \"<string>\",\n  \"api_key\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "413a0d3c-4d93-416d-b715-d4e1de609f15",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teams\": [\n    {\n      \"team_id\": \"<string>\",\n      \"executable_events\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"team_id\": \"<string>\",\n      \"executable_events\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"hostname\": \"<string>\",\n  \"webhook\": \"<string>\",\n  \"api_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6048e4af-dbb2-444d-a2fd-25efe5d785f2",
+              "name": "User requires privilege: COMPANY_INTEGRATIONS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teams\": [\n    {\n      \"team_id\": \"<string>\",\n      \"executable_events\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"team_id\": \"<string>\",\n      \"executable_events\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"hostname\": \"<string>\",\n  \"webhook\": \"<string>\",\n  \"api_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "03b2b2cd-34eb-44ae-98fa-a818ba3bd7b1",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teams\": [\n    {\n      \"team_id\": \"<string>\",\n      \"executable_events\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"team_id\": \"<string>\",\n      \"executable_events\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"hostname\": \"<string>\",\n  \"webhook\": \"<string>\",\n  \"api_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f139e055-bda8-4717-b40a-d56a8ff18977",
+          "name": "Idempotently deletes the integration associated with your company, identified by the supplied type",
+          "request": {
+            "name": "Idempotently deletes the integration associated with your company, identified by the supplied type",
+            "description": {
+              "content": "Requires the privilege [`COMPANY_INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integrations",
+                ":type"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "8a86ba04-2787-4fd1-a728-65a54832b8cf",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a1f33679-cb62-4cbb-87af-04978213f8b6",
+              "name": "User requires privilege: COMPANY_INTEGRATIONS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4aad9a50-8762-4f30-80c6-2fdfc98f9bdc",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b8f8b9a4-8a53-4b09-b25f-f7259e19a9b3",
+          "name": "List all integrations associated with your company",
+          "request": {
+            "name": "List all integrations associated with your company",
+            "description": {
+              "content": "Requires the privilege [`COMPANY_INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integrations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "d9ce687e-f670-4d11-8d7b-30879b2c7cd9",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dcb18703-f507-4fca-a6e0-8e851b5fceed",
+              "name": "User requires privilege: COMPANY_INTEGRATIONS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "201beeec-d11a-42c5-958a-7b2e02ba7169",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"integration_id\": \"string\",\n    \"company_id\": \"string\",\n    \"foreign_id\": \"string\",\n    \"updated_at\": \"1972-01-09T07:51:40.698Z\",\n    \"created_at\": \"1962-02-26T02:14:25.150Z\",\n    \"data\": {\n      \"webhook\": \"string\",\n      \"baseUrl\": \"string\",\n      \"teams\": [\n        {\n          \"team_id\": \"<string>\",\n          \"executable_events\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"team_id\": \"<string>\",\n          \"executable_events\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"api_key\": \"string\"\n    }\n  },\n  {\n    \"integration_id\": \"string\",\n    \"company_id\": \"string\",\n    \"foreign_id\": \"string\",\n    \"updated_at\": \"1987-04-03T09:41:17.360Z\",\n    \"created_at\": \"1989-01-12T19:10:53.261Z\",\n    \"data\": {\n      \"webhook\": \"string\",\n      \"baseUrl\": \"string\",\n      \"teams\": [\n        {\n          \"team_id\": \"<string>\",\n          \"executable_events\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"team_id\": \"<string>\",\n          \"executable_events\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"api_key\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "502aa02f-7b61-4891-aaf6-c29cf991e54c",
+    "name": "Gremlin agents Notification Integrations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

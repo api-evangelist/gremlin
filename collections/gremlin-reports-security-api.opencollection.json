@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gremlin agents reports.security API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "reports.security",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Loads the Access Summary for the specified company in the time period requested (max: 1 hour). Returned in JSON format",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/security/access",
+            "params": [
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Start time in format 'yyyy-mm-ddThh:mm:ss.sssZ'"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query",
+                "description": "End time in format 'yyyy-mm-ddThh:mm:ss.sssZ'"
+              }
+            ]
+          },
+          "docs": "COMPANY_OWNER and COMPANY_ADMIN users only\nRequires the privilege [`SECURITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Loads the Experiment Summary for the specified company in the time period requested (max: 1 hour) and the recent scenario runs. Returned in JSON format",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/security/event",
+            "params": [
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Start time in format 'yyyy-mm-ddThh:mm:ss.sssZ'"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query",
+                "description": "End time in format 'yyyy-mm-ddThh:mm:ss.sssZ'"
+              }
+            ]
+          },
+          "docs": "COMPANY_OWNER and COMPANY_ADMIN users only\nRequires the privilege [`SECURITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

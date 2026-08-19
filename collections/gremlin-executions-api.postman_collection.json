@@ -1,0 +1,198 @@
+{
+  "item": [
+    {
+      "id": "34b44866-d04d-44e9-b4c3-43024d7019e7",
+      "name": "executions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7410dd91-313f-4d48-b175-37fe7390a7c2",
+          "name": "Get a list of executions associated with an attack.",
+          "request": {
+            "name": "Get a list of executions associated with an attack.",
+            "description": {
+              "content": "Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "executions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "taskId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "c7298e6f-fe60-494d-b029-4ccad8130f95",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "taskId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bd25388b-b210-4b35-8175-43098c2639ff",
+              "name": "User requires privilege for target team: EXPERIMENTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "taskId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c4508c06-d692-420a-9e90-24e406b56563",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "taskId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"orgId\": \"string\",\n    \"guid\": \"string\",\n    \"targetType\": \"Docker\",\n    \"infraTarget\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"serviceStates\": [\n      {\n        \"stage\": \"InvalidArgument\",\n        \"timestamp\": \"2020-03-01T02:35:25.916Z\"\n      },\n      {\n        \"stage\": \"InvalidArgument\",\n        \"timestamp\": \"2012-07-02T14:19:39.496Z\"\n      }\n    ],\n    \"clientId\": \"string\",\n    \"clientStates\": [\n      {\n        \"stage\": \"string\",\n        \"timestamp\": \"2002-09-28T08:20:32.899Z\"\n      },\n      {\n        \"stage\": \"string\",\n        \"timestamp\": \"1980-04-30T02:50:11.367Z\"\n      }\n    ],\n    \"tags\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"string\",\n        \"string\"\n      ],\n      \"key_1\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"multiSelectLabels\": {\n      \"key_0\": [\n        \"string\",\n        \"string\"\n      ],\n      \"key_1\": [\n        \"string\",\n        \"string\"\n      ],\n      \"key_2\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"clientStatus\": \"IMPAIRED\",\n    \"clientVersion\": \"string\",\n    \"error\": \"string\",\n    \"output\": \"string\",\n    \"infraCommand\": {\n      \"key_0\": {}\n    },\n    \"guestId\": \"string\",\n    \"createSource\": \"Website\",\n    \"attackContainerId\": \"string\",\n    \"stage\": \"InvalidArgument\",\n    \"stageLifecycle\": \"Complete\",\n    \"owningTeamId\": \"string\",\n    \"runasUser\": \"string\",\n    \"taskId\": \"string\",\n    \"kind\": \"Concord\",\n    \"args\": [\n      \"string\",\n      \"string\"\n    ],\n    \"startTime\": \"1984-03-28T13:54:29.793Z\",\n    \"endTime\": \"1981-09-15T20:27:50.395Z\",\n    \"createdAt\": \"2007-01-12T22:31:20.040Z\",\n    \"updatedAt\": \"1989-12-09T16:53:20.664Z\",\n    \"eventCodes\": [\n      {\n        \"timestamp\": \"1961-01-21T11:08:49.765Z\",\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"link\": \"string\"\n      },\n      {\n        \"timestamp\": \"1966-10-20T16:01:02.614Z\",\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"link\": \"string\"\n      }\n    ],\n    \"metricsLinks\": {\n      \"key_0\": \"string\"\n    },\n    \"scopeDetails\": [\n      {\n        \"key\": \"string\",\n        \"value\": \"string\"\n      },\n      {\n        \"key\": \"string\",\n        \"value\": \"string\"\n      }\n    ]\n  },\n  {\n    \"orgId\": \"string\",\n    \"guid\": \"string\",\n    \"targetType\": \"Container\",\n    \"infraTarget\": {\n      \"key_0\": {}\n    },\n    \"serviceStates\": [\n      {\n        \"stage\": \"ClientAborted\",\n        \"timestamp\": \"1963-07-15T01:35:15.425Z\"\n      },\n      {\n        \"stage\": \"RollbackStarted\",\n        \"timestamp\": \"1964-08-03T06:30:57.365Z\"\n      }\n    ],\n    \"clientId\": \"string\",\n    \"clientStates\": [\n      {\n        \"stage\": \"string\",\n        \"timestamp\": \"1954-12-29T12:40:27.166Z\"\n      },\n      {\n        \"stage\": \"string\",\n        \"timestamp\": \"1953-11-22T17:39:05.750Z\"\n      }\n    ],\n    \"tags\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"string\",\n        \"string\"\n      ],\n      \"key_1\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"multiSelectLabels\": {\n      \"key_0\": [\n        \"string\",\n        \"string\"\n      ],\n      \"key_1\": [\n        \"string\",\n        \"string\"\n      ],\n      \"key_2\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"clientStatus\": \"IMPAIRED\",\n    \"clientVersion\": \"string\",\n    \"error\": \"string\",\n    \"output\": \"string\",\n    \"infraCommand\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"guestId\": \"string\",\n    \"createSource\": \"Chao\",\n    \"attackContainerId\": \"string\",\n    \"stage\": \"InvalidArgument\",\n    \"stageLifecycle\": \"Halting\",\n    \"owningTeamId\": \"string\",\n    \"runasUser\": \"string\",\n    \"taskId\": \"string\",\n    \"kind\": \"Website\",\n    \"args\": [\n      \"string\",\n      \"string\"\n    ],\n    \"startTime\": \"2001-01-19T07:18:13.921Z\",\n    \"endTime\": \"1971-09-03T01:06:56.980Z\",\n    \"createdAt\": \"1961-08-23T12:55:25.175Z\",\n    \"updatedAt\": \"1958-05-15T11:00:22.645Z\",\n    \"eventCodes\": [\n      {\n        \"timestamp\": \"1980-08-18T16:04:37.292Z\",\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"link\": \"string\"\n      },\n      {\n        \"timestamp\": \"2004-07-02T19:00:30.198Z\",\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"link\": \"string\"\n      }\n    ],\n    \"metricsLinks\": {\n      \"key_0\": \"string\"\n    },\n    \"scopeDetails\": [\n      {\n        \"key\": \"string\",\n        \"value\": \"string\"\n      },\n      {\n        \"key\": \"string\",\n        \"value\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6524f051-4119-43a1-a4be-50a51f436ef2",
+    "name": "Gremlin agents executions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

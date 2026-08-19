@@ -1,0 +1,221 @@
+{
+  "item": [
+    {
+      "id": "7679fea9-0fe6-4088-9124-9f71923654f9",
+      "name": "service-overview",
+      "description": {
+        "content": "Overview of a service, including all activity that impacts a service",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cf113094-3f87-4dcb-9056-567639eaa2b1",
+          "name": "Fetch active FaultInjection for Service",
+          "request": {
+            "name": "Fetch active FaultInjection for Service",
+            "description": {
+              "content": "Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "service-overview",
+                ":serviceId",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serviceId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "f799ceff-5374-4bb3-8ef4-2b7f2ab7b826",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service-overview",
+                    ":serviceId",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9a250609-0ecf-42ee-9611-5e61d18d1092",
+              "name": "User requires privilege for target team: SERVICES_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service-overview",
+                    ":serviceId",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9a646a33-ccda-4d74-a1e6-a7d207e71d88",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service-overview",
+                    ":serviceId",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"runningFaultInjections\": [\n    {\n      \"link\": \"string\",\n      \"name\": \"string\",\n      \"orgId\": \"string\",\n      \"serviceId\": \"string\",\n      \"startTime\": \"2011-08-24T16:38:10.529Z\",\n      \"triggerSource\": \"RECURRING_SCHEDULE\",\n      \"triggeredBy\": \"string\",\n      \"type\": \"RELIABILITY_TEST\",\n      \"runNumber\": 9172,\n      \"scenarioId\": \"string\",\n      \"stageInfo\": {\n        \"key_0\": {}\n      },\n      \"dependencyId\": \"string\",\n      \"dependencyName\": \"string\",\n      \"failureFlagName\": \"string\",\n      \"isDependencySpof\": false,\n      \"run\": {\n        \"scenarioId\": \"string\",\n        \"runNumber\": 4783,\n        \"orgId\": \"string\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"hypothesis\": \"string\",\n        \"stageInfo\": {\n          \"key_0\": {}\n        },\n        \"createdBy\": \"string\",\n        \"createdByFirstName\": \"string\",\n        \"createdByLastName\": \"string\",\n        \"createdAt\": \"2003-07-17T00:02:27.780Z\",\n        \"updatedAt\": \"1974-02-28T18:16:56.654Z\",\n        \"endTime\": \"1953-02-22T12:18:10.832Z\",\n        \"createSource\": \"string\",\n        \"triggerSource\": \"RUN_ALL\",\n        \"graph\": {\n          \"nodes\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"observers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"startId\": \"string\",\n          \"externalActions\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"externalRollbacks\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"currentId\": \"string\",\n          \"next\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"guid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"next\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"nextId\": \"string\",\n          \"nodesRecursive\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"expectedLengthWithDelays\": 3610,\n          \"eligibleForServiceCreation\": false,\n          \"expectedLength\": 6564,\n          \"attackTypeQuantity\": {\n            \"key_0\": 7401,\n            \"key_1\": 6334\n          },\n          \"providersCountForNodes\": {\n            \"key_0\": 8919\n          }\n        },\n        \"resultNotes\": \"string\",\n        \"resultFlags\": {\n          \"key_0\": false\n        },\n        \"results\": {\n          \"status\": \"Failed\",\n          \"incidentDetected\": true,\n          \"incidentMitigated\": false\n        },\n        \"scheduleId\": \"string\",\n        \"scenarioEditCounterAtRunTime\": 2891,\n        \"scenarioRunImages\": [\n          \"string\",\n          \"string\"\n        ],\n        \"gameDayInfo\": {\n          \"guid\": \"string\",\n          \"name\": \"string\"\n        },\n        \"passCriteria\": \"AT_LEAST_ONE_FAILED\",\n        \"largeScaleTestId\": \"string\"\n      },\n      \"reliabilityTestId\": \"string\",\n      \"guid\": \"string\",\n      \"stage\": \"HaltDistributed\",\n      \"k8sAttackId\": \"string\"\n    },\n    {\n      \"link\": \"string\",\n      \"name\": \"string\",\n      \"orgId\": \"string\",\n      \"serviceId\": \"string\",\n      \"startTime\": \"1980-03-15T08:29:19.266Z\",\n      \"triggerSource\": \"RUN_ALL\",\n      \"triggeredBy\": \"string\",\n      \"type\": \"RELIABILITY_TEST\",\n      \"runNumber\": 3240,\n      \"scenarioId\": \"string\",\n      \"stageInfo\": {\n        \"key_0\": {}\n      },\n      \"dependencyId\": \"string\",\n      \"dependencyName\": \"string\",\n      \"failureFlagName\": \"string\",\n      \"isDependencySpof\": false,\n      \"run\": {\n        \"scenarioId\": \"string\",\n        \"runNumber\": 8307,\n        \"orgId\": \"string\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"hypothesis\": \"string\",\n        \"stageInfo\": {\n          \"key_0\": {}\n        },\n        \"createdBy\": \"string\",\n        \"createdByFirstName\": \"string\",\n        \"createdByLastName\": \"string\",\n        \"createdAt\": \"1962-02-22T03:53:24.440Z\",\n        \"updatedAt\": \"2024-11-18T02:37:01.911Z\",\n        \"endTime\": \"1973-11-13T16:39:30.147Z\",\n        \"createSource\": \"string\",\n        \"triggerSource\": \"SCHEDULED\",\n        \"graph\": {\n          \"nodes\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"observers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"startId\": \"string\",\n          \"externalActions\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"externalRollbacks\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"currentId\": \"string\",\n          \"next\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"guid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"next\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"nextId\": \"string\",\n          \"nodesRecursive\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"expectedLengthWithDelays\": 6299,\n          \"eligibleForServiceCreation\": true,\n          \"expectedLength\": 1226,\n          \"attackTypeQuantity\": {\n            \"key_0\": 372,\n            \"key_1\": 4988\n          },\n          \"providersCountForNodes\": {\n            \"key_0\": 3335\n          }\n        },\n        \"resultNotes\": \"string\",\n        \"resultFlags\": {\n          \"key_0\": false,\n          \"key_1\": false,\n          \"key_2\": true,\n          \"key_3\": true,\n          \"key_4\": true\n        },\n        \"results\": {\n          \"status\": \"Passed\",\n          \"incidentDetected\": true,\n          \"incidentMitigated\": false\n        },\n        \"scheduleId\": \"string\",\n        \"scenarioEditCounterAtRunTime\": 4582,\n        \"scenarioRunImages\": [\n          \"string\",\n          \"string\"\n        ],\n        \"gameDayInfo\": {\n          \"guid\": \"string\",\n          \"name\": \"string\"\n        },\n        \"passCriteria\": \"ALL_PASS\",\n        \"largeScaleTestId\": \"string\"\n      },\n      \"reliabilityTestId\": \"string\",\n      \"guid\": \"string\",\n      \"stage\": \"HaltDistributed\",\n      \"k8sAttackId\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5f4d3328-5c22-4f11-9c8c-25f090bd64ce",
+    "name": "Gremlin agents service-overview API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

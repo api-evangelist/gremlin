@@ -1,0 +1,949 @@
+{
+  "item": [
+    {
+      "id": "aa58179a-e79c-44ea-93c2-5ba5e30a8812",
+      "name": "google-cloud.integration.resources",
+      "description": {
+        "content": "List resources Gremlin has discovered through a configured integration.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "37526e2d-c463-4e69-8bed-47adfc82a4ee",
+          "name": "all 1",
+          "request": {
+            "name": "all 1",
+            "description": {
+              "content": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gcp",
+                "integrations",
+                ":integrationId",
+                "resources",
+                "all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cloudRunRegion",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cloudRunRegion",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "typeIndex",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cloudRunRegionIndex",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cloudRunRegions",
+                  "value": "[\"<string>\",\"<string>\"]"
+                },
+                {
+                  "disabled": false,
+                  "key": "inner",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "This value determines how many results will be returned per call."
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "integrationId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "ccd7f03d-9ac9-4aac-9996-50d969e5c118",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gcp",
+                    "integrations",
+                    ":integrationId",
+                    "resources",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cloudRunRegion",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cloudRunRegion",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "typeIndex",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cloudRunRegionIndex",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cloudRunRegions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "inner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "integrationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3a9d3bd8-3a02-455a-aee6-bbf4a4ef969b",
+              "name": "User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gcp",
+                    "integrations",
+                    ":integrationId",
+                    "resources",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cloudRunRegion",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cloudRunRegion",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "typeIndex",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cloudRunRegionIndex",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cloudRunRegions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "inner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "integrationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2e337136-e94e-41b0-aaca-289b5b638619",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gcp",
+                    "integrations",
+                    ":integrationId",
+                    "resources",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cloudRunRegion",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cloudRunRegion",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "typeIndex",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cloudRunRegionIndex",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cloudRunRegions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "inner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "integrationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"pageNumber\": 3297,\n  \"pageSize\": 782,\n  \"pageToken\": \"string\",\n  \"items\": [\n    {\n      \"name\": \"string\",\n      \"resourceId\": \"string\",\n      \"resourceType\": \"string\",\n      \"region\": \"string\",\n      \"tags\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"resourceId\": \"string\",\n      \"resourceType\": \"string\",\n      \"region\": \"string\",\n      \"tags\": {\n        \"key_0\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "26df2726-364b-4403-9a73-bb816e85d5bf",
+          "name": "list Cloud Run Resources",
+          "request": {
+            "name": "list Cloud Run Resources",
+            "description": {
+              "content": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gcp",
+                "integrations",
+                ":integrationId",
+                "resources",
+                "cloud-run"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "region",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "region",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cloudRunRegions",
+                  "value": "[\"<string>\",\"<string>\"]"
+                },
+                {
+                  "disabled": false,
+                  "key": "regionIndex",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "inner",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "This value determines how many results will be returned per call."
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "integrationId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "c6135e14-f87f-4b67-abd1-6b1720419700",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gcp",
+                    "integrations",
+                    ":integrationId",
+                    "resources",
+                    "cloud-run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cloudRunRegions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "regionIndex",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "inner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "integrationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6a2d63f9-91ef-4cd3-8459-93f332283c8d",
+              "name": "User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gcp",
+                    "integrations",
+                    ":integrationId",
+                    "resources",
+                    "cloud-run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cloudRunRegions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "regionIndex",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "inner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "integrationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "85425a70-87ec-4e6b-8ea0-0030e2b84bb3",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gcp",
+                    "integrations",
+                    ":integrationId",
+                    "resources",
+                    "cloud-run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cloudRunRegions",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "regionIndex",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "inner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "integrationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"pageNumber\": 4836,\n  \"pageSize\": 3035,\n  \"pageToken\": \"string\",\n  \"items\": [\n    {\n      \"name\": \"string\",\n      \"resourceId\": \"string\",\n      \"resourceType\": \"string\",\n      \"region\": \"string\",\n      \"tags\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"resourceId\": \"string\",\n      \"resourceType\": \"string\",\n      \"region\": \"string\",\n      \"tags\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "69eeb2aa-94a2-4cfc-9d2d-2448f0d508b3",
+          "name": "list Compute Resources",
+          "request": {
+            "name": "list Compute Resources",
+            "description": {
+              "content": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gcp",
+                "integrations",
+                ":integrationId",
+                "resources",
+                "compute"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "resourceType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "resourceType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "[\"<string>\",\"<string>\"]"
+                },
+                {
+                  "disabled": false,
+                  "key": "typeIndex",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "inner",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "This value determines how many results will be returned per call."
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "integrationId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "1683b20b-e26f-4b31-9c5c-67001065d774",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gcp",
+                    "integrations",
+                    ":integrationId",
+                    "resources",
+                    "compute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "resourceType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resourceType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "typeIndex",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "inner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "integrationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "87c899fe-76fa-443c-b949-ea4384235a9e",
+              "name": "User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gcp",
+                    "integrations",
+                    ":integrationId",
+                    "resources",
+                    "compute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "resourceType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resourceType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "typeIndex",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "inner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "integrationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1b06faf0-773c-4f24-9def-a386b2ba70dc",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gcp",
+                    "integrations",
+                    ":integrationId",
+                    "resources",
+                    "compute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "resourceType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resourceType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "typeIndex",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "inner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "integrationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"pageNumber\": 4836,\n  \"pageSize\": 3035,\n  \"pageToken\": \"string\",\n  \"items\": [\n    {\n      \"name\": \"string\",\n      \"resourceId\": \"string\",\n      \"resourceType\": \"string\",\n      \"region\": \"string\",\n      \"tags\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"resourceId\": \"string\",\n      \"resourceType\": \"string\",\n      \"region\": \"string\",\n      \"tags\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "009b22d9-6a8a-4815-8bf9-34dfb8ec7457",
+    "name": "Gremlin agents google-cloud.integration.resources API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

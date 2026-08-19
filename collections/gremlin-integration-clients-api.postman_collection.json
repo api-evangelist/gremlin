@@ -1,0 +1,1005 @@
+{
+  "item": [
+    {
+      "id": "9b758b85-69d2-47c7-b421-cb581f49038f",
+      "name": "integration-clients",
+      "description": {
+        "content": "Handle client integrations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ef5b850e-0dc2-4712-b26c-e1260ff47fdc",
+          "name": "Activates an integration client.",
+          "request": {
+            "name": "Activates an integration client.",
+            "description": {
+              "content": "Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integration-clients",
+                ":identifier",
+                "activate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) The identifier of the integration client to modify."
+                }
+              ]
+            },
+            "method": "PUT"
+          },
+          "response": [
+            {
+              "id": "b10db1b4-6e74-47cd-98ca-cd62c68e0128",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients",
+                    ":identifier",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the integration client to modify."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "896eabbd-a7d1-4260-9399-e7f5ed187bdd",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients",
+                    ":identifier",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the integration client to modify."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5cda28ea-f297-4d2b-a7b7-f144ea379378",
+              "name": "Payment Required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients",
+                    ":identifier",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the integration client to modify."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6c6b13df-36e2-44de-8f65-be4edf76c75e",
+              "name": "User requires privilege for target team: CLIENTS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients",
+                    ":identifier",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the integration client to modify."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8c657a82-3abe-474c-a01b-7d74523bf1f1",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients",
+                    ":identifier",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the integration client to modify."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "21360ee4-04fc-47e0-b5d4-a1ec5abd6835",
+          "name": "Get all active integration clients.",
+          "request": {
+            "name": "Get all active integration clients.",
+            "description": {
+              "content": "Requires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integration-clients",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "9537492c-495a-4c6b-bf7d-48e252bc2d6f",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9093c8fe-1168-44ad-9496-2cbf0bf8f810",
+              "name": "User requires privilege for target team: INTEGRATIONS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "14959bba-7f87-4e7a-9e35-1cad93d4ea60",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"companyId\": \"string\",\n    \"identifier\": \"string\",\n    \"lastSeen\": \"1975-09-19T22:21:30.030Z\",\n    \"orgId\": \"string\",\n    \"state\": \"ACTIVE\",\n    \"tags\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"revokedBy\": \"string\",\n    \"authType\": \"CERTIFICATE\",\n    \"osType\": \"string\",\n    \"osName\": \"string\",\n    \"osVersion\": \"string\",\n    \"usedProxy\": true,\n    \"instanceStartTime\": \"string\",\n    \"lastActiveEmitted\": \"1989-05-14T14:50:32.371Z\",\n    \"createdAt\": \"2012-09-12T00:56:19.152Z\",\n    \"updatedAt\": \"1994-11-15T22:08:29.598Z\",\n    \"active\": true,\n    \"revoked\": false,\n    \"idle\": true,\n    \"gremlinClientVersion\": \"string\"\n  },\n  {\n    \"companyId\": \"string\",\n    \"identifier\": \"string\",\n    \"lastSeen\": \"1950-01-07T07:26:11.681Z\",\n    \"orgId\": \"string\",\n    \"state\": \"ACTIVE\",\n    \"tags\": {\n      \"key_0\": \"string\"\n    },\n    \"revokedBy\": \"string\",\n    \"authType\": \"SECRET\",\n    \"osType\": \"string\",\n    \"osName\": \"string\",\n    \"osVersion\": \"string\",\n    \"usedProxy\": false,\n    \"instanceStartTime\": \"string\",\n    \"lastActiveEmitted\": \"2010-06-09T16:01:03.835Z\",\n    \"createdAt\": \"2004-08-22T20:20:56.211Z\",\n    \"updatedAt\": \"1966-12-30T23:25:34.692Z\",\n    \"active\": true,\n    \"revoked\": true,\n    \"idle\": false,\n    \"gremlinClientVersion\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f669c994-b57e-4b02-8b37-66e1d03eceb1",
+          "name": "Returns all integration clients within a company or team.",
+          "request": {
+            "name": "Returns all integration clients within a company or team.",
+            "description": {
+              "content": "This operation will return all active, idle, and recently inactive integration clients.\nRequires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integration-clients"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "55d49016-d16c-4697-aed1-8ab419a7931a",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ea8b59fb-33b5-4c10-9949-81bd3327c8c8",
+              "name": "User requires privilege for target team: INTEGRATIONS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f5f649f5-7ca8-44b0-960f-38fa9f44197a",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"active\": [\n    {\n      \"companyId\": \"string\",\n      \"identifier\": \"string\",\n      \"lastSeen\": \"1999-02-19T18:40:04.067Z\",\n      \"orgId\": \"string\",\n      \"state\": \"IDLE\",\n      \"tags\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": \"string\"\n      },\n      \"revokedBy\": \"string\",\n      \"authType\": \"CERTIFICATE\",\n      \"osType\": \"string\",\n      \"osName\": \"string\",\n      \"osVersion\": \"string\",\n      \"usedProxy\": false,\n      \"instanceStartTime\": \"string\",\n      \"lastActiveEmitted\": \"1961-01-17T02:31:42.197Z\",\n      \"createdAt\": \"1955-01-21T05:37:45.208Z\",\n      \"updatedAt\": \"1965-09-26T16:22:58.784Z\",\n      \"active\": false,\n      \"revoked\": false,\n      \"idle\": true,\n      \"gremlinClientVersion\": \"string\"\n    },\n    {\n      \"companyId\": \"string\",\n      \"identifier\": \"string\",\n      \"lastSeen\": \"1962-08-16T03:04:33.467Z\",\n      \"orgId\": \"string\",\n      \"state\": \"ACTIVE\",\n      \"tags\": {\n        \"key_0\": \"string\"\n      },\n      \"revokedBy\": \"string\",\n      \"authType\": \"CERTIFICATE\",\n      \"osType\": \"string\",\n      \"osName\": \"string\",\n      \"osVersion\": \"string\",\n      \"usedProxy\": true,\n      \"instanceStartTime\": \"string\",\n      \"lastActiveEmitted\": \"1947-03-07T03:24:06.799Z\",\n      \"createdAt\": \"2024-02-21T01:57:51.145Z\",\n      \"updatedAt\": \"1963-04-01T18:38:32.391Z\",\n      \"active\": false,\n      \"revoked\": true,\n      \"idle\": false,\n      \"gremlinClientVersion\": \"string\"\n    }\n  ],\n  \"idle\": [\n    {\n      \"companyId\": \"string\",\n      \"identifier\": \"string\",\n      \"lastSeen\": \"1976-08-08T23:27:37.514Z\",\n      \"orgId\": \"string\",\n      \"state\": \"REVOKED\",\n      \"tags\": {\n        \"key_0\": \"string\"\n      },\n      \"revokedBy\": \"string\",\n      \"authType\": \"SECRET\",\n      \"osType\": \"string\",\n      \"osName\": \"string\",\n      \"osVersion\": \"string\",\n      \"usedProxy\": false,\n      \"instanceStartTime\": \"string\",\n      \"lastActiveEmitted\": \"1967-04-03T19:25:34.880Z\",\n      \"createdAt\": \"1989-10-18T10:40:51.896Z\",\n      \"updatedAt\": \"2021-02-10T18:58:49.706Z\",\n      \"active\": false,\n      \"revoked\": true,\n      \"idle\": false,\n      \"gremlinClientVersion\": \"string\"\n    },\n    {\n      \"companyId\": \"string\",\n      \"identifier\": \"string\",\n      \"lastSeen\": \"1959-02-20T13:41:26.678Z\",\n      \"orgId\": \"string\",\n      \"state\": \"REVOKED\",\n      \"tags\": {\n        \"key_0\": \"string\"\n      },\n      \"revokedBy\": \"string\",\n      \"authType\": \"SECRET\",\n      \"osType\": \"string\",\n      \"osName\": \"string\",\n      \"osVersion\": \"string\",\n      \"usedProxy\": true,\n      \"instanceStartTime\": \"string\",\n      \"lastActiveEmitted\": \"2013-09-10T12:55:45.098Z\",\n      \"createdAt\": \"2023-10-19T02:19:45.404Z\",\n      \"updatedAt\": \"1984-05-29T10:43:40.478Z\",\n      \"active\": true,\n      \"revoked\": false,\n      \"idle\": false,\n      \"gremlinClientVersion\": \"string\"\n    }\n  ],\n  \"inactive\": [\n    {\n      \"companyId\": \"string\",\n      \"identifier\": \"string\",\n      \"lastSeen\": \"1994-01-14T21:23:10.457Z\",\n      \"orgId\": \"string\",\n      \"state\": \"REVOKED\",\n      \"tags\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"revokedBy\": \"string\",\n      \"authType\": \"SECRET\",\n      \"osType\": \"string\",\n      \"osName\": \"string\",\n      \"osVersion\": \"string\",\n      \"usedProxy\": false,\n      \"instanceStartTime\": \"string\",\n      \"lastActiveEmitted\": \"1984-07-29T04:16:26.785Z\",\n      \"createdAt\": \"1959-12-25T04:42:01.221Z\",\n      \"updatedAt\": \"1975-02-11T22:47:13.501Z\",\n      \"active\": true,\n      \"revoked\": true,\n      \"idle\": true,\n      \"gremlinClientVersion\": \"string\"\n    },\n    {\n      \"companyId\": \"string\",\n      \"identifier\": \"string\",\n      \"lastSeen\": \"1955-01-16T07:42:41.172Z\",\n      \"orgId\": \"string\",\n      \"state\": \"IDLE\",\n      \"tags\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"revokedBy\": \"string\",\n      \"authType\": \"SECRET\",\n      \"osType\": \"string\",\n      \"osName\": \"string\",\n      \"osVersion\": \"string\",\n      \"usedProxy\": false,\n      \"instanceStartTime\": \"string\",\n      \"lastActiveEmitted\": \"1977-09-19T10:08:10.270Z\",\n      \"createdAt\": \"2001-12-04T17:05:38.793Z\",\n      \"updatedAt\": \"1977-05-24T14:02:29.078Z\",\n      \"active\": false,\n      \"revoked\": false,\n      \"idle\": false,\n      \"gremlinClientVersion\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b604961a-979e-43b6-961d-4c0bddb5a933",
+          "name": "Returns list of clients which match the given tags",
+          "request": {
+            "name": "Returns list of clients which match the given tags",
+            "description": {
+              "content": "Requires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integration-clients",
+                "matches-tags"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key_0\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"key_1\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5b8a69a4-2a85-42fe-aae7-b27ac8408c89",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients",
+                    "matches-tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"key_1\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c176b2c0-298c-4500-a6e1-a8be3895415f",
+              "name": "User requires privilege for target team: INTEGRATIONS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients",
+                    "matches-tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"key_1\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4ce03e3a-a82a-4545-8051-456b24e30a99",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients",
+                    "matches-tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"key_1\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"matchingAgents\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bff7a028-0afb-412f-a076-d16781a3355b",
+          "name": "Deactivates an integration client.",
+          "request": {
+            "name": "Deactivates an integration client.",
+            "description": {
+              "content": "This operation will deactivate the specified integration client. The specified client will no longer be able to be used as a target.\nRequires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integration-clients",
+                ":identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) The identifier of the integration client to modify."
+                }
+              ]
+            },
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "2adc38d6-cd91-4a37-a8b5-4dd2aa56b999",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the integration client to modify."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e854c854-9c90-4026-9370-a163ac474f1e",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the integration client to modify."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1a9de2ad-2a32-4918-a0fb-2370f2dda164",
+              "name": "User requires privilege for target team: CLIENTS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the integration client to modify."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "abf72241-078e-4842-8815-146ce4ec0b72",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integration-clients",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the integration client to modify."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b1a8e528-0f39-43d9-a85d-a95bc295bc9f",
+    "name": "Gremlin agents integration-clients API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

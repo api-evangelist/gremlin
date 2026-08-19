@@ -1,0 +1,239 @@
+{
+  "item": [
+    {
+      "id": "23aa29a2-e8e2-4d03-ab90-2c784ce6d462",
+      "name": "reliability-report",
+      "description": {
+        "content": "Retrieve reliability report for a given service",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "437585d3-4a5b-48ac-99ac-c04defd5e1b7",
+          "name": "Get the reliability report for a specified service.",
+          "request": {
+            "name": "Get the reliability report for a specified service.",
+            "description": {
+              "content": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "policies",
+                ":serviceId",
+                "reliability-report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "date",
+                  "value": "<date>",
+                  "description": "The date for the report"
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serviceId",
+                  "description": "(Required) The serviceId within the requested team"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "de01f571-a01a-42ff-a93d-8f3ce4cd6878",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":serviceId",
+                    "reliability-report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceId",
+                      "description": "(Required) The serviceId within the requested team"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f51202d1-afbe-4382-b327-822f09bd4132",
+              "name": "User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":serviceId",
+                    "reliability-report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceId",
+                      "description": "(Required) The serviceId within the requested team"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "65eb0c06-9fad-491a-a8f9-b80645c3f4af",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":serviceId",
+                    "reliability-report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "2026-05-01"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceId",
+                      "description": "(Required) The serviceId within the requested team"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reliability\": {\n    \"key_0\": {\n      \"category\": \"REDUNDANCY\",\n      \"policyTarget\": \"SERVICE_DEPENDENCY\",\n      \"policyStates\": [\n        {\n          \"policyId\": \"string\",\n          \"reliabilityTestId\": \"string\",\n          \"serviceId\": \"string\",\n          \"dependencyId\": \"string\",\n          \"dependencyName\": \"string\",\n          \"failureFlagName\": \"string\",\n          \"evaluationTime\": 1280,\n          \"startTime\": \"1971-11-13T23:04:27.020Z\",\n          \"endTime\": \"1991-10-28T20:28:40.655Z\",\n          \"staleness\": 597,\n          \"result\": \"EXPIRED\",\n          \"order\": 5947,\n          \"scenarioId\": \"string\",\n          \"runNumber\": 5579,\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"passCriteria\": \"ALL_PASS\",\n          \"diagnosisAvailable\": false,\n          \"triggerSource\": \"RECURRING_SCHEDULE\",\n          \"triggeredBy\": \"string\"\n        },\n        {\n          \"policyId\": \"string\",\n          \"reliabilityTestId\": \"string\",\n          \"serviceId\": \"string\",\n          \"dependencyId\": \"string\",\n          \"dependencyName\": \"string\",\n          \"failureFlagName\": \"string\",\n          \"evaluationTime\": 2654,\n          \"startTime\": \"2005-08-25T08:24:40.744Z\",\n          \"endTime\": \"1958-02-11T16:03:56.125Z\",\n          \"staleness\": 3961,\n          \"result\": \"FAILED\",\n          \"order\": 14,\n          \"scenarioId\": \"string\",\n          \"runNumber\": 8842,\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"passCriteria\": \"ALL_PASS\",\n          \"diagnosisAvailable\": true,\n          \"triggerSource\": \"MANUAL\",\n          \"triggeredBy\": \"string\"\n        }\n      ],\n      \"rank\": 5268,\n      \"score\": 9517.447786541676,\n      \"maxScore\": 8213.674103075251\n    },\n    \"key_1\": {\n      \"category\": \"EXTRA_CREDIT\",\n      \"policyTarget\": \"SERVICE\",\n      \"policyStates\": [\n        {\n          \"policyId\": \"string\",\n          \"reliabilityTestId\": \"string\",\n          \"serviceId\": \"string\",\n          \"dependencyId\": \"string\",\n          \"dependencyName\": \"string\",\n          \"failureFlagName\": \"string\",\n          \"evaluationTime\": 3680,\n          \"startTime\": \"1946-11-21T14:06:50.787Z\",\n          \"endTime\": \"2010-06-28T01:48:31.883Z\",\n          \"staleness\": 9937,\n          \"result\": \"EXPIRED\",\n          \"order\": 6398,\n          \"scenarioId\": \"string\",\n          \"runNumber\": 2612,\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"passCriteria\": \"AT_LEAST_ONE_FAILED\",\n          \"diagnosisAvailable\": false,\n          \"triggerSource\": \"RUN_ALL\",\n          \"triggeredBy\": \"string\"\n        },\n        {\n          \"policyId\": \"string\",\n          \"reliabilityTestId\": \"string\",\n          \"serviceId\": \"string\",\n          \"dependencyId\": \"string\",\n          \"dependencyName\": \"string\",\n          \"failureFlagName\": \"string\",\n          \"evaluationTime\": 9235,\n          \"startTime\": \"1983-04-15T09:26:24.642Z\",\n          \"endTime\": \"1977-06-27T05:47:12.161Z\",\n          \"staleness\": 3078,\n          \"result\": \"EXPIRED\",\n          \"order\": 8213,\n          \"scenarioId\": \"string\",\n          \"runNumber\": 6489,\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"passCriteria\": \"AT_LEAST_ONE_FAILED\",\n          \"diagnosisAvailable\": false,\n          \"triggerSource\": \"MANUAL\",\n          \"triggeredBy\": \"string\"\n        }\n      ],\n      \"rank\": 1266,\n      \"score\": 2933.681393720113,\n      \"maxScore\": 6467.9012314979755\n    },\n    \"key_2\": {\n      \"category\": \"OTHER\",\n      \"policyTarget\": \"SERVICE\",\n      \"policyStates\": [\n        {\n          \"policyId\": \"string\",\n          \"reliabilityTestId\": \"string\",\n          \"serviceId\": \"string\",\n          \"dependencyId\": \"string\",\n          \"dependencyName\": \"string\",\n          \"failureFlagName\": \"string\",\n          \"evaluationTime\": 2068,\n          \"startTime\": \"1973-02-05T17:54:46.172Z\",\n          \"endTime\": \"1983-02-26T21:21:10.268Z\",\n          \"staleness\": 5928,\n          \"result\": \"PASSED\",\n          \"order\": 5841,\n          \"scenarioId\": \"string\",\n          \"runNumber\": 9280,\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"passCriteria\": \"ALL_PASS\",\n          \"diagnosisAvailable\": false,\n          \"triggerSource\": \"MANUAL\",\n          \"triggeredBy\": \"string\"\n        },\n        {\n          \"policyId\": \"string\",\n          \"reliabilityTestId\": \"string\",\n          \"serviceId\": \"string\",\n          \"dependencyId\": \"string\",\n          \"dependencyName\": \"string\",\n          \"failureFlagName\": \"string\",\n          \"evaluationTime\": 9456,\n          \"startTime\": \"1978-02-17T02:12:57.159Z\",\n          \"endTime\": \"1993-01-30T02:16:34.440Z\",\n          \"staleness\": 1235,\n          \"result\": \"PASSED\",\n          \"order\": 1363,\n          \"scenarioId\": \"string\",\n          \"runNumber\": 5175,\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"passCriteria\": \"ALL_PASS\",\n          \"diagnosisAvailable\": false,\n          \"triggerSource\": \"SCHEDULED\",\n          \"triggeredBy\": \"string\"\n        }\n      ],\n      \"rank\": 5080,\n      \"score\": 4244.623293310837,\n      \"maxScore\": 4650.805505407479\n    },\n    \"key_3\": {\n      \"category\": \"REDUNDANCY\",\n      \"policyTarget\": \"SERVICE\",\n      \"policyStates\": [\n        {\n          \"policyId\": \"string\",\n          \"reliabilityTestId\": \"string\",\n          \"serviceId\": \"string\",\n          \"dependencyId\": \"string\",\n          \"dependencyName\": \"string\",\n          \"failureFlagName\": \"string\",\n          \"evaluationTime\": 4146,\n          \"startTime\": \"1954-05-27T10:43:24.563Z\",\n          \"endTime\": \"1977-05-17T10:42:17.950Z\",\n          \"staleness\": 4517,\n          \"result\": \"EXPIRED\",\n          \"order\": 8886,\n          \"scenarioId\": \"string\",\n          \"runNumber\": 1489,\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"passCriteria\": \"AT_LEAST_ONE_FAILED\",\n          \"diagnosisAvailable\": true,\n          \"triggerSource\": \"SCHEDULED\",\n          \"triggeredBy\": \"string\"\n        },\n        {\n          \"policyId\": \"string\",\n          \"reliabilityTestId\": \"string\",\n          \"serviceId\": \"string\",\n          \"dependencyId\": \"string\",\n          \"dependencyName\": \"string\",\n          \"failureFlagName\": \"string\",\n          \"evaluationTime\": 5676,\n          \"startTime\": \"1958-03-30T22:14:32.647Z\",\n          \"endTime\": \"1959-09-27T12:19:11.623Z\",\n          \"staleness\": 5389,\n          \"result\": \"EXPIRED\",\n          \"order\": 6745,\n          \"scenarioId\": \"string\",\n          \"runNumber\": 6046,\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"passCriteria\": \"AT_LEAST_ONE_FAILED\",\n          \"diagnosisAvailable\": false,\n          \"triggerSource\": \"RECURRING_SCHEDULE\",\n          \"triggeredBy\": \"string\"\n        }\n      ],\n      \"rank\": 9375,\n      \"score\": 8178.83310534761,\n      \"maxScore\": 5719.734848224827\n    },\n    \"key_4\": {\n      \"category\": \"OTHER\",\n      \"policyTarget\": \"SERVICE_DEPENDENCY\",\n      \"policyStates\": [\n        {\n          \"policyId\": \"string\",\n          \"reliabilityTestId\": \"string\",\n          \"serviceId\": \"string\",\n          \"dependencyId\": \"string\",\n          \"dependencyName\": \"string\",\n          \"failureFlagName\": \"string\",\n          \"evaluationTime\": 3738,\n          \"startTime\": \"1977-06-28T02:07:33.329Z\",\n          \"endTime\": \"1994-11-10T14:46:11.037Z\",\n          \"staleness\": 8633,\n          \"result\": \"EXPIRED\",\n          \"order\": 2363,\n          \"scenarioId\": \"string\",\n          \"runNumber\": 8483,\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"passCriteria\": \"AT_LEAST_ONE_FAILED\",\n          \"diagnosisAvailable\": true,\n          \"triggerSource\": \"SCHEDULED\",\n          \"triggeredBy\": \"string\"\n        },\n        {\n          \"policyId\": \"string\",\n          \"reliabilityTestId\": \"string\",\n          \"serviceId\": \"string\",\n          \"dependencyId\": \"string\",\n          \"dependencyName\": \"string\",\n          \"failureFlagName\": \"string\",\n          \"evaluationTime\": 4132,\n          \"startTime\": \"1954-09-02T04:36:06.787Z\",\n          \"endTime\": \"1979-02-17T08:00:05.472Z\",\n          \"staleness\": 3889,\n          \"result\": \"FAILED\",\n          \"order\": 5354,\n          \"scenarioId\": \"string\",\n          \"runNumber\": 768,\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"passCriteria\": \"AT_LEAST_ONE_FAILED\",\n          \"diagnosisAvailable\": false,\n          \"triggerSource\": \"SCHEDULED\",\n          \"triggeredBy\": \"string\"\n        }\n      ],\n      \"rank\": 6508,\n      \"score\": 4161.78405479302,\n      \"maxScore\": 9428.203353865738\n    }\n  },\n  \"testSuiteId\": \"string\",\n  \"score\": 4201.83827252159,\n  \"previousIntervalScore\": 6480.572345904425,\n  \"categoryScores\": {\n    \"key_0\": {\n      \"category\": \"EXTRA_CREDIT\",\n      \"maxScore\": 9725.624933309573,\n      \"score\": 4019.6142994524043,\n      \"previousIntervalScore\": 1762.793271516543,\n      \"rank\": 6328\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9004e002-2ef7-41e0-bd9e-32ee2d6f253b",
+    "name": "Gremlin agents reliability-report API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

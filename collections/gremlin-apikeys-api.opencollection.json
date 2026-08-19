@@ -1,0 +1,125 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gremlin agents apikeys API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "apikeys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Un-Revoke an existing API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.gremlin.com/v1/apikeys/:identifier/activate",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`API_KEYS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "List all API Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/apikeys"
+          },
+          "docs": "Requires the privilege [`API_KEYS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Create a new API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/apikeys",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Requires the privilege [`API_KEYS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Set a new expiration on key",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.gremlin.com/v1/apikeys/:identifier/expiration",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "expiresAt",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`API_KEYS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "List active API Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/apikeys/active"
+          },
+          "docs": "Requires the privilege [`API_KEYS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "List all API Keys for company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/apikeys/all-for-company"
+          },
+          "docs": "Requires the privilege [`ALL_API_KEYS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Revoke an existing API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.gremlin.com/v1/apikeys/:identifier",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`API_KEYS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,185 @@
+{
+  "item": [
+    {
+      "id": "b8475ac1-88a5-41b9-87a6-12debcc89bdd",
+      "name": "google-cloud.integration",
+      "description": {
+        "content": "Fetch setup instructions for configuring a Google Cloud integration.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4c488c1b-e3bc-4ebd-b383-2d60024224b0",
+          "name": "Returns the configuration details necessary for Gremlin to access GCP resources.",
+          "request": {
+            "name": "Returns the configuration details necessary for Gremlin to access GCP resources.",
+            "description": {
+              "content": "This endpoint provides the necessary details a customer needs in order to configure their GCP project so that Gremlin can access it.\n\nRequires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gcp",
+                "integration-setup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "c96798ff-d29b-4dc2-aca5-9d25a46efbf6",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gcp",
+                    "integration-setup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6aa8af10-bdb5-4dab-bebf-a668839fe9a8",
+              "name": "User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gcp",
+                    "integration-setup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "180da082-5acd-42d4-8f83-ae652be41576",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gcp",
+                    "integration-setup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"principalAccessRoles\": [\n    \"string\",\n    \"string\"\n  ],\n  \"serviceAccountRolePrivileges\": [\n    \"string\",\n    \"string\"\n  ],\n  \"gremlinGcpProxyServiceAccount\": \"string\",\n  \"serviceAccountOutOfBoxRoles\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "16eb4374-6279-4bf6-afd0-5b4da9de5db5",
+    "name": "Gremlin agents google-cloud.integration API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

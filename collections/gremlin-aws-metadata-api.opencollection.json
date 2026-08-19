@@ -1,0 +1,95 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gremlin agents aws.metadata API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "aws.metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Queries Gremlin's view of Autoscaling Groups in a given AWS account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/aws/metadata/autoscaling-groups",
+            "params": [
+              {
+                "name": "domain",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "This endpoint returns Gremlin's view of Autoscaling Groups in a given AWS account.  The `domain` parameter refers to the AWS AccountId.  \nNOTE: This endpoint may (or may not) return Autoscaling Groups which have already been assigned to Gremlin Services, or ones which we cannot assign to Gremlin Services\nRequires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Returns the policy document necessary for Gremlin to access AWS resources.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/aws/metadata/iam-role",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "This endpoint provides the policy document and associated trust policies so that Gremlin can access an arbitrary AWS account. This endpoint also provides a link to a CloudFormationTemplate for applying this to your AWS account. \nSee: https://www.gremlin.com/docs/aws-quick-start-guide for more info\n\nRequires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Queries Gremlin's view of Load balancers in a given AWS account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/aws/metadata/load-balancers",
+            "params": [
+              {
+                "name": "domain",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "This endpoint returns Gremlin's view of Load Balancers in a given AWS account.  These can then be used to create Gremlin Services or Intelligent Health checks.  \nThe `domain` parameter refers to the AWS AccountId.  \nNOTE: This endpoint may (or may not) return Load Balancers which have already been assigned to Gremlin Services, or ones which we cannot assign to Gremlin Services (eg. LBs with no hosts behind them)\nRequires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

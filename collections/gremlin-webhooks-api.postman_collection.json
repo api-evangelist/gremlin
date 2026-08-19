@@ -1,0 +1,977 @@
+{
+  "item": [
+    {
+      "id": "c018026d-7006-4a67-98db-83b868c54ba3",
+      "name": "webhooks",
+      "description": {
+        "content": "Create, read, update, and delete webhooks",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "acd8b7a1-fc6d-4480-919c-052fc5dc18ea",
+          "name": "get Webhooks",
+          "request": {
+            "name": "get Webhooks",
+            "description": {
+              "content": "Requires the privilege [`WEBHOOKS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Filter webhooks by state"
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "32c9c889-80e4-46f4-8ca0-bc1cc5a0221f",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cea05a0f-29df-450e-8275-99eb3050a32b",
+              "name": "User requires privilege for target team: WEBHOOKS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "366b566c-9b69-40d3-8e15-51fecac248cf",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"teamId\": \"string\",\n    \"identifier\": \"string\",\n    \"type\": \"TASK\",\n    \"webhookEndpoint\": {\n      \"uri\": \"string\",\n      \"headers\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"method\": \"PATCH\"\n    },\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"createdBy\": \"string\",\n    \"createdAt\": \"1955-05-27T14:28:23.851Z\",\n    \"updatedBy\": \"string\",\n    \"updatedAt\": \"1989-10-25T06:40:43.833Z\",\n    \"isPrivateNetwork\": true,\n    \"triggerEvents\": [\n      \"FINISHED\",\n      \"INITIALIZING\"\n    ],\n    \"state\": \"ACTIVE\",\n    \"payload\": \"string\",\n    \"teamExternalIntegration\": {\n      \"name\": \"string\",\n      \"type\": \"PROMETHEUS\",\n      \"observabilityToolType\": \"NEWRELIC\",\n      \"domain\": \"string\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"okLatencyMaxMs\": 7720,\n      \"responseBodyEvaluation\": {\n        \"op\": \"OR\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  },\n  {\n    \"teamId\": \"string\",\n    \"identifier\": \"string\",\n    \"type\": \"TASK\",\n    \"webhookEndpoint\": {\n      \"uri\": \"string\",\n      \"headers\": {\n        \"key_0\": \"string\"\n      },\n      \"method\": \"PATCH\"\n    },\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"createdBy\": \"string\",\n    \"createdAt\": \"1979-02-15T06:42:41.560Z\",\n    \"updatedBy\": \"string\",\n    \"updatedAt\": \"2023-10-01T18:49:07.135Z\",\n    \"isPrivateNetwork\": false,\n    \"triggerEvents\": [\n      \"FINISHED\",\n      \"FINISHED\"\n    ],\n    \"state\": \"DEACTIVATED\",\n    \"payload\": \"string\",\n    \"teamExternalIntegration\": {\n      \"name\": \"string\",\n      \"type\": \"DATADOG_US3\",\n      \"observabilityToolType\": \"PROMETHEUS\",\n      \"domain\": \"string\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"okLatencyMaxMs\": 7647,\n      \"responseBodyEvaluation\": {\n        \"op\": \"OR\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fe0bfb16-8f4e-45db-97d8-0bf41f14f91b",
+          "name": "Create a webhook",
+          "request": {
+            "name": "Create a webhook",
+            "description": {
+              "content": "Requires the privilege [`WEBHOOKS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"method\": \"<string>\",\n  \"name\": \"<string>\",\n  \"uri\": \"<url>\",\n  \"identifier\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isPrivateNetwork\": \"<boolean>\",\n  \"headers\": {\n    \"key_0\": \"<string>\"\n  },\n  \"triggerEvents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"state\": \"<string>\",\n  \"payload\": \"<string>\",\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"type\": \"<string>\",\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "64404416-143a-4e00-916f-21bdcc3974ef",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"method\": \"<string>\",\n  \"name\": \"<string>\",\n  \"uri\": \"<url>\",\n  \"identifier\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isPrivateNetwork\": \"<boolean>\",\n  \"headers\": {\n    \"key_0\": \"<string>\"\n  },\n  \"triggerEvents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"state\": \"<string>\",\n  \"payload\": \"<string>\",\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"type\": \"<string>\",\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "baa7fac7-0907-47be-95c2-d34482eb1322",
+              "name": "User requires privilege for target team: WEBHOOKS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"method\": \"<string>\",\n  \"name\": \"<string>\",\n  \"uri\": \"<url>\",\n  \"identifier\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isPrivateNetwork\": \"<boolean>\",\n  \"headers\": {\n    \"key_0\": \"<string>\"\n  },\n  \"triggerEvents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"state\": \"<string>\",\n  \"payload\": \"<string>\",\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"type\": \"<string>\",\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "af38bd62-c562-4fe3-8c06-1ae61fc9d0f6",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"method\": \"<string>\",\n  \"name\": \"<string>\",\n  \"uri\": \"<url>\",\n  \"identifier\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isPrivateNetwork\": \"<boolean>\",\n  \"headers\": {\n    \"key_0\": \"<string>\"\n  },\n  \"triggerEvents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"state\": \"<string>\",\n  \"payload\": \"<string>\",\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"type\": \"<string>\",\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e789ed9c-ef21-444c-add2-9966b430027e",
+          "name": "Retrieve webhook by id",
+          "request": {
+            "name": "Retrieve webhook by id",
+            "description": {
+              "content": "Requires the privilege [`WEBHOOKS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhooks",
+                ":guid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "guid",
+                  "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "674047b2-4267-4a92-b0ee-baff86a38fd1",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cfa01480-e987-4706-8a70-bb8c8b7d3a0b",
+              "name": "User requires privilege for target team: WEBHOOKS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f2cafee6-e1ba-4ac0-a7df-5227343bb655",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"teamId\": \"string\",\n  \"identifier\": \"string\",\n  \"type\": \"LOAD_GENERATOR_STATUS_CHECK\",\n  \"webhookEndpoint\": {\n    \"uri\": \"string\",\n    \"headers\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    \"method\": \"PUT\"\n  },\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"createdBy\": \"string\",\n  \"createdAt\": \"1967-10-07T08:31:52.303Z\",\n  \"updatedBy\": \"string\",\n  \"updatedAt\": \"1957-03-15T04:30:31.126Z\",\n  \"isPrivateNetwork\": false,\n  \"triggerEvents\": [\n    \"RUNNING\",\n    \"INITIALIZING\"\n  ],\n  \"state\": \"ACTIVE\",\n  \"payload\": \"string\",\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_2\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5976900d-7080-45bd-a952-1edc6384a700",
+          "name": "Update a webhook by id",
+          "request": {
+            "name": "Update a webhook by id",
+            "description": {
+              "content": "Requires the privilege [`WEBHOOKS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhooks",
+                ":guid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "guid",
+                  "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"method\": \"<string>\",\n  \"name\": \"<string>\",\n  \"uri\": \"<url>\",\n  \"identifier\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isPrivateNetwork\": \"<boolean>\",\n  \"headers\": {\n    \"key_0\": \"<string>\"\n  },\n  \"triggerEvents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"state\": \"<string>\",\n  \"payload\": \"<string>\",\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"type\": \"<string>\",\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b48d8946-d298-4409-a947-6aeef1b133c0",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"method\": \"<string>\",\n  \"name\": \"<string>\",\n  \"uri\": \"<url>\",\n  \"identifier\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isPrivateNetwork\": \"<boolean>\",\n  \"headers\": {\n    \"key_0\": \"<string>\"\n  },\n  \"triggerEvents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"state\": \"<string>\",\n  \"payload\": \"<string>\",\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"type\": \"<string>\",\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cc39e2e8-75d7-4d9b-8f85-5b69fb57f31f",
+              "name": "User requires privilege for target team: WEBHOOKS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"method\": \"<string>\",\n  \"name\": \"<string>\",\n  \"uri\": \"<url>\",\n  \"identifier\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isPrivateNetwork\": \"<boolean>\",\n  \"headers\": {\n    \"key_0\": \"<string>\"\n  },\n  \"triggerEvents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"state\": \"<string>\",\n  \"payload\": \"<string>\",\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"type\": \"<string>\",\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f37efd76-8e81-4020-a407-be5f3334b4a8",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"method\": \"<string>\",\n  \"name\": \"<string>\",\n  \"uri\": \"<url>\",\n  \"identifier\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isPrivateNetwork\": \"<boolean>\",\n  \"headers\": {\n    \"key_0\": \"<string>\"\n  },\n  \"triggerEvents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"state\": \"<string>\",\n  \"payload\": \"<string>\",\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"type\": \"<string>\",\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d4d0a602-98f4-4079-b940-e1726d7ca224",
+          "name": "Delete a Webhook",
+          "request": {
+            "name": "Delete a Webhook",
+            "description": {
+              "content": "Requires the privilege [`WEBHOOKS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhooks",
+                ":guid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "guid",
+                  "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "ee923fc9-df3e-4bd7-bc0f-0655fcd6c1b3",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2b8e9d3b-a8ae-401b-a599-eaa6264d4a90",
+              "name": "User requires privilege for target team: WEBHOOKS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "013ffdb5-b377-48b8-b722-bab7a8794561",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3c6b7d4b-57a7-444d-a029-e9601b597b36",
+    "name": "Gremlin agents webhooks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

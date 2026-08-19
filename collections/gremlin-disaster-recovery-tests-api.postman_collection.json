@@ -1,0 +1,1728 @@
+{
+  "item": [
+    {
+      "id": "ae907569-ba9b-4796-953b-e575652213b6",
+      "name": "disaster-recovery-tests",
+      "description": {
+        "content": "Create, get, list, run, and complete disaster recovery tests",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "59293444-0729-44a8-a919-4b3998c6413b",
+          "name": "Marks a disaster recovery test for a company as completed, generating a report",
+          "request": {
+            "name": "Marks a disaster recovery test for a company as completed, generating a report",
+            "description": {
+              "content": "Requires the privilege [`DISASTER_RECOVERY_TESTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "disaster-recovery-tests",
+                ":identifier",
+                "complete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST"
+          },
+          "response": [
+            {
+              "id": "d0c36383-4229-4c84-94e1-808e8d5aa588",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier",
+                    "complete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4791bc9b-b02c-4771-a04e-7ac5096710a1",
+              "name": "User requires privilege: DISASTER_RECOVERY_TESTS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier",
+                    "complete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6880c8a0-34f7-4b0e-8547-300a354857ba",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier",
+                    "complete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"companyId\": \"string\",\n  \"identifier\": \"string\",\n  \"name\": \"string\",\n  \"state\": \"DRAFT\",\n  \"reliabilityTestId\": \"string\",\n  \"reliabilityTestName\": \"string\",\n  \"estimatedDuration\": 2499,\n  \"startDateTime\": \"1958-03-24T08:12:44.577Z\",\n  \"endDateTime\": \"1950-11-01T11:57:11.156Z\",\n  \"latestServiceRuns\": [\n    {\n      \"teamId\": \"string\",\n      \"teamName\": \"string\",\n      \"serviceId\": \"string\",\n      \"serviceName\": \"string\",\n      \"multiSelectTags\": {\n        \"key_0\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"scenarioRunId\": \"string\",\n      \"scenarioRunNumber\": 22,\n      \"scenarioRunStage\": \"string\",\n      \"scenarioPassCriteria\": \"ALL_PASS\",\n      \"scenarioRunStatus\": \"string\",\n      \"scenarioRunStartTime\": \"1987-08-26T23:21:12.340Z\",\n      \"scenarioRunEndTime\": \"1954-09-04T15:55:28.542Z\"\n    },\n    {\n      \"teamId\": \"string\",\n      \"teamName\": \"string\",\n      \"serviceId\": \"string\",\n      \"serviceName\": \"string\",\n      \"multiSelectTags\": {\n        \"key_0\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"scenarioRunId\": \"string\",\n      \"scenarioRunNumber\": 788,\n      \"scenarioRunStage\": \"string\",\n      \"scenarioPassCriteria\": \"ALL_PASS\",\n      \"scenarioRunStatus\": \"string\",\n      \"scenarioRunStartTime\": \"1958-08-26T20:43:59.757Z\",\n      \"scenarioRunEndTime\": \"2015-07-30T18:05:41.791Z\"\n    }\n  ],\n  \"statusChecks\": [\n    {\n      \"type\": \"StatusCheckNode\",\n      \"id\": \"string\",\n      \"state\": {\n        \"lifecycle\": \"Successful\",\n        \"startTime\": \"2003-12-08T01:26:46.916Z\",\n        \"endTime\": \"1949-11-29T08:41:13.558Z\",\n        \"failedReason\": \"string\",\n        \"nodeHaltedByGuid\": \"string\",\n        \"nodeHaltedById\": \"string\"\n      },\n      \"guid\": \"string\",\n      \"next\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"thirdPartyPresets\": \"string\",\n      \"category\": \"ERRORS\",\n      \"requestConfiguration\": {\n        \"type\": \"string\"\n      },\n      \"endpointConfiguration\": {\n        \"url\": \"string\",\n        \"method\": \"PUT\",\n        \"headers\": {\n          \"key_0\": \"string\"\n        },\n        \"payload\": \"string\",\n        \"headersArn\": \"string\"\n      },\n      \"rawEndpointConfiguration\": {\n        \"url\": \"string\",\n        \"method\": \"PATCH\",\n        \"headers\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\",\n          \"key_4\": \"string\"\n        },\n        \"payload\": \"string\",\n        \"headersArn\": \"string\"\n      },\n      \"evaluationConfiguration\": {\n        \"okStatusCodes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"okLatencyMaxMs\": 3649,\n        \"responseBodyEvaluation\": {\n          \"op\": \"OR\",\n          \"predicates\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"statusCheckId\": \"string\",\n      \"externalIntegrationId\": \"string\",\n      \"statusCheckReferenceId\": \"string\",\n      \"isPrivateNetwork\": false,\n      \"isHaltable\": true,\n      \"payload\": \"string\",\n      \"isAutoGenerated\": false,\n      \"autoGeneratedStatusCheckId\": \"string\",\n      \"resourceIdentifier\": \"string\",\n      \"statusCheckRequest\": {\n        \"type\": \"string\"\n      },\n      \"intervalSeconds\": 8662,\n      \"additionalTimeInSecsToRunAfterCompletion\": 1854\n    },\n    {\n      \"type\": \"Delay\",\n      \"id\": \"string\",\n      \"state\": {\n        \"lifecycle\": \"HaltRequested\",\n        \"startTime\": \"1999-09-21T10:58:07.300Z\",\n        \"endTime\": \"1975-07-13T13:58:36.082Z\",\n        \"failedReason\": \"string\",\n        \"nodeHaltedByGuid\": \"string\",\n        \"nodeHaltedById\": \"string\"\n      },\n      \"guid\": \"string\",\n      \"next\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"thirdPartyPresets\": \"string\",\n      \"category\": \"UNKNOWN\",\n      \"requestConfiguration\": {\n        \"type\": \"string\"\n      },\n      \"endpointConfiguration\": {\n        \"url\": \"string\",\n        \"method\": \"PATCH\",\n        \"headers\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"payload\": \"string\",\n        \"headersArn\": \"string\"\n      },\n      \"rawEndpointConfiguration\": {\n        \"url\": \"string\",\n        \"method\": \"GET\",\n        \"headers\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"payload\": \"string\",\n        \"headersArn\": \"string\"\n      },\n      \"evaluationConfiguration\": {\n        \"okStatusCodes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"okLatencyMaxMs\": 477,\n        \"responseBodyEvaluation\": {\n          \"op\": \"OR\",\n          \"predicates\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"statusCheckId\": \"string\",\n      \"externalIntegrationId\": \"string\",\n      \"statusCheckReferenceId\": \"string\",\n      \"isPrivateNetwork\": true,\n      \"isHaltable\": true,\n      \"payload\": \"string\",\n      \"isAutoGenerated\": false,\n      \"autoGeneratedStatusCheckId\": \"string\",\n      \"resourceIdentifier\": \"string\",\n      \"statusCheckRequest\": {\n        \"type\": \"string\"\n      },\n      \"intervalSeconds\": 2921,\n      \"additionalTimeInSecsToRunAfterCompletion\": 8758\n    }\n  ],\n  \"scenarioOverrides\": {\n    \"zones\": [\n      \"string\",\n      \"string\"\n    ],\n    \"dns\": \"string\",\n    \"failureFlag\": {\n      \"labels\": {\n        \"foo\": [\n          \"bar\",\n          \"baz\"\n        ]\n      },\n      \"name\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "81883ad9-5abc-4f78-9836-0036a0d4b1f0",
+          "name": "Creates a disaster recovery test for a company",
+          "request": {
+            "name": "Creates a disaster recovery test for a company",
+            "description": {
+              "content": "Requires the privilege [`DISASTER_RECOVERY_TESTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "disaster-recovery-tests"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"serviceKeys\": [\n    {\n      \"teamId\": \"<string>\",\n      \"serviceId\": \"<string>\"\n    },\n    {\n      \"teamId\": \"<string>\",\n      \"serviceId\": \"<string>\"\n    }\n  ],\n  \"statusChecks\": [\n    {\n      \"statusCheck\": \"<object>\",\n      \"teamId\": \"<string>\"\n    },\n    {\n      \"statusCheck\": \"<object>\",\n      \"teamId\": \"<string>\"\n    }\n  ],\n  \"identifier\": \"<string>\",\n  \"companyId\": \"<string>\",\n  \"scenario\": {\n    \"description\": \"<string>\",\n    \"name\": \"<string>\",\n    \"policyCategory\": \"<string>\",\n    \"scenarioToPromote\": {\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"teamId\": \"<string>\"\n    }\n  },\n  \"reliabilityTestId\": \"<string>\",\n  \"scenarioOverrides\": {\n    \"zones\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"dns\": \"<string>\",\n    \"failureFlag\": {\n      \"labels\": {\n        \"key_0\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"key_1\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"key_2\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"name\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cce7e7ad-40e2-40d7-ba3c-1b0fa5922838",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"serviceKeys\": [\n    {\n      \"teamId\": \"<string>\",\n      \"serviceId\": \"<string>\"\n    },\n    {\n      \"teamId\": \"<string>\",\n      \"serviceId\": \"<string>\"\n    }\n  ],\n  \"statusChecks\": [\n    {\n      \"statusCheck\": {\n        \"type\": \"<string>\",\n        \"id\": \"<string>\",\n        \"guid\": \"<string>\",\n        \"next\": \"<string>\",\n        \"state\": {\n          \"lifecycle\": \"<string>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"failedReason\": \"<string>\",\n          \"nodeHaltedByGuid\": \"<string>\",\n          \"nodeHaltedById\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"thirdPartyPresets\": \"<string>\",\n        \"category\": \"<string>\",\n        \"requestConfiguration\": {\n          \"type\": \"<string>\"\n        },\n        \"endpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"rawEndpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"evaluationConfiguration\": {\n          \"okStatusCodes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"okLatencyMaxMs\": \"<integer>\",\n          \"responseBodyEvaluation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"statusCheckId\": \"<string>\",\n        \"externalIntegrationId\": \"<string>\",\n        \"statusCheckReferenceId\": \"<string>\",\n        \"isPrivateNetwork\": \"<boolean>\",\n        \"isHaltable\": \"<boolean>\",\n        \"payload\": \"<string>\",\n        \"isAutoGenerated\": \"<boolean>\",\n        \"autoGeneratedStatusCheckId\": \"<string>\",\n        \"resourceIdentifier\": \"<string>\",\n        \"statusCheckRequest\": {\n          \"type\": \"<string>\"\n        },\n        \"intervalSeconds\": \"<integer>\",\n        \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n      },\n      \"teamId\": \"<string>\"\n    },\n    {\n      \"statusCheck\": {\n        \"type\": \"<string>\",\n        \"id\": \"<string>\",\n        \"guid\": \"<string>\",\n        \"next\": \"<string>\",\n        \"state\": {\n          \"lifecycle\": \"<string>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"failedReason\": \"<string>\",\n          \"nodeHaltedByGuid\": \"<string>\",\n          \"nodeHaltedById\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"thirdPartyPresets\": \"<string>\",\n        \"category\": \"<string>\",\n        \"requestConfiguration\": {\n          \"type\": \"<string>\"\n        },\n        \"endpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"rawEndpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"evaluationConfiguration\": {\n          \"okStatusCodes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"okLatencyMaxMs\": \"<integer>\",\n          \"responseBodyEvaluation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"statusCheckId\": \"<string>\",\n        \"externalIntegrationId\": \"<string>\",\n        \"statusCheckReferenceId\": \"<string>\",\n        \"isPrivateNetwork\": \"<boolean>\",\n        \"isHaltable\": \"<boolean>\",\n        \"payload\": \"<string>\",\n        \"isAutoGenerated\": \"<boolean>\",\n        \"autoGeneratedStatusCheckId\": \"<string>\",\n        \"resourceIdentifier\": \"<string>\",\n        \"statusCheckRequest\": {\n          \"type\": \"<string>\"\n        },\n        \"intervalSeconds\": \"<integer>\",\n        \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n      },\n      \"teamId\": \"<string>\"\n    }\n  ],\n  \"identifier\": \"<string>\",\n  \"companyId\": \"<string>\",\n  \"scenario\": {\n    \"description\": \"<string>\",\n    \"name\": \"<string>\",\n    \"policyCategory\": \"<string>\",\n    \"scenarioToPromote\": {\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"teamId\": \"<string>\"\n    }\n  },\n  \"reliabilityTestId\": \"<string>\",\n  \"scenarioOverrides\": {\n    \"zones\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"dns\": \"<string>\",\n    \"failureFlag\": {\n      \"labels\": {\n        \"foo\": [\n          \"bar\",\n          \"baz\"\n        ]\n      },\n      \"name\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d91bbda6-1d29-4613-8e54-1df12fbbbae6",
+              "name": "User requires privilege: DISASTER_RECOVERY_TESTS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"serviceKeys\": [\n    {\n      \"teamId\": \"<string>\",\n      \"serviceId\": \"<string>\"\n    },\n    {\n      \"teamId\": \"<string>\",\n      \"serviceId\": \"<string>\"\n    }\n  ],\n  \"statusChecks\": [\n    {\n      \"statusCheck\": {\n        \"type\": \"<string>\",\n        \"id\": \"<string>\",\n        \"guid\": \"<string>\",\n        \"next\": \"<string>\",\n        \"state\": {\n          \"lifecycle\": \"<string>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"failedReason\": \"<string>\",\n          \"nodeHaltedByGuid\": \"<string>\",\n          \"nodeHaltedById\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"thirdPartyPresets\": \"<string>\",\n        \"category\": \"<string>\",\n        \"requestConfiguration\": {\n          \"type\": \"<string>\"\n        },\n        \"endpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"rawEndpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"evaluationConfiguration\": {\n          \"okStatusCodes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"okLatencyMaxMs\": \"<integer>\",\n          \"responseBodyEvaluation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"statusCheckId\": \"<string>\",\n        \"externalIntegrationId\": \"<string>\",\n        \"statusCheckReferenceId\": \"<string>\",\n        \"isPrivateNetwork\": \"<boolean>\",\n        \"isHaltable\": \"<boolean>\",\n        \"payload\": \"<string>\",\n        \"isAutoGenerated\": \"<boolean>\",\n        \"autoGeneratedStatusCheckId\": \"<string>\",\n        \"resourceIdentifier\": \"<string>\",\n        \"statusCheckRequest\": {\n          \"type\": \"<string>\"\n        },\n        \"intervalSeconds\": \"<integer>\",\n        \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n      },\n      \"teamId\": \"<string>\"\n    },\n    {\n      \"statusCheck\": {\n        \"type\": \"<string>\",\n        \"id\": \"<string>\",\n        \"guid\": \"<string>\",\n        \"next\": \"<string>\",\n        \"state\": {\n          \"lifecycle\": \"<string>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"failedReason\": \"<string>\",\n          \"nodeHaltedByGuid\": \"<string>\",\n          \"nodeHaltedById\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"thirdPartyPresets\": \"<string>\",\n        \"category\": \"<string>\",\n        \"requestConfiguration\": {\n          \"type\": \"<string>\"\n        },\n        \"endpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"rawEndpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"evaluationConfiguration\": {\n          \"okStatusCodes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"okLatencyMaxMs\": \"<integer>\",\n          \"responseBodyEvaluation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"statusCheckId\": \"<string>\",\n        \"externalIntegrationId\": \"<string>\",\n        \"statusCheckReferenceId\": \"<string>\",\n        \"isPrivateNetwork\": \"<boolean>\",\n        \"isHaltable\": \"<boolean>\",\n        \"payload\": \"<string>\",\n        \"isAutoGenerated\": \"<boolean>\",\n        \"autoGeneratedStatusCheckId\": \"<string>\",\n        \"resourceIdentifier\": \"<string>\",\n        \"statusCheckRequest\": {\n          \"type\": \"<string>\"\n        },\n        \"intervalSeconds\": \"<integer>\",\n        \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n      },\n      \"teamId\": \"<string>\"\n    }\n  ],\n  \"identifier\": \"<string>\",\n  \"companyId\": \"<string>\",\n  \"scenario\": {\n    \"description\": \"<string>\",\n    \"name\": \"<string>\",\n    \"policyCategory\": \"<string>\",\n    \"scenarioToPromote\": {\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"teamId\": \"<string>\"\n    }\n  },\n  \"reliabilityTestId\": \"<string>\",\n  \"scenarioOverrides\": {\n    \"zones\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"dns\": \"<string>\",\n    \"failureFlag\": {\n      \"labels\": {\n        \"foo\": [\n          \"bar\",\n          \"baz\"\n        ]\n      },\n      \"name\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7482419e-7322-4c12-a063-25b86e945dac",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"serviceKeys\": [\n    {\n      \"teamId\": \"<string>\",\n      \"serviceId\": \"<string>\"\n    },\n    {\n      \"teamId\": \"<string>\",\n      \"serviceId\": \"<string>\"\n    }\n  ],\n  \"statusChecks\": [\n    {\n      \"statusCheck\": {\n        \"type\": \"<string>\",\n        \"id\": \"<string>\",\n        \"guid\": \"<string>\",\n        \"next\": \"<string>\",\n        \"state\": {\n          \"lifecycle\": \"<string>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"failedReason\": \"<string>\",\n          \"nodeHaltedByGuid\": \"<string>\",\n          \"nodeHaltedById\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"thirdPartyPresets\": \"<string>\",\n        \"category\": \"<string>\",\n        \"requestConfiguration\": {\n          \"type\": \"<string>\"\n        },\n        \"endpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"rawEndpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"evaluationConfiguration\": {\n          \"okStatusCodes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"okLatencyMaxMs\": \"<integer>\",\n          \"responseBodyEvaluation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"statusCheckId\": \"<string>\",\n        \"externalIntegrationId\": \"<string>\",\n        \"statusCheckReferenceId\": \"<string>\",\n        \"isPrivateNetwork\": \"<boolean>\",\n        \"isHaltable\": \"<boolean>\",\n        \"payload\": \"<string>\",\n        \"isAutoGenerated\": \"<boolean>\",\n        \"autoGeneratedStatusCheckId\": \"<string>\",\n        \"resourceIdentifier\": \"<string>\",\n        \"statusCheckRequest\": {\n          \"type\": \"<string>\"\n        },\n        \"intervalSeconds\": \"<integer>\",\n        \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n      },\n      \"teamId\": \"<string>\"\n    },\n    {\n      \"statusCheck\": {\n        \"type\": \"<string>\",\n        \"id\": \"<string>\",\n        \"guid\": \"<string>\",\n        \"next\": \"<string>\",\n        \"state\": {\n          \"lifecycle\": \"<string>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"failedReason\": \"<string>\",\n          \"nodeHaltedByGuid\": \"<string>\",\n          \"nodeHaltedById\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"thirdPartyPresets\": \"<string>\",\n        \"category\": \"<string>\",\n        \"requestConfiguration\": {\n          \"type\": \"<string>\"\n        },\n        \"endpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"rawEndpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"evaluationConfiguration\": {\n          \"okStatusCodes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"okLatencyMaxMs\": \"<integer>\",\n          \"responseBodyEvaluation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"statusCheckId\": \"<string>\",\n        \"externalIntegrationId\": \"<string>\",\n        \"statusCheckReferenceId\": \"<string>\",\n        \"isPrivateNetwork\": \"<boolean>\",\n        \"isHaltable\": \"<boolean>\",\n        \"payload\": \"<string>\",\n        \"isAutoGenerated\": \"<boolean>\",\n        \"autoGeneratedStatusCheckId\": \"<string>\",\n        \"resourceIdentifier\": \"<string>\",\n        \"statusCheckRequest\": {\n          \"type\": \"<string>\"\n        },\n        \"intervalSeconds\": \"<integer>\",\n        \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n      },\n      \"teamId\": \"<string>\"\n    }\n  ],\n  \"identifier\": \"<string>\",\n  \"companyId\": \"<string>\",\n  \"scenario\": {\n    \"description\": \"<string>\",\n    \"name\": \"<string>\",\n    \"policyCategory\": \"<string>\",\n    \"scenarioToPromote\": {\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"teamId\": \"<string>\"\n    }\n  },\n  \"reliabilityTestId\": \"<string>\",\n  \"scenarioOverrides\": {\n    \"zones\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"dns\": \"<string>\",\n    \"failureFlag\": {\n      \"labels\": {\n        \"foo\": [\n          \"bar\",\n          \"baz\"\n        ]\n      },\n      \"name\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"companyId\": \"string\",\n  \"identifier\": \"string\",\n  \"name\": \"string\",\n  \"state\": \"ACTIVE\",\n  \"reliabilityTestId\": \"string\",\n  \"reliabilityTestName\": \"string\",\n  \"estimatedDuration\": 1926,\n  \"startDateTime\": \"2017-11-24T18:57:32.440Z\",\n  \"endDateTime\": \"1984-05-07T14:32:41.216Z\",\n  \"latestServiceRuns\": [\n    {\n      \"teamId\": \"string\",\n      \"teamName\": \"string\",\n      \"serviceId\": \"string\",\n      \"serviceName\": \"string\",\n      \"multiSelectTags\": {\n        \"key_0\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"scenarioRunId\": \"string\",\n      \"scenarioRunNumber\": 9635,\n      \"scenarioRunStage\": \"string\",\n      \"scenarioPassCriteria\": \"AT_LEAST_ONE_FAILED\",\n      \"scenarioRunStatus\": \"string\",\n      \"scenarioRunStartTime\": \"2024-12-19T10:45:42.061Z\",\n      \"scenarioRunEndTime\": \"1953-05-26T21:02:43.068Z\"\n    },\n    {\n      \"teamId\": \"string\",\n      \"teamName\": \"string\",\n      \"serviceId\": \"string\",\n      \"serviceName\": \"string\",\n      \"multiSelectTags\": {\n        \"key_0\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"scenarioRunId\": \"string\",\n      \"scenarioRunNumber\": 5586,\n      \"scenarioRunStage\": \"string\",\n      \"scenarioPassCriteria\": \"ALL_PASS\",\n      \"scenarioRunStatus\": \"string\",\n      \"scenarioRunStartTime\": \"1952-10-12T18:05:21.694Z\",\n      \"scenarioRunEndTime\": \"2017-11-28T21:55:24.062Z\"\n    }\n  ],\n  \"statusChecks\": [\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"state\": {\n        \"lifecycle\": \"<string>\",\n        \"startTime\": \"<dateTime>\",\n        \"endTime\": \"<dateTime>\",\n        \"failedReason\": \"<string>\",\n        \"nodeHaltedByGuid\": \"<string>\",\n        \"nodeHaltedById\": \"<string>\"\n      },\n      \"guid\": \"<string>\",\n      \"next\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"thirdPartyPresets\": \"<string>\",\n      \"category\": \"<string>\",\n      \"requestConfiguration\": {\n        \"type\": \"<string>\"\n      },\n      \"endpointConfiguration\": {\n        \"url\": \"<url>\",\n        \"method\": \"<string>\",\n        \"headers\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"payload\": \"<string>\",\n        \"headersArn\": \"<string>\"\n      },\n      \"rawEndpointConfiguration\": {\n        \"url\": \"<url>\",\n        \"method\": \"<string>\",\n        \"headers\": {\n          \"key_0\": \"string\"\n        },\n        \"payload\": \"<string>\",\n        \"headersArn\": \"<string>\"\n      },\n      \"evaluationConfiguration\": {\n        \"okStatusCodes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"okLatencyMaxMs\": \"<integer>\",\n        \"responseBodyEvaluation\": {\n          \"op\": \"OR\",\n          \"predicates\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"statusCheckId\": \"<string>\",\n      \"externalIntegrationId\": \"<string>\",\n      \"statusCheckReferenceId\": \"<string>\",\n      \"isPrivateNetwork\": \"<boolean>\",\n      \"isHaltable\": \"<boolean>\",\n      \"payload\": \"<string>\",\n      \"isAutoGenerated\": \"<boolean>\",\n      \"autoGeneratedStatusCheckId\": \"<string>\",\n      \"resourceIdentifier\": \"<string>\",\n      \"statusCheckRequest\": {\n        \"type\": \"<string>\"\n      },\n      \"intervalSeconds\": \"<integer>\",\n      \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"state\": {\n        \"lifecycle\": \"<string>\",\n        \"startTime\": \"<dateTime>\",\n        \"endTime\": \"<dateTime>\",\n        \"failedReason\": \"<string>\",\n        \"nodeHaltedByGuid\": \"<string>\",\n        \"nodeHaltedById\": \"<string>\"\n      },\n      \"guid\": \"<string>\",\n      \"next\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"thirdPartyPresets\": \"<string>\",\n      \"category\": \"<string>\",\n      \"requestConfiguration\": {\n        \"type\": \"<string>\"\n      },\n      \"endpointConfiguration\": {\n        \"url\": \"<url>\",\n        \"method\": \"<string>\",\n        \"headers\": {\n          \"key_0\": \"string\"\n        },\n        \"payload\": \"<string>\",\n        \"headersArn\": \"<string>\"\n      },\n      \"rawEndpointConfiguration\": {\n        \"url\": \"<url>\",\n        \"method\": \"<string>\",\n        \"headers\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"payload\": \"<string>\",\n        \"headersArn\": \"<string>\"\n      },\n      \"evaluationConfiguration\": {\n        \"okStatusCodes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"okLatencyMaxMs\": \"<integer>\",\n        \"responseBodyEvaluation\": {\n          \"op\": \"AND\",\n          \"predicates\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"statusCheckId\": \"<string>\",\n      \"externalIntegrationId\": \"<string>\",\n      \"statusCheckReferenceId\": \"<string>\",\n      \"isPrivateNetwork\": \"<boolean>\",\n      \"isHaltable\": \"<boolean>\",\n      \"payload\": \"<string>\",\n      \"isAutoGenerated\": \"<boolean>\",\n      \"autoGeneratedStatusCheckId\": \"<string>\",\n      \"resourceIdentifier\": \"<string>\",\n      \"statusCheckRequest\": {\n        \"type\": \"<string>\"\n      },\n      \"intervalSeconds\": \"<integer>\",\n      \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n    }\n  ],\n  \"scenarioOverrides\": {\n    \"zones\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"dns\": \"<string>\",\n    \"failureFlag\": {\n      \"labels\": {\n        \"foo\": [\n          \"bar\",\n          \"baz\"\n        ]\n      },\n      \"name\": \"<string>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dd3293b5-92ad-4d80-90e2-3fc715936e9c",
+          "name": "Gets a disaster recovery test, complete with service details",
+          "request": {
+            "name": "Gets a disaster recovery test, complete with service details",
+            "description": {
+              "content": "Requires the privilege [`DISASTER_RECOVERY_TESTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "disaster-recovery-tests",
+                ":identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "bc992b7f-f336-403d-aee1-f6d63505b2a8",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5e08e03f-b908-41f8-97ce-dba5abf73a6d",
+              "name": "User requires privilege: DISASTER_RECOVERY_TESTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bffe3b7a-b024-43f2-b271-9532a2159858",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"companyId\": \"string\",\n  \"identifier\": \"string\",\n  \"name\": \"string\",\n  \"state\": \"ACTIVE\",\n  \"reliabilityTestId\": \"string\",\n  \"reliabilityTestName\": \"string\",\n  \"estimatedDuration\": 1926,\n  \"startDateTime\": \"2017-11-24T18:57:32.440Z\",\n  \"endDateTime\": \"1984-05-07T14:32:41.216Z\",\n  \"latestServiceRuns\": [\n    {\n      \"teamId\": \"string\",\n      \"teamName\": \"string\",\n      \"serviceId\": \"string\",\n      \"serviceName\": \"string\",\n      \"multiSelectTags\": {\n        \"key_0\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"scenarioRunId\": \"string\",\n      \"scenarioRunNumber\": 9635,\n      \"scenarioRunStage\": \"string\",\n      \"scenarioPassCriteria\": \"AT_LEAST_ONE_FAILED\",\n      \"scenarioRunStatus\": \"string\",\n      \"scenarioRunStartTime\": \"2024-12-19T10:45:42.061Z\",\n      \"scenarioRunEndTime\": \"1953-05-26T21:02:43.068Z\"\n    },\n    {\n      \"teamId\": \"string\",\n      \"teamName\": \"string\",\n      \"serviceId\": \"string\",\n      \"serviceName\": \"string\",\n      \"multiSelectTags\": {\n        \"key_0\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"scenarioRunId\": \"string\",\n      \"scenarioRunNumber\": 5586,\n      \"scenarioRunStage\": \"string\",\n      \"scenarioPassCriteria\": \"ALL_PASS\",\n      \"scenarioRunStatus\": \"string\",\n      \"scenarioRunStartTime\": \"1952-10-12T18:05:21.694Z\",\n      \"scenarioRunEndTime\": \"2017-11-28T21:55:24.062Z\"\n    }\n  ],\n  \"statusChecks\": [\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"state\": {\n        \"lifecycle\": \"<string>\",\n        \"startTime\": \"<dateTime>\",\n        \"endTime\": \"<dateTime>\",\n        \"failedReason\": \"<string>\",\n        \"nodeHaltedByGuid\": \"<string>\",\n        \"nodeHaltedById\": \"<string>\"\n      },\n      \"guid\": \"<string>\",\n      \"next\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"thirdPartyPresets\": \"<string>\",\n      \"category\": \"<string>\",\n      \"requestConfiguration\": {\n        \"type\": \"<string>\"\n      },\n      \"endpointConfiguration\": {\n        \"url\": \"<url>\",\n        \"method\": \"<string>\",\n        \"headers\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"payload\": \"<string>\",\n        \"headersArn\": \"<string>\"\n      },\n      \"rawEndpointConfiguration\": {\n        \"url\": \"<url>\",\n        \"method\": \"<string>\",\n        \"headers\": {\n          \"key_0\": \"string\"\n        },\n        \"payload\": \"<string>\",\n        \"headersArn\": \"<string>\"\n      },\n      \"evaluationConfiguration\": {\n        \"okStatusCodes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"okLatencyMaxMs\": \"<integer>\",\n        \"responseBodyEvaluation\": {\n          \"op\": \"OR\",\n          \"predicates\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"statusCheckId\": \"<string>\",\n      \"externalIntegrationId\": \"<string>\",\n      \"statusCheckReferenceId\": \"<string>\",\n      \"isPrivateNetwork\": \"<boolean>\",\n      \"isHaltable\": \"<boolean>\",\n      \"payload\": \"<string>\",\n      \"isAutoGenerated\": \"<boolean>\",\n      \"autoGeneratedStatusCheckId\": \"<string>\",\n      \"resourceIdentifier\": \"<string>\",\n      \"statusCheckRequest\": {\n        \"type\": \"<string>\"\n      },\n      \"intervalSeconds\": \"<integer>\",\n      \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"state\": {\n        \"lifecycle\": \"<string>\",\n        \"startTime\": \"<dateTime>\",\n        \"endTime\": \"<dateTime>\",\n        \"failedReason\": \"<string>\",\n        \"nodeHaltedByGuid\": \"<string>\",\n        \"nodeHaltedById\": \"<string>\"\n      },\n      \"guid\": \"<string>\",\n      \"next\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"thirdPartyPresets\": \"<string>\",\n      \"category\": \"<string>\",\n      \"requestConfiguration\": {\n        \"type\": \"<string>\"\n      },\n      \"endpointConfiguration\": {\n        \"url\": \"<url>\",\n        \"method\": \"<string>\",\n        \"headers\": {\n          \"key_0\": \"string\"\n        },\n        \"payload\": \"<string>\",\n        \"headersArn\": \"<string>\"\n      },\n      \"rawEndpointConfiguration\": {\n        \"url\": \"<url>\",\n        \"method\": \"<string>\",\n        \"headers\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"payload\": \"<string>\",\n        \"headersArn\": \"<string>\"\n      },\n      \"evaluationConfiguration\": {\n        \"okStatusCodes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"okLatencyMaxMs\": \"<integer>\",\n        \"responseBodyEvaluation\": {\n          \"op\": \"AND\",\n          \"predicates\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"statusCheckId\": \"<string>\",\n      \"externalIntegrationId\": \"<string>\",\n      \"statusCheckReferenceId\": \"<string>\",\n      \"isPrivateNetwork\": \"<boolean>\",\n      \"isHaltable\": \"<boolean>\",\n      \"payload\": \"<string>\",\n      \"isAutoGenerated\": \"<boolean>\",\n      \"autoGeneratedStatusCheckId\": \"<string>\",\n      \"resourceIdentifier\": \"<string>\",\n      \"statusCheckRequest\": {\n        \"type\": \"<string>\"\n      },\n      \"intervalSeconds\": \"<integer>\",\n      \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n    }\n  ],\n  \"scenarioOverrides\": {\n    \"zones\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"dns\": \"<string>\",\n    \"failureFlag\": {\n      \"labels\": {\n        \"foo\": [\n          \"bar\",\n          \"baz\"\n        ]\n      },\n      \"name\": \"<string>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1c2f2407-1030-4c68-ba43-2701e08d8cd2",
+          "name": "Updates a disaster recovery test for a company",
+          "request": {
+            "name": "Updates a disaster recovery test for a company",
+            "description": {
+              "content": "Requires the privilege [`DISASTER_RECOVERY_TESTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "disaster-recovery-tests",
+                ":identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "*/*"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"serviceKeys\": [\n    {\n      \"teamId\": \"<string>\",\n      \"serviceId\": \"<string>\"\n    },\n    {\n      \"teamId\": \"<string>\",\n      \"serviceId\": \"<string>\"\n    }\n  ],\n  \"statusChecks\": [\n    {\n      \"statusCheck\": \"<object>\",\n      \"teamId\": \"<string>\"\n    },\n    {\n      \"statusCheck\": \"<object>\",\n      \"teamId\": \"<string>\"\n    }\n  ],\n  \"identifier\": \"<string>\",\n  \"companyId\": \"<string>\",\n  \"scenario\": {\n    \"description\": \"<string>\",\n    \"name\": \"<string>\",\n    \"policyCategory\": \"<string>\",\n    \"scenarioToPromote\": {\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"teamId\": \"<string>\"\n    }\n  },\n  \"reliabilityTestId\": \"<string>\",\n  \"scenarioOverrides\": {\n    \"zones\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"dns\": \"<string>\",\n    \"failureFlag\": {\n      \"labels\": {\n        \"key_0\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"key_1\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"name\": \"<string>\"\n    }\n  }\n}"
+            }
+          },
+          "response": [
+            {
+              "id": "75e35279-2383-4b2e-8e87-843d730a59ff",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"serviceKeys\": [\n    {\n      \"teamId\": \"<string>\",\n      \"serviceId\": \"<string>\"\n    },\n    {\n      \"teamId\": \"<string>\",\n      \"serviceId\": \"<string>\"\n    }\n  ],\n  \"statusChecks\": [\n    {\n      \"statusCheck\": {\n        \"type\": \"<string>\",\n        \"id\": \"<string>\",\n        \"guid\": \"<string>\",\n        \"next\": \"<string>\",\n        \"state\": {\n          \"lifecycle\": \"<string>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"failedReason\": \"<string>\",\n          \"nodeHaltedByGuid\": \"<string>\",\n          \"nodeHaltedById\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"thirdPartyPresets\": \"<string>\",\n        \"category\": \"<string>\",\n        \"requestConfiguration\": {\n          \"type\": \"<string>\"\n        },\n        \"endpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"rawEndpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"evaluationConfiguration\": {\n          \"okStatusCodes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"okLatencyMaxMs\": \"<integer>\",\n          \"responseBodyEvaluation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"statusCheckId\": \"<string>\",\n        \"externalIntegrationId\": \"<string>\",\n        \"statusCheckReferenceId\": \"<string>\",\n        \"isPrivateNetwork\": \"<boolean>\",\n        \"isHaltable\": \"<boolean>\",\n        \"payload\": \"<string>\",\n        \"isAutoGenerated\": \"<boolean>\",\n        \"autoGeneratedStatusCheckId\": \"<string>\",\n        \"resourceIdentifier\": \"<string>\",\n        \"statusCheckRequest\": {\n          \"type\": \"<string>\"\n        },\n        \"intervalSeconds\": \"<integer>\",\n        \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n      },\n      \"teamId\": \"<string>\"\n    },\n    {\n      \"statusCheck\": {\n        \"type\": \"<string>\",\n        \"id\": \"<string>\",\n        \"guid\": \"<string>\",\n        \"next\": \"<string>\",\n        \"state\": {\n          \"lifecycle\": \"<string>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"failedReason\": \"<string>\",\n          \"nodeHaltedByGuid\": \"<string>\",\n          \"nodeHaltedById\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"thirdPartyPresets\": \"<string>\",\n        \"category\": \"<string>\",\n        \"requestConfiguration\": {\n          \"type\": \"<string>\"\n        },\n        \"endpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"rawEndpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"evaluationConfiguration\": {\n          \"okStatusCodes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"okLatencyMaxMs\": \"<integer>\",\n          \"responseBodyEvaluation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"statusCheckId\": \"<string>\",\n        \"externalIntegrationId\": \"<string>\",\n        \"statusCheckReferenceId\": \"<string>\",\n        \"isPrivateNetwork\": \"<boolean>\",\n        \"isHaltable\": \"<boolean>\",\n        \"payload\": \"<string>\",\n        \"isAutoGenerated\": \"<boolean>\",\n        \"autoGeneratedStatusCheckId\": \"<string>\",\n        \"resourceIdentifier\": \"<string>\",\n        \"statusCheckRequest\": {\n          \"type\": \"<string>\"\n        },\n        \"intervalSeconds\": \"<integer>\",\n        \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n      },\n      \"teamId\": \"<string>\"\n    }\n  ],\n  \"identifier\": \"<string>\",\n  \"companyId\": \"<string>\",\n  \"scenario\": {\n    \"description\": \"<string>\",\n    \"name\": \"<string>\",\n    \"policyCategory\": \"<string>\",\n    \"scenarioToPromote\": {\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"teamId\": \"<string>\"\n    }\n  },\n  \"reliabilityTestId\": \"<string>\",\n  \"scenarioOverrides\": {\n    \"zones\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"dns\": \"<string>\",\n    \"failureFlag\": {\n      \"labels\": {\n        \"foo\": [\n          \"bar\",\n          \"baz\"\n        ]\n      },\n      \"name\": \"<string>\"\n    }\n  }\n}"
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dc1addf2-b2b0-4473-9205-8180f0c71fe7",
+              "name": "User requires privilege: DISASTER_RECOVERY_TESTS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"serviceKeys\": [\n    {\n      \"teamId\": \"<string>\",\n      \"serviceId\": \"<string>\"\n    },\n    {\n      \"teamId\": \"<string>\",\n      \"serviceId\": \"<string>\"\n    }\n  ],\n  \"statusChecks\": [\n    {\n      \"statusCheck\": {\n        \"type\": \"<string>\",\n        \"id\": \"<string>\",\n        \"guid\": \"<string>\",\n        \"next\": \"<string>\",\n        \"state\": {\n          \"lifecycle\": \"<string>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"failedReason\": \"<string>\",\n          \"nodeHaltedByGuid\": \"<string>\",\n          \"nodeHaltedById\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"thirdPartyPresets\": \"<string>\",\n        \"category\": \"<string>\",\n        \"requestConfiguration\": {\n          \"type\": \"<string>\"\n        },\n        \"endpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"rawEndpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"evaluationConfiguration\": {\n          \"okStatusCodes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"okLatencyMaxMs\": \"<integer>\",\n          \"responseBodyEvaluation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"statusCheckId\": \"<string>\",\n        \"externalIntegrationId\": \"<string>\",\n        \"statusCheckReferenceId\": \"<string>\",\n        \"isPrivateNetwork\": \"<boolean>\",\n        \"isHaltable\": \"<boolean>\",\n        \"payload\": \"<string>\",\n        \"isAutoGenerated\": \"<boolean>\",\n        \"autoGeneratedStatusCheckId\": \"<string>\",\n        \"resourceIdentifier\": \"<string>\",\n        \"statusCheckRequest\": {\n          \"type\": \"<string>\"\n        },\n        \"intervalSeconds\": \"<integer>\",\n        \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n      },\n      \"teamId\": \"<string>\"\n    },\n    {\n      \"statusCheck\": {\n        \"type\": \"<string>\",\n        \"id\": \"<string>\",\n        \"guid\": \"<string>\",\n        \"next\": \"<string>\",\n        \"state\": {\n          \"lifecycle\": \"<string>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"failedReason\": \"<string>\",\n          \"nodeHaltedByGuid\": \"<string>\",\n          \"nodeHaltedById\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"thirdPartyPresets\": \"<string>\",\n        \"category\": \"<string>\",\n        \"requestConfiguration\": {\n          \"type\": \"<string>\"\n        },\n        \"endpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"rawEndpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"evaluationConfiguration\": {\n          \"okStatusCodes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"okLatencyMaxMs\": \"<integer>\",\n          \"responseBodyEvaluation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"statusCheckId\": \"<string>\",\n        \"externalIntegrationId\": \"<string>\",\n        \"statusCheckReferenceId\": \"<string>\",\n        \"isPrivateNetwork\": \"<boolean>\",\n        \"isHaltable\": \"<boolean>\",\n        \"payload\": \"<string>\",\n        \"isAutoGenerated\": \"<boolean>\",\n        \"autoGeneratedStatusCheckId\": \"<string>\",\n        \"resourceIdentifier\": \"<string>\",\n        \"statusCheckRequest\": {\n          \"type\": \"<string>\"\n        },\n        \"intervalSeconds\": \"<integer>\",\n        \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n      },\n      \"teamId\": \"<string>\"\n    }\n  ],\n  \"identifier\": \"<string>\",\n  \"companyId\": \"<string>\",\n  \"scenario\": {\n    \"description\": \"<string>\",\n    \"name\": \"<string>\",\n    \"policyCategory\": \"<string>\",\n    \"scenarioToPromote\": {\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"teamId\": \"<string>\"\n    }\n  },\n  \"reliabilityTestId\": \"<string>\",\n  \"scenarioOverrides\": {\n    \"zones\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"dns\": \"<string>\",\n    \"failureFlag\": {\n      \"labels\": {\n        \"foo\": [\n          \"bar\",\n          \"baz\"\n        ]\n      },\n      \"name\": \"<string>\"\n    }\n  }\n}"
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3a1228e2-9b9e-478a-803e-575277f6a0b0",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"serviceKeys\": [\n    {\n      \"teamId\": \"<string>\",\n      \"serviceId\": \"<string>\"\n    },\n    {\n      \"teamId\": \"<string>\",\n      \"serviceId\": \"<string>\"\n    }\n  ],\n  \"statusChecks\": [\n    {\n      \"statusCheck\": {\n        \"type\": \"<string>\",\n        \"id\": \"<string>\",\n        \"guid\": \"<string>\",\n        \"next\": \"<string>\",\n        \"state\": {\n          \"lifecycle\": \"<string>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"failedReason\": \"<string>\",\n          \"nodeHaltedByGuid\": \"<string>\",\n          \"nodeHaltedById\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"thirdPartyPresets\": \"<string>\",\n        \"category\": \"<string>\",\n        \"requestConfiguration\": {\n          \"type\": \"<string>\"\n        },\n        \"endpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"rawEndpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"evaluationConfiguration\": {\n          \"okStatusCodes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"okLatencyMaxMs\": \"<integer>\",\n          \"responseBodyEvaluation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"statusCheckId\": \"<string>\",\n        \"externalIntegrationId\": \"<string>\",\n        \"statusCheckReferenceId\": \"<string>\",\n        \"isPrivateNetwork\": \"<boolean>\",\n        \"isHaltable\": \"<boolean>\",\n        \"payload\": \"<string>\",\n        \"isAutoGenerated\": \"<boolean>\",\n        \"autoGeneratedStatusCheckId\": \"<string>\",\n        \"resourceIdentifier\": \"<string>\",\n        \"statusCheckRequest\": {\n          \"type\": \"<string>\"\n        },\n        \"intervalSeconds\": \"<integer>\",\n        \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n      },\n      \"teamId\": \"<string>\"\n    },\n    {\n      \"statusCheck\": {\n        \"type\": \"<string>\",\n        \"id\": \"<string>\",\n        \"guid\": \"<string>\",\n        \"next\": \"<string>\",\n        \"state\": {\n          \"lifecycle\": \"<string>\",\n          \"startTime\": \"<dateTime>\",\n          \"endTime\": \"<dateTime>\",\n          \"failedReason\": \"<string>\",\n          \"nodeHaltedByGuid\": \"<string>\",\n          \"nodeHaltedById\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"thirdPartyPresets\": \"<string>\",\n        \"category\": \"<string>\",\n        \"requestConfiguration\": {\n          \"type\": \"<string>\"\n        },\n        \"endpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"rawEndpointConfiguration\": {\n          \"url\": \"<url>\",\n          \"method\": \"<string>\",\n          \"headers\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"payload\": \"<string>\",\n          \"headersArn\": \"<string>\"\n        },\n        \"evaluationConfiguration\": {\n          \"okStatusCodes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"okLatencyMaxMs\": \"<integer>\",\n          \"responseBodyEvaluation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"statusCheckId\": \"<string>\",\n        \"externalIntegrationId\": \"<string>\",\n        \"statusCheckReferenceId\": \"<string>\",\n        \"isPrivateNetwork\": \"<boolean>\",\n        \"isHaltable\": \"<boolean>\",\n        \"payload\": \"<string>\",\n        \"isAutoGenerated\": \"<boolean>\",\n        \"autoGeneratedStatusCheckId\": \"<string>\",\n        \"resourceIdentifier\": \"<string>\",\n        \"statusCheckRequest\": {\n          \"type\": \"<string>\"\n        },\n        \"intervalSeconds\": \"<integer>\",\n        \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n      },\n      \"teamId\": \"<string>\"\n    }\n  ],\n  \"identifier\": \"<string>\",\n  \"companyId\": \"<string>\",\n  \"scenario\": {\n    \"description\": \"<string>\",\n    \"name\": \"<string>\",\n    \"policyCategory\": \"<string>\",\n    \"scenarioToPromote\": {\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"teamId\": \"<string>\"\n    }\n  },\n  \"reliabilityTestId\": \"<string>\",\n  \"scenarioOverrides\": {\n    \"zones\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"dns\": \"<string>\",\n    \"failureFlag\": {\n      \"labels\": {\n        \"foo\": [\n          \"bar\",\n          \"baz\"\n        ]\n      },\n      \"name\": \"<string>\"\n    }\n  }\n}"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1647a8d0-fd2a-4146-9597-9582f3655247",
+          "name": "Submits a task to delete a disaster recovery test for a company",
+          "request": {
+            "name": "Submits a task to delete a disaster recovery test for a company",
+            "description": {
+              "content": "Requires the privilege [`DISASTER_RECOVERY_TESTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "disaster-recovery-tests",
+                ":identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "6452688e-f726-4685-a2e3-ce7c97129f47",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d0b9cc2d-e8b5-4978-b5d0-c36eb124a056",
+              "name": "User requires privilege: DISASTER_RECOVERY_TESTS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ae3074cc-3b18-4bd4-b54a-36416f643e8c",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3e20f4d4-da0a-41c2-9203-e4cfd8acbca1",
+          "name": "Gets all active disaster recovery tests for a company",
+          "request": {
+            "name": "Gets all active disaster recovery tests for a company",
+            "description": {
+              "content": "Requires the privilege [`DISASTER_RECOVERY_TESTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "disaster-recovery-tests",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "23375013-e672-4635-a9be-195fcf806e85",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "58106f3d-6b2b-4b5e-ab0f-ae0ab2003f2e",
+              "name": "User requires privilege: DISASTER_RECOVERY_TESTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8df2f176-7bab-4dcd-a61c-93136c401c1e",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"disasterRecoveryTests\": [\n    {\n      \"companyId\": \"string\",\n      \"identifier\": \"string\",\n      \"name\": \"string\",\n      \"state\": \"COMPLETED\",\n      \"reliabilityTestId\": \"string\",\n      \"reliabilityTestName\": \"string\",\n      \"estimatedDuration\": 9942,\n      \"startDateTime\": \"2025-05-21T22:54:12.292Z\",\n      \"endDateTime\": \"2003-11-09T15:24:02.528Z\",\n      \"latestServiceRuns\": [\n        {\n          \"teamId\": \"string\",\n          \"teamName\": \"string\",\n          \"serviceId\": \"string\",\n          \"serviceName\": \"string\",\n          \"multiSelectTags\": {\n            \"key_0\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_1\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_2\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"scenarioRunId\": \"string\",\n          \"scenarioRunNumber\": 9490,\n          \"scenarioRunStage\": \"string\",\n          \"scenarioPassCriteria\": \"AT_LEAST_ONE_FAILED\",\n          \"scenarioRunStatus\": \"string\",\n          \"scenarioRunStartTime\": \"1980-10-08T13:13:54.448Z\",\n          \"scenarioRunEndTime\": \"1990-01-22T19:30:13.937Z\"\n        },\n        {\n          \"teamId\": \"string\",\n          \"teamName\": \"string\",\n          \"serviceId\": \"string\",\n          \"serviceName\": \"string\",\n          \"multiSelectTags\": {\n            \"key_0\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"scenarioRunId\": \"string\",\n          \"scenarioRunNumber\": 356,\n          \"scenarioRunStage\": \"string\",\n          \"scenarioPassCriteria\": \"AT_LEAST_ONE_FAILED\",\n          \"scenarioRunStatus\": \"string\",\n          \"scenarioRunStartTime\": \"1987-11-03T20:31:22.850Z\",\n          \"scenarioRunEndTime\": \"2025-12-07T13:32:32.130Z\"\n        }\n      ],\n      \"statusChecks\": [\n        {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\",\n          \"state\": {\n            \"lifecycle\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"startTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"failedReason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nodeHaltedByGuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nodeHaltedById\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"guid\": \"<string>\",\n          \"next\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"thirdPartyPresets\": \"<string>\",\n          \"category\": \"<string>\",\n          \"requestConfiguration\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endpointConfiguration\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payload\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headersArn\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rawEndpointConfiguration\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payload\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headersArn\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"evaluationConfiguration\": {\n            \"okStatusCodes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"okLatencyMaxMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"responseBodyEvaluation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"statusCheckId\": \"<string>\",\n          \"externalIntegrationId\": \"<string>\",\n          \"statusCheckReferenceId\": \"<string>\",\n          \"isPrivateNetwork\": \"<boolean>\",\n          \"isHaltable\": \"<boolean>\",\n          \"payload\": \"<string>\",\n          \"isAutoGenerated\": \"<boolean>\",\n          \"autoGeneratedStatusCheckId\": \"<string>\",\n          \"resourceIdentifier\": \"<string>\",\n          \"statusCheckRequest\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"intervalSeconds\": \"<integer>\",\n          \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\",\n          \"state\": {\n            \"lifecycle\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"startTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"failedReason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nodeHaltedByGuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nodeHaltedById\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"guid\": \"<string>\",\n          \"next\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"thirdPartyPresets\": \"<string>\",\n          \"category\": \"<string>\",\n          \"requestConfiguration\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endpointConfiguration\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payload\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headersArn\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rawEndpointConfiguration\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payload\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headersArn\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"evaluationConfiguration\": {\n            \"okStatusCodes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"okLatencyMaxMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"responseBodyEvaluation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"statusCheckId\": \"<string>\",\n          \"externalIntegrationId\": \"<string>\",\n          \"statusCheckReferenceId\": \"<string>\",\n          \"isPrivateNetwork\": \"<boolean>\",\n          \"isHaltable\": \"<boolean>\",\n          \"payload\": \"<string>\",\n          \"isAutoGenerated\": \"<boolean>\",\n          \"autoGeneratedStatusCheckId\": \"<string>\",\n          \"resourceIdentifier\": \"<string>\",\n          \"statusCheckRequest\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"intervalSeconds\": \"<integer>\",\n          \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n        }\n      ],\n      \"scenarioOverrides\": {\n        \"zones\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"dns\": \"<string>\",\n        \"failureFlag\": {\n          \"labels\": {\n            \"foo\": [\n              \"bar\",\n              \"baz\"\n            ]\n          },\n          \"name\": \"<string>\"\n        }\n      }\n    },\n    {\n      \"companyId\": \"string\",\n      \"identifier\": \"string\",\n      \"name\": \"string\",\n      \"state\": \"DRAFT\",\n      \"reliabilityTestId\": \"string\",\n      \"reliabilityTestName\": \"string\",\n      \"estimatedDuration\": 6461,\n      \"startDateTime\": \"1947-08-26T05:27:19.239Z\",\n      \"endDateTime\": \"1976-04-02T15:33:17.825Z\",\n      \"latestServiceRuns\": [\n        {\n          \"teamId\": \"string\",\n          \"teamName\": \"string\",\n          \"serviceId\": \"string\",\n          \"serviceName\": \"string\",\n          \"multiSelectTags\": {\n            \"key_0\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_1\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_2\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"scenarioRunId\": \"string\",\n          \"scenarioRunNumber\": 6133,\n          \"scenarioRunStage\": \"string\",\n          \"scenarioPassCriteria\": \"ALL_PASS\",\n          \"scenarioRunStatus\": \"string\",\n          \"scenarioRunStartTime\": \"2008-12-07T11:38:47.287Z\",\n          \"scenarioRunEndTime\": \"2008-03-07T08:40:42.209Z\"\n        },\n        {\n          \"teamId\": \"string\",\n          \"teamName\": \"string\",\n          \"serviceId\": \"string\",\n          \"serviceName\": \"string\",\n          \"multiSelectTags\": {\n            \"key_0\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_1\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_2\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_3\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"scenarioRunId\": \"string\",\n          \"scenarioRunNumber\": 9247,\n          \"scenarioRunStage\": \"string\",\n          \"scenarioPassCriteria\": \"ALL_PASS\",\n          \"scenarioRunStatus\": \"string\",\n          \"scenarioRunStartTime\": \"2011-08-20T05:55:31.415Z\",\n          \"scenarioRunEndTime\": \"1965-03-12T10:21:08.840Z\"\n        }\n      ],\n      \"statusChecks\": [\n        {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\",\n          \"state\": {\n            \"lifecycle\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"startTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"failedReason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nodeHaltedByGuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nodeHaltedById\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"guid\": \"<string>\",\n          \"next\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"thirdPartyPresets\": \"<string>\",\n          \"category\": \"<string>\",\n          \"requestConfiguration\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endpointConfiguration\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payload\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headersArn\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rawEndpointConfiguration\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payload\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headersArn\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"evaluationConfiguration\": {\n            \"okStatusCodes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"okLatencyMaxMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"responseBodyEvaluation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"statusCheckId\": \"<string>\",\n          \"externalIntegrationId\": \"<string>\",\n          \"statusCheckReferenceId\": \"<string>\",\n          \"isPrivateNetwork\": \"<boolean>\",\n          \"isHaltable\": \"<boolean>\",\n          \"payload\": \"<string>\",\n          \"isAutoGenerated\": \"<boolean>\",\n          \"autoGeneratedStatusCheckId\": \"<string>\",\n          \"resourceIdentifier\": \"<string>\",\n          \"statusCheckRequest\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"intervalSeconds\": \"<integer>\",\n          \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\",\n          \"state\": {\n            \"lifecycle\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"startTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"failedReason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nodeHaltedByGuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nodeHaltedById\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"guid\": \"<string>\",\n          \"next\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"thirdPartyPresets\": \"<string>\",\n          \"category\": \"<string>\",\n          \"requestConfiguration\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endpointConfiguration\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payload\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headersArn\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rawEndpointConfiguration\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payload\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headersArn\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"evaluationConfiguration\": {\n            \"okStatusCodes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"okLatencyMaxMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"responseBodyEvaluation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"statusCheckId\": \"<string>\",\n          \"externalIntegrationId\": \"<string>\",\n          \"statusCheckReferenceId\": \"<string>\",\n          \"isPrivateNetwork\": \"<boolean>\",\n          \"isHaltable\": \"<boolean>\",\n          \"payload\": \"<string>\",\n          \"isAutoGenerated\": \"<boolean>\",\n          \"autoGeneratedStatusCheckId\": \"<string>\",\n          \"resourceIdentifier\": \"<string>\",\n          \"statusCheckRequest\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"intervalSeconds\": \"<integer>\",\n          \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n        }\n      ],\n      \"scenarioOverrides\": {\n        \"zones\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"dns\": \"<string>\",\n        \"failureFlag\": {\n          \"labels\": {\n            \"foo\": [\n              \"bar\",\n              \"baz\"\n            ]\n          },\n          \"name\": \"<string>\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2e46f1e8-1e61-4444-9b16-2e1a95968213",
+          "name": "Gets all draft disaster recovery tests for a company",
+          "request": {
+            "name": "Gets all draft disaster recovery tests for a company",
+            "description": {
+              "content": "Requires the privilege [`DISASTER_RECOVERY_TESTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "disaster-recovery-tests",
+                "draft"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "fa3ab762-7655-4d38-a58a-8152e8605b54",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    "draft"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f7bd4bee-df42-4f77-9322-757053242ac2",
+              "name": "User requires privilege: DISASTER_RECOVERY_TESTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    "draft"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "328484d0-62bf-49ea-821c-a6f3a0427360",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    "draft"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"disasterRecoveryTests\": [\n    {\n      \"companyId\": \"string\",\n      \"identifier\": \"string\",\n      \"name\": \"string\",\n      \"state\": \"ACTIVE\",\n      \"reliabilityTestId\": \"string\",\n      \"reliabilityTestName\": \"string\",\n      \"estimatedDuration\": 815,\n      \"startDateTime\": \"1974-07-26T13:44:45.090Z\",\n      \"endDateTime\": \"2010-08-27T23:54:33.006Z\",\n      \"latestServiceRuns\": [\n        {\n          \"teamId\": \"string\",\n          \"teamName\": \"string\",\n          \"serviceId\": \"string\",\n          \"serviceName\": \"string\",\n          \"multiSelectTags\": {\n            \"key_0\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"scenarioRunId\": \"string\",\n          \"scenarioRunNumber\": 5396,\n          \"scenarioRunStage\": \"string\",\n          \"scenarioPassCriteria\": \"ALL_PASS\",\n          \"scenarioRunStatus\": \"string\",\n          \"scenarioRunStartTime\": \"1965-10-20T21:21:59.361Z\",\n          \"scenarioRunEndTime\": \"1952-05-06T12:53:32.080Z\"\n        },\n        {\n          \"teamId\": \"string\",\n          \"teamName\": \"string\",\n          \"serviceId\": \"string\",\n          \"serviceName\": \"string\",\n          \"multiSelectTags\": {\n            \"key_0\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_1\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_2\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"scenarioRunId\": \"string\",\n          \"scenarioRunNumber\": 3051,\n          \"scenarioRunStage\": \"string\",\n          \"scenarioPassCriteria\": \"ALL_PASS\",\n          \"scenarioRunStatus\": \"string\",\n          \"scenarioRunStartTime\": \"1968-07-31T04:08:07.628Z\",\n          \"scenarioRunEndTime\": \"1956-04-18T14:54:54.365Z\"\n        }\n      ],\n      \"statusChecks\": [\n        {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\",\n          \"state\": {\n            \"lifecycle\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"startTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"failedReason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nodeHaltedByGuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nodeHaltedById\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"guid\": \"<string>\",\n          \"next\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"thirdPartyPresets\": \"<string>\",\n          \"category\": \"<string>\",\n          \"requestConfiguration\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endpointConfiguration\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payload\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headersArn\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rawEndpointConfiguration\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payload\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headersArn\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"evaluationConfiguration\": {\n            \"okStatusCodes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"okLatencyMaxMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"responseBodyEvaluation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"statusCheckId\": \"<string>\",\n          \"externalIntegrationId\": \"<string>\",\n          \"statusCheckReferenceId\": \"<string>\",\n          \"isPrivateNetwork\": \"<boolean>\",\n          \"isHaltable\": \"<boolean>\",\n          \"payload\": \"<string>\",\n          \"isAutoGenerated\": \"<boolean>\",\n          \"autoGeneratedStatusCheckId\": \"<string>\",\n          \"resourceIdentifier\": \"<string>\",\n          \"statusCheckRequest\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"intervalSeconds\": \"<integer>\",\n          \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\",\n          \"state\": {\n            \"lifecycle\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"startTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"failedReason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nodeHaltedByGuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nodeHaltedById\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"guid\": \"<string>\",\n          \"next\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"thirdPartyPresets\": \"<string>\",\n          \"category\": \"<string>\",\n          \"requestConfiguration\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endpointConfiguration\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payload\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headersArn\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rawEndpointConfiguration\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payload\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headersArn\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"evaluationConfiguration\": {\n            \"okStatusCodes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"okLatencyMaxMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"responseBodyEvaluation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"statusCheckId\": \"<string>\",\n          \"externalIntegrationId\": \"<string>\",\n          \"statusCheckReferenceId\": \"<string>\",\n          \"isPrivateNetwork\": \"<boolean>\",\n          \"isHaltable\": \"<boolean>\",\n          \"payload\": \"<string>\",\n          \"isAutoGenerated\": \"<boolean>\",\n          \"autoGeneratedStatusCheckId\": \"<string>\",\n          \"resourceIdentifier\": \"<string>\",\n          \"statusCheckRequest\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"intervalSeconds\": \"<integer>\",\n          \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n        }\n      ],\n      \"scenarioOverrides\": {\n        \"zones\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"dns\": \"<string>\",\n        \"failureFlag\": {\n          \"labels\": {\n            \"foo\": [\n              \"bar\",\n              \"baz\"\n            ]\n          },\n          \"name\": \"<string>\"\n        }\n      }\n    },\n    {\n      \"companyId\": \"string\",\n      \"identifier\": \"string\",\n      \"name\": \"string\",\n      \"state\": \"ACTIVE\",\n      \"reliabilityTestId\": \"string\",\n      \"reliabilityTestName\": \"string\",\n      \"estimatedDuration\": 7752,\n      \"startDateTime\": \"1965-10-30T18:27:53.833Z\",\n      \"endDateTime\": \"2012-05-11T00:30:00.773Z\",\n      \"latestServiceRuns\": [\n        {\n          \"teamId\": \"string\",\n          \"teamName\": \"string\",\n          \"serviceId\": \"string\",\n          \"serviceName\": \"string\",\n          \"multiSelectTags\": {\n            \"key_0\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"scenarioRunId\": \"string\",\n          \"scenarioRunNumber\": 7050,\n          \"scenarioRunStage\": \"string\",\n          \"scenarioPassCriteria\": \"ALL_PASS\",\n          \"scenarioRunStatus\": \"string\",\n          \"scenarioRunStartTime\": \"1954-09-06T23:12:14.305Z\",\n          \"scenarioRunEndTime\": \"2021-02-20T17:48:26.927Z\"\n        },\n        {\n          \"teamId\": \"string\",\n          \"teamName\": \"string\",\n          \"serviceId\": \"string\",\n          \"serviceName\": \"string\",\n          \"multiSelectTags\": {\n            \"key_0\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_1\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"scenarioRunId\": \"string\",\n          \"scenarioRunNumber\": 1187,\n          \"scenarioRunStage\": \"string\",\n          \"scenarioPassCriteria\": \"ALL_PASS\",\n          \"scenarioRunStatus\": \"string\",\n          \"scenarioRunStartTime\": \"1960-03-24T02:12:42.017Z\",\n          \"scenarioRunEndTime\": \"2017-09-10T07:07:12.218Z\"\n        }\n      ],\n      \"statusChecks\": [\n        {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\",\n          \"state\": {\n            \"lifecycle\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"startTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"failedReason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nodeHaltedByGuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nodeHaltedById\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"guid\": \"<string>\",\n          \"next\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"thirdPartyPresets\": \"<string>\",\n          \"category\": \"<string>\",\n          \"requestConfiguration\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endpointConfiguration\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payload\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headersArn\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rawEndpointConfiguration\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payload\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headersArn\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"evaluationConfiguration\": {\n            \"okStatusCodes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"okLatencyMaxMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"responseBodyEvaluation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"statusCheckId\": \"<string>\",\n          \"externalIntegrationId\": \"<string>\",\n          \"statusCheckReferenceId\": \"<string>\",\n          \"isPrivateNetwork\": \"<boolean>\",\n          \"isHaltable\": \"<boolean>\",\n          \"payload\": \"<string>\",\n          \"isAutoGenerated\": \"<boolean>\",\n          \"autoGeneratedStatusCheckId\": \"<string>\",\n          \"resourceIdentifier\": \"<string>\",\n          \"statusCheckRequest\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"intervalSeconds\": \"<integer>\",\n          \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\",\n          \"state\": {\n            \"lifecycle\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"startTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endTime\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"failedReason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nodeHaltedByGuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nodeHaltedById\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"guid\": \"<string>\",\n          \"next\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"thirdPartyPresets\": \"<string>\",\n          \"category\": \"<string>\",\n          \"requestConfiguration\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"endpointConfiguration\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payload\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headersArn\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rawEndpointConfiguration\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"method\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payload\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"headersArn\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"evaluationConfiguration\": {\n            \"okStatusCodes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"okLatencyMaxMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"responseBodyEvaluation\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"statusCheckId\": \"<string>\",\n          \"externalIntegrationId\": \"<string>\",\n          \"statusCheckReferenceId\": \"<string>\",\n          \"isPrivateNetwork\": \"<boolean>\",\n          \"isHaltable\": \"<boolean>\",\n          \"payload\": \"<string>\",\n          \"isAutoGenerated\": \"<boolean>\",\n          \"autoGeneratedStatusCheckId\": \"<string>\",\n          \"resourceIdentifier\": \"<string>\",\n          \"statusCheckRequest\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"intervalSeconds\": \"<integer>\",\n          \"additionalTimeInSecsToRunAfterCompletion\": \"<integer>\"\n        }\n      ],\n      \"scenarioOverrides\": {\n        \"zones\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"dns\": \"<string>\",\n        \"failureFlag\": {\n          \"labels\": {\n            \"foo\": [\n              \"bar\",\n              \"baz\"\n            ]\n          },\n          \"name\": \"<string>\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8882df95-f796-42be-a749-7555b450aeee",
+          "name": "Halts all active scenario runs for all services for the disaster recovery test",
+          "request": {
+            "name": "Halts all active scenario runs for all services for the disaster recovery test",
+            "description": {
+              "content": "Requires the privilege [`DISASTER_RECOVERY_TESTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "disaster-recovery-tests",
+                ":identifier",
+                "halt-all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"<string>\",\n  \"reference\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e551deca-c569-40b0-9990-c5ab46f47786",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier",
+                    "halt-all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\",\n  \"reference\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a4c013ff-36f3-448f-9a69-499229f01bbb",
+              "name": "User requires privilege: DISASTER_RECOVERY_TESTS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier",
+                    "halt-all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\",\n  \"reference\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "372ccd22-1430-4ad4-8644-3bf8bd1ce06d",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier",
+                    "halt-all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\",\n  \"reference\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e61cc344-a292-4151-bf09-712be9fbcba6",
+          "name": "Creates scenario runs for all eligible services for the disaster recovery test",
+          "request": {
+            "name": "Creates scenario runs for all eligible services for the disaster recovery test",
+            "description": {
+              "content": "Requires the privilege [`DISASTER_RECOVERY_TESTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "disaster-recovery-tests",
+                ":identifier",
+                "run-all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST"
+          },
+          "response": [
+            {
+              "id": "4744f66f-55d6-46d3-961f-838fe84754fd",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier",
+                    "run-all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8d8d9ac4-47d2-4612-9899-746bbb05c807",
+              "name": "User requires privilege: DISASTER_RECOVERY_TESTS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier",
+                    "run-all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fc0bc7e6-61f4-4789-a531-26860a72ab29",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier",
+                    "run-all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"runDetails\": [\n    {\n      \"teamId\": \"string\",\n      \"serviceId\": \"string\",\n      \"runNumber\": 154\n    },\n    {\n      \"teamId\": \"string\",\n      \"serviceId\": \"string\",\n      \"runNumber\": 6465\n    }\n  ],\n  \"errorsPerService\": [\n    {\n      \"teamId\": \"string\",\n      \"serviceId\": \"string\",\n      \"errorType\": \"HALT_IN_PROGRESS\",\n      \"errorMessage\": \"string\"\n    },\n    {\n      \"teamId\": \"string\",\n      \"serviceId\": \"string\",\n      \"errorType\": \"HEALTH_CHECK_IN_ALARM\",\n      \"errorMessage\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2a1da9c4-d995-4d0a-bfc6-ff463fa99797",
+          "name": "Creates a scenario run for the specified service as part of the disaster recovery test",
+          "request": {
+            "name": "Creates a scenario run for the specified service as part of the disaster recovery test",
+            "description": {
+              "content": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "disaster-recovery-tests",
+                ":identifier",
+                "run"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"serviceId\": \"<string>\",\n  \"teamId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "85506dae-14d3-4cbb-89eb-5ea0b619288c",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier",
+                    "run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serviceId\": \"<string>\",\n  \"teamId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2ce31368-7763-46a8-b4f9-b4228ad1d4fe",
+              "name": "User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier",
+                    "run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serviceId\": \"<string>\",\n  \"teamId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "84bdf212-c526-4cba-97a0-88b84bf395ed",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disaster-recovery-tests",
+                    ":identifier",
+                    "run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serviceId\": \"<string>\",\n  \"teamId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"teamId\": \"string\",\n  \"serviceId\": \"string\",\n  \"runNumber\": 183\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4512521a-eb75-4b9a-a207-7547fe3c37d7",
+    "name": "Gremlin agents disaster-recovery-tests API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

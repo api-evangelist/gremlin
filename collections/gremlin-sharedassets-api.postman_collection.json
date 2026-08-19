@@ -1,0 +1,2452 @@
+{
+  "item": [
+    {
+      "id": "4bca9f57-28f9-479d-8e0f-d7a0ffc9e561",
+      "name": "sharedAssets",
+      "description": {
+        "content": "Used for sharing agent assets (eg. K8s Namespaces) between teams",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "41703d18-b41e-470a-b94a-6c301ba05e40",
+          "name": "Approves a sharing request to a resource you own",
+          "request": {
+            "name": "Approves a sharing request to a resource you own",
+            "description": {
+              "content": "The {requestId} parameter _must_ be urlencoded\nRequires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sharedAssets",
+                "requests",
+                ":requestId",
+                "approve"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "requestId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST"
+          },
+          "response": [
+            {
+              "id": "4c98f422-189d-4751-9022-ebe12af459d6",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    ":requestId",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "03a2d46e-16dd-4e0d-bb10-a5b9ecd5209c",
+              "name": "User requires privilege for target team: CLIENTS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    ":requestId",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "abbc28f0-0b8a-41d8-8d01-6efd5fb039cf",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    ":requestId",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"companyId\": \"string\",\n  \"owningTeamId\": \"string\",\n  \"createdAt\": \"1983-06-11T14:00:03.616Z\",\n  \"updatedAt\": \"1986-11-08T02:36:21.844Z\",\n  \"approver\": \"string\",\n  \"requester\": \"string\",\n  \"assetName\": \"string\",\n  \"currentStatus\": \"REVOKED\",\n  \"assetId\": \"string\",\n  \"sharedTeam\": \"string\",\n  \"namespace\": \"string\",\n  \"requestId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8b87b0e6-cbf8-4529-a8bc-e9dd5c4f6758",
+          "name": "Approves a sharing request to a resource you own",
+          "request": {
+            "name": "Approves a sharing request to a resource you own",
+            "description": {
+              "content": "Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sharedAssets",
+                "requests",
+                "approve"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b7e5ad11-2a51-4ff6-a2ea-c69e250a81b5",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2739903e-4f05-499c-a1aa-4e73f90aaef7",
+              "name": "User requires privilege for target team: CLIENTS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6b9ca98d-316e-4015-8641-cdfbcb782701",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"assetToRequestMap\": {\n    \"key_0\": [\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"1986-11-06T05:12:35.700Z\",\n        \"updatedAt\": \"1971-11-29T01:15:05.934Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"APPROVED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      },\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"2023-08-10T04:23:46.080Z\",\n        \"updatedAt\": \"1967-07-09T05:27:58.907Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"DENIED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      }\n    ],\n    \"key_1\": [\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"2023-03-09T01:43:55.086Z\",\n        \"updatedAt\": \"1971-09-10T18:45:29.393Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REVOKED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      },\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"1983-09-23T20:57:09.097Z\",\n        \"updatedAt\": \"2011-07-13T05:32:32.393Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"DELETED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      }\n    ],\n    \"key_2\": [\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"1966-02-27T14:36:52.192Z\",\n        \"updatedAt\": \"1952-04-23T19:00:15.862Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REQUESTED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      },\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"2015-04-09T20:35:57.318Z\",\n        \"updatedAt\": \"1998-01-29T11:35:58.912Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REQUESTED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "28d83465-695f-49e5-a7ae-bb274286f0fd",
+          "name": "Deletes a sharing request your team has made to an asset you don't control",
+          "request": {
+            "name": "Deletes a sharing request your team has made to an asset you don't control",
+            "description": {
+              "content": "Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sharedAssets",
+                "requests",
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1c52ca7e-2b3e-4dc8-babb-2ab7560f7c5c",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a7568340-3b8f-402d-a22c-21bff036e9fd",
+              "name": "User requires privilege for target team: CLIENTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5fa713aa-b23c-40ca-b4eb-f71aee3d58b6",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"assetToRequestMap\": {\n    \"key_0\": [\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"2000-03-02T08:24:27.912Z\",\n        \"updatedAt\": \"2002-01-23T18:35:19.494Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REQUESTED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      },\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"1995-09-02T04:09:42.769Z\",\n        \"updatedAt\": \"1987-01-02T00:48:08.456Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"APPROVED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      }\n    ],\n    \"key_1\": [\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"2022-07-28T09:56:24.503Z\",\n        \"updatedAt\": \"1972-12-15T01:45:16.133Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REQUESTED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      },\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"1970-04-04T06:21:02.195Z\",\n        \"updatedAt\": \"2024-06-19T05:14:58.677Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REQUESTED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d0958eca-7794-4081-b281-1e7a6fa31e7c",
+          "name": "Deletes an existing request for Access",
+          "request": {
+            "name": "Deletes an existing request for Access",
+            "description": {
+              "content": "The {requestId} parameter _must_ be urlencoded\nRequires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sharedAssets",
+                "requests",
+                ":requestId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "requestId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "918d553c-9317-46f3-bc92-508f4d4d139b",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "17d8df3e-5209-44fc-8397-0e9d3c993d90",
+              "name": "User requires privilege for target team: CLIENTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "53b61efa-796d-40f5-9485-306bbc1e9ce2",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"companyId\": \"string\",\n  \"owningTeamId\": \"string\",\n  \"createdAt\": \"1983-06-11T14:00:03.616Z\",\n  \"updatedAt\": \"1986-11-08T02:36:21.844Z\",\n  \"approver\": \"string\",\n  \"requester\": \"string\",\n  \"assetName\": \"string\",\n  \"currentStatus\": \"REVOKED\",\n  \"assetId\": \"string\",\n  \"sharedTeam\": \"string\",\n  \"namespace\": \"string\",\n  \"requestId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a3f1f8e-e9b9-44ee-832e-c15013e84e19",
+          "name": "Denies or Revokes a sharing request to a resource you own",
+          "request": {
+            "name": "Denies or Revokes a sharing request to a resource you own",
+            "description": {
+              "content": "The {requestId} parameter _must_ be urlencoded\nRequires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sharedAssets",
+                "requests",
+                ":requestId",
+                "deny"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "requestId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST"
+          },
+          "response": [
+            {
+              "id": "2034b3d7-ff9c-428a-97a7-3d0863872dfc",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    ":requestId",
+                    "deny"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9656d3d9-a562-441d-8021-8573c1bb9c2f",
+              "name": "User requires privilege for target team: CLIENTS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    ":requestId",
+                    "deny"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "067902ff-f0aa-4a76-8d2e-032b2cf05c7b",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    ":requestId",
+                    "deny"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"companyId\": \"string\",\n  \"owningTeamId\": \"string\",\n  \"createdAt\": \"1983-06-11T14:00:03.616Z\",\n  \"updatedAt\": \"1986-11-08T02:36:21.844Z\",\n  \"approver\": \"string\",\n  \"requester\": \"string\",\n  \"assetName\": \"string\",\n  \"currentStatus\": \"REVOKED\",\n  \"assetId\": \"string\",\n  \"sharedTeam\": \"string\",\n  \"namespace\": \"string\",\n  \"requestId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "de9c8901-0d90-4f48-8979-0bcaa08aeeb2",
+          "name": "Denies or Revokes a sharing request to a resource you own",
+          "request": {
+            "name": "Denies or Revokes a sharing request to a resource you own",
+            "description": {
+              "content": "Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sharedAssets",
+                "requests",
+                "deny"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d810ee43-2664-4548-b56d-8a3a2fc1159d",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    "deny"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "569d8404-b613-4cd3-92bb-0e39d717a10d",
+              "name": "User requires privilege for target team: CLIENTS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    "deny"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ec28b5f9-202d-470c-8f72-57bc8e47e848",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    "deny"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"assetToRequestMap\": {\n    \"key_0\": [\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"2000-03-02T08:24:27.912Z\",\n        \"updatedAt\": \"2002-01-23T18:35:19.494Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REQUESTED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      },\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"1995-09-02T04:09:42.769Z\",\n        \"updatedAt\": \"1987-01-02T00:48:08.456Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"APPROVED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      }\n    ],\n    \"key_1\": [\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"2022-07-28T09:56:24.503Z\",\n        \"updatedAt\": \"1972-12-15T01:45:16.133Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REQUESTED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      },\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"1970-04-04T06:21:02.195Z\",\n        \"updatedAt\": \"2024-06-19T05:14:58.677Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REQUESTED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "edfca279-f3c7-48be-8270-cbadd5ef2f48",
+          "name": "List assets currently shared with your team",
+          "request": {
+            "name": "List assets currently shared with your team",
+            "description": {
+              "content": "Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sharedAssets",
+                "withMe"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "009a853d-6e32-4d78-9cdb-90bf73e83af4",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "withMe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b768886b-441e-4704-8d8d-9d1e05d3cc9a",
+              "name": "User requires privilege for target team: CLIENTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "withMe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "48128bf6-bdcf-452b-9546-e186e5d1e959",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "withMe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"assetToRequestMap\": {\n    \"key_0\": [\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"2000-03-02T08:24:27.912Z\",\n        \"updatedAt\": \"2002-01-23T18:35:19.494Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REQUESTED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      },\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"1995-09-02T04:09:42.769Z\",\n        \"updatedAt\": \"1987-01-02T00:48:08.456Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"APPROVED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      }\n    ],\n    \"key_1\": [\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"2022-07-28T09:56:24.503Z\",\n        \"updatedAt\": \"1972-12-15T01:45:16.133Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REQUESTED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      },\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"1970-04-04T06:21:02.195Z\",\n        \"updatedAt\": \"2024-06-19T05:14:58.677Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REQUESTED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9f586ad6-91d1-4b59-a4d5-f72d5853f419",
+          "name": "List available assets for sharing and all incoming and outgoing requests",
+          "request": {
+            "name": "List available assets for sharing and all incoming and outgoing requests",
+            "description": {
+              "content": "Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sharedAssets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "assetId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "62118971-2146-4456-8247-7af0a9550c55",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assetId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "663c170b-d4c9-49f0-b9e9-16f1793f9c6c",
+              "name": "User requires privilege for target team: CLIENTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assetId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "81eaf5b5-366a-4a23-84be-dabdf4126dd4",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assetId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"availableClusters\": [\n    {\n      \"assetId\": \"string\",\n      \"clusterName\": \"string\",\n      \"owningTeamId\": \"string\",\n      \"availableNamespaces\": [\n        \"string\",\n        \"string\"\n      ],\n      \"currentlySharedNamespaces\": [\n        \"string\",\n        \"string\"\n      ],\n      \"semanticVersion\": {\n        \"major\": 5824,\n        \"minor\": 3007,\n        \"patch\": 5542\n      },\n      \"isOutdated\": false,\n      \"lastAttacked\": \"2010-10-29T22:51:25.054Z\",\n      \"owningTeamName\": \"string\",\n      \"requests\": [\n        {\n          \"requestId\": \"string\",\n          \"namespace\": \"string\",\n          \"currentStatus\": \"DELETED\",\n          \"requester\": \"string\",\n          \"approver\": \"string\"\n        },\n        {\n          \"requestId\": \"string\",\n          \"namespace\": \"string\",\n          \"currentStatus\": \"APPROVED\",\n          \"requester\": \"string\",\n          \"approver\": \"string\"\n        }\n      ]\n    },\n    {\n      \"assetId\": \"string\",\n      \"clusterName\": \"string\",\n      \"owningTeamId\": \"string\",\n      \"availableNamespaces\": [\n        \"string\",\n        \"string\"\n      ],\n      \"currentlySharedNamespaces\": [\n        \"string\",\n        \"string\"\n      ],\n      \"semanticVersion\": {\n        \"major\": 195,\n        \"minor\": 1037,\n        \"patch\": 5532\n      },\n      \"isOutdated\": false,\n      \"lastAttacked\": \"1970-02-24T06:27:15.495Z\",\n      \"owningTeamName\": \"string\",\n      \"requests\": [\n        {\n          \"requestId\": \"string\",\n          \"namespace\": \"string\",\n          \"currentStatus\": \"DELETED\",\n          \"requester\": \"string\",\n          \"approver\": \"string\"\n        },\n        {\n          \"requestId\": \"string\",\n          \"namespace\": \"string\",\n          \"currentStatus\": \"APPROVED\",\n          \"requester\": \"string\",\n          \"approver\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"myClusters\": [\n    {\n      \"assetId\": \"string\",\n      \"clusterName\": \"string\",\n      \"owningTeamId\": \"string\",\n      \"availableNamespaces\": [\n        \"string\",\n        \"string\"\n      ],\n      \"currentlySharedNamespaces\": [\n        \"string\",\n        \"string\"\n      ],\n      \"semanticVersion\": {\n        \"major\": 9280,\n        \"minor\": 7091,\n        \"patch\": 9019\n      },\n      \"isOutdated\": true,\n      \"lastAttacked\": \"2022-12-11T11:00:51.622Z\",\n      \"requests\": [\n        {\n          \"id\": \"string\",\n          \"teamId\": \"string\",\n          \"teamName\": \"string\",\n          \"namespace\": \"string\",\n          \"currentStatus\": \"APPROVED\",\n          \"requester\": \"string\",\n          \"approver\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"teamId\": \"string\",\n          \"teamName\": \"string\",\n          \"namespace\": \"string\",\n          \"currentStatus\": \"REVOKED\",\n          \"requester\": \"string\",\n          \"approver\": \"string\"\n        }\n      ]\n    },\n    {\n      \"assetId\": \"string\",\n      \"clusterName\": \"string\",\n      \"owningTeamId\": \"string\",\n      \"availableNamespaces\": [\n        \"string\",\n        \"string\"\n      ],\n      \"currentlySharedNamespaces\": [\n        \"string\",\n        \"string\"\n      ],\n      \"semanticVersion\": {\n        \"major\": 5132,\n        \"minor\": 8325,\n        \"patch\": 3408\n      },\n      \"isOutdated\": false,\n      \"lastAttacked\": \"1994-05-06T08:32:46.867Z\",\n      \"requests\": [\n        {\n          \"id\": \"string\",\n          \"teamId\": \"string\",\n          \"teamName\": \"string\",\n          \"namespace\": \"string\",\n          \"currentStatus\": \"APPROVED\",\n          \"requester\": \"string\",\n          \"approver\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"teamId\": \"string\",\n          \"teamName\": \"string\",\n          \"namespace\": \"string\",\n          \"currentStatus\": \"DELETED\",\n          \"requester\": \"string\",\n          \"approver\": \"string\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a30e6931-b2a2-4ef9-a90c-81c76dafa4c3",
+          "name": "List my requests for assets to be shared with my team",
+          "request": {
+            "name": "List my requests for assets to be shared with my team",
+            "description": {
+              "content": "Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sharedAssets",
+                "requests"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "87e30363-511d-492a-8a6b-de695c652878",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fd32cb95-d8e5-49d6-b48d-84532d304b1c",
+              "name": "User requires privilege for target team: CLIENTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bbb6eb46-3e61-45c0-a3fa-9a477f8310ef",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"assetToRequestMap\": {\n    \"key_0\": [\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"2024-04-01T14:11:30.528Z\",\n        \"updatedAt\": \"2014-03-26T20:03:24.609Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REQUESTED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      },\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"1947-11-27T03:05:04.708Z\",\n        \"updatedAt\": \"2003-11-02T17:10:02.956Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REQUESTED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      }\n    ]\n  },\n  \"idToTeamMapping\": {\n    \"key_0\": {\n      \"identifier\": \"string\",\n      \"name\": \"string\",\n      \"usersCount\": 2159\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0d91667a-9fdc-476d-9962-7077ffd896b2",
+          "name": "Request access to a given asset",
+          "request": {
+            "name": "Request access to a given asset",
+            "description": {
+              "content": "Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sharedAssets",
+                "requests"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"newRequests\": [\n    {\n      \"owningTeamId\": \"<string>\",\n      \"assetId\": \"<string>\",\n      \"namespace\": \"<string>\",\n      \"teamToShareWith\": \"<string>\"\n    },\n    {\n      \"owningTeamId\": \"<string>\",\n      \"assetId\": \"<string>\",\n      \"namespace\": \"<string>\",\n      \"teamToShareWith\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "37153fb0-1320-46a2-81ad-df10ebc60db7",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"newRequests\": [\n    {\n      \"owningTeamId\": \"<string>\",\n      \"assetId\": \"<string>\",\n      \"namespace\": \"<string>\",\n      \"teamToShareWith\": \"<string>\"\n    },\n    {\n      \"owningTeamId\": \"<string>\",\n      \"assetId\": \"<string>\",\n      \"namespace\": \"<string>\",\n      \"teamToShareWith\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "15deca97-c3a2-4f8d-8ddd-dd4bc337fc82",
+              "name": "User requires privilege for target team: CLIENTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"newRequests\": [\n    {\n      \"owningTeamId\": \"<string>\",\n      \"assetId\": \"<string>\",\n      \"namespace\": \"<string>\",\n      \"teamToShareWith\": \"<string>\"\n    },\n    {\n      \"owningTeamId\": \"<string>\",\n      \"assetId\": \"<string>\",\n      \"namespace\": \"<string>\",\n      \"teamToShareWith\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e875b982-5db5-4ae0-b2ae-18c7f1411600",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"newRequests\": [\n    {\n      \"owningTeamId\": \"<string>\",\n      \"assetId\": \"<string>\",\n      \"namespace\": \"<string>\",\n      \"teamToShareWith\": \"<string>\"\n    },\n    {\n      \"owningTeamId\": \"<string>\",\n      \"assetId\": \"<string>\",\n      \"namespace\": \"<string>\",\n      \"teamToShareWith\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"assetToRequestMap\": {\n    \"key_0\": [\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"2000-03-02T08:24:27.912Z\",\n        \"updatedAt\": \"2002-01-23T18:35:19.494Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REQUESTED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      },\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"1995-09-02T04:09:42.769Z\",\n        \"updatedAt\": \"1987-01-02T00:48:08.456Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"APPROVED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      }\n    ],\n    \"key_1\": [\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"2022-07-28T09:56:24.503Z\",\n        \"updatedAt\": \"1972-12-15T01:45:16.133Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REQUESTED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      },\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"1970-04-04T06:21:02.195Z\",\n        \"updatedAt\": \"2024-06-19T05:14:58.677Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REQUESTED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "43c87cce-e6c4-4ebb-9526-362e1a13f8ef",
+          "name": "List other team's requests to my team for sharing assets my team controls",
+          "request": {
+            "name": "List other team's requests to my team for sharing assets my team controls",
+            "description": {
+              "content": "Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sharedAssets",
+                "requests",
+                "toMe"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "assetId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "fa410ee1-4361-4454-b443-32b5dfc8d0b2",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    "toMe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assetId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9222f8b3-b9ca-476c-a0f5-26d7368acab9",
+              "name": "User requires privilege for target team: CLIENTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    "toMe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assetId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "485d15d1-a74e-4abe-bf12-0b4547121ebf",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    "toMe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assetId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"assetToRequestMap\": {\n    \"key_0\": [\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"1959-08-06T12:40:29.223Z\",\n        \"updatedAt\": \"2003-08-23T09:12:12.481Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REVOKED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      },\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"1950-11-20T22:53:48.481Z\",\n        \"updatedAt\": \"1959-08-30T11:40:48.125Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"APPROVED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      }\n    ],\n    \"key_1\": [\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"1961-02-19T22:22:18.693Z\",\n        \"updatedAt\": \"1997-02-07T11:15:17.841Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"DENIED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      },\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"2014-08-03T08:22:03.367Z\",\n        \"updatedAt\": \"2009-04-10T14:16:32.598Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REVOKED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      }\n    ],\n    \"key_2\": [\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"1994-07-19T22:07:14.979Z\",\n        \"updatedAt\": \"1959-12-05T05:07:06.559Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"DENIED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      },\n      {\n        \"companyId\": \"string\",\n        \"owningTeamId\": \"string\",\n        \"createdAt\": \"1950-12-05T01:51:57.713Z\",\n        \"updatedAt\": \"1989-06-03T01:08:27.947Z\",\n        \"approver\": \"string\",\n        \"requester\": \"string\",\n        \"assetName\": \"string\",\n        \"currentStatus\": \"REQUESTED\",\n        \"assetId\": \"string\",\n        \"sharedTeam\": \"string\",\n        \"namespace\": \"string\",\n        \"requestId\": \"string\"\n      }\n    ]\n  },\n  \"idToTeamMapping\": {\n    \"key_0\": {\n      \"identifier\": \"string\",\n      \"name\": \"string\",\n      \"usersCount\": 6845\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "30b86d17-a236-47cf-9971-e0cbb914de1a",
+          "name": "Deletes an existing request for Access",
+          "request": {
+            "name": "Deletes an existing request for Access",
+            "description": {
+              "content": "The {requestId} parameter _must_ be urlencoded\nRequires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sharedAssets",
+                "requests",
+                ":requestId",
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "requestId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST"
+          },
+          "response": [
+            {
+              "id": "d65563a0-cb43-44bd-ac61-e3eaed15d52b",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    ":requestId",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9e6706e5-c017-4ee2-b3c2-37c544a82917",
+              "name": "User requires privilege for target team: CLIENTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    ":requestId",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0b415e60-93ab-4d42-b07c-5c61adaed85a",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    "requests",
+                    ":requestId",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"companyId\": \"string\",\n  \"owningTeamId\": \"string\",\n  \"createdAt\": \"1983-06-11T14:00:03.616Z\",\n  \"updatedAt\": \"1986-11-08T02:36:21.844Z\",\n  \"approver\": \"string\",\n  \"requester\": \"string\",\n  \"assetName\": \"string\",\n  \"currentStatus\": \"REVOKED\",\n  \"assetId\": \"string\",\n  \"sharedTeam\": \"string\",\n  \"namespace\": \"string\",\n  \"requestId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3637e2b8-ddbc-491e-9d01-7c1eacbe22cb",
+          "name": "Request access to a given asset owned by another team",
+          "request": {
+            "name": "Request access to a given asset owned by another team",
+            "description": {
+              "content": "Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sharedAssets",
+                ":owningTeam",
+                ":assetId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "namespace",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "owningTeam",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "assetId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST"
+          },
+          "response": [
+            {
+              "id": "4b394536-a9ce-4729-90bb-f58811a85661",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    ":owningTeam",
+                    ":assetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "owningTeam",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "assetId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ce3ff423-03c8-4d9c-b991-516d0d37f332",
+              "name": "User requires privilege for target team: CLIENTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    ":owningTeam",
+                    ":assetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "owningTeam",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "assetId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9f4af51f-0a26-4fd8-99c5-42d6668e666d",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sharedAssets",
+                    ":owningTeam",
+                    ":assetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "owningTeam",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "assetId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"companyId\": \"string\",\n  \"owningTeamId\": \"string\",\n  \"createdAt\": \"1983-06-11T14:00:03.616Z\",\n  \"updatedAt\": \"1986-11-08T02:36:21.844Z\",\n  \"approver\": \"string\",\n  \"requester\": \"string\",\n  \"assetName\": \"string\",\n  \"currentStatus\": \"REVOKED\",\n  \"assetId\": \"string\",\n  \"sharedTeam\": \"string\",\n  \"namespace\": \"string\",\n  \"requestId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9c4daa7b-2e50-457a-885a-7a68d90bc3fc",
+    "name": "Gremlin agents sharedAssets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gremlin agents users.auth.mfa API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "users.auth.mfa",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticate a user with MFA.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/users/auth/mfa/auth",
+            "params": [
+              {
+                "name": "getCompanySession",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "email",
+                  "value": ""
+                },
+                {
+                  "name": "password",
+                  "value": ""
+                },
+                {
+                  "name": "token",
+                  "value": ""
+                },
+                {
+                  "name": "companyName",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Authenticate a user with MFA."
+        },
+        {
+          "info": {
+            "name": "Removes the MFA provider and secret, disabling MFA login.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/users/auth/mfa/disable",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "email",
+                  "value": ""
+                },
+                {
+                  "name": "password",
+                  "value": ""
+                },
+                {
+                  "name": "token",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Removes the MFA provider and secret, disabling MFA login."
+        },
+        {
+          "info": {
+            "name": "Generate a secret key and enables it for the user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/users/auth/mfa/enable",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "email",
+                  "value": ""
+                },
+                {
+                  "name": "password",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Generate a secret key and enables it for the user."
+        },
+        {
+          "info": {
+            "name": "Removes the MFA provider and secret, disabling MFA login.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/users/auth/mfa/forceDisable",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "email",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "COMPANY_OWNER and COMPANY_ADMIN users only\nRequires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Returns the enabled/disabled status and provider if set, of MFA for the user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/users/auth/mfa/info"
+          },
+          "docs": "Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Returns the enabled/disabled status of MFA for a user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/users/auth/mfa/:email/enabled",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Company Owners and Admins users only\nRequires the privilege [`SECURITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Validate a MFA token for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/users/auth/mfa/validate",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "email",
+                  "value": ""
+                },
+                {
+                  "name": "token",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Validate a MFA token for a user"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

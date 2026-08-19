@@ -1,0 +1,956 @@
+{
+  "item": [
+    {
+      "id": "4692bfb2-d34b-43da-9a15-34d108b0e12b",
+      "name": "kubernetes.attacks",
+      "description": {
+        "content": "Create, halt, and list Kubernetes attacks",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "60220c9b-6f0f-4611-824a-b20b0600f5c6",
+          "name": "Get an attack by it's guid",
+          "request": {
+            "name": "Get an attack by it's guid",
+            "description": {
+              "content": "Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "kubernetes",
+                "attacks",
+                ":guid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "guid",
+                  "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "6179dbf3-4b82-40eb-a000-9c9d2b51e6d4",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kubernetes",
+                    "attacks",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1c11fe03-2e91-406a-8afe-cd0aed8bbcba",
+              "name": "User requires privilege for target team: EXPERIMENTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kubernetes",
+                    "attacks",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ef40d240-0eb2-4411-89e9-a9771abe5207",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kubernetes",
+                    "attacks",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "90d065e3-5b23-48fd-9257-328365750b47",
+          "name": "List all attacks.",
+          "request": {
+            "name": "List all attacks.",
+            "description": {
+              "content": "Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "kubernetes",
+                "attacks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "Filter Kubernetes attacks to either Adhoc or Scenario."
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "bddab8c0-897b-47a8-babb-00fb5b1f7f03",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kubernetes",
+                    "attacks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "Adhoc"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3914d040-b3b8-4785-9e4f-0e5edd1b61ec",
+              "name": "User requires privilege for target team: EXPERIMENTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kubernetes",
+                    "attacks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "Adhoc"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4a92f1c1-665b-4aef-b762-099d970a1a4e",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kubernetes",
+                    "attacks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "Adhoc"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2e8a0a2-c5d9-4be1-b367-28e1eb5565ef",
+          "name": "Legacy endpoint for creating K8s attacks. Please consider `POST /attacks` endpoint instead",
+          "request": {
+            "name": "Legacy endpoint for creating K8s attacks. Please consider `POST /attacks` endpoint instead",
+            "description": {
+              "content": "Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "kubernetes",
+                "attacks",
+                "new"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"impactDefinition\": {\n    \"providers\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"args\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"trafficImpactMapping\": {\n      \"multiSelectTags\": {\n        \"key_0\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"dependencyIds\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"trafficImpactFromWithSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"trafficImpactWithDependencyIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"type\": \"<string>\",\n    \"templateId\": \"<string>\",\n    \"optionalTemplateId\": \"<string>\",\n    \"empty\": \"<boolean>\"\n  },\n  \"targetDefinition\": {\n    \"strategy\": {\n      \"k8sObjects\": [\n        \"<object>\",\n        \"<object>\"\n      ],\n      \"containerSelection\": {\n        \"selectionType\": \"<string>\",\n        \"containerNames\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"k8sObjectsInternal\": [\n        {\n          \"clusterId\": \"<string>\",\n          \"uid\": \"<string>\",\n          \"namespace\": \"<string>\",\n          \"name\": \"<string>\",\n          \"kind\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\",\n            \"key_2\": \"<string>\",\n            \"key_3\": \"<string>\"\n          },\n          \"annotations\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          },\n          \"ownerReferences\": \"<string>\",\n          \"createdAt\": \"<dateTime>\",\n          \"resolvedContainers\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"data\": \"<string>\",\n          \"clientId\": \"<string>\",\n          \"teamId\": \"<string>\",\n          \"resolved\": \"<boolean>\",\n          \"attackUid\": \"<string>\"\n        },\n        {\n          \"clusterId\": \"<string>\",\n          \"uid\": \"<string>\",\n          \"namespace\": \"<string>\",\n          \"name\": \"<string>\",\n          \"kind\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\"\n          },\n          \"annotations\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          },\n          \"ownerReferences\": \"<string>\",\n          \"createdAt\": \"<dateTime>\",\n          \"resolvedContainers\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"data\": \"<string>\",\n          \"clientId\": \"<string>\",\n          \"teamId\": \"<string>\",\n          \"resolved\": \"<boolean>\",\n          \"attackUid\": \"<string>\"\n        }\n      ],\n      \"count\": \"<integer>\",\n      \"percentage\": \"<integer>\"\n    }\n  },\n  \"includeNewTargets\": \"<boolean>\",\n  \"continueOnEmptyTargets\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e898a93b-4e50-41c4-9263-6b1f1407323e",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kubernetes",
+                    "attacks",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"impactDefinition\": {\n    \"providers\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"args\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"trafficImpactMapping\": {\n      \"multiSelectTags\": {\n        \"key_0\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"dependencyIds\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"trafficImpactFromWithSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"trafficImpactWithDependencyIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"type\": \"<string>\",\n    \"templateId\": \"<string>\",\n    \"optionalTemplateId\": \"<string>\",\n    \"empty\": \"<boolean>\"\n  },\n  \"targetDefinition\": {\n    \"strategy\": {\n      \"k8sObjects\": [\n        \"<object>\",\n        \"<object>\"\n      ],\n      \"containerSelection\": {\n        \"selectionType\": \"<string>\",\n        \"containerNames\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"k8sObjectsInternal\": [\n        {\n          \"clusterId\": \"<string>\",\n          \"uid\": \"<string>\",\n          \"namespace\": \"<string>\",\n          \"name\": \"<string>\",\n          \"kind\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\",\n            \"key_2\": \"<string>\"\n          },\n          \"annotations\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          },\n          \"ownerReferences\": \"<string>\",\n          \"createdAt\": \"<dateTime>\",\n          \"resolvedContainers\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"data\": \"<string>\",\n          \"clientId\": \"<string>\",\n          \"teamId\": \"<string>\",\n          \"resolved\": \"<boolean>\",\n          \"attackUid\": \"<string>\"\n        },\n        {\n          \"clusterId\": \"<string>\",\n          \"uid\": \"<string>\",\n          \"namespace\": \"<string>\",\n          \"name\": \"<string>\",\n          \"kind\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          },\n          \"annotations\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\",\n            \"key_2\": \"<string>\"\n          },\n          \"ownerReferences\": \"<string>\",\n          \"createdAt\": \"<dateTime>\",\n          \"resolvedContainers\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"data\": \"<string>\",\n          \"clientId\": \"<string>\",\n          \"teamId\": \"<string>\",\n          \"resolved\": \"<boolean>\",\n          \"attackUid\": \"<string>\"\n        }\n      ],\n      \"count\": \"<integer>\",\n      \"percentage\": \"<integer>\"\n    }\n  },\n  \"includeNewTargets\": \"<boolean>\",\n  \"continueOnEmptyTargets\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "339867ca-a1dc-4940-9bc4-744efb311fd4",
+              "name": "User requires privilege for target team: EXPERIMENTS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kubernetes",
+                    "attacks",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"impactDefinition\": {\n    \"providers\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"args\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"trafficImpactMapping\": {\n      \"multiSelectTags\": {\n        \"key_0\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"dependencyIds\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"trafficImpactFromWithSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"trafficImpactWithDependencyIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"type\": \"<string>\",\n    \"templateId\": \"<string>\",\n    \"optionalTemplateId\": \"<string>\",\n    \"empty\": \"<boolean>\"\n  },\n  \"targetDefinition\": {\n    \"strategy\": {\n      \"k8sObjects\": [\n        \"<object>\",\n        \"<object>\"\n      ],\n      \"containerSelection\": {\n        \"selectionType\": \"<string>\",\n        \"containerNames\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"k8sObjectsInternal\": [\n        {\n          \"clusterId\": \"<string>\",\n          \"uid\": \"<string>\",\n          \"namespace\": \"<string>\",\n          \"name\": \"<string>\",\n          \"kind\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\",\n            \"key_2\": \"<string>\"\n          },\n          \"annotations\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          },\n          \"ownerReferences\": \"<string>\",\n          \"createdAt\": \"<dateTime>\",\n          \"resolvedContainers\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"data\": \"<string>\",\n          \"clientId\": \"<string>\",\n          \"teamId\": \"<string>\",\n          \"resolved\": \"<boolean>\",\n          \"attackUid\": \"<string>\"\n        },\n        {\n          \"clusterId\": \"<string>\",\n          \"uid\": \"<string>\",\n          \"namespace\": \"<string>\",\n          \"name\": \"<string>\",\n          \"kind\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          },\n          \"annotations\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\",\n            \"key_2\": \"<string>\"\n          },\n          \"ownerReferences\": \"<string>\",\n          \"createdAt\": \"<dateTime>\",\n          \"resolvedContainers\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"data\": \"<string>\",\n          \"clientId\": \"<string>\",\n          \"teamId\": \"<string>\",\n          \"resolved\": \"<boolean>\",\n          \"attackUid\": \"<string>\"\n        }\n      ],\n      \"count\": \"<integer>\",\n      \"percentage\": \"<integer>\"\n    }\n  },\n  \"includeNewTargets\": \"<boolean>\",\n  \"continueOnEmptyTargets\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2b60886e-9478-4c60-a097-c65f9e59f9ff",
+              "name": "Attack created, attackId returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kubernetes",
+                    "attacks",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"impactDefinition\": {\n    \"providers\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"args\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"trafficImpactMapping\": {\n      \"multiSelectTags\": {\n        \"key_0\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"dependencyIds\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"trafficImpactFromWithSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"trafficImpactWithDependencyIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"type\": \"<string>\",\n    \"templateId\": \"<string>\",\n    \"optionalTemplateId\": \"<string>\",\n    \"empty\": \"<boolean>\"\n  },\n  \"targetDefinition\": {\n    \"strategy\": {\n      \"k8sObjects\": [\n        \"<object>\",\n        \"<object>\"\n      ],\n      \"containerSelection\": {\n        \"selectionType\": \"<string>\",\n        \"containerNames\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"k8sObjectsInternal\": [\n        {\n          \"clusterId\": \"<string>\",\n          \"uid\": \"<string>\",\n          \"namespace\": \"<string>\",\n          \"name\": \"<string>\",\n          \"kind\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\",\n            \"key_2\": \"<string>\"\n          },\n          \"annotations\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          },\n          \"ownerReferences\": \"<string>\",\n          \"createdAt\": \"<dateTime>\",\n          \"resolvedContainers\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"data\": \"<string>\",\n          \"clientId\": \"<string>\",\n          \"teamId\": \"<string>\",\n          \"resolved\": \"<boolean>\",\n          \"attackUid\": \"<string>\"\n        },\n        {\n          \"clusterId\": \"<string>\",\n          \"uid\": \"<string>\",\n          \"namespace\": \"<string>\",\n          \"name\": \"<string>\",\n          \"kind\": \"<string>\",\n          \"labels\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          },\n          \"annotations\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\",\n            \"key_2\": \"<string>\"\n          },\n          \"ownerReferences\": \"<string>\",\n          \"createdAt\": \"<dateTime>\",\n          \"resolvedContainers\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"data\": \"<string>\",\n          \"clientId\": \"<string>\",\n          \"teamId\": \"<string>\",\n          \"resolved\": \"<boolean>\",\n          \"attackUid\": \"<string>\"\n        }\n      ],\n      \"count\": \"<integer>\",\n      \"percentage\": \"<integer>\"\n    }\n  },\n  \"includeNewTargets\": \"<boolean>\",\n  \"continueOnEmptyTargets\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1583929b-bff7-4129-8a81-7b4096ba718c",
+          "name": "Halt an active attack",
+          "request": {
+            "name": "Halt an active attack",
+            "description": {
+              "content": "Requires the privilege [`HALT_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "kubernetes",
+                "attacks",
+                ":uid",
+                "halt"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "uid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"<string>\",\n  \"reference\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7f0c8281-5ab6-4f95-b896-a097c3e98ba5",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kubernetes",
+                    "attacks",
+                    ":uid",
+                    "halt"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "uid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\",\n  \"reference\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "523677e1-605e-4660-8b77-423eec68dc87",
+              "name": "User requires privilege for target team: HALT_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kubernetes",
+                    "attacks",
+                    ":uid",
+                    "halt"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "uid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\",\n  \"reference\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "578183af-561d-4801-909e-eef7f7b6ca3e",
+              "name": "Halt successfully triggered",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kubernetes",
+                    "attacks",
+                    ":uid",
+                    "halt"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "uid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\",\n  \"reference\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5098cbd5-5e81-4363-aa1f-a2048ef05b34",
+          "name": "Halt all active attacks",
+          "request": {
+            "name": "Halt all active attacks",
+            "description": {},
+            "url": {
+              "path": [
+                "kubernetes",
+                "attacks",
+                "halt"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"<string>\",\n  \"reference\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9bb99eb8-2eaf-4bb5-a54b-ab45c1cbc6dc",
+              "name": "Halt successfully triggered",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kubernetes",
+                    "attacks",
+                    "halt"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\",\n  \"reference\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a0c3587f-df67-489d-aa6e-edad63c9c92e",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kubernetes",
+                    "attacks",
+                    "halt"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\",\n  \"reference\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "09ca8171-f88b-40ac-9841-58501f9fe6a0",
+              "name": "User requires privilege: HALT_ALL",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kubernetes",
+                    "attacks",
+                    "halt"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\",\n  \"reference\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7acc172a-73bb-4eba-b31e-26b1c54ccd46",
+    "name": "Gremlin agents kubernetes.attacks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

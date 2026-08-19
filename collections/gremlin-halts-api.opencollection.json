@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gremlin agents halts API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "halts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Idempotently halt all active impacts across the Gremlin platform",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gremlin.com/v1/halts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Idempotently halt all active impacts across the Gremlin platform"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

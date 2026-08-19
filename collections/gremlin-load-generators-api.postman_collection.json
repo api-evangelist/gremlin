@@ -1,0 +1,882 @@
+{
+  "item": [
+    {
+      "id": "7b43a096-5d84-4925-8633-47c5c24999a3",
+      "name": "load-generators",
+      "description": {
+        "content": "Create, read, update, and delete LoadGenerators",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a766b8e9-3bab-4b32-9fc7-6a2c66572ffa",
+          "name": "Create Load Generator",
+          "request": {
+            "name": "Create Load Generator",
+            "description": {
+              "content": "Requires the privilege [`WEBHOOKS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "load-generator"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "serviceId",
+                  "value": "<string>",
+                  "description": "(Required) Filter LoadGenerator by service id"
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"webhookStartLoadTrigger\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"identifier\": \"<string>\",\n  \"webhookStatusCheck\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"webhookStopLoadTrigger\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"active\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "39be8c56-058a-4078-b054-37c5082871c6",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "load-generator"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "serviceId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"webhookStartLoadTrigger\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"identifier\": \"<string>\",\n  \"webhookStatusCheck\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_2\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_3\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_4\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"webhookStopLoadTrigger\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"active\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1fc92a2b-6fa3-499e-a81b-c2e2af7d2942",
+              "name": "User requires privilege for target team: WEBHOOKS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "load-generator"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "serviceId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"webhookStartLoadTrigger\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"identifier\": \"<string>\",\n  \"webhookStatusCheck\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_2\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_3\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_4\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"webhookStopLoadTrigger\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"active\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b668da5f-719d-4c47-927c-dab604c24942",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "load-generator"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "serviceId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"webhookStartLoadTrigger\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"identifier\": \"<string>\",\n  \"webhookStatusCheck\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_2\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_3\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_4\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"webhookStopLoadTrigger\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"active\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "642c3d35-f7a9-4577-8c5a-304fd27d46a7",
+          "name": "Retrieve Load Generator by id",
+          "request": {
+            "name": "Retrieve Load Generator by id",
+            "description": {
+              "content": "Requires the privilege [`WEBHOOKS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "load-generator",
+                ":guid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "serviceId",
+                  "value": "<string>",
+                  "description": "(Required) Filter LoadGenerator by service id"
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "guid",
+                  "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "cd126d09-d0b3-42c8-b6f5-6d953de59104",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "load-generator",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "serviceId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e89cd0db-de81-46d2-b8fb-6e3d597ccd56",
+              "name": "User requires privilege for target team: WEBHOOKS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "load-generator",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "serviceId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6bc4edaf-3c2c-4062-89e6-f87bba229967",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "load-generator",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "serviceId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"webhookStartLoadTrigger\": {\n    \"teamId\": \"string\",\n    \"identifier\": \"string\",\n    \"type\": \"LOAD_GENERATOR_TRIGGER\",\n    \"webhookEndpoint\": {\n      \"uri\": \"string\",\n      \"headers\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"method\": \"POST\"\n    },\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"createdBy\": \"string\",\n    \"createdAt\": \"1962-04-13T20:24:40.426Z\",\n    \"updatedBy\": \"string\",\n    \"updatedAt\": \"1991-03-31T14:09:26.594Z\",\n    \"isPrivateNetwork\": true,\n    \"triggerEvents\": [\n      \"FINISHED\",\n      \"RUNNING\"\n    ],\n    \"state\": \"DEACTIVATED\",\n    \"payload\": \"string\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"string\",\n        \"string\"\n      ],\n      \"key_1\": [\n        \"string\",\n        \"string\"\n      ],\n      \"key_2\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  },\n  \"identifier\": \"string\",\n  \"webhookStatusCheck\": {\n    \"teamId\": \"string\",\n    \"identifier\": \"string\",\n    \"type\": \"LOAD_GENERATOR_STATUS_CHECK\",\n    \"webhookEndpoint\": {\n      \"uri\": \"string\",\n      \"headers\": {\n        \"key_0\": \"string\"\n      },\n      \"method\": \"POST\"\n    },\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"createdBy\": \"string\",\n    \"createdAt\": \"1960-05-20T11:40:33.673Z\",\n    \"updatedBy\": \"string\",\n    \"updatedAt\": \"2001-07-14T02:38:09.661Z\",\n    \"isPrivateNetwork\": true,\n    \"triggerEvents\": [\n      \"INITIALIZING\",\n      \"FINISHED\"\n    ],\n    \"state\": \"DEACTIVATED\",\n    \"payload\": \"string\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  },\n  \"webhookStopLoadTrigger\": {\n    \"teamId\": \"string\",\n    \"identifier\": \"string\",\n    \"type\": \"STATUS_CHECK\",\n    \"webhookEndpoint\": {\n      \"uri\": \"string\",\n      \"headers\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"method\": \"PUT\"\n    },\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"createdBy\": \"string\",\n    \"createdAt\": \"1982-10-16T02:58:57.416Z\",\n    \"updatedBy\": \"string\",\n    \"updatedAt\": \"2011-12-21T10:54:10.836Z\",\n    \"isPrivateNetwork\": true,\n    \"triggerEvents\": [\n      \"FINISHED\",\n      \"RUNNING\"\n    ],\n    \"state\": \"ACTIVE\",\n    \"payload\": \"string\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  },\n  \"active\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "584d44a2-4c99-4833-b6b5-b8d392252b8c",
+          "name": "Update a given Load Generator",
+          "request": {
+            "name": "Update a given Load Generator",
+            "description": {
+              "content": "Requires the privilege [`WEBHOOKS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "load-generator",
+                ":guid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "serviceId",
+                  "value": "<string>",
+                  "description": "(Required) Filter LoadGenerator by service id"
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "guid",
+                  "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"webhookStartLoadTrigger\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"identifier\": \"<string>\",\n  \"webhookStatusCheck\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"webhookStopLoadTrigger\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_2\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"active\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "40510369-2685-4f9a-9aed-368e0ff56201",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "load-generator",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "serviceId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"webhookStartLoadTrigger\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"identifier\": \"<string>\",\n  \"webhookStatusCheck\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_2\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_3\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_4\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"webhookStopLoadTrigger\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"active\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5c37ca75-cd49-41ef-b857-384801059600",
+              "name": "User requires privilege for target team: WEBHOOKS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "load-generator",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "serviceId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"webhookStartLoadTrigger\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"identifier\": \"<string>\",\n  \"webhookStatusCheck\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_2\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_3\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_4\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"webhookStopLoadTrigger\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"active\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ac17aaca-fdfa-4e8b-b5b6-7c08f7895a64",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "load-generator",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "serviceId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"webhookStartLoadTrigger\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"identifier\": \"<string>\",\n  \"webhookStatusCheck\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_1\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_2\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_3\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"key_4\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"webhookStopLoadTrigger\": {\n    \"method\": \"<string>\",\n    \"name\": \"<string>\",\n    \"uri\": \"<url>\",\n    \"identifier\": \"<string>\",\n    \"description\": \"<string>\",\n    \"isPrivateNetwork\": \"<boolean>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"triggerEvents\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"state\": \"<string>\",\n    \"payload\": \"<string>\",\n    \"teamExternalIntegration\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"observabilityToolType\": \"<string>\",\n      \"domain\": \"<string>\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"okLatencyMaxMs\": \"<integer>\",\n      \"responseBodyEvaluation\": {\n        \"op\": \"<string>\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"type\": \"<string>\",\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"active\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f4da4d2-f466-45a3-b2de-957b992b8c46",
+          "name": "Delete a given LoadGenerator",
+          "request": {
+            "name": "Delete a given LoadGenerator",
+            "description": {
+              "content": "Requires the privilege [`WEBHOOKS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "load-generator",
+                ":guid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "serviceId",
+                  "value": "<string>",
+                  "description": "(Required) Filter LoadGenerator by service id"
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "guid",
+                  "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "82b43c91-e49b-452b-9b91-d20564983673",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "load-generator",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "serviceId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "870e7864-d49a-4aeb-b188-5e25051c4c43",
+              "name": "User requires privilege for target team: WEBHOOKS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "load-generator",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "serviceId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e5fb965f-4c11-4def-82f8-5fc45f220039",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "load-generator",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "serviceId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) This value represents the globally unique identifier of the record to fetch."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3ab7c28a-27c9-4830-98d8-3a27b7e3a63a",
+    "name": "Gremlin agents load-generators API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

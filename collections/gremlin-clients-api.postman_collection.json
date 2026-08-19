@@ -1,0 +1,1095 @@
+{
+  "item": [
+    {
+      "id": "ed3863d0-a880-4ef9-b339-3789df68a594",
+      "name": "clients",
+      "description": {
+        "content": "List and modify all clients",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3b85fed5-e7b6-472a-bef0-d20c4d256973",
+          "name": "Activate a client.",
+          "request": {
+            "name": "Activate a client.",
+            "description": {
+              "content": "Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clients",
+                ":identifier",
+                "activate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) The identifier of the client to activate"
+                }
+              ]
+            },
+            "method": "PUT"
+          },
+          "response": [
+            {
+              "id": "42820c8e-df4a-4b8a-8890-f4e45cd828fd",
+              "name": "Client successfully activated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients",
+                    ":identifier",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the client to activate"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2bce4818-f07a-4f5a-a3b0-e799322889bd",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients",
+                    ":identifier",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the client to activate"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2a744b51-2556-42c7-922a-584febfeb2ce",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients",
+                    ":identifier",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the client to activate"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d2a0f9e3-66c4-4f32-9b32-95468dbe8cd2",
+              "name": "Payment Required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients",
+                    ":identifier",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the client to activate"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bc90368d-c754-40f2-a1e7-80d640a2b736",
+              "name": "User requires privilege for target team: CLIENTS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients",
+                    ":identifier",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the client to activate"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "31a00a9b-490c-49c7-bc46-d68007b5b668",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients",
+                    ":identifier",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the client to activate"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3c7095bc-de5b-414b-9db6-400aa049eab2",
+          "name": "Return all active clients within a team",
+          "request": {
+            "name": "Return all active clients within a team",
+            "description": {
+              "content": "Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clients",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "13625ea9-03e1-46ae-992c-fc096bcada68",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"orgId\": \"string\",\n    \"identifier\": \"string\",\n    \"lastSeen\": \"1999-11-28T05:03:30.375Z\",\n    \"state\": \"IDLE\",\n    \"tags\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"revokedBy\": \"string\",\n    \"authType\": \"CERTIFICATE\",\n    \"containerHash\": 4451,\n    \"networkInterfaceDataHash\": 267,\n    \"networkInterfaceData\": {\n      \"interfaces\": [\n        {\n          \"ip_addresses\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"name\": \"string\",\n          \"is_default\": false,\n          \"is_physical\": true,\n          \"is_virtual\": false\n        },\n        {\n          \"ip_addresses\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"name\": \"string\",\n          \"is_default\": false,\n          \"is_physical\": false,\n          \"is_virtual\": true\n        }\n      ]\n    },\n    \"osName\": \"string\",\n    \"osVersion\": \"string\",\n    \"dockerVersion\": \"string\",\n    \"containerDriver\": \"string\",\n    \"containerRuntime\": \"string\",\n    \"containerRuntimeVersion\": \"string\",\n    \"containerRuntimeApiVersion\": \"string\",\n    \"containers\": [\n      {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"image\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"dnsServers\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"image\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\"\n        },\n        \"dnsServers\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"kubernetesVersion\": \"string\",\n    \"metricsEnabled\": false,\n    \"processCollectionEnabled\": true,\n    \"collectDnsEnabled\": false,\n    \"usedProxy\": false,\n    \"hardwareInfo\": {\n      \"cpu_data\": [\n        {\n          \"name\": \"string\"\n        },\n        {\n          \"name\": \"string\"\n        }\n      ],\n      \"memory_size\": 8959,\n      \"gpu_data\": [\n        {\n          \"name\": \"string\",\n          \"driver\": \"string\",\n          \"memory_size\": 3788\n        },\n        {\n          \"name\": \"string\",\n          \"driver\": \"string\",\n          \"memory_size\": 7282\n        }\n      ]\n    },\n    \"instanceStartTime\": \"string\",\n    \"offsetInMinutesAfterBucketStart\": 5685,\n    \"validationResults\": {\n      \"agentTimestamp\": 3088,\n      \"clientVersion\": \"string\",\n      \"results\": [\n        {\n          \"attackType\": \"string\",\n          \"status\": \"ERROR\",\n          \"rawErrors\": [\n            \"string\",\n            \"string\"\n          ],\n          \"targeting\": \"CONTAINER\"\n        },\n        {\n          \"attackType\": \"string\",\n          \"status\": \"SUCCESS\",\n          \"rawErrors\": [\n            \"string\",\n            \"string\"\n          ],\n          \"targeting\": \"CONTAINER\"\n        }\n      ],\n      \"clientStatus\": \"UNHEALTHY\"\n    },\n    \"targetType\": \"Container\",\n    \"lastActiveEmitted\": \"1974-11-15T17:16:55.619Z\",\n    \"createdAt\": \"1999-07-23T05:11:55.595Z\",\n    \"updatedAt\": \"2009-02-02T23:40:49.660Z\",\n    \"companyId\": \"string\",\n    \"versionInfo\": {\n      \"gremlind\": {\n        \"major\": 3328,\n        \"minor\": 2263,\n        \"patch\": 7788\n      },\n      \"gremlin\": {\n        \"major\": 843,\n        \"minor\": 3392,\n        \"patch\": 1855\n      }\n    },\n    \"dnsServers\": [\n      \"string\",\n      \"string\"\n    ],\n    \"proxyUrl\": \"string\",\n    \"warnings\": [\n      {\n        \"key\": \"Unknown\",\n        \"link\": \"string\",\n        \"summary\": \"string\"\n      },\n      {\n        \"key\": \"W003\",\n        \"link\": \"string\",\n        \"summary\": \"string\"\n      }\n    ],\n    \"pushPodCidrTags\": true,\n    \"pushZoneCidrTags\": true,\n    \"osType\": \"Windows\"\n  },\n  {\n    \"orgId\": \"string\",\n    \"identifier\": \"string\",\n    \"lastSeen\": \"1965-06-01T02:56:16.103Z\",\n    \"state\": \"IDLE\",\n    \"tags\": {\n      \"key_0\": \"string\"\n    },\n    \"revokedBy\": \"string\",\n    \"authType\": \"CERTIFICATE\",\n    \"containerHash\": 677,\n    \"networkInterfaceDataHash\": 3470,\n    \"networkInterfaceData\": {\n      \"interfaces\": [\n        {\n          \"ip_addresses\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"name\": \"string\",\n          \"is_default\": true,\n          \"is_physical\": false,\n          \"is_virtual\": false\n        },\n        {\n          \"ip_addresses\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"name\": \"string\",\n          \"is_default\": false,\n          \"is_physical\": false,\n          \"is_virtual\": false\n        }\n      ]\n    },\n    \"osName\": \"string\",\n    \"osVersion\": \"string\",\n    \"dockerVersion\": \"string\",\n    \"containerDriver\": \"string\",\n    \"containerRuntime\": \"string\",\n    \"containerRuntimeVersion\": \"string\",\n    \"containerRuntimeApiVersion\": \"string\",\n    \"containers\": [\n      {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"image\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"dnsServers\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"image\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\"\n        },\n        \"dnsServers\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"kubernetesVersion\": \"string\",\n    \"metricsEnabled\": false,\n    \"processCollectionEnabled\": true,\n    \"collectDnsEnabled\": false,\n    \"usedProxy\": true,\n    \"hardwareInfo\": {\n      \"cpu_data\": [\n        {\n          \"name\": \"string\"\n        },\n        {\n          \"name\": \"string\"\n        }\n      ],\n      \"memory_size\": 4069,\n      \"gpu_data\": [\n        {\n          \"name\": \"string\",\n          \"driver\": \"string\",\n          \"memory_size\": 3396\n        },\n        {\n          \"name\": \"string\",\n          \"driver\": \"string\",\n          \"memory_size\": 5888\n        }\n      ]\n    },\n    \"instanceStartTime\": \"string\",\n    \"offsetInMinutesAfterBucketStart\": 761,\n    \"validationResults\": {\n      \"agentTimestamp\": 2651,\n      \"clientVersion\": \"string\",\n      \"results\": [\n        {\n          \"attackType\": \"string\",\n          \"status\": \"SUCCESS\",\n          \"rawErrors\": [\n            \"string\",\n            \"string\"\n          ],\n          \"targeting\": \"HOST\"\n        },\n        {\n          \"attackType\": \"string\",\n          \"status\": \"ERROR\",\n          \"rawErrors\": [\n            \"string\",\n            \"string\"\n          ],\n          \"targeting\": \"CONTAINER\"\n        }\n      ],\n      \"clientStatus\": \"HEALTHY\"\n    },\n    \"targetType\": \"Kubernetes\",\n    \"lastActiveEmitted\": \"2012-06-16T02:49:20.313Z\",\n    \"createdAt\": \"2015-02-12T10:17:06.132Z\",\n    \"updatedAt\": \"1993-09-21T08:10:38.976Z\",\n    \"companyId\": \"string\",\n    \"versionInfo\": {\n      \"gremlind\": {\n        \"major\": 4773,\n        \"minor\": 1681,\n        \"patch\": 782\n      },\n      \"gremlin\": {\n        \"major\": 5169,\n        \"minor\": 2339,\n        \"patch\": 8406\n      }\n    },\n    \"dnsServers\": [\n      \"string\",\n      \"string\"\n    ],\n    \"proxyUrl\": \"string\",\n    \"warnings\": [\n      {\n        \"key\": \"W002\",\n        \"link\": \"string\",\n        \"summary\": \"string\"\n      },\n      {\n        \"key\": \"Unknown\",\n        \"link\": \"string\",\n        \"summary\": \"string\"\n      }\n    ],\n    \"pushPodCidrTags\": false,\n    \"pushZoneCidrTags\": false,\n    \"osType\": \"Windows\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7c09da5-0312-460d-af07-59d19e274540",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d3658969-f9c1-4db8-8fc6-2e4a263ecdaa",
+              "name": "User requires privilege for target team: CLIENTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2fdc20bc-5678-4294-a627-3470369008e8",
+          "name": "Returns all clients within a team.",
+          "request": {
+            "name": "Returns all clients within a team.",
+            "description": {
+              "content": "This operation will return all active, idle, and recently inactive clients.\nRequires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clients"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) The identifier of the team for which to retrieve clients"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "ebac493c-330d-4cbb-8d47-d1d16f2617e9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"orgId\": \"string\",\n    \"identifier\": \"string\",\n    \"lastSeen\": \"2007-09-24T11:57:41.079Z\",\n    \"state\": \"INVITED\",\n    \"tags\": {\n      \"key_0\": \"string\"\n    },\n    \"revokedBy\": \"string\",\n    \"authType\": \"SECRET\",\n    \"containerHash\": 4999,\n    \"networkInterfaceDataHash\": 1161,\n    \"networkInterfaceData\": {\n      \"interfaces\": [\n        {\n          \"ip_addresses\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"name\": \"string\",\n          \"is_default\": false,\n          \"is_physical\": false,\n          \"is_virtual\": false\n        },\n        {\n          \"ip_addresses\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"name\": \"string\",\n          \"is_default\": true,\n          \"is_physical\": false,\n          \"is_virtual\": true\n        }\n      ]\n    },\n    \"osName\": \"string\",\n    \"osVersion\": \"string\",\n    \"dockerVersion\": \"string\",\n    \"containerDriver\": \"string\",\n    \"containerRuntime\": \"string\",\n    \"containerRuntimeVersion\": \"string\",\n    \"containerRuntimeApiVersion\": \"string\",\n    \"containers\": [\n      {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"image\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"dnsServers\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"image\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\"\n        },\n        \"dnsServers\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"kubernetesVersion\": \"string\",\n    \"metricsEnabled\": true,\n    \"processCollectionEnabled\": false,\n    \"collectDnsEnabled\": true,\n    \"usedProxy\": true,\n    \"hardwareInfo\": {\n      \"cpu_data\": [\n        {\n          \"name\": \"string\"\n        },\n        {\n          \"name\": \"string\"\n        }\n      ],\n      \"memory_size\": 1708,\n      \"gpu_data\": [\n        {\n          \"name\": \"string\",\n          \"driver\": \"string\",\n          \"memory_size\": 2350\n        },\n        {\n          \"name\": \"string\",\n          \"driver\": \"string\",\n          \"memory_size\": 1049\n        }\n      ]\n    },\n    \"instanceStartTime\": \"string\",\n    \"offsetInMinutesAfterBucketStart\": 4223,\n    \"validationResults\": {\n      \"agentTimestamp\": 7678,\n      \"clientVersion\": \"string\",\n      \"results\": [\n        {\n          \"attackType\": \"string\",\n          \"status\": \"ERROR\",\n          \"rawErrors\": [\n            \"string\",\n            \"string\"\n          ],\n          \"targeting\": \"HOST\"\n        },\n        {\n          \"attackType\": \"string\",\n          \"status\": \"SUCCESS\",\n          \"rawErrors\": [\n            \"string\",\n            \"string\"\n          ],\n          \"targeting\": \"CONTAINER\"\n        }\n      ],\n      \"clientStatus\": \"UNHEALTHY\"\n    },\n    \"targetType\": \"Kubernetes\",\n    \"lastActiveEmitted\": \"1996-09-13T19:07:14.715Z\",\n    \"createdAt\": \"2001-01-22T23:23:38.769Z\",\n    \"updatedAt\": \"1974-11-29T02:07:13.849Z\",\n    \"companyId\": \"string\",\n    \"versionInfo\": {\n      \"gremlind\": {\n        \"major\": 2832,\n        \"minor\": 3024,\n        \"patch\": 8960\n      },\n      \"gremlin\": {\n        \"major\": 2518,\n        \"minor\": 8752,\n        \"patch\": 4778\n      }\n    },\n    \"dnsServers\": [\n      \"string\",\n      \"string\"\n    ],\n    \"proxyUrl\": \"string\",\n    \"warnings\": [\n      {\n        \"key\": \"W003\",\n        \"link\": \"string\",\n        \"summary\": \"string\"\n      },\n      {\n        \"key\": \"Unknown\",\n        \"link\": \"string\",\n        \"summary\": \"string\"\n      }\n    ],\n    \"pushPodCidrTags\": true,\n    \"pushZoneCidrTags\": true,\n    \"osType\": \"Windows\"\n  },\n  {\n    \"orgId\": \"string\",\n    \"identifier\": \"string\",\n    \"lastSeen\": \"1972-02-01T06:47:24.899Z\",\n    \"state\": \"REVOKED\",\n    \"tags\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    \"revokedBy\": \"string\",\n    \"authType\": \"SECRET\",\n    \"containerHash\": 3922,\n    \"networkInterfaceDataHash\": 4272,\n    \"networkInterfaceData\": {\n      \"interfaces\": [\n        {\n          \"ip_addresses\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"name\": \"string\",\n          \"is_default\": true,\n          \"is_physical\": false,\n          \"is_virtual\": false\n        },\n        {\n          \"ip_addresses\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"name\": \"string\",\n          \"is_default\": true,\n          \"is_physical\": false,\n          \"is_virtual\": true\n        }\n      ]\n    },\n    \"osName\": \"string\",\n    \"osVersion\": \"string\",\n    \"dockerVersion\": \"string\",\n    \"containerDriver\": \"string\",\n    \"containerRuntime\": \"string\",\n    \"containerRuntimeVersion\": \"string\",\n    \"containerRuntimeApiVersion\": \"string\",\n    \"containers\": [\n      {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"image\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"dnsServers\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"image\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\"\n        },\n        \"dnsServers\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"kubernetesVersion\": \"string\",\n    \"metricsEnabled\": true,\n    \"processCollectionEnabled\": false,\n    \"collectDnsEnabled\": false,\n    \"usedProxy\": true,\n    \"hardwareInfo\": {\n      \"cpu_data\": [\n        {\n          \"name\": \"string\"\n        },\n        {\n          \"name\": \"string\"\n        }\n      ],\n      \"memory_size\": 4907,\n      \"gpu_data\": [\n        {\n          \"name\": \"string\",\n          \"driver\": \"string\",\n          \"memory_size\": 4953\n        },\n        {\n          \"name\": \"string\",\n          \"driver\": \"string\",\n          \"memory_size\": 9571\n        }\n      ]\n    },\n    \"instanceStartTime\": \"string\",\n    \"offsetInMinutesAfterBucketStart\": 779,\n    \"validationResults\": {\n      \"agentTimestamp\": 5967,\n      \"clientVersion\": \"string\",\n      \"results\": [\n        {\n          \"attackType\": \"string\",\n          \"status\": \"SUCCESS\",\n          \"rawErrors\": [\n            \"string\",\n            \"string\"\n          ],\n          \"targeting\": \"CONTAINER\"\n        },\n        {\n          \"attackType\": \"string\",\n          \"status\": \"ERROR\",\n          \"rawErrors\": [\n            \"string\",\n            \"string\"\n          ],\n          \"targeting\": \"HOST\"\n        }\n      ],\n      \"clientStatus\": \"IMPAIRED\"\n    },\n    \"targetType\": \"Kubernetes\",\n    \"lastActiveEmitted\": \"1984-06-11T09:46:12.489Z\",\n    \"createdAt\": \"1961-01-29T01:05:20.427Z\",\n    \"updatedAt\": \"1952-11-26T11:05:11.964Z\",\n    \"companyId\": \"string\",\n    \"versionInfo\": {\n      \"gremlind\": {\n        \"major\": 7321,\n        \"minor\": 324,\n        \"patch\": 2700\n      },\n      \"gremlin\": {\n        \"major\": 8442,\n        \"minor\": 9782,\n        \"patch\": 731\n      }\n    },\n    \"dnsServers\": [\n      \"string\",\n      \"string\"\n    ],\n    \"proxyUrl\": \"string\",\n    \"warnings\": [\n      {\n        \"key\": \"W002\",\n        \"link\": \"string\",\n        \"summary\": \"string\"\n      },\n      {\n        \"key\": \"W003\",\n        \"link\": \"string\",\n        \"summary\": \"string\"\n      }\n    ],\n    \"pushPodCidrTags\": false,\n    \"pushZoneCidrTags\": true,\n    \"osType\": \"Linux\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5677e6a8-3220-4591-9fa3-245c7f79cc92",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2cedd9e0-1aaf-46c1-8b2c-73b2ca47eb1b",
+              "name": "User requires privilege for target team: CLIENTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c4814272-be2b-4f81-a5a3-2e95e68d1a09",
+          "name": "Get a client by identifier",
+          "request": {
+            "name": "Get a client by identifier",
+            "description": {
+              "content": "Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clients",
+                ":identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) The identifier of the client to get"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "19b1e1a3-f738-4798-8ca1-bbcf34fc7f57",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the client to get"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orgId\": \"string\",\n  \"identifier\": \"string\",\n  \"lastSeen\": \"1981-07-29T13:32:17.265Z\",\n  \"state\": \"IDLE\",\n  \"tags\": {\n    \"key_0\": \"string\"\n  },\n  \"revokedBy\": \"string\",\n  \"authType\": \"CERTIFICATE\",\n  \"containerHash\": 3614,\n  \"networkInterfaceDataHash\": 9661,\n  \"networkInterfaceData\": {\n    \"interfaces\": [\n      {\n        \"ip_addresses\": [\n          {\n            \"ip\": \"string\",\n            \"protocolFamily\": \"UNIX\"\n          },\n          {\n            \"ip\": \"string\",\n            \"protocolFamily\": \"INET\"\n          }\n        ],\n        \"name\": \"string\",\n        \"is_default\": true,\n        \"is_physical\": true,\n        \"is_virtual\": false\n      },\n      {\n        \"ip_addresses\": [\n          {\n            \"ip\": \"string\",\n            \"protocolFamily\": \"UNIX\"\n          },\n          {\n            \"ip\": \"string\",\n            \"protocolFamily\": \"INET6\"\n          }\n        ],\n        \"name\": \"string\",\n        \"is_default\": true,\n        \"is_physical\": false,\n        \"is_virtual\": false\n      }\n    ]\n  },\n  \"osName\": \"string\",\n  \"osVersion\": \"string\",\n  \"dockerVersion\": \"string\",\n  \"containerDriver\": \"string\",\n  \"containerRuntime\": \"string\",\n  \"containerRuntimeVersion\": \"string\",\n  \"containerRuntimeApiVersion\": \"string\",\n  \"containers\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"image\": \"string\",\n      \"labels\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"dnsServers\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"image\": \"string\",\n      \"labels\": {\n        \"key_0\": \"string\"\n      },\n      \"dnsServers\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"kubernetesVersion\": \"string\",\n  \"metricsEnabled\": true,\n  \"processCollectionEnabled\": true,\n  \"collectDnsEnabled\": false,\n  \"usedProxy\": true,\n  \"hardwareInfo\": {\n    \"cpu_data\": [\n      {\n        \"name\": \"string\"\n      },\n      {\n        \"name\": \"string\"\n      }\n    ],\n    \"memory_size\": 4123,\n    \"gpu_data\": [\n      {\n        \"name\": \"string\",\n        \"driver\": \"string\",\n        \"memory_size\": 9258\n      },\n      {\n        \"name\": \"string\",\n        \"driver\": \"string\",\n        \"memory_size\": 6507\n      }\n    ]\n  },\n  \"instanceStartTime\": \"string\",\n  \"offsetInMinutesAfterBucketStart\": 4992,\n  \"validationResults\": {\n    \"agentTimestamp\": 9626,\n    \"clientVersion\": \"string\",\n    \"results\": [\n      {\n        \"attackType\": \"string\",\n        \"status\": \"SUCCESS\",\n        \"rawErrors\": [\n          \"string\",\n          \"string\"\n        ],\n        \"targeting\": \"HOST\"\n      },\n      {\n        \"attackType\": \"string\",\n        \"status\": \"SUCCESS\",\n        \"rawErrors\": [\n          \"string\",\n          \"string\"\n        ],\n        \"targeting\": \"HOST\"\n      }\n    ],\n    \"clientStatus\": \"IMPAIRED\"\n  },\n  \"targetType\": \"Container\",\n  \"lastActiveEmitted\": \"1970-10-08T10:40:46.269Z\",\n  \"createdAt\": \"1959-08-28T02:25:54.318Z\",\n  \"updatedAt\": \"1967-08-28T06:42:23.176Z\",\n  \"companyId\": \"string\",\n  \"versionInfo\": {\n    \"gremlind\": {\n      \"major\": 4502,\n      \"minor\": 403,\n      \"patch\": 8996\n    },\n    \"gremlin\": {\n      \"major\": 8035,\n      \"minor\": 5551,\n      \"patch\": 4018\n    }\n  },\n  \"dnsServers\": [\n    \"string\",\n    \"string\"\n  ],\n  \"proxyUrl\": \"string\",\n  \"warnings\": [\n    {\n      \"key\": \"W000\",\n      \"link\": \"string\",\n      \"summary\": \"string\"\n    },\n    {\n      \"key\": \"W001\",\n      \"link\": \"string\",\n      \"summary\": \"string\"\n    }\n  ],\n  \"pushPodCidrTags\": true,\n  \"pushZoneCidrTags\": true,\n  \"osType\": \"Linux\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3bc358c4-e13b-4203-b7ee-3884e9beb739",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the client to get"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "56def256-8bbd-4042-91f6-e4491032ca07",
+              "name": "User requires privilege for target team: CLIENTS_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the client to get"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9b14a2f2-0017-4d2d-912f-3c749aa3b043",
+          "name": "Deactivate a client",
+          "request": {
+            "name": "Deactivate a client",
+            "description": {
+              "content": "Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "clients",
+                ":identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) The identifier of the client to revoke"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "986ba5e6-61a3-4a39-9c76-3c867bb2e8eb",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the client to revoke"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b7b80456-86e7-4d96-8682-c7153edb4ea4",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the client to revoke"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b45398cc-02ac-4cc6-9b19-5725230eb870",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the client to revoke"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "322934aa-5dee-47f3-b1b6-960e61ee22ac",
+              "name": "User requires privilege for target team: CLIENTS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the client to revoke"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "91f57a5b-4acc-4eec-98c2-d1ce6daee5ce",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clients",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The identifier of the client to revoke"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f5d1b5ed-4498-4b25-96a2-fdd398d371b8",
+    "name": "Gremlin agents clients API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gremlin agents service-overview API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "service-overview",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch active FaultInjection for Service",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/service-overview/:serviceId/active",
+            "params": [
+              {
+                "name": "serviceId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

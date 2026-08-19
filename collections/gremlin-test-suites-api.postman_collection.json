@@ -1,0 +1,1072 @@
+{
+  "item": [
+    {
+      "id": "fa4d64fa-e055-4420-aa88-3a58f6f94263",
+      "name": "test-suites",
+      "description": {
+        "content": "Create custom test suites",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "054ea887-3cc3-4811-bf0a-c3cdcd93c7ca",
+          "name": "Gets all reliability test suites for a company, starting with Gremlin's default global test suite, followed by other global suites and company's custom test suites",
+          "request": {
+            "name": "Gets all reliability test suites for a company, starting with Gremlin's default global test suite, followed by other global suites and company's custom test suites",
+            "description": {
+              "content": "Requires the privilege [`TEST_SUITES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "test-suites"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "b7a6e999-ec5c-4a5c-94ff-ea9fbb6f0c90",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fb38fe41-0e6e-4975-aa79-af1196525178",
+              "name": "User requires privilege: TEST_SUITES_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "88a46b53-5888-4515-b0ee-eb95800c66a1",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"identifier\": \"string\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"testResponses\": [\n      {\n        \"testPolicy\": {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"policyCategory\": \"RISKS\",\n          \"policyTarget\": \"SERVICE\",\n          \"reliabilityTestId\": \"string\"\n        },\n        \"sourceScenarioId\": \"string\",\n        \"sourceScenarioType\": \"GENERAL\",\n        \"sourceScenarioEditCounter\": 4404\n      },\n      {\n        \"testPolicy\": {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"policyCategory\": \"REDUNDANCY\",\n          \"policyTarget\": \"SERVICE_DEPENDENCY\",\n          \"reliabilityTestId\": \"string\"\n        },\n        \"sourceScenarioId\": \"string\",\n        \"sourceScenarioType\": \"SHARED\",\n        \"sourceScenarioEditCounter\": 7697\n      }\n    ],\n    \"targetTeamIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"excludedRiskIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"default\": true,\n    \"isDefault\": true,\n    \"official\": false,\n    \"isOfficial\": true\n  },\n  {\n    \"identifier\": \"string\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"testResponses\": [\n      {\n        \"testPolicy\": {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"policyCategory\": \"RISKS\",\n          \"policyTarget\": \"SERVICE\",\n          \"reliabilityTestId\": \"string\"\n        },\n        \"sourceScenarioId\": \"string\",\n        \"sourceScenarioType\": \"GENERAL\",\n        \"sourceScenarioEditCounter\": 7091\n      },\n      {\n        \"testPolicy\": {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"policyCategory\": \"OTHER\",\n          \"policyTarget\": \"SERVICE_DEPENDENCY\",\n          \"reliabilityTestId\": \"string\"\n        },\n        \"sourceScenarioId\": \"string\",\n        \"sourceScenarioType\": \"RECOMMENDED\",\n        \"sourceScenarioEditCounter\": 6970\n      }\n    ],\n    \"targetTeamIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"excludedRiskIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"default\": true,\n    \"isDefault\": false,\n    \"official\": false,\n    \"isOfficial\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a3f2572b-63ae-4f9f-8311-79c99ca3dd50",
+          "name": "Creates a reliability test suite",
+          "request": {
+            "name": "Creates a reliability test suite",
+            "description": {
+              "content": "Requires the privilege [`TEST_SUITES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "test-suites"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"scenarios\": [\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioToPromote\": {\n        \"scenarioId\": \"<string>\",\n        \"scenarioType\": \"<string>\",\n        \"teamId\": \"<string>\"\n      }\n    },\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioToPromote\": {\n        \"scenarioId\": \"<string>\",\n        \"scenarioType\": \"<string>\",\n        \"teamId\": \"<string>\"\n      }\n    }\n  ],\n  \"targetTeamIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"excludedRiskIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a4822326-993a-49ee-9113-7bbe13ff37be",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"scenarios\": [\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioToPromote\": {\n        \"scenarioId\": \"<string>\",\n        \"scenarioType\": \"<string>\",\n        \"teamId\": \"<string>\"\n      }\n    },\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioToPromote\": {\n        \"scenarioId\": \"<string>\",\n        \"scenarioType\": \"<string>\",\n        \"teamId\": \"<string>\"\n      }\n    }\n  ],\n  \"targetTeamIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"excludedRiskIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e0a74f3a-8f66-4ed2-846a-346df46d1ef3",
+              "name": "User requires privilege: TEST_SUITES_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"scenarios\": [\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioToPromote\": {\n        \"scenarioId\": \"<string>\",\n        \"scenarioType\": \"<string>\",\n        \"teamId\": \"<string>\"\n      }\n    },\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioToPromote\": {\n        \"scenarioId\": \"<string>\",\n        \"scenarioType\": \"<string>\",\n        \"teamId\": \"<string>\"\n      }\n    }\n  ],\n  \"targetTeamIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"excludedRiskIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2c6fb7c4-aebb-45f7-ab7e-54915e785e3a",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"scenarios\": [\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioToPromote\": {\n        \"scenarioId\": \"<string>\",\n        \"scenarioType\": \"<string>\",\n        \"teamId\": \"<string>\"\n      }\n    },\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioToPromote\": {\n        \"scenarioId\": \"<string>\",\n        \"scenarioType\": \"<string>\",\n        \"teamId\": \"<string>\"\n      }\n    }\n  ],\n  \"targetTeamIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"excludedRiskIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"identifier\": \"string\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"testResponses\": [\n    {\n      \"testPolicy\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"policyCategory\": \"EXTRA_CREDIT\",\n        \"policyTarget\": \"SERVICE_DEPENDENCY\",\n        \"reliabilityTestId\": \"string\"\n      },\n      \"sourceScenarioId\": \"string\",\n      \"sourceScenarioType\": \"GENERAL\",\n      \"sourceScenarioEditCounter\": 9525\n    },\n    {\n      \"testPolicy\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"policyCategory\": \"SCALABILITY\",\n        \"policyTarget\": \"SERVICE\",\n        \"reliabilityTestId\": \"string\"\n      },\n      \"sourceScenarioId\": \"string\",\n      \"sourceScenarioType\": \"SHARED\",\n      \"sourceScenarioEditCounter\": 6139\n    }\n  ],\n  \"targetTeamIds\": [\n    \"string\",\n    \"string\"\n  ],\n  \"excludedRiskIds\": [\n    \"string\",\n    \"string\"\n  ],\n  \"default\": true,\n  \"isDefault\": false,\n  \"official\": false,\n  \"isOfficial\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "68c80f75-b455-4c47-bf1e-88f4efba8e16",
+          "name": "Gets a reliability test suite",
+          "request": {
+            "name": "Gets a reliability test suite",
+            "description": {
+              "content": "Requires the privilege [`TEST_SUITES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "test-suites",
+                ":testSuiteId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "testSuiteId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "e3cdf52e-e8b5-4cc6-92c8-500acbdcb98b",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites",
+                    ":testSuiteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "testSuiteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0dfb5eb8-dc8e-4ab5-b43b-86ddc021a426",
+              "name": "User requires privilege: TEST_SUITES_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites",
+                    ":testSuiteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "testSuiteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "095b6f9b-f841-4ff2-b34f-3e3d94812c1a",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites",
+                    ":testSuiteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "testSuiteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"identifier\": \"string\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"testResponses\": [\n    {\n      \"testPolicy\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"policyCategory\": \"EXTRA_CREDIT\",\n        \"policyTarget\": \"SERVICE_DEPENDENCY\",\n        \"reliabilityTestId\": \"string\"\n      },\n      \"sourceScenarioId\": \"string\",\n      \"sourceScenarioType\": \"GENERAL\",\n      \"sourceScenarioEditCounter\": 9525\n    },\n    {\n      \"testPolicy\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"policyCategory\": \"SCALABILITY\",\n        \"policyTarget\": \"SERVICE\",\n        \"reliabilityTestId\": \"string\"\n      },\n      \"sourceScenarioId\": \"string\",\n      \"sourceScenarioType\": \"SHARED\",\n      \"sourceScenarioEditCounter\": 6139\n    }\n  ],\n  \"targetTeamIds\": [\n    \"string\",\n    \"string\"\n  ],\n  \"excludedRiskIds\": [\n    \"string\",\n    \"string\"\n  ],\n  \"default\": true,\n  \"isDefault\": false,\n  \"official\": false,\n  \"isOfficial\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c24e583c-ad9d-4e4f-8415-d73dd3d62edf",
+          "name": "Delete a Test Suite.",
+          "request": {
+            "name": "Delete a Test Suite.",
+            "description": {
+              "content": "Requires the privilege [`TEST_SUITES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "test-suites",
+                ":testSuiteId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "testSuiteId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "41c082a2-eac7-4978-9399-22b88a765529",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites",
+                    ":testSuiteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "testSuiteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7f495aaa-98b3-4c27-98e1-50bf5044aae7",
+              "name": "User requires privilege: TEST_SUITES_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites",
+                    ":testSuiteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "testSuiteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b7fa2f4b-9850-4d39-9fe9-58106511e447",
+              "name": "test suite not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites",
+                    ":testSuiteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "testSuiteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "510c0462-0bc9-4211-8e35-e1c87d25e751",
+          "name": "Updates a reliability test suite",
+          "request": {
+            "name": "Updates a reliability test suite",
+            "description": {
+              "content": "Requires the privilege [`TEST_SUITES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "test-suites",
+                ":testSuiteId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "testSuiteId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"targetTeamIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scenarios\": [\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"reliabilityTestId\": \"<string>\",\n      \"teamId\": \"<string>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"reliabilityTestId\": \"<string>\",\n      \"teamId\": \"<string>\"\n    }\n  ],\n  \"excludedRiskIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f113d5a1-80b2-4853-a538-b7f75bbf46a7",
+              "name": "Updates a test suite.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites",
+                    ":testSuiteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "testSuiteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"targetTeamIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scenarios\": [\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"reliabilityTestId\": \"<string>\",\n      \"teamId\": \"<string>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"reliabilityTestId\": \"<string>\",\n      \"teamId\": \"<string>\"\n    }\n  ],\n  \"excludedRiskIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3feedf1c-66d2-49f2-bdd9-7b0b6c7ba0dc",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites",
+                    ":testSuiteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "testSuiteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"targetTeamIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scenarios\": [\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"reliabilityTestId\": \"<string>\",\n      \"teamId\": \"<string>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"reliabilityTestId\": \"<string>\",\n      \"teamId\": \"<string>\"\n    }\n  ],\n  \"excludedRiskIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2a5ff56d-329a-4870-8f7f-e79f7109e185",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites",
+                    ":testSuiteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "testSuiteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"targetTeamIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scenarios\": [\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"reliabilityTestId\": \"<string>\",\n      \"teamId\": \"<string>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"reliabilityTestId\": \"<string>\",\n      \"teamId\": \"<string>\"\n    }\n  ],\n  \"excludedRiskIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a889f481-23b3-4cd9-ad35-eb1f52d76842",
+              "name": "User requires privilege: TEST_SUITES_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites",
+                    ":testSuiteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "testSuiteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"targetTeamIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scenarios\": [\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"reliabilityTestId\": \"<string>\",\n      \"teamId\": \"<string>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"reliabilityTestId\": \"<string>\",\n      \"teamId\": \"<string>\"\n    }\n  ],\n  \"excludedRiskIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f9c05f48-3f28-4b61-8e5e-a6b502bb3467",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites",
+                    ":testSuiteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "testSuiteId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"targetTeamIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scenarios\": [\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"reliabilityTestId\": \"<string>\",\n      \"teamId\": \"<string>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"policyCategory\": \"<string>\",\n      \"scenarioId\": \"<string>\",\n      \"scenarioType\": \"<string>\",\n      \"reliabilityTestId\": \"<string>\",\n      \"teamId\": \"<string>\"\n    }\n  ],\n  \"excludedRiskIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "85772c77-3cc7-4bd3-8e36-9a0181a72f8d",
+          "name": "Retrieve the default list of available risks to add to a given TestSuite",
+          "request": {
+            "name": "Retrieve the default list of available risks to add to a given TestSuite",
+            "description": {
+              "content": "Requires the privilege [`TEST_SUITES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "test-suites",
+                "detected-risks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "ba6ae022-94a9-4efe-90a6-f040780fad80",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites",
+                    "detected-risks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b7b8abfa-5ca3-4371-81e7-68cf51aa1fdb",
+              "name": "User requires privilege: TEST_SUITES_READ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites",
+                    "detected-risks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6ac0e57e-b515-41d7-9315-2b36f1409fd6",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-suites",
+                    "detected-risks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"string\",\n    \"id\": \"string\",\n    \"mappingExpression\": \"string\",\n    \"evaluationExpression\": \"string\",\n    \"document\": \"string\",\n    \"queryType\": \"AWS_AUTO_SCALING_GROUP\",\n    \"disabled\": true\n  },\n  {\n    \"name\": \"string\",\n    \"id\": \"string\",\n    \"mappingExpression\": \"string\",\n    \"evaluationExpression\": \"string\",\n    \"document\": \"string\",\n    \"queryType\": \"AWS_LOAD_BALANCER\",\n    \"disabled\": true\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "98d00ba8-b2ef-4e96-9d35-3d179b0a7510",
+    "name": "Gremlin agents test-suites API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

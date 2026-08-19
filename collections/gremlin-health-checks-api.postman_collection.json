@@ -1,0 +1,1579 @@
+{
+  "item": [
+    {
+      "id": "c2b67c87-3434-43e8-98d6-1dbecf098126",
+      "name": "health checks",
+      "description": {
+        "content": "Create, read, update, delete health checks as well as test health check endpoint and evaluation configuration",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "88d49f77-8e22-4799-a54e-fb6585e529a3",
+          "name": "Retrieve status checks by Id (or all if the query param is empty)",
+          "request": {
+            "name": "Retrieve status checks by Id (or all if the query param is empty)",
+            "description": {
+              "content": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status-checks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "statusCheckIds",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "statusCheckIds",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "14ce9075-0416-4155-b849-a42dc64c8274",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "statusCheckIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statusCheckIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dd192cc3-7804-4c72-a239-6d4f67114055",
+              "name": "User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "statusCheckIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statusCheckIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "eae0a126-406d-49e6-a9ac-75a09498a9d4",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "statusCheckIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statusCheckIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"teamId\": \"string\",\n    \"identifier\": \"string\",\n    \"isContinuous\": false,\n    \"isPrivateNetwork\": true,\n    \"endpointConfiguration\": {\n      \"url\": \"string\",\n      \"method\": \"PATCH\",\n      \"headers\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"payload\": \"string\",\n      \"headersArn\": \"string\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"okLatencyMaxMs\": 7452,\n      \"responseBodyEvaluation\": {\n        \"op\": \"OR\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"rawEndpointConfiguration\": {\n      \"url\": \"string\",\n      \"method\": \"POST\",\n      \"headers\": {\n        \"key_0\": \"string\"\n      },\n      \"payload\": \"string\",\n      \"headersArn\": \"string\"\n    },\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"thirdPartyPresets\": \"string\",\n    \"createdBy\": \"string\",\n    \"createdAt\": \"2008-04-01T10:42:11.833Z\",\n    \"updatedBy\": \"string\",\n    \"updatedAt\": \"2024-01-13T11:45:47.365Z\",\n    \"teamExternalIntegration\": {\n      \"name\": \"string\",\n      \"type\": \"DATADOG_US3\",\n      \"observabilityToolType\": \"PAGERDUTY\",\n      \"domain\": \"string\"\n    },\n    \"pollingIntervalSeconds\": 6107,\n    \"requestParams\": {\n      \"key_0\": \"string\"\n    },\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  },\n  {\n    \"teamId\": \"string\",\n    \"identifier\": \"string\",\n    \"isContinuous\": true,\n    \"isPrivateNetwork\": false,\n    \"endpointConfiguration\": {\n      \"url\": \"string\",\n      \"method\": \"GET\",\n      \"headers\": {\n        \"key_0\": \"string\"\n      },\n      \"payload\": \"string\",\n      \"headersArn\": \"string\"\n    },\n    \"evaluationConfiguration\": {\n      \"okStatusCodes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"okLatencyMaxMs\": 4933,\n      \"responseBodyEvaluation\": {\n        \"op\": \"AND\",\n        \"predicates\": [\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"jpQuery\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rValue\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"comparator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"rawEndpointConfiguration\": {\n      \"url\": \"string\",\n      \"method\": \"PATCH\",\n      \"headers\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"payload\": \"string\",\n      \"headersArn\": \"string\"\n    },\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"thirdPartyPresets\": \"string\",\n    \"createdBy\": \"string\",\n    \"createdAt\": \"1984-11-11T11:44:16.706Z\",\n    \"updatedBy\": \"string\",\n    \"updatedAt\": \"1996-03-19T03:02:32.509Z\",\n    \"teamExternalIntegration\": {\n      \"name\": \"string\",\n      \"type\": \"DATADOG\",\n      \"observabilityToolType\": \"CUSTOM\",\n      \"domain\": \"string\"\n    },\n    \"pollingIntervalSeconds\": 1219,\n    \"requestParams\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"multiSelectTags\": {\n      \"key_0\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d79615f1-416a-4091-b248-9c092f2b83f3",
+          "name": "Creates a new Status Check",
+          "request": {
+            "name": "Creates a new Status Check",
+            "description": {
+              "content": "Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status-checks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"name\": \"<string>\",\n  \"isContinuous\": \"<boolean>\",\n  \"isPrivateNetwork\": \"<boolean>\",\n  \"description\": \"<string>\",\n  \"rawEndpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"pollingIntervalSeconds\": \"<integer>\",\n  \"category\": \"<string>\",\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"key_1\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b3df851e-2211-4416-af13-d08d205cfadf",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"name\": \"<string>\",\n  \"isContinuous\": \"<boolean>\",\n  \"isPrivateNetwork\": \"<boolean>\",\n  \"description\": \"<string>\",\n  \"rawEndpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"pollingIntervalSeconds\": \"<integer>\",\n  \"category\": \"<string>\",\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ade2a044-0e25-4e27-b3d4-6ba730af1e9d",
+              "name": "User requires privilege for target team: INTEGRATIONS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"name\": \"<string>\",\n  \"isContinuous\": \"<boolean>\",\n  \"isPrivateNetwork\": \"<boolean>\",\n  \"description\": \"<string>\",\n  \"rawEndpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"pollingIntervalSeconds\": \"<integer>\",\n  \"category\": \"<string>\",\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "842377ae-4e4b-4b2d-a9bf-a003b26ccd56",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"name\": \"<string>\",\n  \"isContinuous\": \"<boolean>\",\n  \"isPrivateNetwork\": \"<boolean>\",\n  \"description\": \"<string>\",\n  \"rawEndpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"pollingIntervalSeconds\": \"<integer>\",\n  \"category\": \"<string>\",\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a054f7a5-2424-4702-8516-81d1751a56d4",
+          "name": "retrieve a status check by id",
+          "request": {
+            "name": "retrieve a status check by id",
+            "description": {
+              "content": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status-checks",
+                ":identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "25c04b44-e38c-4208-a11b-9d36c0188429",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "162848da-a2fe-4450-8f98-85beb7955c6f",
+              "name": "User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e8e0ea65-37f2-4e50-9a1e-a379b5e690a3",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"teamId\": \"string\",\n  \"identifier\": \"string\",\n  \"isContinuous\": false,\n  \"isPrivateNetwork\": false,\n  \"endpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"rawEndpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"thirdPartyPresets\": \"string\",\n  \"createdBy\": \"string\",\n  \"createdAt\": \"1965-12-19T04:57:50.274Z\",\n  \"updatedBy\": \"string\",\n  \"updatedAt\": \"1991-09-30T21:49:03.900Z\",\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"pollingIntervalSeconds\": 4266,\n  \"requestParams\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\"\n  },\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0cea9ae8-d1e4-4372-a900-96daafd89775",
+          "name": "Update a given status check",
+          "request": {
+            "name": "Update a given status check",
+            "description": {
+              "content": "Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status-checks",
+                ":identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"name\": \"<string>\",\n  \"isContinuous\": \"<boolean>\",\n  \"isPrivateNetwork\": \"<boolean>\",\n  \"description\": \"<string>\",\n  \"rawEndpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"pollingIntervalSeconds\": \"<integer>\",\n  \"category\": \"<string>\",\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"key_1\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"key_2\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"key_3\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3c957a69-b1cd-47b4-960c-ccc8ac1762b0",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"name\": \"<string>\",\n  \"isContinuous\": \"<boolean>\",\n  \"isPrivateNetwork\": \"<boolean>\",\n  \"description\": \"<string>\",\n  \"rawEndpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"pollingIntervalSeconds\": \"<integer>\",\n  \"category\": \"<string>\",\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "95f55df4-6dc8-4bc6-940d-f982e4e54ebe",
+              "name": "User requires privilege for target team: INTEGRATIONS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"name\": \"<string>\",\n  \"isContinuous\": \"<boolean>\",\n  \"isPrivateNetwork\": \"<boolean>\",\n  \"description\": \"<string>\",\n  \"rawEndpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"pollingIntervalSeconds\": \"<integer>\",\n  \"category\": \"<string>\",\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3b1b77de-10e3-4a16-85cb-f9b110212dc6",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"name\": \"<string>\",\n  \"isContinuous\": \"<boolean>\",\n  \"isPrivateNetwork\": \"<boolean>\",\n  \"description\": \"<string>\",\n  \"rawEndpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"pollingIntervalSeconds\": \"<integer>\",\n  \"category\": \"<string>\",\n  \"multiSelectTags\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a42bc81e-ec62-41a5-a8e8-0d3ad132b307",
+          "name": "Delete a given statuscheck by id",
+          "request": {
+            "name": "Delete a given statuscheck by id",
+            "description": {
+              "content": "Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status-checks",
+                ":identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "654baa59-1a84-46eb-9150-63b0fbbcc051",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bf1b775b-6dab-4908-9fa4-bb7dd32a69f6",
+              "name": "User requires privilege for target team: INTEGRATIONS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "093ddfc0-f31e-4b5c-abf9-af90b14acacb",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bf4c1c85-d9c8-43d3-b6c0-c5e2ab11275e",
+          "name": "Test a status check endpoint configuration.",
+          "request": {
+            "name": "Test a status check endpoint configuration.",
+            "description": {
+              "content": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status-checks",
+                ":runTestEndpoint"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"webhookId\": \"<string>\",\n  \"integrationSpecificValues\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5b76b625-666f-4e24-b87d-138558b06960",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":runTestEndpoint"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"webhookId\": \"<string>\",\n  \"integrationSpecificValues\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9bbaed15-42e1-4dcd-a46b-13a2d9a5c24a",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":runTestEndpoint"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"webhookId\": \"<string>\",\n  \"integrationSpecificValues\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "52b4f115-1ae5-49d9-90bd-13ee71bf442f",
+              "name": "User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":runTestEndpoint"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  },\n  \"webhookId\": \"<string>\",\n  \"integrationSpecificValues\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d65eb212-fc99-4e17-a7b0-fb5b77e32d83",
+          "name": "Test a status check evaluation configuration.",
+          "request": {
+            "name": "Test a status check evaluation configuration.",
+            "description": {
+              "content": "Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status-checks",
+                ":runTestEvaluation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"endpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"testEndpointResponse\": {\n    \"httpStatusCode\": \"<integer>\",\n    \"requestLatencyMs\": \"<integer>\",\n    \"responseBody\": \"<string>\",\n    \"contentType\": \"<string>\"\n  },\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e36916fa-6831-4212-93e9-31021d159fab",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":runTestEvaluation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"endpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"testEndpointResponse\": {\n    \"httpStatusCode\": \"<integer>\",\n    \"requestLatencyMs\": \"<integer>\",\n    \"responseBody\": \"<string>\",\n    \"contentType\": \"<string>\"\n  },\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c5e71221-6781-46c7-9f72-da1caac2b162",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":runTestEvaluation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"endpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"testEndpointResponse\": {\n    \"httpStatusCode\": \"<integer>\",\n    \"requestLatencyMs\": \"<integer>\",\n    \"responseBody\": \"<string>\",\n    \"contentType\": \"<string>\"\n  },\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "eca1ad68-5910-4ba1-b36f-905d57854469",
+              "name": "User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":runTestEvaluation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"evaluationConfiguration\": {\n    \"okStatusCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"okLatencyMaxMs\": \"<integer>\",\n    \"responseBodyEvaluation\": {\n      \"op\": \"<string>\",\n      \"predicates\": [\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        },\n        {\n          \"jpQuery\": \"<string>\",\n          \"rValue\": \"<object>\",\n          \"type\": \"<string>\",\n          \"comparator\": \"<object>\"\n        }\n      ]\n    }\n  },\n  \"endpointConfiguration\": {\n    \"url\": \"<url>\",\n    \"method\": \"<string>\",\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\"\n    },\n    \"payload\": \"<string>\",\n    \"headersArn\": \"<string>\"\n  },\n  \"testEndpointResponse\": {\n    \"httpStatusCode\": \"<integer>\",\n    \"requestLatencyMs\": \"<integer>\",\n    \"responseBody\": \"<string>\",\n    \"contentType\": \"<string>\"\n  },\n  \"teamExternalIntegration\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"observabilityToolType\": \"<string>\",\n    \"domain\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "549c1bec-dad6-4c6d-bd97-7da844670acd",
+          "name": "Update a given status check tags",
+          "request": {
+            "name": "Update a given status check tags",
+            "description": {
+              "content": "Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status-checks",
+                ":identifier",
+                "tags"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key_0\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"key_1\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "32f0a5a8-99d1-4169-89fa-ef59aaf78377",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":identifier",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3c4d5dba-7b44-4656-965b-53af677940ef",
+              "name": "User requires privilege for target team: INTEGRATIONS_WRITE",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":identifier",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "70f940e3-c5e9-4f37-98ac-3796874a02cd",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-checks",
+                    ":identifier",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "cdcb3499-7ef7-4d47-805f-0b2f9a4f2348",
+    "name": "Gremlin agents health checks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

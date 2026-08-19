@@ -1,0 +1,680 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gremlin agents reports API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Loads the Attacks Summary for the specified time period.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/attacks",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "2026-05-01",
+                "type": "query",
+                "description": "team identifier associated with the requester's team"
+              },
+              {
+                "name": "start",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Loads the Client Summary for the specified time period.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/clients",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "2026-05-01",
+                "type": "query",
+                "description": "team identifier associated with the requester's team"
+              },
+              {
+                "name": "start",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Loads the Company Summary for the specified month.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/companies",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "2026-05-01",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Loads the Company Summary PDF for the specified time frame.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/companies/pdf",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "numberOfDataPoints",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "topN",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "groupBy",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Loads the Company Reliability Management Report for the specified time window defaulting to a week.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/companies/reliability-management",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "topN",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeDailyReport",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Loads the company service list and reliability trend for each service for the specified time window defaulting to a month.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/companies/reliability-management/services",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "numberOfDataPoints",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "topN",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Loads the Company Reliability Management Report grouped by query param value of groupBy - defaults to TEAM.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/companies/reliability-management/grouped",
+            "params": [
+              {
+                "name": "groupBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "numberOfDataPoints",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Returns the Risk and Score trends for your company across all associated services",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/companies/trends",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "numberOfDataPoints",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Returns the trend of risks across all services for a given team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/team/detected-risk/trend",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "numberOfDataPoints",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "getReliabilityReportForTeam",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/team/reliability-report",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Loads the team reliability report PDF for the specified time frame.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/team/reliability-report/pdf",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "numberOfDataPoints",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Loads the Reliability report trend for all the services of the team for the specified time period defaulting to 1 months and 4 data points",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/services/reliability-management/reliability-report-trend",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "numberOfDataPoints",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Loads the Reliability report trend for the service for the specified time period defaulting to 1 months and 4 data points",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/services/:serviceId/reliability-management/reliability-report-trend",
+            "params": [
+              {
+                "name": "serviceId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "numberOfDataPoints",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Required when using company session token."
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Returns the trend of Reliability Scores across all services for a given team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/team/reliability-report/trend",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "numberOfDataPoints",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Loads latest risk evaluation for each eligible service for the team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/team/detected-risks-report",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Loads the team risk report PDF for the specified time frame.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/team/detected-risks-report/pdf",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "numberOfDataPoints",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Returns the trend of Reliability Scores across all services for a given team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/team/trends",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "numberOfDataPoints",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Loads the pricing usage for the specified dates and tracking period.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/pricing",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "2026-05-01",
+                "type": "query",
+                "description": "Start date (yyyy-mm-dd) for the pricing usage. Should be within the current contract duration"
+              },
+              {
+                "name": "endDate",
+                "value": "2026-05-01",
+                "type": "query",
+                "description": "End date (yyyy-mm-dd) for the pricing usage. Should be within the current contract duration"
+              },
+              {
+                "name": "trackingPeriod",
+                "value": "",
+                "type": "query",
+                "description": "Tracking period for the pricing usage. Should be either Daily, Weekly or Monthly based on the contract. Defaults to the currently configured period for the company's plan"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "This functionality has moved to GET /reports/teams/paged.Loads the Team Summary for the specified month.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/teams",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Loads the Team Summary for the specified month.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/teams/paged",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "20",
+                "type": "query",
+                "description": "This value determines how many results will be returned per call."
+              },
+              {
+                "name": "pageToken",
+                "value": "None (returns first page)",
+                "type": "query",
+                "description": "Token corresponding to the last page of team summaries retrieved. Pass the pageToken to get the next page of team summaries"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        },
+        {
+          "info": {
+            "name": "Loads the User Summary for the specified time period.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gremlin.com/v1/reports/users",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "2026-05-01",
+                "type": "query",
+                "description": "team identifier associated with the requester's team"
+              },
+              {
+                "name": "start",
+                "value": "2026-05-01",
+                "type": "query"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

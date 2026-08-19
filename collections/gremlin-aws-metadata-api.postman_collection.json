@@ -1,0 +1,573 @@
+{
+  "item": [
+    {
+      "id": "dbd52c13-6ab5-4329-9e71-079302d8b27f",
+      "name": "aws.metadata",
+      "description": {
+        "content": "Get metadata about the AWS IAM role creation for health checks",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1d35d929-a8f3-48d6-9830-d31a62824d49",
+          "name": "Queries Gremlin's view of Autoscaling Groups in a given AWS account",
+          "request": {
+            "name": "Queries Gremlin's view of Autoscaling Groups in a given AWS account",
+            "description": {
+              "content": "This endpoint returns Gremlin's view of Autoscaling Groups in a given AWS account.  The `domain` parameter refers to the AWS AccountId.  \nNOTE: This endpoint may (or may not) return Autoscaling Groups which have already been assigned to Gremlin Services, or ones which we cannot assign to Gremlin Services\nRequires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "aws",
+                "metadata",
+                "autoscaling-groups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "domain",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "mode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "784e9b69-5ed9-4398-a58d-ada6ecbc4436",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "metadata",
+                    "autoscaling-groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f2888bbb-5dc1-4dac-adab-854cc6305e73",
+              "name": "User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "metadata",
+                    "autoscaling-groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b453eaa8-9539-473d-ae11-fc16b0a838a5",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "metadata",
+                    "autoscaling-groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"domain\": \"string\",\n  \"autoscalingGroups\": [\n    {\n      \"name\": \"string\",\n      \"arn\": \"string\",\n      \"region\": \"string\",\n      \"serviceIds\": [\n        \"string\",\n        \"string\"\n      ],\n      \"discoveredAt\": \"1971-09-20T06:21:24.385Z\"\n    },\n    {\n      \"name\": \"string\",\n      \"arn\": \"string\",\n      \"region\": \"string\",\n      \"serviceIds\": [\n        \"string\",\n        \"string\"\n      ],\n      \"discoveredAt\": \"2018-07-29T08:30:59.288Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1ad06f26-1bb8-4f67-ac24-3a63eeecbed4",
+          "name": "Returns the policy document necessary for Gremlin to access AWS resources.",
+          "request": {
+            "name": "Returns the policy document necessary for Gremlin to access AWS resources.",
+            "description": {
+              "content": "This endpoint provides the policy document and associated trust policies so that Gremlin can access an arbitrary AWS account. This endpoint also provides a link to a CloudFormationTemplate for applying this to your AWS account. \nSee: https://www.gremlin.com/docs/aws-quick-start-guide for more info\n\nRequires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "aws",
+                "metadata",
+                "iam-role"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "db8ed442-494e-427c-a262-57f9ca829a21",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "metadata",
+                    "iam-role"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "793973c2-c59e-4878-aa15-115ef4754442",
+              "name": "User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "metadata",
+                    "iam-role"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dbc53fcb-e293-412e-bda7-070b44622226",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "metadata",
+                    "iam-role"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cfnTemplateLink\": \"string\",\n  \"permissionPolicy\": \"string\",\n  \"managedPolicies\": [\n    \"string\",\n    \"string\"\n  ],\n  \"trustPolicy\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "48a09183-9631-4c3b-b0fd-f4f4b5618a9a",
+          "name": "Queries Gremlin's view of Load balancers in a given AWS account",
+          "request": {
+            "name": "Queries Gremlin's view of Load balancers in a given AWS account",
+            "description": {
+              "content": "This endpoint returns Gremlin's view of Load Balancers in a given AWS account.  These can then be used to create Gremlin Services or Intelligent Health checks.  \nThe `domain` parameter refers to the AWS AccountId.  \nNOTE: This endpoint may (or may not) return Load Balancers which have already been assigned to Gremlin Services, or ones which we cannot assign to Gremlin Services (eg. LBs with no hosts behind them)\nRequires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "aws",
+                "metadata",
+                "load-balancers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "domain",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "mode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "(Required) Required when using company session token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "bdbd53ce-9f0f-4e6f-a645-de8cc95dc934",
+              "name": "Authorization header missing or malformed. Please provide proper credentials in the authorization header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "metadata",
+                    "load-balancers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f1224394-db89-4508-8154-00b9cf00e6d9",
+              "name": "User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "metadata",
+                    "load-balancers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4ff14552-9af5-44c7-9b18-05408bd81cb3",
+              "name": "default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "metadata",
+                    "load-balancers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"domain\": \"string\",\n  \"loadBalancers\": [\n    {\n      \"type\": \"string\",\n      \"name\": \"string\",\n      \"arn\": \"string\",\n      \"dnsName\": \"string\",\n      \"region\": \"string\",\n      \"tags\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"serviceIds\": [\n        \"string\",\n        \"string\"\n      ],\n      \"targetingStrategy\": {\n        \"type\": \"string\"\n      },\n      \"targetingStrategyDetectionScore\": 8431.218248625151,\n      \"discoveredAt\": \"1975-07-23T22:17:19.358Z\"\n    },\n    {\n      \"type\": \"string\",\n      \"name\": \"string\",\n      \"arn\": \"string\",\n      \"dnsName\": \"string\",\n      \"region\": \"string\",\n      \"tags\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"serviceIds\": [\n        \"string\",\n        \"string\"\n      ],\n      \"targetingStrategy\": {\n        \"type\": \"string\"\n      },\n      \"targetingStrategyDetectionScore\": 5487.594782973433,\n      \"discoveredAt\": \"2019-10-25T17:11:20.637Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gremlin.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "eb9689f8-11ed-49c8-a1f9-a7a3ca07b04d",
+    "name": "Gremlin agents aws.metadata API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API for interacting with the Gremlin Failure-as-a-Service platform\n\nContact Support:\n Name: Gremlin Support\n Email: support@gremlin.com",
+      "type": "text/plain"
+    }
+  }
+}

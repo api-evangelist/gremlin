@@ -1,0 +1,488 @@
+# Gremlin — Full Content
+
+> Gremlin is the #1 enterprise reliability platform, offering Chaos Engineering and reliability management tools to help organizations uncover and fix availability risks before they impact users.
+
+---
+
+## URL: https://www.gremlin.com/
+## Title: Reliability Testing & Chaos Engineering | Gremlin
+
+### Protect your uptime
+
+Only Gremlin shows you how systems respond to actual failures. Gremlin eliminates reliability blind spots so you can improve resilience and prevent outages. Free for 30 days. No credit card required.
+
+### Get the reliability data you've been missing
+
+Gremlin safely simulates real failure conditions, giving you accurate, actionable data about how your systems respond, enabling you to make data-driven decisions with a provable impact on system reliability.
+
+**Track your reliability and resilience**
+- Standard test suites for the biggest risks
+- Robust reliability reports for tracking and visibility
+- Enterprise management and control
+
+**Move faster with intelligent recommendations and insights**
+- Machine learning root cause analysis for failed tests
+- Recommended remediations for faster resolution
+- MCP server for LLM integration and data exploration
+
+**Automate disaster recovery testing and compliance**
+- Validate Business Continuity and Disaster Recovery plans
+- Ensure standards across your entire organization
+- Auditable reporting for compliance verification
+
+**Automatically uncover reliability risks**
+- Detect the most common Kubernetes and cloud risks
+- Map systems with Dependency Discovery
+- Track risks over time with centralized reporting
+
+**Improve application layer reliability with Failure Flags**
+- Test application-level failures including specific error codes
+- Verify resilience for serverless systems
+- Run failure tests on service mesh applications
+
+### Customer Quotes
+
+"We couldn't have done this without Gremlin and the close working relationship we have with them." — Chris Kempster, Senior NFT Engineer, Visa
+
+"I haven't seen anything that competes. Gremlin has a focus and you nailed the focus. I'm looking for tools that do what they do well and better than everybody else." — Ranbir Chawla, SVP of Engineering, Ritchie Bros.
+
+"Do you want to find out about [problems] when you're looking for them during business hours...or do you want to find out about them at 3:00 AM and you're in this half asleep haze trying to then troubleshoot an issue?" — Matthew Simons, Director of Engineering, Workiva
+
+"We wanted a practice that would allow us to experiment and uncover problems we hadn't even thought of yet. [With Gremlin,] we can learn a lot about how our systems work and how we can make them better." — Doug Campbell, Senior Site Reliability Engineer, Grubhub
+
+---
+
+## URL: https://www.gremlin.com/product
+## Title: Reliability and Chaos Engineering Platform | Gremlin
+
+### The #1 enterprise reliability platform
+
+Find and fix availability risks before they impact your users with Gremlin's Chaos Engineering and reliability monitoring, testing, and reporting tools. Free for 30 days. No credit card required.
+
+### A new approach to reliability
+
+Today's ephemeral and complex systems are a minefield of reliability risks, including unknown dependencies, misconfigured autoscaling, missing or broken redundancies, untested resilience hacks, and non-compliant architecture.
+
+Gremlin is built to find and fix these risks so you can deliver the availability your users demand at the speed and scale of today's enterprise technology organizations.
+
+### Recreate incidents and outages
+
+Run Chaos Engineering experiments and reliability tests safely and easily.
+- Uncover common availability risks using pre-built Reliability Tests.
+- Build custom Chaos Engineering experiments designed for your architecture.
+- Keep your systems strong with enterprise safety and security features.
+
+### Highlight your biggest risks to availability
+
+Prioritize risks and communicate them across the organization to drive action.
+- Use automated and repeatable testing to discover availability risks before they cause an incident.
+- Get actionable reports to prioritize risks and work across the organization to fix them.
+- Seamlessly integrate testing with your CI/CD pipeline and observability tools.
+
+### Build confidence in your systems
+
+Continuously measure and improve your reliability, resiliency, and availability.
+- Align around standardized reliability scores to predict the availability of your systems.
+- Track reliability scores over time to create metrics that show your reliability posture.
+- Use dashboards and shared reports to prove reliability improvements to your organization.
+
+### How Gremlin works
+
+Gremlin uses Chaos Engineering principles to test the resiliency and reliability of your software. By deliberately introducing stress or failure in a controlled environment, you can locate weaknesses and risks safely—and fix them before they impact your users.
+
+### The Gremlin Reliability Platform — Everything you need
+
+- **Safe and secure fault injection suite**: Perform chaos engineering experiments to recreate past incidents and specific failure modes.
+- **Standardized reliability test suite**: Run pre-built reliability tests to quickly find, fix, and validate unidentified reliability risks.
+- **Collaborative GameDay manager**: Prepare, run, and learn from GameDays — organized team events to proactively improve reliability.
+- **Service reliability scores & dashboard**: Identify reliability risk and track progress over time at scale.
+- **Enterprise ready out of the box**: Multi-factor authentication, SSO, RBAC, full audit trails, and SOC 2 compliance.
+
+### Use cases
+
+- Prove systems are reliable before launches and high-scale events.
+- Ensure cloud and Kubernetes migrations are on time and reliable.
+- Achieve disaster recovery and cloud compliance targets.
+- Increase velocity while improving overall reliability posture.
+
+### Supported platforms
+
+Gremlin is a cloud-native platform that runs in any environment. Gremlin supports all public cloud environments — AWS, Azure, and GCP — and runs on Linux, Windows, containerized environments like Kubernetes, and even on-premises with Gremlin Private Edition.
+
+### Enterprise-grade security and compliance
+
+Gremlin is SOC 2 compliant and follows industry-standard security practices.
+- **Secure User Management**: Multi-factor authentication, Secure Single Sign On, and Role-Based Access Control (RBAC).
+- **Audit Trails**: Every action on the platform is tracked for compliance.
+- **Least Permissions**: Gremlin runs on default Linux permissions and doesn't require root access.
+- **3rd Party Testing**: Gremlin regularly undergoes security auditing by a third party.
+
+---
+
+## URL: https://www.gremlin.com/chaos-engineering
+## Title: What is Chaos Engineering? | Gremlin
+
+### What is Chaos Engineering?
+
+Chaos Engineering is a practice that aims to help us improve our systems by teaching us new things about how they operate. It involves injecting faults into systems (such as high CPU consumption, network latency, or dependency loss), observing how our systems respond, then using that knowledge to make improvements.
+
+To put it simply, Chaos Engineering identifies hidden problems that could arise in production. Identifying these issues beforehand lets us address systemic weaknesses, make our systems fault-tolerant, and prevent outages in production.
+
+Chaos Engineering goes beyond traditional failure testing in that it's not only about verifying assumptions. It helps us explore the unpredictable things that could happen, and discover new properties of our inherently chaotic systems.
+
+Chaos Engineering as a discipline was originally formalized by Netflix, who created Chaos Monkey — the first well-known Chaos Engineering tool — which worked by randomly terminating Amazon EC2 instances. Since then, Chaos Engineering has grown to include dozens of tools used by hundreds of teams around the world.
+
+### How does Chaos Engineering work?
+
+Chaos Engineering involves running thoughtful, planned experiments that teach us how our systems behave in the face of failure. These experiments follow three steps:
+
+1. **Plan an experiment** — Form a hypothesis about how a system should behave when something goes wrong. For example: if your primary web server fails, can you automatically failover to a redundant server?
+2. **Contain the blast radius** — Limit the scope of your experiment to only the systems you want to test. Start by testing a single non-production server instead of your entire production deployment.
+3. **Scale or squash the experiment** — Run and observe the experiment. Look for both successes and failures. Did your systems respond the way you expected?
+
+### Why would you break things on purpose?
+
+Chaos Engineering is often called "breaking things on purpose," but the reality is much more nuanced. Think of a vaccine, where you inject yourself with a small amount of a potentially harmful substance in order to build resistance. Chaos Engineering is a tool we use to build such immunity in our technical systems. We inject harm (like latency, CPU failure, or network black holes) to find and mitigate potential weaknesses.
+
+According to the 2021 State of Chaos Engineering report, the most common outcomes of Chaos Engineering are increased availability, lower MTTR, lower MTTD, fewer bugs shipped to production, and fewer outages. Teams who frequently run Chaos Engineering experiments are more likely to have >99.9% availability.
+
+### What's the role of Chaos Engineering in distributed systems?
+
+Distributed systems are inherently more complex than monolithic systems. The eight fallacies of distributed systems (originally articulated at Sun Microsystems) describe false assumptions engineers make:
+- The network is reliable
+- Latency is zero
+- Bandwidth is infinite
+- The network is secure
+- Topology doesn't change
+- There is one administrator
+- Transport cost is zero
+- The network is homogeneous
+
+Many of these fallacies drive the design of Chaos Engineering experiments such as "packet-loss attacks" and "latency attacks."
+
+### Chaos Engineering vs. performance engineering
+
+Performance Engineering tests systems under ideal conditions to ensure they can scale. Chaos Engineering tests whether systems remain resilient under failure conditions. **Scaling is incomplete without coupling scaling with resilience.** Chaos Engineering and Performance Engineering are complementary — companies who adopt both not only have the ability to scale but scale in a way that keeps resiliency top of mind.
+
+### Metrics for Chaos Engineering
+
+Before running Chaos Engineering experiments, collect baseline metrics across four categories:
+
+1. **Infrastructure monitoring metrics**: CPU, IO, Disk, Memory, Network DNS, Latency, Packet Loss. Tools: Datadog, New Relic, SignalFX.
+2. **Alerting and on-call metrics**: Total alert counts by service, time to resolution, noisy alerts, top alerts by frequency. Tools: PagerDuty, VictorOps, OpsGenie.
+3. **High Severity Incident (SEV) metrics**: Total incidents per week by SEV level, MTTD/MTTR/MTBF per service.
+4. **Application metrics**: Error rates, exception tracking. Tools: Sentry, Honeycomb.
+
+### Chaos Engineering use cases
+
+**Demonstrating regulatory compliance**
+- Verify RTO and RPO targets.
+- Test automated incident mitigation (redundant instances, database failover, data recovery).
+- Confirm monitoring tools send alerts when necessary.
+- Test system performance under heavy load.
+- Demonstrate resilience against DDoS or cyber attacks.
+
+**Maximizing resilience**
+Chaos Engineering uncovers unexpected problems in complex systems, verifies fallback and failover mechanisms work as expected, and teaches engineers how to maximize resilience to failure.
+
+**Site reliability**
+Running Chaos Engineering experiments validates that systems and infrastructure are reliable so that developers can feel confident deploying workloads onto them.
+
+**Disaster recovery**
+Chaos Engineering lets teams simulate disaster-like conditions to test their disaster recovery plans and processes, gain valuable training, and ensure real-world disasters are responded to quickly, efficiently, and safely.
+
+### Benefits of Chaos Engineering
+
+**Business benefits**
+- Reduce risk of incidents and outages (and their associated lost revenue).
+- Competitive advantage through high availability.
+- Avoid heavy fines in regulated industries (financial services, government, healthcare).
+- Accelerate failure mode identification practices such as FMEA.
+
+**Engineering benefits**
+- Reduction in incidents and on-call burden.
+- Better understanding of system design and failure modes.
+- Faster MTTD and reduction in SEV-1 incidents.
+- Confidence through knowledge of failure modes and recovery mechanisms.
+- Improved incident response processes through GameDay practice.
+
+**Customer benefits**
+- Outages are less likely to disrupt customers.
+- Increased reliability, durability, and availability.
+
+### Containerization and Chaos Engineering
+
+**AWS**: In 2020, AWS added Chaos Engineering to the reliability pillar of the Well-Architected Framework. Gremlin supports all major AWS services including EC2, EKS, Lambda, and integrates via AWS PrivateLink.
+
+**Microsoft Azure**: Gremlin tests Windows-specific risks including WSFC, SQL Server Always On availability groups, and Microsoft Exchange Server back pressure.
+
+**Kubernetes**: Gremlin enables teams using, adopting, or planning Kubernetes migrations to ensure they're ready for the complexity and risks of production Kubernetes deployments.
+
+### Getting started with Chaos Engineering
+
+1. Consider the potential failure points in your environment.
+2. Create a hypothesis about a potential failure scenario.
+3. Identify the smallest set of systems you can test (blast radius).
+4. Run a Chaos Engineering experiment on those systems.
+5. Observe the results and form a conclusion.
+
+If the experiment reveals a failure mode, address it and re-run the experiment to confirm the fix. If not, scale up the experiment to a larger blast radius.
+
+### Industry applications
+
+**Financial services**
+- Improve reliability while reducing IT costs.
+- Improve the customer experience with faster, more resilient systems.
+- Proactively test systems for compliance with regulatory agencies.
+
+**Tech Business Management (TBM)**
+Chaos Engineering supports TBM goals by improving customer satisfaction through better reliability, and by reducing time to find and resolve problems.
+
+### Featured Tutorials
+
+- [Testing disaster recovery with Chaos Engineering](https://www.gremlin.com/community/tutorials/testing-disaster-recovery-with-chaos-engineering)
+- [Improving the reliability of financial services with Chaos Engineering](https://www.gremlin.com/community/tutorials/improving-the-reliability-of-financial-services-with-chaos-engineering)
+- [Visualize Chaos Experiments in Grafana with Gremlin webhooks](https://www.gremlin.com/community/tutorials/visualize-chaos-experiments-in-grafana-with-gremlin-webhooks)
+- [How to Set Up Chaos Engineering in your Continuous Delivery pipeline with Gremlin and Jenkins](https://www.gremlin.com/community/tutorials/how-to-set-up-chaos-engineering-in-your-continuous-delivery-pipeline-with-gremlin-and-jenkins)
+- [How to simulate missing and failed dependencies using Gremlin](https://www.gremlin.com/community/tutorials/how-to-simulate-missing-and-failed-dependencies-using-gremlin)
+- [How to simulate a zone/region evacuation using Gremlin](https://www.gremlin.com/community/tutorials/how-to-simulate-a-zone-region-evacuation-using-gremlin)
+- [How to run a Chaos Engineering experiment on AWS Lambda using Failure Flags (Java)](https://www.gremlin.com/community/tutorials/how-to-run-a-chaos-engineering-experiment-on-aws-lambda-using-java-and-failure-flags)
+- [How to run a Chaos Engineering experiment on AWS Lambda using Failure Flags (Python)](https://www.gremlin.com/community/tutorials/how-to-run-a-chaos-engineering-experiment-on-aws-lambda-using-python-and-failure-flags)
+- [How to run an experiment on AWS Lambda using Failure Flags and Node.js](https://www.gremlin.com/community/tutorials/how-to-run-a-chaos-engineering-experiment-on-aws-lambda-using-failure-flags)
+- [How to run multiple experiments in parallel using Gremlin](https://www.gremlin.com/community/tutorials/how-to-run-multiple-experiments-in-parallel-using-gremlin)
+- [How to use your Gremlin reliability score in Jenkins to ensure reliable releases](https://www.gremlin.com/community/tutorials/how-to-use-reliability-score-as-jenkins-gate)
+- [How to create a custom Test Suite](https://www.gremlin.com/community/tutorials/how-to-create-a-custom-test-suite)
+
+---
+
+## URL: https://www.gremlin.com/about
+## Title: About Gremlin
+
+### About Us
+
+Gremlin helps engineering teams proactively manage reliability at scale. The platform makes it easy to uncover risks, run automated tests, and validate disaster recovery — so teams can stay ahead of outages and deliver a better customer experience. Trusted by leading enterprises, Gremlin goes beyond Chaos Engineering to give full visibility and control over reliability posture — especially critical in the era of AI, where uptime and trust matter more than ever.
+
+### Company Timeline
+
+**2026**
+- Gremlin announces Disaster Recovery Testing, enabling teams to safely and efficiently test zone, region, and datacenter evacuations and failover.
+
+**2025**
+- November: Gremlin partners with Dynatrace to streamline reliability testing for Kubernetes environments.
+- August: Gremlin announces Reliability Intelligence, empowering teams with custom-tailored experiment analysis, recommended remediations, and reliability insights.
+- April: Gremlin announces support for Linkerd, Kubernetes sidecar containers, and SAML claims aliasing.
+- March: Gremlin announces cross-region connectivity for AWS PrivateLink.
+- February: Gremlin announces Private Edition — a fully isolated version of Gremlin deployable within your own private network.
+- January: Gremlin announces new features to help teams review and manage their activity in Gremlin.
+
+**2024**
+- October: Gremlin releases Failure Flags support for services running on the Istio service mesh (via Envoy).
+- September: Gremlin releases Argo Rollouts support for experiments and services.
+- July: Gremlin announces customizable RBAC.
+- June: Gremlin announces Gremlin for AWS, with streamlined onboarding and auto-configured Intelligent Health Checks.
+- January: Gremlin releases Private Network Integration (PNI) agent scoping to individual teams.
+
+**2023**
+- September: Gremlin announces Failure Flags for testing application reliability on AWS Lambda and other serverless platforms.
+- August: Gremlin launches the Gremlin Enterprise Chaos Engineering Certification (GECEC) program, issuing over 2,000 credentials in its first year. Also announces Detected Risks for automatic reliability risk detection.
+
+**2022**
+- November: Gremlin announces the Certificate Expiry test for Reliability Management.
+- September: Gremlin launches the world's first Reliability Management Platform, including pre-built reliability tests, customizable test suites, automatic service and dependency detection, and more.
+
+**2021**
+- April: Gremlin announces Automatic Service Discovery.
+- January: Gremlin announces the first-ever State of Chaos Engineering report and unlocks entire library of attacks on Gremlin Free.
+
+**2020**
+- June: Gremlin achieves AWS DevOps Competency Status.
+- March: Gremlin launches Failover Conf.
+
+**2019**
+- November: Gremlin announces Chaos Engineering on Kubernetes.
+- September: Gremlin launches Scenarios to simulate real-world outages.
+- August: Gremlin completes SOC 2 Type II certification.
+- February: Gremlin launches free Chaos Monkey as-a-Service.
+
+**2018**
+- September: Gremlin raises $18M Series B and announces Application Level Fault Injection (ALFI).
+- August: Gremlin announces container support as first-class citizens.
+- February: Gremlin establishes the Gremlin Community.
+
+**2017**
+- December: Gremlin officially launches and announces $7.5M Series A Funding.
+- November: Gremlin wins "Rookie of the Year" at AWS re:Invent 2017.
+- July: Gremlin begins performing annual penetration testing.
+
+**Historical milestones**
+- 2014: The role "Chaos Engineer" is coined.
+- 2012: Netflix shares the source code for Chaos Monkey on GitHub.
+- 2009: Kolton Andrus builds fault injection at Amazon.
+
+### Media Coverage (Selected)
+
+- "The Shift from Chaos to Controlled Reliability Testing" — SD Times, February 3, 2026
+- "Gremlin Launches Disaster Recovery Testing, Helping Businesses Prepare for Catastrophic Events" — PR Newswire, February 3, 2026
+- "Gremlin CEO: Why 2026 Will Be AI's Reality Check Year and Data Control Will Dominate" — TFiR, January 29, 2026
+
+---
+
+## URL: https://www.gremlin.com/technologies/fault-injection
+## Summary: Fault Injection Technology
+
+Fault injection is Gremlin's core mechanism for testing system robustness. Gremlin supports a wide variety of fault types:
+
+- **Resource attacks**: CPU, Memory, Disk I/O, Disk Space
+- **State attacks**: Shutdown/reboot of hosts or containers, process killing, time skew (clock manipulation)
+- **Network attacks**: Latency, packet loss, packet corruption, bandwidth throttling, DNS failures, blackhole (blocking all/specific network traffic)
+- **Application-level attacks** (via Failure Flags): custom error injection, latency at the code level for serverless and service mesh architectures
+
+Gremlin's fault injection is designed to be "safe, secure, and simple" — controlled experiments with configurable blast radii, automatic halt conditions, and full audit trails.
+
+---
+
+## URL: https://www.gremlin.com/technologies/reliability-scoring
+## Summary: Reliability Scoring Technology
+
+Gremlin's Reliability Scoring allows organizations to:
+- Define custom reliability tests for their services.
+- Automatically run tests and generate a numerical reliability score per service.
+- Track scores over time to demonstrate improvements to leadership.
+- Use scores as gates in CI/CD pipelines (e.g., Jenkins) to prevent unreliable code from reaching production.
+- Share dashboards across teams to align on reliability posture.
+
+---
+
+## URL: https://www.gremlin.com/technologies/detected-risks
+## Summary: Detected Risks Technology
+
+Detected Risks continuously scans systems for known reliability anti-patterns without requiring manual test execution. It:
+- Detects the most common Kubernetes and cloud reliability risks automatically.
+- Surfaces actionable findings with remediation guidance.
+- Tracks risk exposure over time with centralized reporting.
+- Covers issues like missing resource limits, improper pod disruption budgets, absent readiness probes, single points of failure, and more.
+
+---
+
+## URL: https://www.gremlin.com/technologies/dependency-discovery
+## Summary: Dependency Discovery Technology
+
+Dependency Discovery automatically maps the dependencies between your services and infrastructure. It:
+- Identifies upstream and downstream service dependencies without manual configuration.
+- Enables targeted chaos experiments on specific dependency paths.
+- Helps teams understand how failures propagate through the system.
+- Integrates with the broader Gremlin platform to recommend relevant reliability tests based on discovered topology.
+
+---
+
+## URL: https://www.gremlin.com/technologies/failure-flags
+## Summary: Failure Flags Technology
+
+Failure Flags is Gremlin's SDK-based approach to application-level fault injection. Unlike agent-based fault injection, Failure Flags:
+- Does not require system-level access or Gremlin agents.
+- Works with serverless platforms like AWS Lambda.
+- Works with service mesh architectures like Istio (via Envoy) and Linkerd.
+- Supports Node.js, Python, Java, and Go SDKs.
+- Allows teams to inject specific error codes, add latency at the function level, and simulate application-layer failures.
+
+---
+
+## URL: https://www.gremlin.com/technologies/reliability-intelligence
+## Summary: Reliability Intelligence Technology
+
+Reliability Intelligence is Gremlin's AI-powered analysis layer. It:
+- Uses machine learning to perform root cause analysis on failed reliability tests.
+- Provides recommended remediations tailored to the specific failure mode and system context.
+- Generates custom-tailored reliability insights and summaries for teams and leaders.
+- Includes an MCP (Model Context Protocol) server for integration with LLMs and AI-powered workflows.
+
+---
+
+## URL: https://www.gremlin.com/technologies/disaster-recovery-testing
+## Summary: Disaster Recovery Testing Technology
+
+Disaster Recovery Testing (announced February 2026) allows organizations to:
+- Validate zone failover processes (e.g., evacuate traffic from a failed availability zone).
+- Test region failover and multi-region failover scenarios.
+- Validate datacenter evacuation procedures.
+- Test incident response procedures and runbooks in a controlled environment.
+- Generate auditable reports for compliance verification (BCDR compliance).
+- Automate DR tests on a schedule to ensure plans remain current.
+
+---
+
+## URL: https://www.gremlin.com/technologies/gremlin-private-edition
+## Summary: Gremlin Private Edition
+
+Gremlin Private Edition (announced February 2025) is a fully isolated deployment of the Gremlin platform within your own private network. It is designed for organizations with strict data sovereignty, network isolation, or compliance requirements. Key characteristics:
+- All Gremlin components run within the customer's private network.
+- No data leaves the customer environment.
+- Supports the same full feature set as Gremlin SaaS.
+- Enables use of Gremlin for air-gapped or highly regulated environments.
+
+---
+
+## URL: https://www.gremlin.com/pricing
+## Summary: Pricing
+
+Gremlin offers a free 30-day trial with no credit card required. For pricing details on paid plans, visit https://www.gremlin.com/pricing or contact Gremlin's sales team.
+
+---
+
+## URL: https://www.gremlin.com/security
+## Summary: Security
+
+Gremlin is SOC 2 Type II certified. Security practices include:
+- Multi-factor authentication (MFA)
+- Single Sign-On (SSO)
+- Role-Based Access Control (RBAC) with customizable roles (announced July 2024)
+- Complete audit trails for all platform actions
+- Least-privilege Linux permissions (no root access required)
+- Annual third-party penetration testing (since July 2017)
+- AWS PrivateLink support with cross-region connectivity
+
+---
+
+## URL: https://www.gremlin.com/certification
+## Summary: Certifications
+
+Gremlin offers two certification programs:
+- **Gremlin Certified Chaos Engineering Practitioner (GCCEP)**: Free certification validating foundational Chaos Engineering knowledge.
+- **Gremlin Enterprise Chaos Engineering Certification (GECEC)**: Enterprise-level certification launched August 2023; over 2,000 credentials issued in the first year.
+
+---
+
+## Integrations & Ecosystem
+
+Gremlin integrates with major observability, CI/CD, and cloud platforms including:
+- **Observability**: Datadog, New Relic, SignalFX, Grafana (via webhooks), Dynatrace (partnership announced November 2025), Honeycomb, Sentry
+- **Alerting**: PagerDuty, VictorOps, OpsGenie
+- **CI/CD**: Jenkins, Argo Rollouts
+- **Cloud**: AWS (EC2, EKS, Lambda, PrivateLink), Microsoft Azure, Google Cloud Platform
+- **Container orchestration**: Kubernetes, Docker
+- **Service mesh**: Istio (via Envoy), Linkerd
+- **Authentication**: SSO/SAML (with claims aliasing support)
+- **AI/LLM**: MCP server for Reliability Intelligence
+
+---
+
+## Key Terminology
+
+- **Chaos Engineering**: A disciplined practice of injecting failures into systems to identify weaknesses before they cause outages.
+- **Blast radius**: The scope of systems affected by a Chaos Engineering experiment; should be minimized initially and expanded as confidence grows.
+- **Fault injection**: The deliberate introduction of failure conditions (CPU stress, network latency, etc.) into a system.
+- **Reliability test**: A pre-built, repeatable test that checks a system against a known reliability standard or risk.
+- **Test suite**: A collection of reliability tests run together as a single testing harness.
+- **GameDay**: An organized team event where engineers deliberately introduce failures to practice incident response and improve reliability.
+- **Failure Flags**: SDK-based application-level fault injection for serverless and service mesh architectures.
+- **Detected Risks**: Automatically identified reliability anti-patterns in Kubernetes and cloud environments.
+- **Reliability Score**: A numerical metric representing a service's reliability posture, derived from automated test results.
+- **MTTD**: Mean Time to Detect — how quickly a team detects an incident.
+- **MTTR**: Mean Time to Recover — how quickly a team resolves an incident.
+- **RTO**: Recovery Time Objective — the target time to restore service after a disaster.
+- **RPO**: Recovery Point Objective — the acceptable amount of data loss measured in time after a disaster.
+- **SEV (Severity) Incident**: A tiered classification for high-severity incidents (e.g., SEV-0, SEV-1, SEV-2, SEV-3).
+- **DR / DRP**: Disaster Recovery / Disaster Recovery Plan — formal procedures for restoring IT operations after a disruptive event.
+- **BCDR**: Business Continuity and Disaster Recovery.
+- **SRE**: Site Reliability Engineering — a discipline that applies software engineering principles to operations.
+- **WAF**: AWS Well-Architected Framework — a set of best practices for building reliable, secure, efficient, and cost-effective cloud systems.
