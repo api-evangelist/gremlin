@@ -1,0 +1,154 @@
+slug: gremlin
+provider: Gremlin
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 13
+edges:
+- tag: disaster-recovery-tests
+  spec_file: gremlin-disaster-recovery-tests-api-openapi.yml
+  capability_id: BC-4220.60
+  capability_id_l1: BC-4220
+  capability_name: Disaster Recovery & Resilience
+  confidence: 0.8
+  evidence: POST /disaster-recovery-tests 'Creates a disaster recovery test for a company'; POST /disaster-recovery-tests/{identifier}/run-all
+    'Creates scenario runs for all eligible services for the disaster recovery test'; POST /disaster-recovery-tests/{identifier}/complete
+    'Marks a disaster recovery test ... as completed, generating a report'
+  reason: Full lifecycle of disaster-recovery tests — create, run scenarios per service, halt, complete
+    and report. This is squarely disaster-recovery exercising and resilience validation of the service;
+    only residual ambiguity is BC-160.40 under business continuity.
+- tag: gamedays
+  spec_file: gremlin-gamedays-api-openapi.yml
+  capability_id: BC-4220.60
+  capability_id_l1: BC-4220
+  capability_name: Disaster Recovery & Resilience
+  confidence: 0.8
+  evidence: POST /gamedays  createGameDayPlan  Create new GameDay plan; POST /gamedays/{gameDayId}/runs/{scenarioId}  runScenarioForGameDay
+  reason: GameDays are planned resilience/chaos exercises with scenario runs and summaries — disaster-recovery
+    and resilience exercises.
+- tag: kubernetes.attacks
+  spec_file: gremlin-kubernetes-attacks-api-openapi.yml
+  capability_id: BC-4220.60
+  capability_id_l1: BC-4220
+  capability_name: Disaster Recovery & Resilience
+  confidence: 0.8
+  evidence: POST /kubernetes/attacks/new createAttack Legacy endpoint for creating K8s attacks; "Halt
+    all active attacks"
+  reason: 'Gremlin chaos engineering: creating and halting controlled failure experiments against Kubernetes
+    workloads. This is resilience testing of the running service, best fit under SaaS Platform Operations
+    / Disaster Recovery & Resilience (DR exercises, resilience validation).'
+- tag: roles
+  spec_file: gremlin-roles-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: GET /roles — "Returns all roles and privileges"; POST /roles — "Create a new custom role";
+    schemas Privileges, PrivilegeDefinition
+  reason: Full CRUD over custom roles and their privileges is role-based access control administration,
+    which realises Identity & Access Management rather than any chaos-engineering capability.
+- tag: disaster-recovery-test-reports
+  spec_file: gremlin-disaster-recovery-test-reports-api-openapi.yml
+  capability_id: BC-4220.60
+  capability_id_l1: BC-4220
+  capability_name: Disaster Recovery & Resilience
+  confidence: 0.75
+  evidence: GET /disaster-recovery-test-reports/{identifier} 'Gets a disaster recovery test report'; GET
+    /disaster-recovery-test-reports/{identifier}/pdf 'Gets a disaster recovery test report as PDF'
+  reason: Retrieval and PDF export of disaster-recovery test reports with reliability test results and
+    status checks — the reporting artefact of DR exercises for the service. BC-4220.60 explicitly covers
+    disaster-recovery exercises; BC-160.40 is the plausible alternative reading, hence not full confidence.
+- tag: failure-flags.experiments
+  spec_file: gremlin-failure-flags-experiments-api-openapi.yml
+  capability_id: BC-4220.60
+  capability_id_l1: BC-4220
+  capability_name: Disaster Recovery & Resilience
+  confidence: 0.75
+  evidence: POST /failure-flags/experiments/{id}/run  runExperiment  Run an Experiment by team and ID;
+    "chaos engineering platform ... running controlled failure experiments"
+  reason: Chaos experiments injecting failure to validate resilience map to SaaS Platform Operations,
+    disaster recovery & resilience (resilience exercises). Not product A/B experimentation.
+- tag: attacks
+  spec_file: gremlin-attacks-api-openapi.yml
+  capability_id: BC-4220.60
+  capability_id_l1: BC-4220
+  capability_name: Disaster Recovery & Resilience
+  confidence: 0.72
+  evidence: POST /attacks createNewAttack 'Create a new attack.'; GET /attacks/active/paged 'Return a
+    page of active ad-hoc experiments.'; DELETE /attacks 'Idempotently halt all active attacks'
+  reason: '''Attacks'' here are chaos-engineering failure experiments run against running services, with
+    halt controls and execution summaries. That is resilience/DR exercising of the service estate. Some
+    ambiguity between BC-4220.60 (resilience exercises for the service) and BC-160.40 (business continuity
+    exercises); the operations are service-level fault injection, so platform-ops resilience is the better
+    fit.'
+- tag: health checks
+  spec_file: gremlin-health-checks-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.7
+  evidence: POST /status-checks  Creates a new Status Check; POST /status-checks/{runTestEndpoint}  Test
+    a status check endpoint configuration.
+  reason: Status checks probe service endpoints and evaluate responses during experiments — synthetic
+    monitoring/observability of the running service.
+- tag: load-generators
+  spec_file: gremlin-load-generators-api-openapi.yml
+  capability_id: BC-4220.50
+  capability_id_l1: BC-4220
+  capability_name: Capacity & Performance Management
+  confidence: 0.7
+  evidence: POST /load-generator createLoadGenerator "Create Load Generator"
+  reason: Load generators drive traffic against services during experiments — this is performance/load
+    testing of the service, mapping to Capacity & Performance Management. Moderate confidence as it also
+    serves the resilience-experiment flow.
+- tag: reliability-management
+  spec_file: gremlin-reliability-management-api-openapi.yml
+  capability_id: BC-4220.10
+  capability_id_l1: BC-4220
+  capability_name: Service Reliability Engineering
+  confidence: 0.7
+  evidence: GET /reliability-management/services/{serviceId} getServiceDetails "Loads the service details
+    and score"
+  reason: Provides a reliability score per service — measurement and stewardship of service reliability
+    posture, fitting Service Reliability Engineering. Only one endpoint, so moderate confidence.
+- tag: reliability-report
+  spec_file: gremlin-reliability-report-api-openapi.yml
+  capability_id: BC-4220
+  capability_id_l1: BC-4220
+  capability_name: SaaS Platform Operations Management
+  confidence: 0.7
+  evidence: GET /policies/{serviceId}/reliability-report — "Get the reliability report for a specified
+    service."; schemas ReliabilityCategorySummary, ScoreSummaryResponse
+  reason: Reports a per-service reliability score/summary for a running service, which sits within SaaS
+    platform reliability operations. Evidence does not clearly name a single sub-capability (SLO stewardship
+    vs resilience exercise reporting), so only the L1 is asserted.
+- tag: reliability-tests
+  spec_file: gremlin-reliability-tests-api-openapi.yml
+  capability_id: BC-4220.60
+  capability_id_l1: BC-4220
+  capability_name: Disaster Recovery & Resilience
+  confidence: 0.7
+  evidence: POST /reliability-tests/{reliabilityTestId}/runs — "Run a reliability test for a service.";
+    schemas GameDayInfo, ScenarioRunResults
+  reason: Operations create and run repeated reliability/failure tests against services, with game-day
+    metadata — i.e. resilience exercises for the running service. Mapped to Disaster Recovery & Resilience,
+    which covers resilience/DR exercises; some residual ambiguity with reliability engineering measurement.
+- tag: scenarios
+  spec_file: gremlin-scenarios-api-openapi.yml
+  capability_id: BC-4220.60
+  capability_id_l1: BC-4220
+  capability_name: Disaster Recovery & Resilience
+  confidence: 0.7
+  evidence: POST /scenarios — "Create a new scenario."; GET /scenarios/active-runs — "List all active
+    scenarios."; schemas ScenarioRunResults, RollbackExternalActionNode, GameDayInfo
+  reason: Scenarios are this vendor's chaos/failure-injection experiment definitions and runs against
+    services — authoring and executing resilience exercises on the production service. Sub-capability
+    choice (resilience exercises) is the closest fit but not uniquely determined.
