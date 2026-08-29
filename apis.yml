@@ -4,6 +4,18 @@ description: >-
   Gremlin is a chaos engineering platform that helps teams build more resilient systems by running controlled failure
   experiments. It provides tools to simulate infrastructure failures, network issues, and resource exhaustion to
   identify and fix weaknesses before they cause real outages.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: unknown
