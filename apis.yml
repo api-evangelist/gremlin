@@ -65,7 +65,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - APIKeys
+  - apikeys
   tags_raw:
   - apikeys
   properties:
@@ -83,7 +83,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - Attacks
+  - attacks
   tags_raw:
   - attacks
   properties:
@@ -173,7 +173,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - Datadog
+  - datadog
   tags_raw:
   - datadog
   properties:
@@ -223,7 +223,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - Execution
+  - executions
   tags_raw:
   - executions
   properties:
@@ -241,7 +241,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - External Integrations
+  - external-integrations
   tags_raw:
   - external-integrations
   properties:
@@ -390,7 +390,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - Health Checks
+  - health checks
   tags_raw:
   - health checks
   properties:
@@ -458,7 +458,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - Jira
+  - jira
   tags_raw:
   - jira
   properties:
@@ -594,7 +594,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - Notification Settings
+  - notification-settings
   tags_raw:
   - notification-settings
   properties:
@@ -630,7 +630,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - Organization
+  - orgs
   tags_raw:
   - orgs
   properties:
@@ -785,7 +785,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - Scenarios
+  - scenarios
   tags_raw:
   - scenarios
   properties:
@@ -907,7 +907,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - Test Suites
+  - test-suites
   tags_raw:
   - test-suites
   properties:
