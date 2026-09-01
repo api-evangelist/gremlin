@@ -65,7 +65,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - apikeys
+  - APIKeys
   tags_raw:
   - apikeys
   properties:
@@ -83,7 +83,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - attacks
+  - Attacks
   tags_raw:
   - attacks
   properties:
@@ -173,7 +173,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - datadog
+  - Datadog
   tags_raw:
   - datadog
   properties:
@@ -223,7 +223,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - executions
+  - Execution
   tags_raw:
   - executions
   properties:
@@ -241,7 +241,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - external-integrations
+  - External Integrations
   tags_raw:
   - external-integrations
   properties:
@@ -390,7 +390,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - health checks
+  - Health Checks
   tags_raw:
   - health checks
   properties:
@@ -458,7 +458,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - jira
+  - Jira
   tags_raw:
   - jira
   properties:
@@ -594,7 +594,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - notification-settings
+  - Notification Settings
   tags_raw:
   - notification-settings
   properties:
@@ -630,7 +630,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - orgs
+  - Organization
   tags_raw:
   - orgs
   properties:
@@ -648,7 +648,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - PagerDuty
+  - pagerduty
   tags_raw:
   - pagerduty
   properties:
@@ -785,7 +785,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - scenarios
+  - Scenarios
   tags_raw:
   - scenarios
   properties:
@@ -871,7 +871,8 @@ apis:
   description: Used for sharing agent assets (eg. K8s Namespaces) between teams
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
-  tags: []
+  tags:
+  - Shared assets
   tags_raw:
   - sharedAssets
   properties:
@@ -907,7 +908,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - test-suites
+  - Test Suites
   tags_raw:
   - test-suites
   properties:
