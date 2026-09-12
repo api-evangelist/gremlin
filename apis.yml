@@ -991,6 +991,8 @@ apis:
   - type: JSONSchema
     url: json-schema/gremlin-schema-index.yml
 common:
+  - type: Website
+    url: https://www.gremlin.com/
   - type: CapabilityMap
     url: capabilities/gremlin-capability-edges.yml
     name: Gremlin Business Capability Map
