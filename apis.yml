@@ -59,24 +59,6 @@ apis:
     url: rules/gremlin-rules.yml
   - type: JSONSchema
     url: json-schema/gremlin-schema-index.yml
-- aid: gremlin:gremlin-apikeys-api
-  name: Gremlin apikeys API
-  description: Create, delete, activate, deactivate and list apikeys
-  humanURL: https://www.gremlin.com/docs
-  baseURL: https://api.gremlin.com/v1
-  tags:
-  - APIKeys
-  tags_raw:
-  - apikeys
-  properties:
-  - type: OpenAPI
-    url: openapi/gremlin-apikeys-api-openapi.yml
-  - type: Documentation
-    url: https://www.gremlin.com/docs
-  - type: Rules
-    url: rules/gremlin-rules.yml
-  - type: JSONSchema
-    url: json-schema/gremlin-schema-index.yml
 - aid: gremlin:gremlin-attacks-api
   name: Gremlin attacks API
   description: Create, halt, and list attacks
@@ -606,24 +588,6 @@ apis:
     url: rules/gremlin-rules.yml
   - type: JSONSchema
     url: json-schema/gremlin-schema-index.yml
-- aid: gremlin:gremlin-oauth-api
-  name: Gremlin oauth API
-  description: OAuth callback endpoints
-  humanURL: https://www.gremlin.com/docs
-  baseURL: https://api.gremlin.com/v1
-  tags:
-  - Authentication
-  tags_raw:
-  - oauth
-  properties:
-  - type: OpenAPI
-    url: openapi/gremlin-oauth-api-openapi.yml
-  - type: Documentation
-    url: https://www.gremlin.com/docs
-  - type: Rules
-    url: rules/gremlin-rules.yml
-  - type: JSONSchema
-    url: json-schema/gremlin-schema-index.yml
 - aid: gremlin:gremlin-orgs-api
   name: Gremlin orgs API
   description: Get and update org preferences. Generate new and delete old client certificates
@@ -866,24 +830,6 @@ apis:
     url: rules/gremlin-rules.yml
   - type: JSONSchema
     url: json-schema/gremlin-schema-index.yml
-- aid: gremlin:gremlin-sharedassets-api
-  name: Gremlin sharedAssets API
-  description: Used for sharing agent assets (eg. K8s Namespaces) between teams
-  humanURL: https://www.gremlin.com/docs
-  baseURL: https://api.gremlin.com/v1
-  tags:
-  - Shared assets
-  tags_raw:
-  - sharedAssets
-  properties:
-  - type: OpenAPI
-    url: openapi/gremlin-sharedassets-api-openapi.yml
-  - type: Documentation
-    url: https://www.gremlin.com/docs
-  - type: Rules
-    url: rules/gremlin-rules.yml
-  - type: JSONSchema
-    url: json-schema/gremlin-schema-index.yml
 - aid: gremlin:gremlin-teams-api
   name: Gremlin teams API
   description: Create, Retrieve, Update, and Delete endpoints for Teams
@@ -984,6 +930,54 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gremlin-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-oauth-api
+  name: Gremlin OAUTH API
+  description: OAuth callback endpoints
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - oauth
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-oauth-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-api-keys-api
+  name: Gremlin API Keys API
+  description: Create, delete, activate, deactivate and list apikeys
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - API Keys
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-api-keys-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-shared-assets-api
+  name: Gremlin Shared assets API
+  description: Used for sharing agent assets (eg. K8s Namespaces) between teams
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - Shared assets
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-shared-assets-api-openapi.yml
   - type: Documentation
     url: https://www.gremlin.com/docs
   - type: Rules
