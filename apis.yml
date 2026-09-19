@@ -784,7 +784,7 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - Schedules
+  - Schedule
   tags_raw:
   - schedules
   properties:
@@ -942,6 +942,8 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
+  - Authentication
+  tags_raw:
   - oauth
   properties:
   - type: OpenAPI
@@ -958,6 +960,8 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
+  - APIKeys
+  tags_raw:
   - API Keys
   properties:
   - type: OpenAPI
