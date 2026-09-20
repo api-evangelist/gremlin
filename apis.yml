@@ -989,6 +989,8 @@ apis:
   - type: JSONSchema
     url: json-schema/gremlin-schema-index.yml
 common:
+  - type: Plans
+    url: plans/gremlin-plans-pricing.yml
   - type: Website
     url: https://www.gremlin.com/
   - type: CapabilityMap
