@@ -10,6 +10,12 @@ provenance:
   grounding: every price_text was found verbatim in the fetched page text
 audience: business-product
 pricing_basis: negotiated
+delivery:
+  delivery: managed+licensed
+  method: page
+  read: '2026-09-20'
+  evidence: For teams that can't, Gremlin Private Edition is available as a self-hosted deployment.
+  managed_tier: Gremlin Platform
 published: false
 note: No numeric prices published; all tiers say 'Get a quote'. FAQ explicitly states 'Why don't you publish
   prices?'. Mentions a 30-day free trial with no credit card.
