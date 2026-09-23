@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents metrics API
+  title: Gremlin Metrics API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,17 +14,17 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: metrics
+- name: Metrics
   description: Metrics for charting purposes
 paths:
   /metrics/attacks/{attackId}:
     get:
       tags:
-      - metrics
+      - Metrics
       summary: Get metrics for an attack
       description: 'This endpoint will allow you to get metrics for a specific attack based on its guid.
 
-        Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `EXPERIMENTS_READ`'
       operationId: getMetricsForAttack
       parameters:
       - name: attackId
@@ -55,11 +55,11 @@ paths:
   /metrics/scenarios/{scenarioId}/runs/{scenarioRunNumber}:
     get:
       tags:
-      - metrics
+      - Metrics
       summary: Get metrics for a scenario run
       description: 'This endpoint will allow you to get metrics for a specific scenario run based on its scenario guid and run number.
 
-        Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `EXPERIMENTS_READ`'
       operationId: getMetricsForScenarioRun
       parameters:
       - name: scenarioId
@@ -97,13 +97,6 @@ paths:
         - EXPERIMENTS_READ
 components:
   schemas:
-    TaskMetrics:
-      type: object
-      properties:
-        taskId:
-          type: string
-        metrics:
-          $ref: '#/components/schemas/AttackMetricsDisplayResponse'
     YAxisLine:
       type: object
       properties:
@@ -112,6 +105,31 @@ components:
           format: double
         label:
           type: string
+    TimeRange:
+      type: object
+      properties:
+        start:
+          type: integer
+          format: int64
+        end:
+          type: integer
+          format: int64
+    MetricPoint:
+      type: object
+      properties:
+        timestamp:
+          type: integer
+          format: int64
+        value:
+          type: number
+          format: double
+    TaskMetrics:
+      type: object
+      properties:
+        taskId:
+          type: string
+        metrics:
+          $ref: '#/components/schemas/AttackMetricsDisplayResponse'
     AttackMetricsDisplayResponse:
       type: object
       properties:
@@ -160,21 +178,3 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/YAxisLine'
-    MetricPoint:
-      type: object
-      properties:
-        timestamp:
-          type: integer
-          format: int64
-        value:
-          type: number
-          format: double
-    TimeRange:
-      type: object
-      properties:
-        start:
-          type: integer
-          format: int64
-        end:
-          type: integer
-          format: int64

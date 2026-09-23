@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents integration-clients API
+  title: Gremlin Integration Clients API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -21,8 +21,8 @@ paths:
     put:
       tags:
       - integration-clients
-      summary: Activates an integration client.
-      description: Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Activates an integration client
+      description: Requires the privilege `CLIENTS_WRITE`
       operationId: activate_1
       parameters:
       - name: identifier
@@ -55,8 +55,8 @@ paths:
     get:
       tags:
       - integration-clients
-      summary: Get all active integration clients.
-      description: Requires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get all active integration clients
+      description: Requires the privilege `INTEGRATIONS_READ`
       operationId: active_3
       parameters:
       - name: teamId
@@ -85,10 +85,10 @@ paths:
     get:
       tags:
       - integration-clients
-      summary: Returns all integration clients within a company or team.
+      summary: Returns all integration clients within a company or team
       description: 'This operation will return all active, idle, and recently inactive integration clients.
 
-        Requires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `INTEGRATIONS_READ`'
       operationId: all_3
       parameters:
       - name: teamId
@@ -116,7 +116,7 @@ paths:
       tags:
       - integration-clients
       summary: Returns list of clients which match the given tags
-      description: Requires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `INTEGRATIONS_READ`
       operationId: matchesTags
       parameters:
       - name: teamId
@@ -152,10 +152,10 @@ paths:
     delete:
       tags:
       - integration-clients
-      summary: Deactivates an integration client.
+      summary: Deactivates an integration client
       description: 'This operation will deactivate the specified integration client. The specified client will no longer be able to be used as a target.
 
-        Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `CLIENTS_WRITE`'
       operationId: revoke_2
       parameters:
       - name: identifier
@@ -191,21 +191,6 @@ components:
           type: array
           items:
             type: string
-    IdentitiesPrivateNetworkClient:
-      type: object
-      properties:
-        active:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrivateNetworkClient'
-        idle:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrivateNetworkClient'
-        inactive:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrivateNetworkClient'
     PrivateNetworkClient:
       type: object
       properties:
@@ -263,3 +248,18 @@ components:
           type: boolean
         gremlinClientVersion:
           type: string
+    IdentitiesPrivateNetworkClient:
+      type: object
+      properties:
+        active:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkClient'
+        idle:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkClient'
+        inactive:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkClient'

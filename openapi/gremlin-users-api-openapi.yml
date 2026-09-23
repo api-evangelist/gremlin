@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents users API
+  title: Gremlin Users API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,15 +14,15 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: users
+- name: Users
   description: Get users (all or active) and activate, deactivate, update, and invite users.
 paths:
   /users/active:
     get:
       tags:
-      - users
-      summary: Get all active users.
-      description: Requires the privilege [`USERS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Users
+      summary: Get all active users
+      description: Requires the privilege `USERS_READ`
       operationId: active_4
       parameters:
       - name: teamId
@@ -46,9 +46,9 @@ paths:
   /users/active/paged:
     get:
       tags:
-      - users
-      summary: Get all active users paginated.
-      description: Requires the privilege [`USERS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Users
+      summary: Get all active users paginated
+      description: Requires the privilege `USERS_READ`
       operationId: activePaginated
       parameters:
       - name: pageSize
@@ -86,9 +86,9 @@ paths:
   /users:
     get:
       tags:
-      - users
-      summary: Get all users.
-      description: Requires the privilege [`USERS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Users
+      summary: Get all users
+      description: Requires the privilege `USERS_READ`
       operationId: all_4
       parameters:
       - name: teamId
@@ -111,11 +111,11 @@ paths:
         - USERS_READ
     post:
       tags:
-      - users
+      - Users
       summary: Add an existing user to the target team
       description: 'User must belong to this teams company
 
-        Requires the privilege [`USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `USERS_WRITE`'
       operationId: addUserToTeam
       parameters:
       - name: teamId
@@ -149,9 +149,9 @@ paths:
   /users/paged:
     get:
       tags:
-      - users
-      summary: Get all users paginated.
-      description: Requires the privilege [`USERS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Users
+      summary: Get all users paginated
+      description: Requires the privilege `USERS_READ`
       operationId: allPaginated
       parameters:
       - name: pageSize
@@ -189,9 +189,9 @@ paths:
   /users/self:
     get:
       tags:
-      - users
+      - Users
       summary: Get information about the authenticated user
-      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `MINIMUM_COMPANY_PRIVILEGES`
       operationId: getSelf
       parameters: []
       responses:
@@ -208,11 +208,11 @@ paths:
         - MINIMUM_COMPANY_PRIVILEGES
     patch:
       tags:
-      - users
-      summary: Update an existing users info.
+      - Users
+      summary: Update an existing users info
       description: 'User must exist.
 
-        Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `MINIMUM_COMPANY_PRIVILEGES`'
       operationId: rbacUpdateSelf
       parameters: []
       requestBody:
@@ -236,9 +236,9 @@ paths:
   /users/invite:
     post:
       tags:
-      - users
-      summary: Invite a user.
-      description: Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Users
+      summary: Invite a user
+      description: Requires the privilege `COMPANY_USERS_WRITE`
       operationId: invite_1
       parameters: []
       requestBody:
@@ -270,8 +270,8 @@ paths:
   /users/renew/rbac:
     post:
       tags:
-      - users
-      summary: Renew authorization.
+      - Users
+      summary: Renew authorization
       operationId: rbacAuthRenew
       parameters: []
       requestBody:
@@ -302,11 +302,11 @@ paths:
   /users/{email}:
     put:
       tags:
-      - users
-      summary: Update an existing user.
+      - Users
+      summary: Update an existing user
       description: 'User must exist.
 
-        Requires the privilege [`USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `USERS_WRITE`'
       operationId: update_2
       parameters:
       - name: email
@@ -347,9 +347,9 @@ paths:
         - USERS_WRITE
     delete:
       tags:
-      - users
-      summary: Deactivate a user.
-      description: Requires the privilege [`USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Users
+      summary: Deactivate a user
+      description: Requires the privilege `USERS_WRITE`
       operationId: revokeOrRemoveFromTeam
       parameters:
       - name: email
@@ -378,9 +378,9 @@ paths:
   /users/sessions:
     get:
       tags:
-      - users
-      summary: Returns the updated user sessions list for the currently authenticated user.
-      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Users
+      summary: Returns the updated user sessions list for the currently authenticated user
+      description: Requires the privilege `MINIMUM_COMPANY_PRIVILEGES`
       operationId: refreshSessions
       parameters:
       - name: getCompanySession
@@ -402,9 +402,9 @@ paths:
   /users/invite/{email}:
     delete:
       tags:
-      - users
-      summary: Revoke a pending user invite.
-      description: Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Users
+      summary: Revoke a pending user invite
+      description: Requires the privilege `COMPANY_USERS_WRITE`
       operationId: revokeInvite
       parameters:
       - name: email

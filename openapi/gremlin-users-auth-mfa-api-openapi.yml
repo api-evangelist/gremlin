@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents users.auth.mfa API
+  title: Gremlin Users.auth.mfa API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -21,7 +21,7 @@ paths:
     post:
       tags:
       - users.auth.mfa
-      summary: Authenticate a user with MFA.
+      summary: Authenticate a user with MFA
       operationId: auth
       parameters:
       - name: getCompanySession
@@ -58,7 +58,7 @@ paths:
     post:
       tags:
       - users.auth.mfa
-      summary: Removes the MFA provider and secret, disabling MFA login.
+      summary: Removes the MFA provider and secret, disabling MFA login
       operationId: disable
       parameters: []
       requestBody:
@@ -89,7 +89,7 @@ paths:
     post:
       tags:
       - users.auth.mfa
-      summary: Generate a secret key and enables it for the user.
+      summary: Generate a secret key and enables it for the user
       operationId: enable
       parameters: []
       requestBody:
@@ -118,10 +118,10 @@ paths:
     post:
       tags:
       - users.auth.mfa
-      summary: Removes the MFA provider and secret, disabling MFA login.
+      summary: Removes the MFA provider and secret, disabling MFA login
       description: 'COMPANY_OWNER and COMPANY_ADMIN users only
 
-        Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `COMPANY_USERS_WRITE`'
       operationId: forceDisable
       parameters: []
       requestBody:
@@ -150,8 +150,8 @@ paths:
     get:
       tags:
       - users.auth.mfa
-      summary: Returns the enabled/disabled status and provider if set, of MFA for the user.
-      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Returns the enabled/disabled status and provider if set, of MFA for the user
+      description: Requires the privilege `MINIMUM_COMPANY_PRIVILEGES`
       operationId: getInfo
       parameters: []
       responses:
@@ -172,10 +172,10 @@ paths:
     get:
       tags:
       - users.auth.mfa
-      summary: Returns the enabled/disabled status of MFA for a user.
+      summary: Returns the enabled/disabled status of MFA for a user
       description: 'Company Owners and Admins users only
 
-        Requires the privilege [`SECURITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `SECURITY_REPORTS_READ`'
       operationId: isEnabled
       parameters:
       - name: email
@@ -227,13 +227,6 @@ paths:
           description: Response was sent via HTTP, please retry using HTTPS
 components:
   schemas:
-    MfaInfoResponse:
-      type: object
-      properties:
-        enabled:
-          type: string
-        provider:
-          type: string
     MfaEnableResponse:
       type: object
       properties:
@@ -242,3 +235,10 @@ components:
         qrUrl:
           type: string
           format: uri
+    MfaInfoResponse:
+      type: object
+      properties:
+        enabled:
+          type: string
+        provider:
+          type: string

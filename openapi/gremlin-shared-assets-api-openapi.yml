@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents sharedAssets API
+  title: Gremlin Shared Assets API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,17 +14,17 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: sharedAssets
+- name: Shared assets
   description: Used for sharing agent assets (eg. K8s Namespaces) between teams
 paths:
   /sharedAssets/requests/{requestId}/approve:
     post:
       tags:
-      - sharedAssets
+      - Shared assets
       summary: Approves a sharing request to a resource you own
       description: 'The {requestId} parameter _must_ be urlencoded
 
-        Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `CLIENTS_WRITE`'
       operationId: approveAccess
       parameters:
       - name: requestId
@@ -55,9 +55,9 @@ paths:
   /sharedAssets/requests/approve:
     post:
       tags:
-      - sharedAssets
+      - Shared assets
       summary: Approves a sharing request to a resource you own
-      description: Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `CLIENTS_WRITE`
       operationId: approveAccessRequests
       parameters:
       - name: teamId
@@ -89,9 +89,9 @@ paths:
   /sharedAssets/requests/delete:
     post:
       tags:
-      - sharedAssets
+      - Shared assets
       summary: Deletes a sharing request your team has made to an asset you don't control
-      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `CLIENTS_READ`
       operationId: deleteAccessRequests
       parameters:
       - name: teamId
@@ -123,11 +123,11 @@ paths:
   /sharedAssets/requests/{requestId}:
     delete:
       tags:
-      - sharedAssets
+      - Shared assets
       summary: Deletes an existing request for Access
       description: 'The {requestId} parameter _must_ be urlencoded
 
-        Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `CLIENTS_READ`'
       operationId: deleteRequest
       parameters:
       - name: requestId
@@ -158,11 +158,11 @@ paths:
   /sharedAssets/requests/{requestId}/deny:
     post:
       tags:
-      - sharedAssets
+      - Shared assets
       summary: Denies or Revokes a sharing request to a resource you own
       description: 'The {requestId} parameter _must_ be urlencoded
 
-        Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `CLIENTS_WRITE`'
       operationId: denyAccess
       parameters:
       - name: requestId
@@ -193,9 +193,9 @@ paths:
   /sharedAssets/requests/deny:
     post:
       tags:
-      - sharedAssets
+      - Shared assets
       summary: Denies or Revokes a sharing request to a resource you own
-      description: Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `CLIENTS_WRITE`
       operationId: denyAccessRequests
       parameters:
       - name: teamId
@@ -227,9 +227,9 @@ paths:
   /sharedAssets/withMe:
     get:
       tags:
-      - sharedAssets
+      - Shared assets
       summary: List assets currently shared with your team
-      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `CLIENTS_READ`
       operationId: listAssetsSharedWithMe
       parameters:
       - name: teamId
@@ -255,9 +255,9 @@ paths:
   /sharedAssets:
     get:
       tags:
-      - sharedAssets
+      - Shared assets
       summary: List available assets for sharing and all incoming and outgoing requests
-      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `CLIENTS_READ`
       operationId: listAvailableAssetsWithRequests
       parameters:
       - name: assetId
@@ -287,9 +287,9 @@ paths:
   /sharedAssets/requests:
     get:
       tags:
-      - sharedAssets
+      - Shared assets
       summary: List my requests for assets to be shared with my team
-      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `CLIENTS_READ`
       operationId: listMyRequests
       parameters:
       - name: teamId
@@ -314,9 +314,9 @@ paths:
         - CLIENTS_READ
     post:
       tags:
-      - sharedAssets
+      - Shared assets
       summary: Request access to a given asset
-      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `CLIENTS_READ`
       operationId: requestAccess
       parameters:
       - name: teamId
@@ -348,9 +348,9 @@ paths:
   /sharedAssets/requests/toMe:
     get:
       tags:
-      - sharedAssets
+      - Shared assets
       summary: List other team's requests to my team for sharing assets my team controls
-      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `CLIENTS_READ`
       operationId: listRequestsToMe
       parameters:
       - name: assetId
@@ -380,11 +380,11 @@ paths:
   /sharedAssets/requests/{requestId}/delete:
     post:
       tags:
-      - sharedAssets
+      - Shared assets
       summary: Deletes an existing request for Access
       description: 'The {requestId} parameter _must_ be urlencoded
 
-        Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `CLIENTS_READ`'
       operationId: postDeleteRequest
       parameters:
       - name: requestId
@@ -415,9 +415,9 @@ paths:
   /sharedAssets/{owningTeam}/{assetId}:
     post:
       tags:
-      - sharedAssets
+      - Shared assets
       summary: Request access to a given asset owned by another team
-      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `CLIENTS_READ`
       operationId: requestAccessToAsset
       parameters:
       - name: owningTeam
@@ -456,95 +456,6 @@ paths:
         - CLIENTS_READ
 components:
   schemas:
-    SharedAsset:
-      type: object
-      properties:
-        companyId:
-          type: string
-        owningTeamId:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        approver:
-          type: string
-        requester:
-          type: string
-        assetName:
-          type: string
-        currentStatus:
-          type: string
-          enum:
-          - REQUESTED
-          - APPROVED
-          - DENIED
-          - REVOKED
-          - DELETED
-        assetId:
-          type: string
-        sharedTeam:
-          type: string
-        namespace:
-          type: string
-        requestId:
-          type: string
-    SharableAssetsWithRequestsResponse:
-      type: object
-      properties:
-        availableClusters:
-          type: array
-          items:
-            $ref: '#/components/schemas/AvailableClusterResponse'
-        myClusters:
-          type: array
-          items:
-            $ref: '#/components/schemas/MyClusterResponse'
-    OutstandingRequests:
-      type: object
-      properties:
-        assetToRequestMap:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/SharedAsset'
-        idToTeamMapping:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/SharedTeam'
-    UpdateAllRequests:
-      required:
-      - requestIds
-      type: object
-      properties:
-        requestIds:
-          type: array
-          items:
-            type: string
-    SharedAssetUpdate:
-      type: object
-      properties:
-        assetToRequestMap:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/SharedAsset'
-    SemanticVersion:
-      type: object
-      properties:
-        major:
-          type: integer
-          format: int32
-        minor:
-          type: integer
-          format: int32
-        patch:
-          type: integer
-          format: int32
     MyClusterResponse:
       type: object
       properties:
@@ -573,25 +484,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TheirRequest'
-    SharedTeam:
-      type: object
-      properties:
-        identifier:
-          type: string
-        name:
-          type: string
-        usersCount:
-          type: integer
-          format: int64
-    NewRequestRequest:
-      required:
-      - newRequests
-      type: object
-      properties:
-        newRequests:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccessRequest'
     MyRequest:
       type: object
       properties:
@@ -634,6 +526,114 @@ components:
           type: string
         approver:
           type: string
+    SharedTeam:
+      type: object
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        usersCount:
+          type: integer
+          format: int64
+    SharedAsset:
+      type: object
+      properties:
+        companyId:
+          type: string
+        owningTeamId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        approver:
+          type: string
+        requester:
+          type: string
+        assetName:
+          type: string
+        currentStatus:
+          type: string
+          enum:
+          - REQUESTED
+          - APPROVED
+          - DENIED
+          - REVOKED
+          - DELETED
+        assetId:
+          type: string
+        sharedTeam:
+          type: string
+        namespace:
+          type: string
+        requestId:
+          type: string
+    NewRequestRequest:
+      required:
+      - newRequests
+      type: object
+      properties:
+        newRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessRequest'
+    SharableAssetsWithRequestsResponse:
+      type: object
+      properties:
+        availableClusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableClusterResponse'
+        myClusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/MyClusterResponse'
+    SharedAssetUpdate:
+      type: object
+      properties:
+        assetToRequestMap:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/SharedAsset'
+    SemanticVersion:
+      type: object
+      properties:
+        major:
+          type: integer
+          format: int32
+        minor:
+          type: integer
+          format: int32
+        patch:
+          type: integer
+          format: int32
+    UpdateAllRequests:
+      required:
+      - requestIds
+      type: object
+      properties:
+        requestIds:
+          type: array
+          items:
+            type: string
+    OutstandingRequests:
+      type: object
+      properties:
+        assetToRequestMap:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/SharedAsset'
+        idToTeamMapping:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SharedTeam'
     AccessRequest:
       type: object
       properties:

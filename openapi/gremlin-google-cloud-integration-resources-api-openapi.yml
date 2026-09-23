@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents google-cloud.integration.resources API
+  title: Gremlin Google Cloud.integration.resources API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -21,7 +21,7 @@ paths:
     get:
       tags:
       - google-cloud.integration.resources
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: all_1
       parameters:
       - name: integrationId
@@ -68,11 +68,13 @@ paths:
       - privilege:
         - MINIMUM_TEAM_PRIVILEGES
       x-gremlin-feature-flag: gcp-ihc
+      summary: All 1
+      x-summary-source: derived
   /gcp/integrations/{integrationId}/resources/cloud-run:
     get:
       tags:
       - google-cloud.integration.resources
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: listCloudRunResources
       parameters:
       - name: integrationId
@@ -119,11 +121,13 @@ paths:
       - privilege:
         - MINIMUM_TEAM_PRIVILEGES
       x-gremlin-feature-flag: gcp-ihc
+      summary: List cloud run resources
+      x-summary-source: derived
   /gcp/integrations/{integrationId}/resources/compute:
     get:
       tags:
       - google-cloud.integration.resources
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: listComputeResources
       parameters:
       - name: integrationId
@@ -175,41 +179,10 @@ paths:
       - privilege:
         - MINIMUM_TEAM_PRIVILEGES
       x-gremlin-feature-flag: gcp-ihc
+      summary: List compute resources
+      x-summary-source: derived
 components:
   schemas:
-    CloudRunPageToken:
-      required:
-      - cloudRunRegions
-      type: object
-      properties:
-        cloudRunRegions:
-          type: array
-          items:
-            type: string
-        regionIndex:
-          type: integer
-          format: int32
-        inner:
-          type: string
-    ComputePageToken:
-      required:
-      - types
-      type: object
-      properties:
-        types:
-          type: array
-          items:
-            type: string
-            enum:
-            - ForwardingRule
-            - UrlMap
-            - BackendService
-            - CloudRunService
-        typeIndex:
-          type: integer
-          format: int32
-        inner:
-          type: string
     ResourceItem:
       type: object
       properties:
@@ -249,6 +222,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResourceItem'
+    CloudRunPageToken:
+      required:
+      - cloudRunRegions
+      type: object
+      properties:
+        cloudRunRegions:
+          type: array
+          items:
+            type: string
+        regionIndex:
+          type: integer
+          format: int32
+        inner:
+          type: string
     AllPageToken:
       type: object
       properties:
@@ -262,5 +249,24 @@ components:
           type: array
           items:
             type: string
+        inner:
+          type: string
+    ComputePageToken:
+      required:
+      - types
+      type: object
+      properties:
+        types:
+          type: array
+          items:
+            type: string
+            enum:
+            - ForwardingRule
+            - UrlMap
+            - BackendService
+            - CloudRunService
+        typeIndex:
+          type: integer
+          format: int32
         inner:
           type: string

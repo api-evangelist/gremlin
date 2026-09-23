@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents metadata API
+  title: Gremlin Metadata API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,15 +14,15 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: metadata
+- name: Metadata
   description: Get metadata about the Gremlin commands.
 paths:
   /metadata:
     get:
       tags:
-      - metadata
-      summary: Get metadata about the Gremlin commands.
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Metadata
+      summary: Get metadata about the Gremlin commands
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: metadata
       parameters:
       - name: teamId
@@ -49,64 +49,16 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
 components:
   schemas:
-    DisplayConfig:
-      type: object
-      properties:
-        grouped_args:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-        arg_groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/ArgGroup'
-        values:
-          type: array
-          items:
-            type: string
-    InfraAttackMetadata:
+    ArgGroup:
       type: object
       properties:
         name:
           type: string
-        revision:
-          type: integer
-          format: int32
-        type:
+        description:
           type: string
-          enum:
-          - Network
-          - Resource
-          - State
         args:
           type: array
           items:
-            $ref: '#/components/schemas/InfraAttackArgObject'
-        info:
-          type: string
-        usage:
-          type: string
-        command:
-          type: string
-        versions:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Versioning'
-        display:
-          $ref: '#/components/schemas/DisplayConfig'
-        doc:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-        error:
-          type: object
-          additionalProperties:
             type: string
     InfraAttackArgObject:
       type: object
@@ -165,6 +117,50 @@ components:
           type: object
           additionalProperties:
             type: object
+    ValidatorObject:
+      type: object
+    InfraAttackMetadata:
+      type: object
+      properties:
+        name:
+          type: string
+        revision:
+          type: integer
+          format: int32
+        type:
+          type: string
+          enum:
+          - Network
+          - Resource
+          - State
+        args:
+          type: array
+          items:
+            $ref: '#/components/schemas/InfraAttackArgObject'
+        info:
+          type: string
+        usage:
+          type: string
+        command:
+          type: string
+        versions:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Versioning'
+        display:
+          $ref: '#/components/schemas/DisplayConfig'
+        doc:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        error:
+          type: object
+          additionalProperties:
+            type: string
     Versioning:
       type: object
       properties:
@@ -172,16 +168,20 @@ components:
           type: string
         deprecated:
           type: boolean
-    ArgGroup:
+    DisplayConfig:
       type: object
       properties:
-        name:
-          type: string
-        description:
-          type: string
-        args:
+        grouped_args:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+        arg_groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArgGroup'
+        values:
           type: array
           items:
             type: string
-    ValidatorObject:
-      type: object

@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents integration-invocations API
+  title: Gremlin Integration Invocations API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -24,7 +24,7 @@ paths:
       summary: Returns recent private network invocations
       description: 'This operation will return a list of matching invocations
 
-        Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `MINIMUM_TEAM_PRIVILEGES`'
       operationId: list_1
       parameters:
       - name: teamId
@@ -51,7 +51,7 @@ paths:
       tags:
       - integration-invocations
       summary: Creates a webhook invocation based on the endpoint configuration
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: createInvocation
       parameters:
       - name: teamId
@@ -81,8 +81,8 @@ paths:
     post:
       tags:
       - integration-invocations
-      summary: Test an endpoint configuration.
-      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Test an endpoint configuration
+      description: Requires the privilege `INTEGRATIONS_WRITE`
       operationId: testEndpointConfiguration
       parameters:
       - name: invocationId
@@ -118,8 +118,8 @@ paths:
     post:
       tags:
       - integration-invocations
-      summary: Test an evaluation configuration.
-      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Test an evaluation configuration
+      description: Requires the privilege `INTEGRATIONS_WRITE`
       operationId: testEvaluationConfiguration
       parameters:
       - name: invocationId
@@ -160,119 +160,6 @@ paths:
         - INTEGRATIONS_WRITE
 components:
   schemas:
-    ResponseBodyEvaluation:
-      required:
-      - op
-      - predicates
-      type: object
-      properties:
-        op:
-          type: string
-          description: The operation to logically combine predicates into a success or failure
-          enum:
-          - AND
-          - OR
-        predicates:
-          type: array
-          description: The list of predicates to evaluate against the status check response body
-          items:
-            $ref: '#/components/schemas/PredicateObject'
-      description: The configuration for evaluating the success of a response body
-    PredicateObject:
-      required:
-      - jpQuery
-      - rValue
-      - type
-      type: object
-      properties:
-        comparator:
-          $ref: '#/components/schemas/HasCompareFunctionObject'
-        type:
-          type: string
-          description: The type of primitive this predicate operates on
-          enum:
-          - String
-          - Number
-          - Boolean
-        jpQuery:
-          type: string
-          description: The json path query to run to read from the response body
-        rValue:
-          type: object
-          description: The right hand value of the predicate
-      description: The list of predicates to evaluate against the status check response body
-      discriminator:
-        propertyName: type
-    PrivateNetworkInvocationModel:
-      type: object
-      properties:
-        companyId:
-          type: string
-        invocationId:
-          type: string
-        status:
-          type: string
-          enum:
-          - SUCCESS
-          - ERROR
-          - TIMEOUT
-          - AGENT_TIMEOUT
-          - UNKNOWN
-          - PENDING
-          - RUNNING
-        webhookId:
-          type: string
-        requestProperties:
-          $ref: '#/components/schemas/PrivateNetworkRequestPropertiesModel'
-        responses:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrivateNetworkResponsePropertiesModel'
-        noOfRetries:
-          type: integer
-          format: int32
-        timeout:
-          type: integer
-          format: int32
-        retryWaitTime:
-          type: integer
-          format: int32
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        executedByClientID:
-          type: string
-        errorMessage:
-          type: string
-        teamId:
-          type: string
-        tags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-    EvaluationConfiguration:
-      required:
-      - okStatusCodes
-      type: object
-      properties:
-        okLatencyMaxMs:
-          type: integer
-          description: The maximum latency in milliseconds for a successful status check
-          format: int32
-        okStatusCodes:
-          type: array
-          description: The list of successful response status codes for a successful status check
-          items:
-            type: string
-            description: The list of successful response status codes for a successful status check
-        responseBodyEvaluation:
-          $ref: '#/components/schemas/ResponseBodyEvaluation'
-      description: The configuration for evaluating the success/failure of a status check
     PrivateNetworkResponsePropertiesModel:
       type: object
       properties:
@@ -341,59 +228,76 @@ components:
           type: string
           description: The name of the external integration for the health check to be created/updated
       description: Represents the configuration for referencing an external integration
-    CreatePrivateNetworkInvocationRequest:
+    ResponseBodyEvaluation:
       required:
-      - endpointConfiguration
+      - op
+      - predicates
       type: object
       properties:
-        endpointConfiguration:
-          $ref: '#/components/schemas/EndpointConfiguration'
-        teamExternalIntegration:
-          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body
+    PrivateNetworkInvocationModel:
+      type: object
+      properties:
+        companyId:
+          type: string
+        invocationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - SUCCESS
+          - ERROR
+          - TIMEOUT
+          - AGENT_TIMEOUT
+          - UNKNOWN
+          - PENDING
+          - RUNNING
         webhookId:
           type: string
-        multiSelectTags:
+        requestProperties:
+          $ref: '#/components/schemas/PrivateNetworkRequestPropertiesModel'
+        responses:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkResponsePropertiesModel'
+        noOfRetries:
+          type: integer
+          format: int32
+        timeout:
+          type: integer
+          format: int32
+        retryWaitTime:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        executedByClientID:
+          type: string
+        errorMessage:
+          type: string
+        teamId:
+          type: string
+        tags:
           type: object
           additionalProperties:
             type: array
             items:
               type: string
-    PrivateNetworkInvocationModelResponse:
-      type: object
-      properties:
-        invocations:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrivateNetworkInvocationModel'
-    HasCompareFunctionObject:
-      type: object
-    PrivateNetworkRequestPropertiesModel:
-      type: object
-      properties:
-        uri:
-          type: string
-          format: url
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-        method:
-          type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-        payload:
-          type: string
-        headersArn:
-          type: string
-    TestPrivateNetworkEvaluationConfigurationRequest:
-      required:
-      - evaluationConfiguration
-      type: object
-      properties:
-        evaluationConfiguration:
-          $ref: '#/components/schemas/EvaluationConfiguration'
     EndpointConfiguration:
       required:
       - url
@@ -423,3 +327,99 @@ components:
         headersArn:
           type: string
           description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
+    TestPrivateNetworkEvaluationConfigurationRequest:
+      required:
+      - evaluationConfiguration
+      type: object
+      properties:
+        evaluationConfiguration:
+          $ref: '#/components/schemas/EvaluationConfiguration'
+    PrivateNetworkRequestPropertiesModel:
+      type: object
+      properties:
+        uri:
+          type: string
+          format: url
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+        payload:
+          type: string
+        headersArn:
+          type: string
+    CreatePrivateNetworkInvocationRequest:
+      required:
+      - endpointConfiguration
+      type: object
+      properties:
+        endpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+        webhookId:
+          type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    PrivateNetworkInvocationModelResponse:
+      type: object
+      properties:
+        invocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkInvocationModel'
+    HasCompareFunctionObject:
+      type: object
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
+      type: object
+      properties:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
+    EvaluationConfiguration:
+      required:
+      - okStatusCodes
+      type: object
+      properties:
+        okLatencyMaxMs:
+          type: integer
+          description: The maximum latency in milliseconds for a successful status check
+          format: int32
+        okStatusCodes:
+          type: array
+          description: The list of successful response status codes for a successful status check
+          items:
+            type: string
+            description: The list of successful response status codes for a successful status check
+        responseBodyEvaluation:
+          $ref: '#/components/schemas/ResponseBodyEvaluation'
+      description: The configuration for evaluating the success/failure of a status check

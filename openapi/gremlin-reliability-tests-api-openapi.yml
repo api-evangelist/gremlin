@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents reliability-tests API
+  title: Gremlin Reliability Tests API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -21,8 +21,8 @@ paths:
     get:
       tags:
       - reliability-tests
-      summary: Get active reliability tests.
-      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get active reliability tests
+      description: Requires the privilege `SERVICES_READ`
       operationId: getActiveReliabilityTests
       parameters:
       - name: teamId
@@ -51,8 +51,8 @@ paths:
     get:
       tags:
       - reliability-tests
-      summary: Get all reliability test runs ordered by createdDate desc.
-      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get all reliability test runs ordered by createdDate desc
+      description: Requires the privilege `SERVICES_READ`
       operationId: getAllReliabilityRuns
       parameters:
       - name: serviceId
@@ -92,8 +92,8 @@ paths:
     get:
       tags:
       - reliability-tests
-      summary: Get all reliability test runs for a reliabilityTest ordered by createdDate desc.
-      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get all reliability test runs for a reliabilityTest ordered by createdDate desc
+      description: Requires the privilege `SERVICES_READ`
       operationId: getAllReliabilityRunsForReliabilityTest
       parameters:
       - name: reliabilityTestId
@@ -147,8 +147,8 @@ paths:
     post:
       tags:
       - reliability-tests
-      summary: Run a reliability test for a service.
-      description: Requires the privilege [`SERVICES_RUN`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Run a reliability test for a service
+      description: Requires the privilege `SERVICES_RUN`
       operationId: runReliabilityTestForService
       parameters:
       - name: reliabilityTestId
@@ -186,8 +186,8 @@ paths:
     get:
       tags:
       - reliability-tests
-      summary: Get all reliability tests.
-      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get all reliability tests
+      description: Requires the privilege `SERVICES_READ`
       operationId: getAllReliabilityTests
       parameters:
       - name: teamId
@@ -215,7 +215,7 @@ paths:
       tags:
       - reliability-tests
       summary: Get all notifications for a team
-      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `SERVICES_READ`
       operationId: getNotificationsForTeam
       parameters:
       - name: sinceDays
@@ -249,8 +249,8 @@ paths:
     get:
       tags:
       - reliability-tests
-      summary: Get a team's active reliability tests in descending order by start time.
-      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get a team's active reliability tests in descending order by start time
+      description: Requires the privilege `SERVICES_READ`
       operationId: getPaginatedActiveReliabilityTests
       parameters:
       - name: pageSize
@@ -291,8 +291,8 @@ paths:
     get:
       tags:
       - reliability-tests
-      summary: Get a team's completed reliability test runs ordered by start time desc.
-      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get a team's completed reliability test runs ordered by start time desc
+      description: Requires the privilege `SERVICES_READ`
       operationId: getPaginatedCompletedReliabilityTestRuns
       parameters:
       - name: pageSize
@@ -333,8 +333,8 @@ paths:
     get:
       tags:
       - reliability-tests
-      summary: Get pending reliability test runs for service, ordered by expected trigger time via schedule or Run All.
-      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get pending reliability test runs for service, ordered by expected trigger time…
+      description: Requires the privilege `SERVICES_READ`
       operationId: getPendingServiceReliabilityRuns
       parameters:
       - name: serviceId
@@ -369,8 +369,8 @@ paths:
     get:
       tags:
       - reliability-tests
-      summary: Get recently completed reliability test runs ordered by endDate desc. for a service
-      description: Requires the privilege [`SERVICES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get recently completed reliability test runs ordered by endDate desc.
+      description: Requires the privilege `SERVICES_READ`
       operationId: getRecentReliabilityTestRuns
       parameters:
       - name: serviceId
@@ -413,8 +413,8 @@ paths:
     get:
       tags:
       - reliability-tests
-      summary: Get a single company-scoped reliability test.
-      description: Requires the privilege [`TEST_SUITES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get a single company-scoped reliability test
+      description: Requires the privilege `TEST_SUITES_READ`
       operationId: getReliabilityTest
       parameters:
       - name: reliabilityTestId
@@ -443,7 +443,7 @@ paths:
       summary: Takes a given scenario and transforms it for turning into a reliability test
       description: 'This endpoint provides a preview of the translation between scenarios and ReliabilityTests. As such it can be used to understand what modifications are made when a given Scenario is promoted to a ReliabilityTest and debug them
 
-        Requires the privilege [`TEST_SUITES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `TEST_SUITES_READ`'
       operationId: previewGraph
       parameters:
       - name: scenarioType
@@ -488,333 +488,7 @@ paths:
         - TEST_SUITES_READ
 components:
   schemas:
-    ExternalActionNode:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/GraphNodeObject'
-      - type: object
-        properties:
-          externalActionRequest:
-            $ref: '#/components/schemas/ExternalActionRequest'
-          state:
-            $ref: '#/components/schemas/State'
-          stateDetails:
-            $ref: '#/components/schemas/ExternalCallFailedException'
-    ResponseBodyEvaluation:
-      required:
-      - op
-      - predicates
-      type: object
-      properties:
-        op:
-          type: string
-          description: The operation to logically combine predicates into a success or failure
-          enum:
-          - AND
-          - OR
-        predicates:
-          type: array
-          description: The list of predicates to evaluate against the status check response body
-          items:
-            $ref: '#/components/schemas/PredicateObject'
-      description: The configuration for evaluating the success of a response body
-    StatusCheckNodeRequest:
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    ScenarioRunResults:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - Passed
-          - Failed
-          - Unsure
-        incidentDetected:
-          type: boolean
-        incidentMitigated:
-          type: boolean
-    ScenarioRunResponse:
-      type: object
-      properties:
-        scenarioId:
-          type: string
-        runNumber:
-          type: integer
-          format: int64
-        orgId:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        hypothesis:
-          type: string
-        stageInfo:
-          type: object
-          additionalProperties:
-            type: object
-        createdBy:
-          type: string
-        createdByFirstName:
-          type: string
-        createdByLastName:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        endTime:
-          type: string
-          format: date-time
-        createSource:
-          type: string
-        triggerSource:
-          type: string
-          enum:
-          - MANUAL
-          - RUN_ALL
-          - SCHEDULED
-          - RECURRING_SCHEDULE
-        graph:
-          $ref: '#/components/schemas/ScenarioRunGraph'
-        resultNotes:
-          type: string
-        resultFlags:
-          type: object
-          additionalProperties:
-            type: boolean
-        results:
-          $ref: '#/components/schemas/ScenarioRunResults'
-        scheduleId:
-          type: string
-        scenarioEditCounterAtRunTime:
-          type: integer
-          format: int32
-        scenarioRunImages:
-          type: array
-          items:
-            type: string
-        gameDayInfo:
-          $ref: '#/components/schemas/GameDayInfo'
-        passCriteria:
-          type: string
-          enum:
-          - ALL_PASS
-          - AT_LEAST_ONE_FAILED
-        largeScaleTestId:
-          type: string
-    HasCompareFunctionObject:
-      type: object
-    NotificationElement:
-      type: object
-      properties:
-        reliabilityTestId:
-          type: string
-        dependencyId:
-          type: string
-        runNumber:
-          type: integer
-          format: int64
-    EndpointConfiguration:
-      required:
-      - url
-      type: object
-      properties:
-        url:
-          type: string
-          description: The URL of the status check
-          format: url
-        method:
-          type: string
-          description: The method type of the status check
-          enum:
-          - GET
-          - POST
-          - PUT
-          - PATCH
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-            description: Optional request headers to be used when the status check is invoked
-          description: Optional request headers to be used when the status check is invoked
-        payload:
-          type: string
-          description: Payload for POST type of request
-        headersArn:
-          type: string
-          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
-    ExternalActionRequest:
-      required:
-      - type
-      type: object
-      properties:
-        semanticType:
-          type: string
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    PendingReliabilityTestRunResponse:
-      type: object
-      properties:
-        reliabilityTestId:
-          type: string
-        reliabilityTestName:
-          type: string
-        dependencyId:
-          type: string
-        dependencyName:
-          type: string
-        failureFlagName:
-          type: string
-        triggerSource:
-          type: string
-          enum:
-          - MANUAL
-          - RUN_ALL
-          - SCHEDULED
-          - RECURRING_SCHEDULE
-        triggeredBy:
-          type: string
-        expectedTriggerTime:
-          type: string
-          format: date-time
-    ReliabilityTestResponse:
-      type: object
-      properties:
-        accessType:
-          type: string
-          enum:
-          - Global
-          - Company
-          - Team
-        guid:
-          type: string
-        scenario:
-          $ref: '#/components/schemas/ScenarioResponse'
-    ReliabilityResponse:
-      type: object
-      properties:
-        reliabilityTestResponses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReliabilityTestResponse'
-    StatusCheckNode:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/GraphNodeObject'
-      - type: object
-        properties:
-          state:
-            $ref: '#/components/schemas/State'
-          name:
-            type: string
-          description:
-            type: string
-          thirdPartyPresets:
-            type: string
-          category:
-            type: string
-            enum:
-            - ERRORS
-            - LATENCY
-            - REQUESTS
-            - UNKNOWN
-          requestConfiguration:
-            $ref: '#/components/schemas/StatusCheckNodeRequest'
-          endpointConfiguration:
-            $ref: '#/components/schemas/EndpointConfiguration'
-          rawEndpointConfiguration:
-            $ref: '#/components/schemas/EndpointConfiguration'
-          evaluationConfiguration:
-            $ref: '#/components/schemas/EvaluationConfiguration'
-          statusCheckId:
-            type: string
-          externalIntegrationId:
-            type: string
-          statusCheckReferenceId:
-            type: string
-          isPrivateNetwork:
-            type: boolean
-          isHaltable:
-            type: boolean
-          payload:
-            type: string
-          isAutoGenerated:
-            type: boolean
-          autoGeneratedStatusCheckId:
-            type: string
-          resourceIdentifier:
-            type: string
-          statusCheckRequest:
-            $ref: '#/components/schemas/StatusCheckNodeRequest'
-          intervalSeconds:
-            type: integer
-            format: int32
-          additionalTimeInSecsToRunAfterCompletion:
-            type: integer
-            format: int32
-    RollbackExternalActionNode:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/GraphNodeObject'
-      - type: object
-        properties:
-          referenceExternalActionId:
-            type: string
-          state:
-            $ref: '#/components/schemas/State'
-          stateDetails:
-            $ref: '#/components/schemas/ExternalCallFailedException'
-          externalActionRequest:
-            $ref: '#/components/schemas/ExternalActionRequest'
-          externalActionLifecycle:
-            type: string
-            enum:
-            - NotStarted
-            - Active
-            - HaltRequested
-            - Successful
-            - Halted
-            - Failed
-          didExternalActionNoOp:
-            type: boolean
-    GraphNodeObject:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Concurrent
-          - ContinuousStatusCheck
-          - StatusCheckNode
-          - Delay
-          - InfraAttack
-          - SynchronousStatusCheck
-          - Continuous
-          - FailureFlag
-          - ExternalAction
-          - RollbackExternalAction
-        id:
-          type: string
-        state:
-          type: object
-          readOnly: true
-        guid:
-          type: string
-        next:
-          type: string
-      discriminator:
-        propertyName: type
-    PagedResponseCompletedReliabilityTestRunResponse:
+    PagedResponseReliabilityTestRunResponse:
       type: object
       properties:
         pageNumber:
@@ -837,7 +511,7 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/CompletedReliabilityTestRunResponse'
+            $ref: '#/components/schemas/ReliabilityTestRunResponse'
     ScenarioRunGraph:
       type: object
       properties:
@@ -911,164 +585,36 @@ components:
             format: int32
             readOnly: true
           readOnly: true
-    State:
+    ReliabilityTestResponse:
       type: object
       properties:
-        lifecycle:
+        accessType:
           type: string
           enum:
-          - NotStarted
-          - Active
-          - HaltRequested
-          - Successful
-          - Halted
-          - Failed
-        startTime:
+          - Global
+          - Company
+          - Team
+        guid:
           type: string
-          format: date-time
-        endTime:
-          type: string
-          format: date-time
-        failedReason:
-          type: string
-        nodeHaltedByGuid:
-          type: string
-        nodeHaltedById:
-          type: string
-      readOnly: true
-    EvaluationConfiguration:
+        scenario:
+          $ref: '#/components/schemas/ScenarioResponse'
+    ExternalActionRequest:
       required:
-      - okStatusCodes
+      - type
       type: object
       properties:
-        okLatencyMaxMs:
-          type: integer
-          description: The maximum latency in milliseconds for a successful status check
-          format: int32
-        okStatusCodes:
-          type: array
-          description: The list of successful response status codes for a successful status check
-          items:
-            type: string
-            description: The list of successful response status codes for a successful status check
-        responseBodyEvaluation:
-          $ref: '#/components/schemas/ResponseBodyEvaluation'
-      description: The configuration for evaluating the success/failure of a status check
-    PagedResponseReliabilityTestRunResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
+        semanticType:
           type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReliabilityTestRunResponse'
-    GameDayInfo:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    ReliabilityTestRunResponse:
       type: object
       properties:
         guid:
           type: string
-        name:
-          type: string
-    ScenarioResponse:
-      type: object
-      properties:
-        orgId:
-          type: string
-        guid:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        hypothesis:
-          type: string
-        steps:
-          type: array
-          items:
-            type: object
-            additionalProperties:
-              type: object
-        graph:
-          $ref: '#/components/schemas/ScenarioGraph'
-        state:
-          type: string
-        createSource:
-          type: string
-        createdBy:
-          type: string
-        updatedBy:
-          type: string
-        createdAt:
-          type: string
-        updatedAt:
-          type: string
-        lastRunAt:
-          type: string
-        recommendedScenarioId:
-          type: string
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        createdFromType:
-          type: string
-          enum:
-          - Recommended
-          - Shared
-        createdFromId:
-          type: string
-        editCounter:
-          type: integer
-          format: int32
-        version:
-          type: integer
-          format: int64
-        passCriteria:
-          type: string
-          enum:
-          - ALL_PASS
-          - AT_LEAST_ONE_FAILED
-        eligibleForServiceCreation:
-          type: boolean
-    ReliabilityTestRunParameters:
-      title: ReliabilityTestRunParameters
-      required:
-      - serviceId
-      type: object
-      properties:
         serviceId:
-          type: string
-        dependencyId:
-          type: string
-        failureFlagName:
-          type: string
-      description: Represents a request with parameters necessary to run a reliability test for a service, dependency (optional) or failure flag name (optional)
-    CompletedReliabilityTestRunResponse:
-      type: object
-      properties:
-        serviceId:
-          type: string
-        reliabilityTestId:
-          type: string
-        reliabilityTestName:
           type: string
         dependencyId:
           type: string
@@ -1076,54 +622,96 @@ components:
           type: string
         failureFlagName:
           type: string
+        isDependencySpof:
+          type: boolean
         runNumber:
           type: integer
           format: int64
-        triggerSource:
-          type: string
-          enum:
-          - MANUAL
-          - RUN_ALL
-          - SCHEDULED
-          - RECURRING_SCHEDULE
-        triggeredBy:
-          type: string
-        status:
-          type: string
-          enum:
-          - Passed
-          - Failed
-          - Unsure
-        passCriteria:
-          type: string
-          enum:
-          - ALL_PASS
-          - AT_LEAST_ONE_FAILED
-        endTime:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        diagnosisAvailable:
-          type: boolean
-    NotificationResponse:
+        run:
+          $ref: '#/components/schemas/ScenarioRunResponse'
+    NotificationDetail:
       type: object
       properties:
-        sinceDays:
-          type: integer
-          format: int32
-        totalNotifications:
-          type: integer
-          format: int32
-        title:
+        text:
           type: string
-        subHeading:
+        notificationType:
           type: string
-        notifications:
+          enum:
+          - ScheduleTestFailure
+          - NewDependencyDiscovery
+        serviceId:
+          type: string
+        path:
+          type: string
+        elements:
           type: array
           items:
-            $ref: '#/components/schemas/NotificationDetail'
+            $ref: '#/components/schemas/NotificationElement'
+    NotificationElement:
+      type: object
+      properties:
+        reliabilityTestId:
+          type: string
+        dependencyId:
+          type: string
+        runNumber:
+          type: integer
+          format: int64
+    StatusCheckNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          state:
+            $ref: '#/components/schemas/State'
+          name:
+            type: string
+          description:
+            type: string
+          thirdPartyPresets:
+            type: string
+          category:
+            type: string
+            enum:
+            - ERRORS
+            - LATENCY
+            - REQUESTS
+            - UNKNOWN
+          requestConfiguration:
+            $ref: '#/components/schemas/StatusCheckNodeRequest'
+          endpointConfiguration:
+            $ref: '#/components/schemas/EndpointConfiguration'
+          rawEndpointConfiguration:
+            $ref: '#/components/schemas/EndpointConfiguration'
+          evaluationConfiguration:
+            $ref: '#/components/schemas/EvaluationConfiguration'
+          statusCheckId:
+            type: string
+          externalIntegrationId:
+            type: string
+          statusCheckReferenceId:
+            type: string
+          isPrivateNetwork:
+            type: boolean
+          isHaltable:
+            type: boolean
+          payload:
+            type: string
+          isAutoGenerated:
+            type: boolean
+          autoGeneratedStatusCheckId:
+            type: string
+          resourceIdentifier:
+            type: string
+          statusCheckRequest:
+            $ref: '#/components/schemas/StatusCheckNodeRequest'
+          intervalSeconds:
+            type: integer
+            format: int32
+          additionalTimeInSecsToRunAfterCompletion:
+            type: integer
+            format: int32
     ExternalCallFailedException:
       type: object
       properties:
@@ -1220,6 +808,8 @@ components:
                 type: string
         localizedMessage:
           type: string
+    HasCompareFunctionObject:
+      type: object
     PredicateObject:
       required:
       - jpQuery
@@ -1245,41 +835,14 @@ components:
       description: The list of predicates to evaluate against the status check response body
       discriminator:
         propertyName: type
-    NotificationDetail:
+    CompletedReliabilityTestRunResponse:
       type: object
       properties:
-        text:
-          type: string
-        notificationType:
-          type: string
-          enum:
-          - ScheduleTestFailure
-          - NewDependencyDiscovery
         serviceId:
           type: string
-        path:
+        reliabilityTestId:
           type: string
-        elements:
-          type: array
-          items:
-            $ref: '#/components/schemas/NotificationElement'
-    GraphPreviewResponse:
-      type: object
-      properties:
-        metadata:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        graph:
-          $ref: '#/components/schemas/ScenarioGraph'
-    ReliabilityTestRunResponse:
-      type: object
-      properties:
-        guid:
-          type: string
-        serviceId:
+        reliabilityTestName:
           type: string
         dependencyId:
           type: string
@@ -1287,13 +850,44 @@ components:
           type: string
         failureFlagName:
           type: string
-        isDependencySpof:
-          type: boolean
         runNumber:
           type: integer
           format: int64
-        run:
-          $ref: '#/components/schemas/ScenarioRunResponse'
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        triggeredBy:
+          type: string
+        status:
+          type: string
+          enum:
+          - Passed
+          - Failed
+          - Unsure
+        passCriteria:
+          type: string
+          enum:
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
+        endTime:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        diagnosisAvailable:
+          type: boolean
+    StatusCheckNodeRequest:
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
     ScenarioGraph:
       type: object
       properties:
@@ -1344,3 +938,409 @@ components:
             format: int32
             readOnly: true
           readOnly: true
+    GameDayInfo:
+      type: object
+      properties:
+        guid:
+          type: string
+        name:
+          type: string
+    ScenarioRunResults:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - Passed
+          - Failed
+          - Unsure
+        incidentDetected:
+          type: boolean
+        incidentMitigated:
+          type: boolean
+    ScenarioRunResponse:
+      type: object
+      properties:
+        scenarioId:
+          type: string
+        runNumber:
+          type: integer
+          format: int64
+        orgId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        hypothesis:
+          type: string
+        stageInfo:
+          type: object
+          additionalProperties:
+            type: object
+        createdBy:
+          type: string
+        createdByFirstName:
+          type: string
+        createdByLastName:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        createSource:
+          type: string
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        graph:
+          $ref: '#/components/schemas/ScenarioRunGraph'
+        resultNotes:
+          type: string
+        resultFlags:
+          type: object
+          additionalProperties:
+            type: boolean
+        results:
+          $ref: '#/components/schemas/ScenarioRunResults'
+        scheduleId:
+          type: string
+        scenarioEditCounterAtRunTime:
+          type: integer
+          format: int32
+        scenarioRunImages:
+          type: array
+          items:
+            type: string
+        gameDayInfo:
+          $ref: '#/components/schemas/GameDayInfo'
+        passCriteria:
+          type: string
+          enum:
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
+        largeScaleTestId:
+          type: string
+    NotificationResponse:
+      type: object
+      properties:
+        sinceDays:
+          type: integer
+          format: int32
+        totalNotifications:
+          type: integer
+          format: int32
+        title:
+          type: string
+        subHeading:
+          type: string
+        notifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationDetail'
+    EvaluationConfiguration:
+      required:
+      - okStatusCodes
+      type: object
+      properties:
+        okLatencyMaxMs:
+          type: integer
+          description: The maximum latency in milliseconds for a successful status check
+          format: int32
+        okStatusCodes:
+          type: array
+          description: The list of successful response status codes for a successful status check
+          items:
+            type: string
+            description: The list of successful response status codes for a successful status check
+        responseBodyEvaluation:
+          $ref: '#/components/schemas/ResponseBodyEvaluation'
+      description: The configuration for evaluating the success/failure of a status check
+    RollbackExternalActionNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          referenceExternalActionId:
+            type: string
+          state:
+            $ref: '#/components/schemas/State'
+          stateDetails:
+            $ref: '#/components/schemas/ExternalCallFailedException'
+          externalActionRequest:
+            $ref: '#/components/schemas/ExternalActionRequest'
+          externalActionLifecycle:
+            type: string
+            enum:
+            - NotStarted
+            - Active
+            - HaltRequested
+            - Successful
+            - Halted
+            - Failed
+          didExternalActionNoOp:
+            type: boolean
+    PagedResponseCompletedReliabilityTestRunResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompletedReliabilityTestRunResponse'
+    GraphPreviewResponse:
+      type: object
+      properties:
+        metadata:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        graph:
+          $ref: '#/components/schemas/ScenarioGraph'
+    ReliabilityTestRunParameters:
+      title: ReliabilityTestRunParameters
+      required:
+      - serviceId
+      type: object
+      properties:
+        serviceId:
+          type: string
+        dependencyId:
+          type: string
+        failureFlagName:
+          type: string
+      description: Represents a request with parameters necessary to run a reliability test for a service, dependency (optional) or failure flag name (optional)
+    State:
+      type: object
+      properties:
+        lifecycle:
+          type: string
+          enum:
+          - NotStarted
+          - Active
+          - HaltRequested
+          - Successful
+          - Halted
+          - Failed
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        failedReason:
+          type: string
+        nodeHaltedByGuid:
+          type: string
+        nodeHaltedById:
+          type: string
+      readOnly: true
+    PendingReliabilityTestRunResponse:
+      type: object
+      properties:
+        reliabilityTestId:
+          type: string
+        reliabilityTestName:
+          type: string
+        dependencyId:
+          type: string
+        dependencyName:
+          type: string
+        failureFlagName:
+          type: string
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        triggeredBy:
+          type: string
+        expectedTriggerTime:
+          type: string
+          format: date-time
+    EndpointConfiguration:
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          type: string
+          description: The URL of the status check
+          format: url
+        method:
+          type: string
+          description: The method type of the status check
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Optional request headers to be used when the status check is invoked
+          description: Optional request headers to be used when the status check is invoked
+        payload:
+          type: string
+          description: Payload for POST type of request
+        headersArn:
+          type: string
+          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
+    ReliabilityResponse:
+      type: object
+      properties:
+        reliabilityTestResponses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReliabilityTestResponse'
+    GraphNodeObject:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Concurrent
+          - ContinuousStatusCheck
+          - StatusCheckNode
+          - Delay
+          - InfraAttack
+          - SynchronousStatusCheck
+          - Continuous
+          - FailureFlag
+          - ExternalAction
+          - RollbackExternalAction
+        id:
+          type: string
+        state:
+          type: object
+          readOnly: true
+        guid:
+          type: string
+        next:
+          type: string
+      discriminator:
+        propertyName: type
+    ExternalActionNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          externalActionRequest:
+            $ref: '#/components/schemas/ExternalActionRequest'
+          state:
+            $ref: '#/components/schemas/State'
+          stateDetails:
+            $ref: '#/components/schemas/ExternalCallFailedException'
+    ScenarioResponse:
+      type: object
+      properties:
+        orgId:
+          type: string
+        guid:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        hypothesis:
+          type: string
+        steps:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: object
+        graph:
+          $ref: '#/components/schemas/ScenarioGraph'
+        state:
+          type: string
+        createSource:
+          type: string
+        createdBy:
+          type: string
+        updatedBy:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        lastRunAt:
+          type: string
+        recommendedScenarioId:
+          type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        createdFromType:
+          type: string
+          enum:
+          - Recommended
+          - Shared
+        createdFromId:
+          type: string
+        editCounter:
+          type: integer
+          format: int32
+        version:
+          type: integer
+          format: int64
+        passCriteria:
+          type: string
+          enum:
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
+        eligibleForServiceCreation:
+          type: boolean
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body

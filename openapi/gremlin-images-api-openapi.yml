@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents images API
+  title: Gremlin Images API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,15 +14,15 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: images
+- name: Images
   description: Manage images for different entities
 paths:
   /images/{imageName}:
     get:
       tags:
-      - images
+      - Images
       summary: retrieve a given image
-      description: Requires the privilege [`IMAGES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `IMAGES_READ`
       operationId: get_5
       parameters:
       - name: imageName
@@ -50,9 +50,9 @@ paths:
         - IMAGES_READ
     delete:
       tags:
-      - images
+      - Images
       summary: delete a given image
-      description: Requires the privilege [`IMAGES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `IMAGES_WRITE`
       operationId: delete_2
       parameters:
       - name: imageName
@@ -81,9 +81,9 @@ paths:
   /images/{parentId}/{imageName}:
     get:
       tags:
-      - images
+      - Images
       summary: Retrieve a given image for an associated Scenario or Gameday
-      description: Requires the privilege [`IMAGES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `IMAGES_READ`
       operationId: getWithParent
       parameters:
       - name: imageName

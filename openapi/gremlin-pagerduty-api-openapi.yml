@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents pagerduty API
+  title: Gremlin Pagerduty API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -22,7 +22,7 @@ paths:
       tags:
       - pagerduty
       summary: Get incidents from a service
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: incidentsForService
       parameters:
       - name: name
@@ -80,7 +80,7 @@ paths:
       tags:
       - pagerduty
       summary: Get all services
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: services
       parameters:
       - name: name

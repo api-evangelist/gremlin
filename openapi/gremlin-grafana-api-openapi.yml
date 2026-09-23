@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents grafana API
+  title: Gremlin Grafana API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -22,7 +22,7 @@ paths:
       tags:
       - grafana
       summary: Get all alerts
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: alerts
       parameters:
       - name: name
@@ -58,7 +58,7 @@ paths:
       tags:
       - grafana
       summary: Get all dashboards
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: dashboards
       parameters:
       - name: name
@@ -94,7 +94,7 @@ paths:
       tags:
       - grafana
       summary: Get all rules
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: rules
       parameters:
       - name: name
@@ -130,7 +130,7 @@ paths:
       tags:
       - grafana
       summary: Searches for Grafana alert monitors
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: searchMonitors_1
       parameters:
       - name: searchString

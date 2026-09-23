@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents executions API
+  title: Gremlin Executions API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,14 +14,14 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: executions
+- name: Executions
 paths:
   /executions:
     get:
       tags:
-      - executions
-      summary: Get a list of executions associated with an attack.
-      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Executions
+      summary: Get a list of executions associated with an attack
+      description: Requires the privilege `EXPERIMENTS_READ`
       operationId: forAttack
       parameters:
       - name: taskId
@@ -82,6 +82,35 @@ components:
           type: string
           format: date-time
       description: A collection of states
+    ScopeDetail:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+      description: Detailed information about the scope of this experiment. This contains information such as which containerId or Linux namespace is targeted.
+    ClientState:
+      type: object
+      properties:
+        stage:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+      description: A collection of states an execution goes through during its lifecycle, along with their corresponding timestamps. This list can be used to create a timeline of what happened to a particular target during an experiment. Meanings of specific state values can be found at https://www.gremlin.com/docs/fault-injection-experiments#experiment-stages
+    EventCode:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        code:
+          type: string
+        message:
+          type: string
+        link:
+          type: string
     ExecutionResponse:
       title: Execution
       type: object
@@ -264,32 +293,3 @@ components:
           items:
             $ref: '#/components/schemas/ScopeDetail'
       description: An execution represents a portion of an experiment, run against a specific target. There is one target associated with every target of an experiment.
-    ScopeDetail:
-      type: object
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-      description: Detailed information about the scope of this experiment. This contains information such as which containerId or Linux namespace is targeted.
-    EventCode:
-      type: object
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-        code:
-          type: string
-        message:
-          type: string
-        link:
-          type: string
-    ClientState:
-      type: object
-      properties:
-        stage:
-          type: string
-        timestamp:
-          type: string
-          format: date-time
-      description: A collection of states an execution goes through during its lifecycle, along with their corresponding timestamps. This list can be used to create a timeline of what happened to a particular target during an experiment. Meanings of specific state values can be found at https://www.gremlin.com/docs/fault-injection-experiments#experiment-stages

@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents providers API
+  title: Gremlin Providers API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,15 +14,15 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: providers
+- name: Providers
   description: Get a list of supported infrastructure providers and supported services by provider
 paths:
   /providers/aws:
     get:
       tags:
-      - providers
-      summary: Returns the list of supported AWS services.
-      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Providers
+      summary: Returns the list of supported AWS services
+      description: Requires the privilege `MINIMUM_COMPANY_PRIVILEGES`
       operationId: aws
       parameters: []
       responses:
@@ -40,9 +40,9 @@ paths:
   /providers/all:
     get:
       tags:
-      - providers
+      - Providers
       summary: Returns the list of supported services for all Providers
-      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `MINIMUM_COMPANY_PRIVILEGES`
       operationId: getAllProviders
       parameters: []
       responses:
@@ -62,9 +62,9 @@ paths:
   /providers/{provider}:
     get:
       tags:
-      - providers
+      - Providers
       summary: Returns the list of supported services for a given Provider
-      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `MINIMUM_COMPANY_PRIVILEGES`
       operationId: getProvider
       parameters:
       - name: provider
@@ -89,11 +89,11 @@ paths:
   /providers:
     get:
       tags:
-      - providers
-      summary: Returns a list of supported infrastructure providers.
+      - Providers
+      summary: Returns a list of supported infrastructure providers
       description: 'Currently supports ''aws''
 
-        Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `MINIMUM_COMPANY_PRIVILEGES`'
       operationId: providers
       parameters: []
       responses:

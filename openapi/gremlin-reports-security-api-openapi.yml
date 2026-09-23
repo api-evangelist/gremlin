@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents reports.security API
+  title: Gremlin Reports.security API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -21,10 +21,10 @@ paths:
     get:
       tags:
       - reports.security
-      summary: 'Loads the Access Summary for the specified company in the time period requested (max: 1 hour). Returned in JSON format'
+      summary: Loads the Access Summary for the specified company in the time period requested…
       description: 'COMPANY_OWNER and COMPANY_ADMIN users only
 
-        Requires the privilege [`SECURITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `SECURITY_REPORTS_READ`'
       operationId: accessSummary
       parameters:
       - name: start
@@ -58,10 +58,10 @@ paths:
     get:
       tags:
       - reports.security
-      summary: 'Loads the Experiment Summary for the specified company in the time period requested (max: 1 hour) and the recent scenario runs. Returned in JSON format'
+      summary: Loads the Experiment Summary for the specified company in the time period…
       description: 'COMPANY_OWNER and COMPANY_ADMIN users only
 
-        Requires the privilege [`SECURITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `SECURITY_REPORTS_READ`'
       operationId: eventSummary
       parameters:
       - name: start

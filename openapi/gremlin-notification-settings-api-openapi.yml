@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents notification-settings API
+  title: Gremlin Notification Settings API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,17 +14,17 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: notification-settings
+- name: Notification Settings
   description: View and modify a team's notification settings
 paths:
   /notification-settings:
     get:
       tags:
-      - notification-settings
+      - Notification Settings
       summary: Returns a team's notification settings
       description: 'This operation will return a team''s notification settings.
 
-        Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `TEAMS_READ`'
       operationId: getNotificationSettings
       parameters: []
       responses:
@@ -42,11 +42,11 @@ paths:
         - TEAMS_READ
     patch:
       tags:
-      - notification-settings
+      - Notification Settings
       summary: Updates a team's notification settings
       description: 'This operation will update a team''s notification settings.
 
-        Requires the privilege [`TEAMS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `TEAMS_WRITE`'
       operationId: putNotificationSettings
       parameters:
       - name: teamId
@@ -77,15 +77,6 @@ paths:
         - TEAMS_WRITE
 components:
   schemas:
-    TeamNotificationSettings:
-      required:
-      - subjects
-      type: object
-      properties:
-        subjects:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/SubjectSettings'
     ChannelSettings:
       type: object
       properties:
@@ -95,13 +86,6 @@ components:
           type: string
         updatedAt:
           type: string
-    ScopeSettings:
-      type: object
-      properties:
-        channels:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ChannelSettings'
     SubjectSettings:
       type: object
       properties:
@@ -109,3 +93,19 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/ScopeSettings'
+    TeamNotificationSettings:
+      required:
+      - subjects
+      type: object
+      properties:
+        subjects:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SubjectSettings'
+    ScopeSettings:
+      type: object
+      properties:
+        channels:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ChannelSettings'

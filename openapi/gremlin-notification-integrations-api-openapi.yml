@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents Notification Integrations API
+  title: Gremlin Notification Integrations API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -22,7 +22,7 @@ paths:
       tags:
       - Notification Integrations
       summary: Get the integration for your company that is identified by the supplied type
-      description: Requires the privilege [`COMPANY_INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `COMPANY_INTEGRATIONS_READ`
       operationId: get_2
       parameters:
       - name: type
@@ -48,7 +48,7 @@ paths:
       tags:
       - Notification Integrations
       summary: Puts the integration identified by the supplied type on your company
-      description: Requires the privilege [`COMPANY_INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `COMPANY_INTEGRATIONS_WRITE`
       operationId: put
       parameters:
       - name: type
@@ -76,8 +76,8 @@ paths:
     delete:
       tags:
       - Notification Integrations
-      summary: Idempotently deletes the integration associated with your company, identified by the supplied type
-      description: Requires the privilege [`COMPANY_INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Idempotently deletes the integration associated with your company, identified…
+      description: Requires the privilege `COMPANY_INTEGRATIONS_WRITE`
       operationId: delete
       parameters:
       - name: type
@@ -102,7 +102,7 @@ paths:
       tags:
       - Notification Integrations
       summary: List all integrations associated with your company
-      description: Requires the privilege [`COMPANY_INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `COMPANY_INTEGRATIONS_READ`
       operationId: list
       parameters: []
       responses:
@@ -123,20 +123,6 @@ paths:
         - COMPANY_INTEGRATIONS_READ
 components:
   schemas:
-    TeamData:
-      type: object
-      properties:
-        team_id:
-          type: string
-        executable_events:
-          type: array
-          items:
-            type: string
-            enum:
-            - START
-            - END
-            - STAGE_TRANSITION
-            - ERROR
     CreateIntegrationRequest:
       required:
       - teams
@@ -152,6 +138,20 @@ components:
             $ref: '#/components/schemas/TeamData'
         api_key:
           type: string
+    TeamData:
+      type: object
+      properties:
+        team_id:
+          type: string
+        executable_events:
+          type: array
+          items:
+            type: string
+            enum:
+            - START
+            - END
+            - STAGE_TRANSITION
+            - ERROR
     Data:
       type: object
       properties:

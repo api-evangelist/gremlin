@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents google-cloud.integration API
+  title: Gremlin Google Cloud.integration API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -21,11 +21,11 @@ paths:
     get:
       tags:
       - google-cloud.integration
-      summary: Returns the configuration details necessary for Gremlin to access GCP resources.
+      summary: Returns the configuration details necessary for Gremlin to access GCP resources
       description: 'This endpoint provides the necessary details a customer needs in order to configure their GCP project so that Gremlin can access it.
 
 
-        Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `MINIMUM_TEAM_PRIVILEGES`'
       operationId: getMetadata
       parameters:
       - name: teamId

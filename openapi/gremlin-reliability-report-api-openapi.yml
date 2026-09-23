@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents reliability-report API
+  title: Gremlin Reliability Report API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -21,8 +21,8 @@ paths:
     get:
       tags:
       - reliability-report
-      summary: Get the reliability report for a specified service.
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get the reliability report for a specified service
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: getReliabilityResults
       parameters:
       - name: serviceId
@@ -85,6 +85,55 @@ components:
         rank:
           type: integer
           format: int32
+    ReliabilityReportResponse:
+      type: object
+      properties:
+        reliability:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ReliabilityCategorySummary'
+        testSuiteId:
+          type: string
+        score:
+          type: number
+          format: double
+        previousIntervalScore:
+          type: number
+          format: double
+        categoryScores:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ScoreSummaryResponse'
+    ReliabilityCategorySummary:
+      type: object
+      properties:
+        category:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        policyTarget:
+          type: string
+          enum:
+          - SERVICE
+          - SERVICE_DEPENDENCY
+        policyStates:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyEvaluation'
+        rank:
+          type: integer
+          format: int32
+        score:
+          type: number
+          format: double
+        maxScore:
+          type: number
+          format: double
     PolicyEvaluation:
       type: object
       properties:
@@ -147,52 +196,3 @@ components:
           - RECURRING_SCHEDULE
         triggeredBy:
           type: string
-    ReliabilityReportResponse:
-      type: object
-      properties:
-        reliability:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ReliabilityCategorySummary'
-        testSuiteId:
-          type: string
-        score:
-          type: number
-          format: double
-        previousIntervalScore:
-          type: number
-          format: double
-        categoryScores:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ScoreSummaryResponse'
-    ReliabilityCategorySummary:
-      type: object
-      properties:
-        category:
-          type: string
-          enum:
-          - OTHER
-          - REDUNDANCY
-          - SCALABILITY
-          - DEPENDENCIES
-          - RISKS
-          - EXTRA_CREDIT
-        policyTarget:
-          type: string
-          enum:
-          - SERVICE
-          - SERVICE_DEPENDENCY
-        policyStates:
-          type: array
-          items:
-            $ref: '#/components/schemas/PolicyEvaluation'
-        rank:
-          type: integer
-          format: int32
-        score:
-          type: number
-          format: double
-        maxScore:
-          type: number
-          format: double

@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents failure-flags.experiments API
+  title: Gremlin Failure Flags.experiments API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -21,8 +21,8 @@ paths:
     get:
       tags:
       - failure-flags.experiments
-      summary: List all runs of an Experiment by team and ID.
-      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: List all runs of an Experiment by team and ID
+      description: Requires the privilege `EXPERIMENTS_READ`
       operationId: allRunsForExperiment
       parameters:
       - name: id
@@ -58,8 +58,8 @@ paths:
     get:
       tags:
       - failure-flags.experiments
-      summary: Get all Experiments for a team.
-      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get all Experiments for a team
+      description: Requires the privilege `EXPERIMENTS_READ`
       operationId: getExperimentsForTeam
       parameters:
       - name: includeScenarios
@@ -93,8 +93,8 @@ paths:
     post:
       tags:
       - failure-flags.experiments
-      summary: Create an Experiment.
-      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Create an Experiment
+      description: Requires the privilege `EXPERIMENTS_WRITE`
       operationId: createExperiment
       parameters:
       - name: teamId
@@ -128,8 +128,8 @@ paths:
     get:
       tags:
       - failure-flags.experiments
-      summary: Get Experiment by ID.
-      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get Experiment by ID
+      description: Requires the privilege `EXPERIMENTS_READ`
       operationId: getExperimentForTeamAndId
       parameters:
       - name: id
@@ -162,8 +162,8 @@ paths:
     delete:
       tags:
       - failure-flags.experiments
-      summary: Delete an Experiment by team and ID.
-      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Delete an Experiment by team and ID
+      description: Requires the privilege `EXPERIMENTS_WRITE`
       operationId: deleteExperiment
       parameters:
       - name: id
@@ -195,8 +195,8 @@ paths:
     get:
       tags:
       - failure-flags.experiments
-      summary: Get all active Experiments for a team.
-      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get all active Experiments for a team
+      description: Requires the privilege `EXPERIMENTS_READ`
       operationId: getActiveExperimentsForTeam
       parameters:
       - name: pageSize
@@ -238,8 +238,8 @@ paths:
     get:
       tags:
       - failure-flags.experiments
-      summary: Get all completed Experiments for a team.
-      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get all completed Experiments for a team
+      description: Requires the privilege `EXPERIMENTS_READ`
       operationId: getCompletedExperimentsForTeam
       parameters:
       - name: pageSize
@@ -282,8 +282,8 @@ paths:
     get:
       tags:
       - failure-flags.experiments
-      summary: Get details for a single Experiment run by ID and run start time.
-      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get details for a single Experiment run by ID and run start time
+      description: Requires the privilege `EXPERIMENTS_READ`
       operationId: getExperimentRunDetailsForIdAndStartTime
       parameters:
       - name: id
@@ -324,8 +324,8 @@ paths:
     post:
       tags:
       - failure-flags.experiments
-      summary: Halt an Experiment by team and ID.
-      description: Requires the privilege [`HALT_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Halt an Experiment by team and ID
+      description: Requires the privilege `HALT_WRITE`
       operationId: haltExperiment
       parameters:
       - name: id
@@ -355,8 +355,8 @@ paths:
     post:
       tags:
       - failure-flags.experiments
-      summary: Protect an Experiment by team and ID.
-      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Protect an Experiment by team and ID
+      description: Requires the privilege `EXPERIMENTS_WRITE`
       operationId: protectExperiment
       parameters:
       - name: id
@@ -388,8 +388,8 @@ paths:
     post:
       tags:
       - failure-flags.experiments
-      summary: Run an Experiment by team and ID.
-      description: Requires the privilege [`EXPERIMENTS_RUN`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Run an Experiment by team and ID
+      description: Requires the privilege `EXPERIMENTS_RUN`
       operationId: runExperiment
       parameters:
       - name: id
@@ -425,8 +425,8 @@ paths:
     post:
       tags:
       - failure-flags.experiments
-      summary: Unprotect an Experiment by team and ID.
-      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Unprotect an Experiment by team and ID
+      description: Requires the privilege `EXPERIMENTS_WRITE`
       operationId: unprotectExperiment
       parameters:
       - name: id
@@ -454,6 +454,21 @@ paths:
         - EXPERIMENTS_WRITE
 components:
   schemas:
+    ExperimentRunSummary:
+      type: object
+      properties:
+        startTime:
+          type: string
+          format: date-time
+        stopTime:
+          type: string
+          format: date-time
+        impacts:
+          type: integer
+          format: int32
+        deliveries:
+          type: integer
+          format: int32
     ExperimentPagedResponse:
       type: object
       properties:
@@ -536,24 +551,6 @@ components:
         triggeredBy:
           type: string
       readOnly: true
-    TargetSampling:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    SeriesMinute:
-      type: object
-      properties:
-        minute:
-          type: integer
-          format: int32
-        count:
-          type: integer
-          format: int32
     Selector:
       required:
       - labels
@@ -580,45 +577,6 @@ components:
             foo:
             - bar
             - baz
-    ExperimentRunSummary:
-      type: object
-      properties:
-        startTime:
-          type: string
-          format: date-time
-        stopTime:
-          type: string
-          format: date-time
-        impacts:
-          type: integer
-          format: int32
-        deliveries:
-          type: integer
-          format: int32
-    CompletedExperimentPagedResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompletedRunSummaryResponse'
     Experiment:
       required:
       - app
@@ -670,3 +628,45 @@ components:
         protected:
           type: boolean
           readOnly: true
+    CompletedExperimentPagedResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompletedRunSummaryResponse'
+    TargetSampling:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    SeriesMinute:
+      type: object
+      properties:
+        minute:
+          type: integer
+          format: int32
+        count:
+          type: integer
+          format: int32

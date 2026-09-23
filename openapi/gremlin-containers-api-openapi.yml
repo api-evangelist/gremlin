@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents containers API
+  title: Gremlin Containers API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,15 +14,15 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: containers
+- name: Containers
   description: Get all active containers
 paths:
   /containers:
     get:
       tags:
-      - containers
-      summary: Get all active containers.
-      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Containers
+      summary: Get all active containers
+      description: Requires the privilege `CLIENTS_READ`
       operationId: all_5
       parameters:
       - name: teamId

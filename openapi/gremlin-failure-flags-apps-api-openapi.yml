@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents failure-flags.apps API
+  title: Gremlin Failure Flags.apps API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -21,8 +21,8 @@ paths:
     get:
       tags:
       - failure-flags.apps
-      summary: Get Application by name.
-      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get Application by name
+      description: Requires the privilege `EXPERIMENTS_READ`
       operationId: getApplicationForNameAndTeam
       parameters:
       - name: name
@@ -56,8 +56,8 @@ paths:
     get:
       tags:
       - failure-flags.apps
-      summary: List Applications by team.
-      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: List Applications by team
+      description: Requires the privilege `EXPERIMENTS_READ`
       operationId: getApplicationsForTeam
       parameters:
       - name: onlyWithMetricsEnabled
@@ -92,8 +92,8 @@ paths:
     post:
       tags:
       - failure-flags.apps
-      summary: Protect Application by name.
-      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Protect Application by name
+      description: Requires the privilege `EXPERIMENTS_WRITE`
       operationId: protectApplication
       parameters:
       - name: name
@@ -123,8 +123,8 @@ paths:
     post:
       tags:
       - failure-flags.apps
-      summary: Unprotect Application by name.
-      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Unprotect Application by name
+      description: Requires the privilege `EXPERIMENTS_WRITE`
       operationId: unprotectApplication
       parameters:
       - name: name
@@ -152,6 +152,14 @@ paths:
         - EXPERIMENTS_WRITE
 components:
   schemas:
+    ApplicationLabel:
+      type: object
+      properties:
+        value:
+          type: string
+        cardinality:
+          type: integer
+          format: int32
     Application:
       type: object
       properties:
@@ -182,11 +190,3 @@ components:
           type: array
           items:
             type: string
-    ApplicationLabel:
-      type: object
-      properties:
-        value:
-          type: string
-        cardinality:
-          type: integer
-          format: int32

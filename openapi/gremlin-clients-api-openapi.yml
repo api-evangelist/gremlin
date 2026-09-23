@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents clients API
+  title: Gremlin Clients API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,15 +14,15 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: clients
+- name: Clients
   description: List and modify all clients
 paths:
   /clients/{identifier}/activate:
     put:
       tags:
-      - clients
-      summary: Activate a client.
-      description: Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Clients
+      summary: Activate a client
+      description: Requires the privilege `CLIENTS_WRITE`
       operationId: activate
       parameters:
       - name: identifier
@@ -56,9 +56,9 @@ paths:
   /clients/active:
     get:
       tags:
-      - clients
+      - Clients
       summary: Return all active clients within a team
-      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `CLIENTS_READ`
       operationId: active_2
       parameters:
       - name: teamId
@@ -85,11 +85,11 @@ paths:
   /clients:
     get:
       tags:
-      - clients
-      summary: Returns all clients within a team.
+      - Clients
+      summary: Returns all clients within a team
       description: 'This operation will return all active, idle, and recently inactive clients.
 
-        Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `CLIENTS_READ`'
       operationId: all_2
       parameters:
       - name: teamId
@@ -116,9 +116,9 @@ paths:
   /clients/{identifier}:
     get:
       tags:
-      - clients
+      - Clients
       summary: Get a client by identifier
-      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `CLIENTS_READ`
       operationId: getClientByIdentifier
       parameters:
       - name: identifier
@@ -148,9 +148,9 @@ paths:
         - CLIENTS_READ
     delete:
       tags:
-      - clients
+      - Clients
       summary: Deactivate a client
-      description: Requires the privilege [`CLIENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `CLIENTS_WRITE`
       operationId: revoke_1
       parameters:
       - name: identifier
@@ -186,49 +186,39 @@ paths:
         - CLIENTS_WRITE
 components:
   schemas:
-    VersionInfo:
+    Warning:
       type: object
       properties:
-        gremlind:
-          $ref: '#/components/schemas/SemanticVersion'
-        gremlin:
-          $ref: '#/components/schemas/SemanticVersion'
-    NetworkInterfaceData:
-      type: object
-      properties:
-        interfaces:
-          type: array
-          items:
-            $ref: '#/components/schemas/NetworkInterface'
-    NetworkInterface:
-      required:
-      - ip_addresses
-      type: object
-      properties:
-        name:
+        key:
           type: string
-        ip_addresses:
-          type: array
-          items:
-            $ref: '#/components/schemas/IPAddress'
-        is_default:
-          type: boolean
-        is_physical:
-          type: boolean
-        is_virtual:
-          type: boolean
-    SemanticVersion:
+          enum:
+          - W000
+          - W001
+          - W002
+          - W003
+          - Unknown
+        link:
+          type: string
+        summary:
+          type: string
+    ValidationAttack:
       type: object
       properties:
-        major:
+        agentTimestamp:
           type: integer
-          format: int32
-        minor:
-          type: integer
-          format: int32
-        patch:
-          type: integer
-          format: int32
+          format: int64
+        clientVersion:
+          type: string
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationAttackResult'
+        clientStatus:
+          type: string
+          enum:
+          - HEALTHY
+          - IMPAIRED
+          - UNHEALTHY
     Client:
       type: object
       properties:
@@ -341,79 +331,6 @@ components:
           enum:
           - Linux
           - Windows
-    HardwareInfo:
-      type: object
-      properties:
-        cpu_data:
-          type: array
-          items:
-            $ref: '#/components/schemas/CpuInfo'
-        memory_size:
-          type: integer
-          format: int64
-        gpu_data:
-          type: array
-          items:
-            $ref: '#/components/schemas/GpuInfo'
-    ValidationAttack:
-      type: object
-      properties:
-        agentTimestamp:
-          type: integer
-          format: int64
-        clientVersion:
-          type: string
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationAttackResult'
-        clientStatus:
-          type: string
-          enum:
-          - HEALTHY
-          - IMPAIRED
-          - UNHEALTHY
-    GpuInfo:
-      type: object
-      properties:
-        name:
-          type: string
-        driver:
-          type: string
-        memory_size:
-          type: integer
-          format: int64
-    Warning:
-      type: object
-      properties:
-        key:
-          type: string
-          enum:
-          - W000
-          - W001
-          - W002
-          - W003
-          - Unknown
-        link:
-          type: string
-        summary:
-          type: string
-    CpuInfo:
-      type: object
-      properties:
-        name:
-          type: string
-    IPAddress:
-      type: object
-      properties:
-        ip:
-          type: string
-        protocolFamily:
-          type: string
-          enum:
-          - INET
-          - INET6
-          - UNIX
     Container:
       required:
       - id
@@ -438,6 +355,25 @@ components:
           type: array
           items:
             type: string
+    VersionInfo:
+      type: object
+      properties:
+        gremlind:
+          $ref: '#/components/schemas/SemanticVersion'
+        gremlin:
+          $ref: '#/components/schemas/SemanticVersion'
+    SemanticVersion:
+      type: object
+      properties:
+        major:
+          type: integer
+          format: int32
+        minor:
+          type: integer
+          format: int32
+        patch:
+          type: integer
+          format: int32
     ValidationAttackResult:
       type: object
       properties:
@@ -457,3 +393,67 @@ components:
           enum:
           - CONTAINER
           - HOST
+    NetworkInterfaceData:
+      type: object
+      properties:
+        interfaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/NetworkInterface'
+    CpuInfo:
+      type: object
+      properties:
+        name:
+          type: string
+    NetworkInterface:
+      required:
+      - ip_addresses
+      type: object
+      properties:
+        name:
+          type: string
+        ip_addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPAddress'
+        is_default:
+          type: boolean
+        is_physical:
+          type: boolean
+        is_virtual:
+          type: boolean
+    IPAddress:
+      type: object
+      properties:
+        ip:
+          type: string
+        protocolFamily:
+          type: string
+          enum:
+          - INET
+          - INET6
+          - UNIX
+    HardwareInfo:
+      type: object
+      properties:
+        cpu_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CpuInfo'
+        memory_size:
+          type: integer
+          format: int64
+        gpu_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GpuInfo'
+    GpuInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        driver:
+          type: string
+        memory_size:
+          type: integer
+          format: int64

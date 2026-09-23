@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents jira API
+  title: Gremlin Jira API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,15 +14,15 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: jira
+- name: JIRA
   description: Create, read Jira tickets
 paths:
   /jira/issues:
     get:
       tags:
-      - jira
-      summary: Returns issues for entity ids with details.
-      description: Requires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - JIRA
+      summary: Returns issues for entity ids with details
+      description: Requires the privilege `INTEGRATIONS_READ`
       operationId: issuesForGremlinEntityIds
       parameters:
       - name: gremlinEntityIds
@@ -55,9 +55,9 @@ paths:
         - INTEGRATIONS_READ
     post:
       tags:
-      - jira
-      summary: Creates new issue.
-      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - JIRA
+      summary: Creates new issue
+      description: Requires the privilege `INTEGRATIONS_WRITE`
       operationId: issue
       parameters:
       - name: teamId
@@ -89,9 +89,9 @@ paths:
   /jira/issues/count:
     get:
       tags:
-      - jira
-      summary: Returns total issues for entity ids with details.
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - JIRA
+      summary: Returns total issues for entity ids with details
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: issueCount
       parameters:
       - name: gremlinEntityIds
@@ -122,9 +122,9 @@ paths:
   /jira/issue-meta:
     get:
       tags:
-      - jira
-      summary: Returns the fields and data available and required for creating issues.
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - JIRA
+      summary: Returns the fields and data available and required for creating issues
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: issueMeta
       parameters:
       - name: projectId
@@ -158,9 +158,9 @@ paths:
   /jira/issues/services:
     get:
       tags:
-      - jira
-      summary: Returns issues for an entity id with details.
-      description: Requires the privilege [`INTEGRATIONS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - JIRA
+      summary: Returns issues for an entity id with details
+      description: Requires the privilege `INTEGRATIONS_READ`
       operationId: issuesForGremlinEntityIdOfType
       parameters:
       - name: gremlinEntityId
@@ -203,9 +203,9 @@ paths:
   /jira/labels:
     get:
       tags:
-      - jira
-      summary: Returns all labels of Jira instance.
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - JIRA
+      summary: Returns all labels of Jira instance
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: labels
       parameters:
       - name: teamId
@@ -227,9 +227,9 @@ paths:
   /jira/priorities:
     get:
       tags:
-      - jira
-      summary: Returns the list of issue priorities.
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - JIRA
+      summary: Returns the list of issue priorities
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: priorities
       parameters:
       - name: teamId
@@ -257,9 +257,9 @@ paths:
   /jira/projects/{projectIdOrKey}:
     get:
       tags:
-      - jira
-      summary: Returns project with given id or key.
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - JIRA
+      summary: Returns project with given id or key
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: projectById
       parameters:
       - name: projectIdOrKey
@@ -288,9 +288,9 @@ paths:
   /jira/projects:
     get:
       tags:
-      - jira
-      summary: Search for projects.
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - JIRA
+      summary: Search for projects
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: projectSearch
       parameters:
       - name: query
@@ -328,9 +328,9 @@ paths:
   /jira/projects/{projectIdOrKey}/users:
     get:
       tags:
-      - jira
-      summary: Returns users assignable to given project.
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - JIRA
+      summary: Returns users assignable to given project
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: projectUsers
       parameters:
       - name: projectIdOrKey
@@ -368,6 +368,16 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
 components:
   schemas:
+    CreateJiraIssueRequest:
+      required:
+      - entity
+      - fields
+      type: object
+      properties:
+        entity:
+          $ref: '#/components/schemas/GremlinEntityReference'
+        fields:
+          $ref: '#/components/schemas/CreateJiraIssueFields'
     CreateJiraIssueFields:
       required:
       - issuetype
@@ -391,13 +401,6 @@ components:
           type: array
           items:
             type: string
-    JiraId:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
     JiraPriority:
       required:
       - id
@@ -427,13 +430,10 @@ components:
           - SCENARIO
         serviceEntityType:
           type: boolean
-    CreateJiraIssueRequest:
+    JiraId:
       required:
-      - entity
-      - fields
+      - id
       type: object
       properties:
-        entity:
-          $ref: '#/components/schemas/GremlinEntityReference'
-        fields:
-          $ref: '#/components/schemas/CreateJiraIssueFields'
+        id:
+          type: string

@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents failure-flags.flags API
+  title: Gremlin Failure Flags.flags API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -21,8 +21,8 @@ paths:
     get:
       tags:
       - failure-flags.flags
-      summary: Get Failure Flag by name.
-      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Get Failure Flag by name
+      description: Requires the privilege `EXPERIMENTS_READ`
       operationId: getFailureFlagForTeamAndName
       parameters:
       - name: name
@@ -56,8 +56,8 @@ paths:
     get:
       tags:
       - failure-flags.flags
-      summary: List Failure Flags by team.
-      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: List Failure Flags by team
+      description: Requires the privilege `EXPERIMENTS_READ`
       operationId: getFailureFlagsForTeam
       parameters:
       - name: teamId
@@ -88,8 +88,8 @@ paths:
     post:
       tags:
       - failure-flags.flags
-      summary: Protect Failure Flag by name and team.
-      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Protect Failure Flag by name and team
+      description: Requires the privilege `EXPERIMENTS_WRITE`
       operationId: protectFailureFlag
       parameters:
       - name: name
@@ -119,8 +119,8 @@ paths:
     post:
       tags:
       - failure-flags.flags
-      summary: Unprotect Failure Flag by name and team.
-      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Unprotect Failure Flag by name and team
+      description: Requires the privilege `EXPERIMENTS_WRITE`
       operationId: unprotectFailureFlag
       parameters:
       - name: name

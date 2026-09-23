@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents kubernetes.attacks API
+  title: Gremlin Kubernetes.attacks API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -22,7 +22,7 @@ paths:
       tags:
       - kubernetes.attacks
       summary: Get an attack by it's guid
-      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `EXPERIMENTS_READ`
       operationId: attack
       parameters:
       - name: guid
@@ -53,8 +53,8 @@ paths:
     get:
       tags:
       - kubernetes.attacks
-      summary: List all attacks.
-      description: Requires the privilege [`EXPERIMENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: List all attacks
+      description: Requires the privilege `EXPERIMENTS_READ`
       operationId: attacks
       parameters:
       - name: source
@@ -88,8 +88,8 @@ paths:
     post:
       tags:
       - kubernetes.attacks
-      summary: Legacy endpoint for creating K8s attacks. Please consider `POST /attacks` endpoint instead
-      description: Requires the privilege [`EXPERIMENTS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Legacy endpoint for creating K8s attacks.
+      description: Requires the privilege `EXPERIMENTS_WRITE`
       operationId: createAttack
       parameters:
       - name: teamId
@@ -119,7 +119,7 @@ paths:
       tags:
       - kubernetes.attacks
       summary: Halt an active attack
-      description: Requires the privilege [`HALT_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `HALT_WRITE`
       operationId: halt_2
       parameters:
       - name: uid
@@ -169,19 +169,6 @@ paths:
           description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
 components:
   schemas:
-    TaskTrafficImpactMappingInput:
-      type: object
-      properties:
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        dependencyIds:
-          type: array
-          items:
-            type: string
     StrategyObject:
       type: object
       properties:
@@ -201,17 +188,6 @@ components:
         percentage:
           type: integer
           format: int32
-    Attack:
-      type: object
-      properties:
-        impactDefinition:
-          $ref: '#/components/schemas/Command'
-        targetDefinition:
-          $ref: '#/components/schemas/TargetObject'
-        includeNewTargets:
-          type: boolean
-        continueOnEmptyTargets:
-          type: boolean
     Command:
       type: object
       properties:
@@ -247,6 +223,15 @@ components:
           type: boolean
       additionalProperties:
         type: object
+    HaltRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: The reason why this halt this requested.
+        reference:
+          type: string
+          description: A reference to why this halt was requested.
     ContainerSelection:
       type: object
       properties:
@@ -265,15 +250,30 @@ components:
       properties:
         strategy:
           $ref: '#/components/schemas/StrategyObject'
-    HaltRequest:
+    Attack:
       type: object
       properties:
-        reason:
-          type: string
-          description: The reason why this halt this requested.
-        reference:
-          type: string
-          description: A reference to why this halt was requested.
+        impactDefinition:
+          $ref: '#/components/schemas/Command'
+        targetDefinition:
+          $ref: '#/components/schemas/TargetObject'
+        includeNewTargets:
+          type: boolean
+        continueOnEmptyTargets:
+          type: boolean
+    TaskTrafficImpactMappingInput:
+      type: object
+      properties:
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        dependencyIds:
+          type: array
+          items:
+            type: string
     K8sObjectOnAttack:
       type: object
       properties:

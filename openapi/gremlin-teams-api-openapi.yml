@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents teams API
+  title: Gremlin Teams API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,14 +14,14 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: teams
+- name: Teams
   description: Create, Retrieve, Update, and Delete endpoints for Teams
 paths:
   /teams/{teamId}/profile:
     get:
       tags:
-      - teams
-      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Teams
+      description: Requires the privilege `MINIMUM_COMPANY_PRIVILEGES`
       operationId: getProfile
       parameters:
       - name: teamId
@@ -43,10 +43,12 @@ paths:
       security:
       - privilege:
         - MINIMUM_COMPANY_PRIVILEGES
+      summary: Get profile
+      x-summary-source: derived
     put:
       tags:
-      - teams
-      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Teams
+      description: Requires the privilege `MINIMUM_COMPANY_PRIVILEGES`
       operationId: putProfile
       parameters:
       - name: teamId
@@ -72,11 +74,13 @@ paths:
       security:
       - privilege:
         - MINIMUM_COMPANY_PRIVILEGES
+      summary: Put profile
+      x-summary-source: derived
   /teams/{teamId}/profile/prompt:
     get:
       tags:
-      - teams
-      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Teams
+      description: Requires the privilege `MINIMUM_COMPANY_PRIVILEGES`
       operationId: getProfilePrompt
       parameters:
       - name: teamId
@@ -98,12 +102,14 @@ paths:
       security:
       - privilege:
         - MINIMUM_COMPANY_PRIVILEGES
+      summary: Get profile prompt
+      x-summary-source: derived
   /teams/kubernetes/install:
     get:
       tags:
-      - teams
+      - Teams
       summary: Generates a kubernetes installation manifest for passing to kubectl
-      description: Requires the privilege [`TEAM_SECURITY_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `TEAM_SECURITY_READ`
       operationId: combinedKubernetes
       parameters:
       - name: teamId
@@ -129,9 +135,9 @@ paths:
   /teams/{identifier}:
     delete:
       tags:
-      - teams
-      summary: Idempotently deletes an existing team.
-      description: Requires the privilege [`COMPANIES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Teams
+      summary: Idempotently deletes an existing team
+      description: Requires the privilege `COMPANIES_WRITE`
       operationId: delete_3
       parameters:
       - name: identifier
@@ -155,9 +161,9 @@ paths:
         - COMPANIES_WRITE
     patch:
       tags:
-      - teams
-      summary: Idempotently updates an existing team.
-      description: Requires the privilege [`TEAMS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Teams
+      summary: Idempotently updates an existing team
+      description: Requires the privilege `TEAMS_WRITE`
       operationId: update_1
       parameters:
       - name: identifier
@@ -192,9 +198,9 @@ paths:
   /teams/client/install:
     get:
       tags:
-      - teams
+      - Teams
       summary: Generates a config.yaml file with populated values for authenticating the client
-      description: Requires the privilege [`TEAM_SECURITY_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `TEAM_SECURITY_READ`
       operationId: downloadClientConfig
       parameters:
       - name: teamId
@@ -218,9 +224,9 @@ paths:
   /teams/helm/install:
     get:
       tags:
-      - teams
+      - Teams
       summary: Generates a teams-specific values file to be passed to a helm install command
-      description: Requires the privilege [`TEAM_SECURITY_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `TEAM_SECURITY_READ`
       operationId: downloadHelmValues
       parameters:
       - name: teamId
@@ -246,9 +252,9 @@ paths:
   /teams:
     get:
       tags:
-      - teams
-      summary: Gets all Teams associated with the current Company.
-      description: Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Teams
+      summary: Gets all Teams associated with the current Company
+      description: Requires the privilege `TEAMS_READ`
       operationId: get_6
       parameters: []
       responses:
@@ -270,8 +276,8 @@ paths:
   /teams/{teamIdOrName}:
     get:
       tags:
-      - teams
-      description: Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Teams
+      description: Requires the privilege `TEAMS_READ`
       operationId: getByIdOrName
       parameters:
       - name: teamIdOrName
@@ -295,12 +301,14 @@ paths:
       security:
       - privilege:
         - TEAMS_READ
+      summary: Get by id or name
+      x-summary-source: derived
   /teams/paged:
     get:
       tags:
-      - teams
-      summary: Gets paged response for teams associated with the current Company. Default page size is 20
-      description: Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Teams
+      summary: Gets paged response for teams associated with the current Company.
+      description: Requires the privilege `TEAMS_READ`
       operationId: getPaged
       parameters:
       - name: pageSize
@@ -332,6 +340,30 @@ paths:
         - TEAMS_READ
 components:
   schemas:
+    PagedResponseTeamResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamResponse'
     UpdateTeamRequest:
       type: object
       properties:
@@ -347,40 +379,6 @@ components:
         prefs:
           $ref: '#/components/schemas/PrefsPatch'
       description: A request to update an team
-    Prefs:
-      type: object
-      properties:
-        autoAddUsers:
-          type: boolean
-        domain:
-          type: string
-        testRunRestrictionWindows:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestRunRestrictionWindow'
-      description: Prefs for team
-    SemanticVersion:
-      type: object
-      properties:
-        major:
-          type: integer
-          format: int32
-        minor:
-          type: integer
-          format: int32
-        patch:
-          type: integer
-          format: int32
-    PrefsPatch:
-      type: object
-      properties:
-        testRunRestrictionWindows:
-          maxItems: 7
-          minItems: 0
-          type: array
-          items:
-            $ref: '#/components/schemas/TestRunRestrictionWindow'
-      description: Prefs on team level
     TeamResponse:
       type: object
       properties:
@@ -430,22 +428,87 @@ components:
           type: string
           description: An ISO8601 timestamp representing the time at which this team was created
           format: date-time
-    ScheduleWindow:
-      required:
-      - end
-      - start
+    Prompt:
       type: object
       properties:
-        start:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+        prefix:
           type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
-        end:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+        suffix:
           type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
+    Field:
+      type: object
+      properties:
+        field:
+          type: string
+        presets:
+          type: array
+          items:
+            type: string
+        multiple:
+          type: boolean
+        answer:
+          type: array
+          items:
+            type: string
+        prompt:
+          $ref: '#/components/schemas/Prompt'
+    Prefs:
+      type: object
+      properties:
+        autoAddUsers:
+          type: boolean
+        domain:
+          type: string
+        testRunRestrictionWindows:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunRestrictionWindow'
+      description: Prefs for team
+    PrefsPatch:
+      type: object
+      properties:
+        testRunRestrictionWindows:
+          maxItems: 7
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunRestrictionWindow'
+      description: Prefs on team level
+    SemanticVersion:
+      type: object
+      properties:
+        major:
+          type: integer
+          format: int32
+        minor:
+          type: integer
+          format: int32
+        patch:
+          type: integer
+          format: int32
+    TeamProfilePrompt:
+      type: object
+      properties:
+        updated_by:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field'
+        completedByUsers:
+          type: array
+          items:
+            type: string
+        skippedByUsers:
+          type: array
+          items:
+            type: string
     TestRunRestrictionWindow:
       required:
       - dayOfWeek
@@ -468,13 +531,30 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ScheduleWindow'
-    Prompt:
+    ScheduleWindow:
+      required:
+      - end
+      - start
       type: object
       properties:
-        prefix:
+        start:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
           type: string
-        suffix:
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+        end:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
           type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+    ClientVersionRange:
+      type: object
+      properties:
+        minimum:
+          $ref: '#/components/schemas/SemanticVersion'
+        maximum:
+          $ref: '#/components/schemas/SemanticVersion'
+      description: A Map representing the minimum and maximum client versions authenticated with this Team.
     TeamProfile:
       type: object
       properties:
@@ -535,75 +615,3 @@ components:
         createdAt:
           type: string
           format: date-time
-    ClientVersionRange:
-      type: object
-      properties:
-        minimum:
-          $ref: '#/components/schemas/SemanticVersion'
-        maximum:
-          $ref: '#/components/schemas/SemanticVersion'
-      description: A Map representing the minimum and maximum client versions authenticated with this Team.
-    TeamProfilePrompt:
-      type: object
-      properties:
-        updated_by:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-        created_at:
-          type: string
-          format: date-time
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/Field'
-        completedByUsers:
-          type: array
-          items:
-            type: string
-        skippedByUsers:
-          type: array
-          items:
-            type: string
-    Field:
-      type: object
-      properties:
-        field:
-          type: string
-        presets:
-          type: array
-          items:
-            type: string
-        multiple:
-          type: boolean
-        answer:
-          type: array
-          items:
-            type: string
-        prompt:
-          $ref: '#/components/schemas/Prompt'
-    PagedResponseTeamResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamResponse'

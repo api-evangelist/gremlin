@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents webhooks API
+  title: Gremlin Webhooks API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,14 +14,14 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: webhooks
+- name: Webhooks
   description: Create, read, update, and delete webhooks
 paths:
   /webhooks:
     get:
       tags:
-      - webhooks
-      description: Requires the privilege [`WEBHOOKS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Webhooks
+      description: Requires the privilege `WEBHOOKS_READ`
       operationId: getWebhooks
       parameters:
       - name: state
@@ -54,11 +54,13 @@ paths:
       security:
       - privilege:
         - WEBHOOKS_READ
+      summary: Get webhooks
+      x-summary-source: derived
     post:
       tags:
-      - webhooks
+      - Webhooks
       summary: Create a webhook
-      description: Requires the privilege [`WEBHOOKS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `WEBHOOKS_WRITE`
       operationId: createWebhook_1
       parameters:
       - name: teamId
@@ -89,9 +91,9 @@ paths:
   /webhooks/{guid}:
     get:
       tags:
-      - webhooks
+      - Webhooks
       summary: Retrieve webhook by id
-      description: Requires the privilege [`WEBHOOKS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `WEBHOOKS_READ`
       operationId: getWebhookById
       parameters:
       - name: guid
@@ -122,9 +124,9 @@ paths:
         - WEBHOOKS_READ
     put:
       tags:
-      - webhooks
+      - Webhooks
       summary: Update a webhook by id
-      description: Requires the privilege [`WEBHOOKS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `WEBHOOKS_WRITE`
       operationId: updateWebhook
       parameters:
       - name: guid
@@ -160,9 +162,9 @@ paths:
         - WEBHOOKS_WRITE
     delete:
       tags:
-      - webhooks
+      - Webhooks
       summary: Delete a Webhook
-      description: Requires the privilege [`WEBHOOKS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `WEBHOOKS_WRITE`
       operationId: deleteWebhook
       parameters:
       - name: guid
@@ -191,49 +193,76 @@ paths:
         - WEBHOOKS_WRITE
 components:
   schemas:
-    ResponseBodyEvaluation:
-      required:
-      - op
-      - predicates
+    WebhookEndpoint:
       type: object
       properties:
-        op:
+        uri:
           type: string
-          description: The operation to logically combine predicates into a success or failure
+          description: The uri of this webhook endpoint
+          format: url
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: The request headers to be included when invoking this webhook endpoint
+          description: The request headers to be included when invoking this webhook endpoint
+        method:
+          type: string
+          description: The request method to be used when invoking this webhook endpoint
           enum:
-          - AND
-          - OR
-        predicates:
-          type: array
-          description: The list of predicates to evaluate against the status check response body
-          items:
-            $ref: '#/components/schemas/PredicateObject'
-      description: The configuration for evaluating the success of a response body
-    PredicateObject:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+      description: The webhook endpoint configuration for this webhook
+    TeamExternalIntegrationReference:
+      title: StatusCheckRequest.TeamExternalIntegrationReference
       required:
-      - jpQuery
-      - rValue
-      - type
+      - name
       type: object
       properties:
-        comparator:
-          $ref: '#/components/schemas/HasCompareFunctionObject'
         type:
           type: string
-          description: The type of primitive this predicate operates on
+          description: The type of the external integration for the health check to be created/updated
           enum:
-          - String
-          - Number
-          - Boolean
-        jpQuery:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+        observabilityToolType:
           type: string
-          description: The json path query to run to read from the response body
-        rValue:
-          type: object
-          description: The right hand value of the predicate
-      description: The list of predicates to evaluate against the status check response body
-      discriminator:
-        propertyName: type
+          description: The observability tool type of the external integration for the health check to be created/updated
+          enum:
+          - DATADOG
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - AWS
+          - AZURE
+        domain:
+          type: string
+          description: The domain of the observability tool type of the external integration for the health check to be created/updated
+        name:
+          type: string
+          description: The name of the external integration for the health check to be created/updated
+      description: Represents the configuration for referencing an external integration
     Webhook:
       type: object
       properties:
@@ -327,56 +356,6 @@ components:
         responseBodyEvaluation:
           $ref: '#/components/schemas/ResponseBodyEvaluation'
       description: The configuration for evaluating the success/failure of a status check
-    TeamExternalIntegrationReference:
-      title: StatusCheckRequest.TeamExternalIntegrationReference
-      required:
-      - name
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of the external integration for the health check to be created/updated
-          enum:
-          - JIRA
-          - DATADOG
-          - DATADOG_EU
-          - DATADOG_US3
-          - DATADOG_US5
-          - DATADOG_US1_FED
-          - PAGERDUTY
-          - NEWRELIC
-          - GRAFANA
-          - DYNATRACE
-          - APPDYNAMICS
-          - PROMETHEUS
-          - CUSTOM
-          - K6
-          - LOAD_GENERATOR_CUSTOM
-          - AWS
-          - AZURE
-        observabilityToolType:
-          type: string
-          description: The observability tool type of the external integration for the health check to be created/updated
-          enum:
-          - DATADOG
-          - PAGERDUTY
-          - NEWRELIC
-          - GRAFANA
-          - DYNATRACE
-          - APPDYNAMICS
-          - PROMETHEUS
-          - CUSTOM
-          - AWS
-          - AZURE
-        domain:
-          type: string
-          description: The domain of the observability tool type of the external integration for the health check to be created/updated
-        name:
-          type: string
-          description: The name of the external integration for the health check to be created/updated
-      description: Represents the configuration for referencing an external integration
-    HasCompareFunctionObject:
-      type: object
     WebhookRequest:
       required:
       - method
@@ -454,25 +433,48 @@ components:
               type: string
               description: The tags associated with this webhook
           description: The tags associated with this webhook
-    WebhookEndpoint:
+    HasCompareFunctionObject:
+      type: object
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
       type: object
       properties:
-        uri:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
           type: string
-          description: The uri of this webhook endpoint
-          format: url
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-            description: The request headers to be included when invoking this webhook endpoint
-          description: The request headers to be included when invoking this webhook endpoint
-        method:
-          type: string
-          description: The request method to be used when invoking this webhook endpoint
+          description: The type of primitive this predicate operates on
           enum:
-          - GET
-          - POST
-          - PUT
-          - PATCH
-      description: The webhook endpoint configuration for this webhook
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body

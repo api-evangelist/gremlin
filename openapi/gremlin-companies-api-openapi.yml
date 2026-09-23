@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents companies API
+  title: Gremlin Companies API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,17 +14,17 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: companies
+- name: Companies
   description: Update company preferences, get all users or clients for a company, and get company details
 paths:
   /companies/zones:
     get:
       tags:
-      - companies
+      - Companies
       summary: Gets all names of configured and detected zones
       description: 'Get all names of configured zone settings, and all zones detected from agents
 
-        Requires the privilege [`TEST_SUITES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `TEST_SUITES_READ`'
       operationId: getZones
       parameters: []
       responses:
@@ -41,11 +41,11 @@ paths:
         - TEST_SUITES_READ
     post:
       tags:
-      - companies
+      - Companies
       summary: Create a zone
       description: 'Creates a new zone setting of the company
 
-        Requires the privilege [`TEST_SUITES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `TEST_SUITES_WRITE`'
       operationId: addZoneSetting
       parameters: []
       requestBody:
@@ -68,7 +68,7 @@ paths:
   /companies:
     post:
       tags:
-      - companies
+      - Companies
       summary: Allows a user to create a new Company
       description: User must have been previously invited
       operationId: create_1
@@ -89,11 +89,11 @@ paths:
   /companies/{identifier}/saml/claim-aliases:
     get:
       tags:
-      - companies
+      - Companies
       summary: Returns all aliases for a company
       description: 'Returns all aliases for a company, ordered alphabetically
 
-        Requires the privilege [`COMPANY_SAMLCLAIM_ALIAS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `COMPANY_SAMLCLAIM_ALIAS_READ`'
       operationId: getClaimAliasesForCompany
       parameters:
       - name: identifier
@@ -117,11 +117,11 @@ paths:
         - COMPANY_SAMLCLAIM_ALIAS_READ
     post:
       tags:
-      - companies
+      - Companies
       summary: Creates a claim alias for the company
       description: 'Creates a claim alias for the company. If a claim alias already exists, it will not be updated.
 
-        Requires the privilege [`COMPANY_SAMLCLAIM_ALIAS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `COMPANY_SAMLCLAIM_ALIAS_WRITE`'
       operationId: createAlias
       parameters:
       - name: identifier
@@ -151,9 +151,9 @@ paths:
   /companies/{identifier}/users:
     get:
       tags:
-      - companies
+      - Companies
       summary: Returns all users for the supplied company
-      description: Requires the privilege [`COMPANY_USERS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `COMPANY_USERS_READ`
       operationId: getUsersForCompany
       parameters:
       - name: identifier
@@ -175,8 +175,8 @@ paths:
         - COMPANY_USERS_READ
     post:
       tags:
-      - companies
-      summary: Create a new user.
+      - Companies
+      summary: Create a new user
       description: User must have been invited.
       operationId: createUserFromInvite
       parameters:
@@ -201,11 +201,11 @@ paths:
   /companies/{identifier}/saml/claim-aliases/{aliasId}:
     get:
       tags:
-      - companies
+      - Companies
       summary: Returns an alias for a company
       description: 'Returns an alias for a company, with the teams and roles ordered alphabetically
 
-        Requires the privilege [`COMPANY_SAMLCLAIM_ALIAS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `COMPANY_SAMLCLAIM_ALIAS_READ`'
       operationId: getClaimAlias
       parameters:
       - name: identifier
@@ -234,11 +234,11 @@ paths:
         - COMPANY_SAMLCLAIM_ALIAS_READ
     put:
       tags:
-      - companies
+      - Companies
       summary: Updates a claim alias for the company
       description: 'Updates a claim alias for the company, creating it if it doesn''t already exist
 
-        Requires the privilege [`COMPANY_SAMLCLAIM_ALIAS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `COMPANY_SAMLCLAIM_ALIAS_WRITE`'
       operationId: updateAlias
       parameters:
       - name: identifier
@@ -272,11 +272,11 @@ paths:
         - COMPANY_SAMLCLAIM_ALIAS_WRITE
     delete:
       tags:
-      - companies
+      - Companies
       summary: Deletes a claim alias for the company
       description: 'Permanently deletes the specified alias for the company
 
-        Requires the privilege [`COMPANY_SAMLCLAIM_ALIAS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `COMPANY_SAMLCLAIM_ALIAS_WRITE`'
       operationId: deleteAlias
       parameters:
       - name: identifier
@@ -304,11 +304,11 @@ paths:
   /companies/zones/{zoneId}:
     get:
       tags:
-      - companies
+      - Companies
       summary: Get a zone setting
       description: 'Get the zone setting
 
-        Requires the privilege [`TEST_SUITES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `TEST_SUITES_READ`'
       operationId: getZoneSetting
       parameters:
       - name: zoneId
@@ -330,11 +330,11 @@ paths:
         - TEST_SUITES_READ
     put:
       tags:
-      - companies
+      - Companies
       summary: Update a zone
       description: 'Update a zone setting of the company
 
-        Requires the privilege [`TEST_SUITES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `TEST_SUITES_WRITE`'
       operationId: editZoneSetting
       parameters:
       - name: zoneId
@@ -361,11 +361,11 @@ paths:
         - TEST_SUITES_WRITE
     delete:
       tags:
-      - companies
+      - Companies
       summary: Delete zone setting
       description: 'Deletes the zone setting from the company
 
-        Requires the privilege [`TEST_SUITES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `TEST_SUITES_WRITE`'
       operationId: deleteZoneSetting
       parameters:
       - name: zoneId
@@ -388,9 +388,9 @@ paths:
   /companies/{identifier}/users/active/paged:
     get:
       tags:
-      - companies
+      - Companies
       summary: Returns paginated active users for the supplied company
-      description: Requires the privilege [`COMPANY_USERS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `COMPANY_USERS_READ`
       operationId: getActiveUsersForCompanyPaginated
       parameters:
       - name: identifier
@@ -427,11 +427,11 @@ paths:
   /companies/{identifier}/clients:
     get:
       tags:
-      - companies
+      - Companies
       summary: Returns all clients for the supplied company
       description: 'SUPER users only
 
-        Requires the privilege [`COMPANIES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `COMPANIES_READ`'
       operationId: getClientsForCompany
       parameters:
       - name: identifier
@@ -454,9 +454,9 @@ paths:
   /companies/{identifier}:
     get:
       tags:
-      - companies
+      - Companies
       summary: Gets a Company by its supplied guid
-      description: Requires the privilege [`COMPANIES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `COMPANIES_READ`
       operationId: getCompany
       parameters:
       - name: identifier
@@ -484,11 +484,11 @@ paths:
         - COMPANIES_READ
     patch:
       tags:
-      - companies
+      - Companies
       summary: Update the prefs for company
       description: 'This endpoint will allow you to update the prefs for a company based on its identifier.
 
-        Requires the privilege [`COMPANY_PREFERENCES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `COMPANY_PREFERENCES_WRITE`'
       operationId: updateCompanyPrefs
       parameters:
       - name: identifier
@@ -516,9 +516,9 @@ paths:
   /companies/{identifier}/users/invited/paged:
     get:
       tags:
-      - companies
+      - Companies
       summary: Returns paginated invited users for the supplied company
-      description: Requires the privilege [`COMPANY_USERS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `COMPANY_USERS_READ`
       operationId: getInvitedUsersForCompanyPaginated
       parameters:
       - name: identifier
@@ -555,9 +555,9 @@ paths:
   /companies/{identifier}/users/revoked/paged:
     get:
       tags:
-      - companies
+      - Companies
       summary: Returns paginated revoked users for the supplied company
-      description: Requires the privilege [`COMPANY_USERS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `COMPANY_USERS_READ`
       operationId: getRevokedUsersForCompanyPaginated
       parameters:
       - name: identifier
@@ -594,9 +594,9 @@ paths:
   /companies/{identifier}/users/paged:
     get:
       tags:
-      - companies
+      - Companies
       summary: Returns paginated users for the supplied company
-      description: Requires the privilege [`COMPANY_USERS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `COMPANY_USERS_READ`
       operationId: getUsersForCompanyPaginated
       parameters:
       - name: identifier
@@ -633,8 +633,8 @@ paths:
   /companies/invite:
     post:
       tags:
-      - companies
-      summary: Invites the specified email to create a new Company.
+      - Companies
+      summary: Invites the specified email to create a new Company
       operationId: invite
       parameters: []
       requestBody:
@@ -655,9 +655,9 @@ paths:
   /companies/{identifier}/invites:
     post:
       tags:
-      - companies
+      - Companies
       summary: Invite one or more users to join your Gremlin company
-      description: Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `COMPANY_USERS_WRITE`
       operationId: inviteUsersToCompany
       parameters:
       - name: identifier
@@ -688,11 +688,11 @@ paths:
   /companies/{identifier}/users/{email}/active:
     post:
       tags:
-      - companies
-      summary: User must exist. This is primarily used to reactivate a deactivated user.
+      - Companies
+      summary: User must exist. This is primarily used to reactivate a deactivated user
       description: 'Activates a user.
 
-        Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `COMPANY_USERS_WRITE`'
       operationId: rbacUnrevoke
       parameters:
       - name: identifier
@@ -719,11 +719,11 @@ paths:
         - COMPANY_USERS_WRITE
     delete:
       tags:
-      - companies
-      summary: Deactivates a user.
+      - Companies
+      summary: Deactivates a user
       description: 'Once deactivated, user will not be able to do anything on company
 
-        Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `COMPANY_USERS_WRITE`'
       operationId: rbacRevoke
       parameters:
       - name: identifier
@@ -751,9 +751,9 @@ paths:
   /companies/{identifier}/invites/{email}:
     delete:
       tags:
-      - companies
-      summary: Revoke a pending user invite.
-      description: Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Companies
+      summary: Revoke a pending user invite
+      description: Requires the privilege `COMPANY_USERS_WRITE`
       operationId: rbacRevokeInvite
       parameters:
       - name: identifier
@@ -781,11 +781,11 @@ paths:
   /companies/{identifier}/users/{email}:
     put:
       tags:
-      - companies
-      summary: Update roles of existing user.
+      - Companies
+      summary: Update roles of existing user
       description: 'User must exist.
 
-        Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `COMPANY_USERS_WRITE`'
       operationId: rbacUpdate
       parameters:
       - name: identifier
@@ -819,8 +819,8 @@ paths:
   /companies/trial:
     post:
       tags:
-      - companies
-      summary: Allows an invited user to create a new Company for a trial.
+      - Companies
+      summary: Allows an invited user to create a new Company for a trial
       description: User must have been previously invited
       operationId: trial
       parameters: []
@@ -857,9 +857,9 @@ paths:
   /companies/{identifier}/auth/prefs:
     post:
       tags:
-      - companies
-      summary: Updates the authentication preferences associated with this Company.
-      description: Requires the privilege [`COMPANY_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Companies
+      summary: Updates the authentication preferences associated with this Company
+      description: Requires the privilege `COMPANY_SECURITY_WRITE`
       operationId: updateAuthMethodPrefs
       parameters:
       - name: identifier
@@ -888,9 +888,9 @@ paths:
   /companies/{identifier}/mfaPrefs:
     post:
       tags:
-      - companies
-      summary: Updates the MFA preferences associated with this Company.
-      description: Requires the privilege [`COMPANY_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Companies
+      summary: Updates the MFA preferences associated with this Company
+      description: Requires the privilege `COMPANY_SECURITY_WRITE`
       operationId: updateMfaPrefs
       parameters:
       - name: identifier
@@ -922,9 +922,9 @@ paths:
   /companies/{identifier}/oauth/settings:
     post:
       tags:
-      - companies
-      summary: Updates the OAuth settings for this Company.
-      description: Requires the privilege [`COMPANY_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Companies
+      summary: Updates the OAuth settings for this Company
+      description: Requires the privilege `COMPANY_SECURITY_WRITE`
       operationId: updateOAuthSettings
       parameters:
       - name: identifier
@@ -953,11 +953,11 @@ paths:
   /companies/{identifier}/prefs:
     post:
       tags:
-      - companies
-      summary: Updates the preferences associated with this Company.
+      - Companies
+      summary: Updates the preferences associated with this Company
       description: 'SUPER users only
 
-        Requires the privilege [`COMPANY_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `COMPANY_SECURITY_WRITE`'
       operationId: updatePrefs
       parameters:
       - name: identifier
@@ -990,11 +990,11 @@ paths:
   /companies/{identifier}/saml/props:
     post:
       tags:
-      - companies
-      summary: Updates the preferences associated with this Company.
+      - Companies
+      summary: Updates the preferences associated with this Company
       description: 'SUPER users only
 
-        Requires the privilege [`COMPANY_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `COMPANY_SECURITY_WRITE`'
       operationId: updateSamlProperties
       parameters:
       - name: identifier
@@ -1164,8 +1164,8 @@ paths:
   /companies/{identifier}/users/{email}/api-key/{api-key-id}:
     delete:
       tags:
-      - companies
-      description: Requires the privilege [`COMPANY_USERS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Companies
+      description: Requires the privilege `COMPANY_USERS_WRITE`
       operationId: userApiKeyRevoke
       parameters:
       - name: identifier
@@ -1198,8 +1198,176 @@ paths:
       security:
       - privilege:
         - COMPANY_USERS_WRITE
+      summary: User api key revoke
+      x-summary-source: derived
 components:
   schemas:
+    Prefs:
+      type: object
+      properties:
+        autoAddUsers:
+          type: boolean
+        domain:
+          type: string
+        testRunRestrictionWindows:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunRestrictionWindow'
+      description: Prefs for team
+    CompanyEntitlementsResponse:
+      type: object
+      properties:
+        companyId:
+          type: string
+        companyName:
+          type: string
+        end:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+        internal:
+          type: boolean
+        strict:
+          type: boolean
+        hasAgentBilling:
+          type: boolean
+        hasTrialBanners:
+          type: boolean
+        expired:
+          type: boolean
+        productFlags:
+          type: object
+          additionalProperties:
+            type: boolean
+        limits:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        targetsTrackingPeriod:
+          type: string
+          enum:
+          - Daily
+          - Weekly
+          - Monthly
+    PrefsPatch:
+      type: object
+      properties:
+        testRunRestrictionWindows:
+          maxItems: 7
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunRestrictionWindow'
+      description: Prefs on team level
+    Zone:
+      required:
+      - cidrs
+      - includeAllAgents
+      type: object
+      properties:
+        zoneId:
+          type: string
+          description: The name for the zone
+        cidrs:
+          type: array
+          description: Extra CIDRs to use when running zone-based network experiments
+          items:
+            type: string
+            description: Extra CIDRs to use when running zone-based network experiments
+        includeAllAgents:
+          type: boolean
+          description: Determine if Gremlin agents across company should be used
+      description: A zone setting for zonal tests
+    SamlAlias:
+      type: object
+      properties:
+        companyId:
+          type: string
+        aliasId:
+          type: string
+        companyRoles:
+          type: array
+          items:
+            type: string
+        teamRoles:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    CreateCompanyRequest:
+      required:
+      - admin_email
+      - code
+      - company_name
+      - team_name
+      type: object
+      properties:
+        admin_email:
+          type: string
+          description: The email of the user creating the company
+        code:
+          type: string
+          description: The invite code the user received in their email
+        company_name:
+          maxLength: 50
+          minLength: 1
+          type: string
+          description: The name of the company to be created
+        team_name:
+          maxLength: 50
+          minLength: 1
+          type: string
+          description: The name of the team to be created under the company
+        allow_us_storage:
+          type: boolean
+          description: If the user's information is allowed to be stored in U.S. based servers
+        admin_password:
+          type: string
+          description: The password for the user (optional if using SSO)
+      description: Represents a request to create a new Gremlin company
+    InviteUserFromSelfSignupRequest:
+      required:
+      - companyName
+      - email
+      type: object
+      properties:
+        email:
+          type: string
+        firstName:
+          maxLength: 50
+          minLength: 1
+          type: string
+        lastName:
+          maxLength: 50
+          minLength: 1
+          type: string
+        companyName:
+          maxLength: 50
+          minLength: 1
+          type: string
+      description: Represents a request to create a new user from the self signup page
+    Key:
+      type: object
+      properties:
+        hashKey:
+          type: object
+        sortKey:
+          type: object
     UpdateCompanyAuthMethodPrefsRequest:
       type: object
       properties:
@@ -1267,70 +1435,61 @@ components:
               description: A mapping of team IDs to the team-level roles for the alias
           description: A mapping of team IDs to the team-level roles for the alias
       description: Represents a request to create or update a SAML claims alias on behalf of a user
-    TeamRoles:
+    SamlIdpPrefs:
       type: object
       properties:
-        teamId:
+        entityId:
           type: string
-        teamName:
+        url:
           type: string
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssignedRole'
-    CompanyEntitlementsResponse:
+        cert:
+          type: string
+        enabled:
+          type: string
+        forced:
+          type: string
+        claimsForced:
+          type: string
+    CompanyResponse:
       type: object
       properties:
-        companyId:
+        entitlements:
+          $ref: '#/components/schemas/CompanyEntitlementsResponse'
+        identifier:
           type: string
-        companyName:
+        name:
           type: string
-        end:
+        prefs:
+          $ref: '#/components/schemas/Prefs'
+        samlIdpPrefs:
+          $ref: '#/components/schemas/SamlIdpPrefs'
+        authMethodPrefs:
+          $ref: '#/components/schemas/AuthMethodPrefs'
+        internal:
+          type: boolean
+        createdBy:
           type: string
-          format: date-time
         createdAt:
           type: string
           format: date-time
         updatedAt:
           type: string
           format: date-time
-        createdBy:
-          type: string
-        internal:
-          type: boolean
-        strict:
-          type: boolean
-        hasAgentBilling:
-          type: boolean
-        hasTrialBanners:
-          type: boolean
-        expired:
-          type: boolean
-        productFlags:
-          type: object
-          additionalProperties:
-            type: boolean
-        limits:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int32
-        targetsTrackingPeriod:
-          type: string
-          enum:
-          - Daily
-          - Weekly
-          - Monthly
-    PrefsPatch:
-      type: object
-      properties:
-        testRunRestrictionWindows:
-          maxItems: 7
-          minItems: 0
+        orgs:
           type: array
           items:
-            $ref: '#/components/schemas/TestRunRestrictionWindow'
-      description: Prefs on team level
+            $ref: '#/components/schemas/Info'
+        alias:
+          type: string
+        defaultCompanyRole:
+          type: string
+        defaultTeamRole:
+          type: string
+        haltAllCoolDownEnd:
+          type: string
+          format: date-time
+        oauthSettings:
+          $ref: '#/components/schemas/OAuthSettings'
     OrderedSamlAlias:
       type: object
       properties:
@@ -1344,6 +1503,132 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TeamRoles'
+    SamlAliasIDs:
+      type: object
+      properties:
+        aliasIds:
+          type: array
+          items:
+            type: string
+    CreateUserRequest:
+      required:
+      - code
+      - email
+      type: object
+      properties:
+        email:
+          type: string
+          description: The unique identifier for the user (user's email)
+        password:
+          type: string
+          description: The password for the user (optional if using SSO)
+        code:
+          type: string
+          description: The user's invite code they received in their email
+        allow_us_storage:
+          type: boolean
+          description: If the user's information is allowed to be stored in U.S. based servers
+      description: Represents a request to create a new user within the company
+    OAuthSettings:
+      type: object
+      properties:
+        authorizationUri:
+          type: string
+        userInfoUri:
+          type: string
+        tokenUri:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        scope:
+          type: string
+        enabled:
+          type: boolean
+    AssignedRole:
+      type: object
+      properties:
+        roleKey:
+          type: string
+        roleName:
+          type: string
+        customRole:
+          type: boolean
+    TestRunRestrictionWindow:
+      required:
+      - dayOfWeek
+      - windowsForDay
+      type: object
+      properties:
+        dayOfWeek:
+          type: string
+          enum:
+          - M
+          - T
+          - W
+          - Th
+          - F
+          - S
+          - Su
+        windowsForDay:
+          maxItems: 3
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleWindow'
+    CompanyPatch:
+      title: CompanyPatch.Input
+      type: object
+      properties:
+        prefs:
+          $ref: '#/components/schemas/PrefsPatch'
+        defaultCompanyRole:
+          type: string
+        defaultTeamRole:
+          type: string
+    AuthMethodPrefs:
+      type: object
+      properties:
+        allowSessionRenewal:
+          type: boolean
+        passwordEnabled:
+          type: boolean
+        mfaRequired:
+          type: boolean
+        googleEnabled:
+          type: boolean
+        oauthEnabled:
+          type: boolean
+        samlEnabled:
+          type: boolean
+        claimsRequired:
+          type: boolean
+        apiKeysEnabled:
+          type: boolean
+        apiKeysMaxSecondsToExpireEnabled:
+          type: boolean
+        apiKeysMaxSecondsToExpire:
+          type: integer
+          format: int32
+        sessionDuration:
+          type: integer
+          format: int32
+        samlAliasesEnabled:
+          type: boolean
+    GremlinUserPrincipal:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/Key'
+        provider:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
     Info:
       type: object
       properties:
@@ -1392,128 +1677,6 @@ components:
           type: string
         anyCertificateExpirationImminent:
           type: boolean
-    Zone:
-      required:
-      - cidrs
-      - includeAllAgents
-      type: object
-      properties:
-        zoneId:
-          type: string
-          description: The name for the zone
-        cidrs:
-          type: array
-          description: Extra CIDRs to use when running zone-based network experiments
-          items:
-            type: string
-            description: Extra CIDRs to use when running zone-based network experiments
-        includeAllAgents:
-          type: boolean
-          description: Determine if Gremlin agents across company should be used
-      description: A zone setting for zonal tests
-    OAuthSettings:
-      type: object
-      properties:
-        authorizationUri:
-          type: string
-        userInfoUri:
-          type: string
-        tokenUri:
-          type: string
-        clientId:
-          type: string
-        clientSecret:
-          type: string
-        scope:
-          type: string
-        enabled:
-          type: boolean
-    SamlAlias:
-      type: object
-      properties:
-        companyId:
-          type: string
-        aliasId:
-          type: string
-        companyRoles:
-          type: array
-          items:
-            type: string
-        teamRoles:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    SetRolesRequest:
-      required:
-      - roles
-      type: object
-      properties:
-        roles:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-    SamlAliasIDs:
-      type: object
-      properties:
-        aliasIds:
-          type: array
-          items:
-            type: string
-    SamlIdpPrefs:
-      type: object
-      properties:
-        entityId:
-          type: string
-        url:
-          type: string
-        cert:
-          type: string
-        enabled:
-          type: string
-        forced:
-          type: string
-        claimsForced:
-          type: string
-    AssignedRole:
-      type: object
-      properties:
-        roleKey:
-          type: string
-        roleName:
-          type: string
-        customRole:
-          type: boolean
-    CompanyPatch:
-      title: CompanyPatch.Input
-      type: object
-      properties:
-        prefs:
-          $ref: '#/components/schemas/PrefsPatch'
-        defaultCompanyRole:
-          type: string
-        defaultTeamRole:
-          type: string
-    Prefs:
-      type: object
-      properties:
-        autoAddUsers:
-          type: boolean
-        domain:
-          type: string
-        testRunRestrictionWindows:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestRunRestrictionWindow'
-      description: Prefs for team
     UpdateOAuthSettingsRequest:
       required:
       - authorizationUri
@@ -1545,66 +1708,40 @@ components:
           type: string
           description: The scope to be used for the OAuth authorization request. (default is 'email')
       description: A request to update the OAuth settings for a company
-    AuthMethodPrefs:
+    CompanyInviteResponse:
       type: object
       properties:
-        allowSessionRenewal:
-          type: boolean
-        passwordEnabled:
-          type: boolean
-        mfaRequired:
-          type: boolean
-        googleEnabled:
-          type: boolean
-        oauthEnabled:
-          type: boolean
-        samlEnabled:
-          type: boolean
-        claimsRequired:
-          type: boolean
-        apiKeysEnabled:
-          type: boolean
-        apiKeysMaxSecondsToExpireEnabled:
-          type: boolean
-        apiKeysMaxSecondsToExpire:
-          type: integer
-          format: int32
-        sessionDuration:
-          type: integer
-          format: int32
-        samlAliasesEnabled:
-          type: boolean
-    CreateCompanyRequest:
+        link:
+          type: string
+          format: uri
+        message:
+          type: string
+    ScheduleWindow:
       required:
-      - admin_email
-      - code
-      - company_name
-      - team_name
+      - end
+      - start
       type: object
       properties:
-        admin_email:
+        start:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
           type: string
-          description: The email of the user creating the company
-        code:
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+        end:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
           type: string
-          description: The invite code the user received in their email
-        company_name:
-          maxLength: 50
-          minLength: 1
-          type: string
-          description: The name of the company to be created
-        team_name:
-          maxLength: 50
-          minLength: 1
-          type: string
-          description: The name of the team to be created under the company
-        allow_us_storage:
-          type: boolean
-          description: If the user's information is allowed to be stored in U.S. based servers
-        admin_password:
-          type: string
-          description: The password for the user (optional if using SSO)
-      description: Represents a request to create a new Gremlin company
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+    SetRolesRequest:
+      required:
+      - roles
+      type: object
+      properties:
+        roles:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
     InviteUserRequest:
       required:
       - identifier
@@ -1626,149 +1763,14 @@ components:
         user_principal:
           $ref: '#/components/schemas/GremlinUserPrincipal'
       description: Represents a request to invite a user to Gremlin.
-    CompanyResponse:
+    TeamRoles:
       type: object
       properties:
-        entitlements:
-          $ref: '#/components/schemas/CompanyEntitlementsResponse'
-        identifier:
+        teamId:
           type: string
-        name:
+        teamName:
           type: string
-        prefs:
-          $ref: '#/components/schemas/Prefs'
-        samlIdpPrefs:
-          $ref: '#/components/schemas/SamlIdpPrefs'
-        authMethodPrefs:
-          $ref: '#/components/schemas/AuthMethodPrefs'
-        internal:
-          type: boolean
-        createdBy:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        orgs:
+        roles:
           type: array
           items:
-            $ref: '#/components/schemas/Info'
-        alias:
-          type: string
-        defaultCompanyRole:
-          type: string
-        defaultTeamRole:
-          type: string
-        haltAllCoolDownEnd:
-          type: string
-          format: date-time
-        oauthSettings:
-          $ref: '#/components/schemas/OAuthSettings'
-    Key:
-      type: object
-      properties:
-        hashKey:
-          type: object
-        sortKey:
-          type: object
-    GremlinUserPrincipal:
-      type: object
-      properties:
-        key:
-          $ref: '#/components/schemas/Key'
-        provider:
-          type: string
-        email:
-          type: string
-        firstName:
-          type: string
-        lastName:
-          type: string
-    ScheduleWindow:
-      required:
-      - end
-      - start
-      type: object
-      properties:
-        start:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
-        end:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
-    TestRunRestrictionWindow:
-      required:
-      - dayOfWeek
-      - windowsForDay
-      type: object
-      properties:
-        dayOfWeek:
-          type: string
-          enum:
-          - M
-          - T
-          - W
-          - Th
-          - F
-          - S
-          - Su
-        windowsForDay:
-          maxItems: 3
-          minItems: 0
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleWindow'
-    CreateUserRequest:
-      required:
-      - code
-      - email
-      type: object
-      properties:
-        email:
-          type: string
-          description: The unique identifier for the user (user's email)
-        password:
-          type: string
-          description: The password for the user (optional if using SSO)
-        code:
-          type: string
-          description: The user's invite code they received in their email
-        allow_us_storage:
-          type: boolean
-          description: If the user's information is allowed to be stored in U.S. based servers
-      description: Represents a request to create a new user within the company
-    InviteUserFromSelfSignupRequest:
-      required:
-      - companyName
-      - email
-      type: object
-      properties:
-        email:
-          type: string
-        firstName:
-          maxLength: 50
-          minLength: 1
-          type: string
-        lastName:
-          maxLength: 50
-          minLength: 1
-          type: string
-        companyName:
-          maxLength: 50
-          minLength: 1
-          type: string
-      description: Represents a request to create a new user from the self signup page
-    CompanyInviteResponse:
-      type: object
-      properties:
-        link:
-          type: string
-          format: uri
-        message:
-          type: string
+            $ref: '#/components/schemas/AssignedRole'

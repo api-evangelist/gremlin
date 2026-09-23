@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents test-suites API
+  title: Gremlin Test Suites API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,15 +14,15 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: test-suites
+- name: Test Suites
   description: Create custom test suites
 paths:
   /test-suites:
     get:
       tags:
-      - test-suites
-      summary: Gets all reliability test suites for a company, starting with Gremlin's default global test suite, followed by other global suites and company's custom test suites
-      description: Requires the privilege [`TEST_SUITES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Test Suites
+      summary: Gets all reliability test suites for a company, starting with Gremlin's default…
+      description: Requires the privilege `TEST_SUITES_READ`
       operationId: getAllTestSuites
       parameters:
       - name: teamId
@@ -49,9 +49,9 @@ paths:
         - TEST_SUITES_READ
     post:
       tags:
-      - test-suites
+      - Test Suites
       summary: Creates a reliability test suite
-      description: Requires the privilege [`TEST_SUITES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `TEST_SUITES_WRITE`
       operationId: createTestSuite
       parameters: []
       requestBody:
@@ -77,9 +77,9 @@ paths:
   /test-suites/{testSuiteId}:
     get:
       tags:
-      - test-suites
+      - Test Suites
       summary: Gets a reliability test suite
-      description: Requires the privilege [`TEST_SUITES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `TEST_SUITES_READ`
       operationId: getTestSuite
       parameters:
       - name: testSuiteId
@@ -103,9 +103,9 @@ paths:
         - TEST_SUITES_READ
     delete:
       tags:
-      - test-suites
-      summary: Delete a Test Suite.
-      description: Requires the privilege [`TEST_SUITES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Test Suites
+      summary: Delete a Test Suite
+      description: Requires the privilege `TEST_SUITES_WRITE`
       operationId: deleteTestSuite
       parameters:
       - name: testSuiteId
@@ -125,9 +125,9 @@ paths:
         - TEST_SUITES_WRITE
     patch:
       tags:
-      - test-suites
+      - Test Suites
       summary: Updates a reliability test suite
-      description: Requires the privilege [`TEST_SUITES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `TEST_SUITES_WRITE`
       operationId: updateTestSuite
       parameters:
       - name: testSuiteId
@@ -158,9 +158,9 @@ paths:
   /test-suites/detected-risks:
     get:
       tags:
-      - test-suites
+      - Test Suites
       summary: Retrieve the default list of available risks to add to a given TestSuite
-      description: Requires the privilege [`TEST_SUITES_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `TEST_SUITES_READ`
       operationId: getRisks
       parameters: []
       responses:
@@ -181,85 +181,6 @@ paths:
         - TEST_SUITES_READ
 components:
   schemas:
-    TestSuiteScenario:
-      required:
-      - description
-      - name
-      - policyCategory
-      - scenarioToPromote
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        policyCategory:
-          type: string
-          enum:
-          - OTHER
-          - REDUNDANCY
-          - SCALABILITY
-          - DEPENDENCIES
-          - RISKS
-          - EXTRA_CREDIT
-        scenarioToPromote:
-          $ref: '#/components/schemas/ScenarioToPromote'
-    ScenarioInfo:
-      required:
-      - description
-      - name
-      - policyCategory
-      - scenarioId
-      - scenarioType
-      type: object
-      properties:
-        scenarioId:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        policyCategory:
-          type: string
-          enum:
-          - OTHER
-          - REDUNDANCY
-          - SCALABILITY
-          - DEPENDENCIES
-          - RISKS
-          - EXTRA_CREDIT
-        scenarioType:
-          type: string
-          enum:
-          - RECOMMENDED
-          - SHARED
-          - GENERAL
-        reliabilityTestId:
-          type: string
-        teamId:
-          type: string
-    RiskResponse:
-      type: object
-      properties:
-        name:
-          type: string
-        id:
-          type: string
-        mappingExpression:
-          type: string
-        evaluationExpression:
-          type: string
-        document:
-          type: string
-        queryType:
-          type: string
-          enum:
-          - KUBERNETES_OBJECT
-          - AGENT
-          - AWS_LOAD_BALANCER
-          - AWS_AUTO_SCALING_GROUP
-        disabled:
-          type: boolean
     TestSuiteResponse:
       type: object
       properties:
@@ -289,6 +210,28 @@ components:
           type: boolean
         isOfficial:
           type: boolean
+    RiskResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        mappingExpression:
+          type: string
+        evaluationExpression:
+          type: string
+        document:
+          type: string
+        queryType:
+          type: string
+          enum:
+          - KUBERNETES_OBJECT
+          - AGENT
+          - AWS_LOAD_BALANCER
+          - AWS_AUTO_SCALING_GROUP
+        disabled:
+          type: boolean
     TestPolicyResponse:
       type: object
       properties:
@@ -312,25 +255,6 @@ components:
           - SERVICE_DEPENDENCY
         reliabilityTestId:
           type: string
-    UpdateTestSuiteRequest:
-      title: UpdateTestSuiteRequest.Input
-      type: object
-      properties:
-        name:
-          type: string
-        targetTeamIds:
-          type: array
-          items:
-            type: string
-        scenarios:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScenarioInfo'
-        excludedRiskIds:
-          type: array
-          items:
-            type: string
-      description: Update a test suite for a team
     ScenarioToPromote:
       required:
       - scenarioId
@@ -369,6 +293,48 @@ components:
           items:
             type: string
       description: Create a request to create a test suite for a team
+    TestSuiteScenario:
+      required:
+      - description
+      - name
+      - policyCategory
+      - scenarioToPromote
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        policyCategory:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        scenarioToPromote:
+          $ref: '#/components/schemas/ScenarioToPromote'
+    UpdateTestSuiteRequest:
+      title: UpdateTestSuiteRequest.Input
+      type: object
+      properties:
+        name:
+          type: string
+        targetTeamIds:
+          type: array
+          items:
+            type: string
+        scenarios:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioInfo'
+        excludedRiskIds:
+          type: array
+          items:
+            type: string
+      description: Update a test suite for a team
     TestResponse:
       type: object
       properties:
@@ -385,3 +351,37 @@ components:
         sourceScenarioEditCounter:
           type: integer
           format: int32
+    ScenarioInfo:
+      required:
+      - description
+      - name
+      - policyCategory
+      - scenarioId
+      - scenarioType
+      type: object
+      properties:
+        scenarioId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        policyCategory:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        scenarioType:
+          type: string
+          enum:
+          - RECOMMENDED
+          - SHARED
+          - GENERAL
+        reliabilityTestId:
+          type: string
+        teamId:
+          type: string

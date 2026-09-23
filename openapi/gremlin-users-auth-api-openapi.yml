@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents users.auth API
+  title: Gremlin Users.auth API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -21,7 +21,7 @@ paths:
     post:
       tags:
       - users.auth
-      summary: Authenticate a user.
+      summary: Authenticate a user
       operationId: auth_1
       parameters:
       - name: getCompanySession
@@ -53,8 +53,8 @@ paths:
     delete:
       tags:
       - users.auth
-      summary: Invalidates a user's current session, if it exists.
-      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Invalidates a user's current session, if it exists
+      description: Requires the privilege `MINIMUM_COMPANY_PRIVILEGES`
       operationId: invalidate
       parameters: []
       responses:
@@ -73,7 +73,7 @@ paths:
     get:
       tags:
       - users.auth
-      summary: Email active company affiliations.
+      summary: Email active company affiliations
       operationId: companyAffiliationsEmail
       parameters:
       - name: email
@@ -92,7 +92,7 @@ paths:
     post:
       tags:
       - users.auth
-      summary: Reset a user's password via email.
+      summary: Reset a user's password via email
       operationId: passwordReset
       parameters: []
       requestBody:
@@ -116,8 +116,8 @@ paths:
     put:
       tags:
       - users.auth
-      summary: Update an authenticated user's password directly.
-      description: Requires the privilege [`MINIMUM_COMPANY_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: Update an authenticated user's password directly
+      description: Requires the privilege `MINIMUM_COMPANY_PRIVILEGES`
       operationId: passwordReset_1
       parameters: []
       requestBody:
@@ -148,7 +148,7 @@ paths:
     post:
       tags:
       - users.auth
-      summary: Update a user's password.
+      summary: Update a user's password
       operationId: passwordUpdate
       parameters: []
       requestBody:
@@ -178,8 +178,8 @@ paths:
     get:
       tags:
       - users.auth
-      summary: View SAML auth failures for the current company and optional user.
-      description: Requires the privilege [`COMPANY_SECURITY_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      summary: View SAML auth failures for the current company and optional user
+      description: Requires the privilege `COMPANY_SECURITY_READ`
       operationId: samlFailures
       parameters:
       - name: email
@@ -202,7 +202,7 @@ paths:
     get:
       tags:
       - users.auth
-      summary: Gets SAML Service Provider metadata.
+      summary: Gets SAML Service Provider metadata
       operationId: samlMetadata
       parameters:
       - name: companyName

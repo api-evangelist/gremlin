@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents health checks API
+  title: Gremlin health checks API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,15 +14,15 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: health checks
+- name: Health Checks
   description: Create, read, update, delete health checks as well as test health check endpoint and evaluation configuration
 paths:
   /status-checks:
     get:
       tags:
-      - health checks
+      - Health Checks
       summary: Retrieve status checks by Id (or all if the query param is empty)
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: getStatusChecks
       parameters:
       - name: statusCheckIds
@@ -55,9 +55,9 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
     post:
       tags:
-      - health checks
+      - Health Checks
       summary: Creates a new Status Check
-      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `INTEGRATIONS_WRITE`
       operationId: createWebhook
       parameters:
       - name: teamId
@@ -88,9 +88,9 @@ paths:
   /status-checks/{identifier}:
     get:
       tags:
-      - health checks
+      - Health Checks
       summary: retrieve a status check by id
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: getStatusCheck
       parameters:
       - name: identifier
@@ -120,9 +120,9 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
     put:
       tags:
-      - health checks
+      - Health Checks
       summary: Update a given status check
-      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `INTEGRATIONS_WRITE`
       operationId: update_3
       parameters:
       - name: identifier
@@ -157,9 +157,9 @@ paths:
         - INTEGRATIONS_WRITE
     delete:
       tags:
-      - health checks
+      - Health Checks
       summary: Delete a given statuscheck by id
-      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `INTEGRATIONS_WRITE`
       operationId: delete_5
       parameters:
       - name: identifier
@@ -188,9 +188,9 @@ paths:
   /status-checks/{runTestEndpoint}:
     post:
       tags:
-      - health checks
-      summary: Test a status check endpoint configuration.
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Health Checks
+      summary: Test a status check endpoint configuration
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: testEndpointConfiguration_1
       parameters:
       - name: teamId
@@ -218,9 +218,9 @@ paths:
   /status-checks/{runTestEvaluation}:
     post:
       tags:
-      - health checks
-      summary: Test a status check evaluation configuration.
-      description: Requires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Health Checks
+      summary: Test a status check evaluation configuration
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: testEvaluationConfiguration_1
       parameters:
       - name: teamId
@@ -248,9 +248,9 @@ paths:
   /status-checks/{identifier}/tags:
     put:
       tags:
-      - health checks
+      - Health Checks
       summary: Update a given status check tags
-      description: Requires the privilege [`INTEGRATIONS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `INTEGRATIONS_WRITE`
       operationId: updateTags
       parameters:
       - name: identifier
@@ -305,145 +305,6 @@ components:
           type: string
         responseBody:
           type: string
-    ResponseBodyEvaluation:
-      required:
-      - op
-      - predicates
-      type: object
-      properties:
-        op:
-          type: string
-          description: The operation to logically combine predicates into a success or failure
-          enum:
-          - AND
-          - OR
-        predicates:
-          type: array
-          description: The list of predicates to evaluate against the status check response body
-          items:
-            $ref: '#/components/schemas/PredicateObject'
-      description: The configuration for evaluating the success of a response body
-    PredicateObject:
-      required:
-      - jpQuery
-      - rValue
-      - type
-      type: object
-      properties:
-        comparator:
-          $ref: '#/components/schemas/HasCompareFunctionObject'
-        type:
-          type: string
-          description: The type of primitive this predicate operates on
-          enum:
-          - String
-          - Number
-          - Boolean
-        jpQuery:
-          type: string
-          description: The json path query to run to read from the response body
-        rValue:
-          type: object
-          description: The right hand value of the predicate
-      description: The list of predicates to evaluate against the status check response body
-      discriminator:
-        propertyName: type
-    TestEvaluationConfigurationRequest:
-      required:
-      - evaluationConfiguration
-      type: object
-      properties:
-        endpointConfiguration:
-          $ref: '#/components/schemas/EndpointConfiguration'
-        evaluationConfiguration:
-          $ref: '#/components/schemas/EvaluationConfiguration'
-        testEndpointResponse:
-          $ref: '#/components/schemas/EndpointResponse'
-        teamExternalIntegration:
-          $ref: '#/components/schemas/TeamExternalIntegrationReference'
-    TestEndpointConfigurationRequest:
-      required:
-      - endpointConfiguration
-      type: object
-      properties:
-        endpointConfiguration:
-          $ref: '#/components/schemas/EndpointConfiguration'
-        teamExternalIntegration:
-          $ref: '#/components/schemas/TeamExternalIntegrationReference'
-        webhookId:
-          type: string
-        integrationSpecificValues:
-          type: object
-          additionalProperties:
-            type: string
-            description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
-          description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
-    EvaluationConfiguration:
-      required:
-      - okStatusCodes
-      type: object
-      properties:
-        okLatencyMaxMs:
-          type: integer
-          description: The maximum latency in milliseconds for a successful status check
-          format: int32
-        okStatusCodes:
-          type: array
-          description: The list of successful response status codes for a successful status check
-          items:
-            type: string
-            description: The list of successful response status codes for a successful status check
-        responseBodyEvaluation:
-          $ref: '#/components/schemas/ResponseBodyEvaluation'
-      description: The configuration for evaluating the success/failure of a status check
-    TeamExternalIntegrationReference:
-      title: StatusCheckRequest.TeamExternalIntegrationReference
-      required:
-      - name
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of the external integration for the health check to be created/updated
-          enum:
-          - JIRA
-          - DATADOG
-          - DATADOG_EU
-          - DATADOG_US3
-          - DATADOG_US5
-          - DATADOG_US1_FED
-          - PAGERDUTY
-          - NEWRELIC
-          - GRAFANA
-          - DYNATRACE
-          - APPDYNAMICS
-          - PROMETHEUS
-          - CUSTOM
-          - K6
-          - LOAD_GENERATOR_CUSTOM
-          - AWS
-          - AZURE
-        observabilityToolType:
-          type: string
-          description: The observability tool type of the external integration for the health check to be created/updated
-          enum:
-          - DATADOG
-          - PAGERDUTY
-          - NEWRELIC
-          - GRAFANA
-          - DYNATRACE
-          - APPDYNAMICS
-          - PROMETHEUS
-          - CUSTOM
-          - AWS
-          - AZURE
-        domain:
-          type: string
-          description: The domain of the observability tool type of the external integration for the health check to be created/updated
-        name:
-          type: string
-          description: The name of the external integration for the health check to be created/updated
-      description: Represents the configuration for referencing an external integration
     StatusCheck:
       type: object
       properties:
@@ -509,8 +370,89 @@ components:
               type: string
               description: The tags associated with this status check
           description: The tags associated with this status check
-    HasCompareFunctionObject:
+    TeamExternalIntegrationReference:
+      title: StatusCheckRequest.TeamExternalIntegrationReference
+      required:
+      - name
       type: object
+      properties:
+        type:
+          type: string
+          description: The type of the external integration for the health check to be created/updated
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+        observabilityToolType:
+          type: string
+          description: The observability tool type of the external integration for the health check to be created/updated
+          enum:
+          - DATADOG
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - AWS
+          - AZURE
+        domain:
+          type: string
+          description: The domain of the observability tool type of the external integration for the health check to be created/updated
+        name:
+          type: string
+          description: The name of the external integration for the health check to be created/updated
+      description: Represents the configuration for referencing an external integration
+    TestEndpointConfigurationRequest:
+      required:
+      - endpointConfiguration
+      type: object
+      properties:
+        endpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+        webhookId:
+          type: string
+        integrationSpecificValues:
+          type: object
+          additionalProperties:
+            type: string
+            description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+          description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+    EvaluationConfiguration:
+      required:
+      - okStatusCodes
+      type: object
+      properties:
+        okLatencyMaxMs:
+          type: integer
+          description: The maximum latency in milliseconds for a successful status check
+          format: int32
+        okStatusCodes:
+          type: array
+          description: The list of successful response status codes for a successful status check
+          items:
+            type: string
+            description: The list of successful response status codes for a successful status check
+        responseBodyEvaluation:
+          $ref: '#/components/schemas/ResponseBodyEvaluation'
+      description: The configuration for evaluating the success/failure of a status check
     StatusCheckRequest:
       required:
       - endpointConfiguration
@@ -589,3 +531,61 @@ components:
         headersArn:
           type: string
           description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
+    TestEvaluationConfigurationRequest:
+      required:
+      - evaluationConfiguration
+      type: object
+      properties:
+        endpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        evaluationConfiguration:
+          $ref: '#/components/schemas/EvaluationConfiguration'
+        testEndpointResponse:
+          $ref: '#/components/schemas/EndpointResponse'
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+    HasCompareFunctionObject:
+      type: object
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
+      type: object
+      properties:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body

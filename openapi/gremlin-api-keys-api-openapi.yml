@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents apikeys API
+  title: Gremlin Apikeys API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,15 +14,15 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: apikeys
+- name: API Keys
   description: Create, delete, activate, deactivate and list apikeys
 paths:
   /apikeys/{identifier}/activate:
     put:
       tags:
-      - apikeys
+      - API Keys
       summary: Un-Revoke an existing API Key
-      description: Requires the privilege [`API_KEYS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `API_KEYS_WRITE`
       operationId: activate_2
       parameters:
       - name: identifier
@@ -45,9 +45,9 @@ paths:
   /apikeys:
     get:
       tags:
-      - apikeys
+      - API Keys
       summary: List all API Keys
-      description: Requires the privilege [`API_KEYS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `API_KEYS_READ`
       operationId: listAll
       parameters: []
       responses:
@@ -68,9 +68,9 @@ paths:
         - API_KEYS_READ
     post:
       tags:
-      - apikeys
+      - API Keys
       summary: Create a new API Key
-      description: Requires the privilege [`API_KEYS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `API_KEYS_WRITE`
       operationId: createNew
       parameters: []
       requestBody:
@@ -94,9 +94,9 @@ paths:
   /apikeys/{identifier}/expiration:
     put:
       tags:
-      - apikeys
+      - API Keys
       summary: Set a new expiration on key
-      description: Requires the privilege [`API_KEYS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `API_KEYS_WRITE`
       operationId: expiration
       parameters:
       - name: identifier
@@ -124,9 +124,9 @@ paths:
   /apikeys/active:
     get:
       tags:
-      - apikeys
+      - API Keys
       summary: List active API Keys
-      description: Requires the privilege [`API_KEYS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `API_KEYS_READ`
       operationId: listActive
       parameters: []
       responses:
@@ -148,9 +148,9 @@ paths:
   /apikeys/all-for-company:
     get:
       tags:
-      - apikeys
+      - API Keys
       summary: List all API Keys for company
-      description: Requires the privilege [`ALL_API_KEYS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `ALL_API_KEYS_READ`
       operationId: listAllForCompany
       parameters: []
       responses:
@@ -172,9 +172,9 @@ paths:
   /apikeys/{identifier}:
     delete:
       tags:
-      - apikeys
+      - API Keys
       summary: Revoke an existing API Key
-      description: Requires the privilege [`API_KEYS_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `API_KEYS_WRITE`
       operationId: revoke_3
       parameters:
       - name: identifier
@@ -196,6 +196,23 @@ paths:
         - API_KEYS_WRITE
 components:
   schemas:
+    CreateApiKeysRequest:
+      required:
+      - identifier
+      type: object
+      properties:
+        identifier:
+          maxLength: 100
+          minLength: 0
+          pattern: ^[a-zA-Z0-9 -]*$
+          type: string
+        description:
+          maxLength: 256
+          minLength: 0
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
     ApiKeyJson:
       type: object
       properties:
@@ -240,21 +257,4 @@ components:
         last_used_at:
           type: string
           description: The date this API key was last used.
-          format: date-time
-    CreateApiKeysRequest:
-      required:
-      - identifier
-      type: object
-      properties:
-        identifier:
-          maxLength: 100
-          minLength: 0
-          pattern: ^[a-zA-Z0-9 -]*$
-          type: string
-        description:
-          maxLength: 256
-          minLength: 0
-          type: string
-        expiresAt:
-          type: string
           format: date-time

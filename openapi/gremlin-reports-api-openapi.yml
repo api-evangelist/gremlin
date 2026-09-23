@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents reports API
+  title: Gremlin Reports API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,15 +14,15 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: reports
+- name: Reports
   description: Get users, clients, and attacks summaries
 paths:
   /reports/attacks:
     get:
       tags:
-      - reports
-      summary: Loads the Attacks Summary for the specified time period.
-      description: Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Reports
+      summary: Loads the Attacks Summary for the specified time period
+      description: Requires the privilege `REPORTS_READ`
       operationId: attackSummary
       parameters:
       - name: teamId
@@ -69,9 +69,9 @@ paths:
   /reports/clients:
     get:
       tags:
-      - reports
-      summary: Loads the Client Summary for the specified time period.
-      description: Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Reports
+      summary: Loads the Client Summary for the specified time period
+      description: Requires the privilege `REPORTS_READ`
       operationId: clientSummary
       parameters:
       - name: teamId
@@ -118,9 +118,9 @@ paths:
   /reports/companies:
     get:
       tags:
-      - reports
-      summary: Loads the Company Summary for the specified month.
-      description: Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Reports
+      summary: Loads the Company Summary for the specified month
+      description: Requires the privilege `REPORTS_READ`
       operationId: companySummary
       parameters:
       - name: startDate
@@ -152,9 +152,9 @@ paths:
   /reports/companies/pdf:
     get:
       tags:
-      - reports
-      summary: Loads the Company Summary PDF for the specified time frame.
-      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Reports
+      summary: Loads the Company Summary PDF for the specified time frame
+      description: Requires the privilege `RELIABILITY_REPORTS_READ`
       operationId: companySummaryPdf
       parameters:
       - name: startDate
@@ -207,9 +207,9 @@ paths:
   /reports/companies/reliability-management:
     get:
       tags:
-      - reports
-      summary: Loads the Company Reliability Management Report for the specified time window defaulting to a week.
-      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Reports
+      summary: Loads the Company Reliability Management Report for the specified time window…
+      description: Requires the privilege `RELIABILITY_REPORTS_READ`
       operationId: getCompanyReliabilityManagementReport
       parameters:
       - name: startDate
@@ -251,9 +251,9 @@ paths:
   /reports/companies/reliability-management/services:
     get:
       tags:
-      - reports
-      summary: Loads the company service list and reliability trend for each service for the specified time window defaulting to a month.
-      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Reports
+      summary: Loads the company service list and reliability trend for each service for the…
+      description: Requires the privilege `RELIABILITY_REPORTS_READ`
       operationId: getCompanyReliabilityManagementReport_1
       parameters:
       - name: startDate
@@ -301,9 +301,9 @@ paths:
   /reports/companies/reliability-management/grouped:
     get:
       tags:
-      - reports
-      summary: Loads the Company Reliability Management Report grouped by query param value of groupBy - defaults to TEAM.
-      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Reports
+      summary: Loads the Company Reliability Management Report grouped by query param value of…
+      description: Requires the privilege `RELIABILITY_REPORTS_READ`
       operationId: getCompanyReliabilityManagementReportGrouped
       parameters:
       - name: groupBy
@@ -340,9 +340,9 @@ paths:
   /reports/companies/trends:
     get:
       tags:
-      - reports
-      summary: Returns the Risk and Score trends for your company across all associated services
-      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Reports
+      summary: Returns the Risk and Score trends for your company across all associated…
+      description: Requires the privilege `RELIABILITY_REPORTS_READ`
       operationId: getCompanyScoreRiskTrends
       parameters:
       - name: startDate
@@ -384,9 +384,9 @@ paths:
   /reports/team/detected-risk/trend:
     get:
       tags:
-      - reports
+      - Reports
       summary: Returns the trend of risks across all services for a given team
-      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `RELIABILITY_REPORTS_READ`
       operationId: getDetectedRisksReportTrendForTeam
       parameters:
       - name: teamId
@@ -428,8 +428,8 @@ paths:
   /reports/team/reliability-report:
     get:
       tags:
-      - reports
-      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Reports
+      description: Requires the privilege `RELIABILITY_REPORTS_READ`
       operationId: getReliabilityReportForTeam
       parameters:
       - name: teamId
@@ -450,12 +450,14 @@ paths:
       security:
       - privilege:
         - RELIABILITY_REPORTS_READ
+      summary: Get reliability report for team
+      x-summary-source: derived
   /reports/team/reliability-report/pdf:
     get:
       tags:
-      - reports
-      summary: Loads the team reliability report PDF for the specified time frame.
-      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Reports
+      summary: Loads the team reliability report PDF for the specified time frame
+      description: Requires the privilege `RELIABILITY_REPORTS_READ`
       operationId: getReliabilityReportForTeamPdf
       parameters:
       - name: teamId
@@ -497,9 +499,9 @@ paths:
   /reports/services/reliability-management/reliability-report-trend:
     get:
       tags:
-      - reports
-      summary: Loads the Reliability report trend for all the services of the team for the specified time period defaulting to 1 months and 4 data points
-      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Reports
+      summary: Loads the Reliability report trend for all the services of the team for the…
+      description: Requires the privilege `RELIABILITY_REPORTS_READ`
       operationId: getReliabilityReportTrendForAllServicesOfTeam
       parameters:
       - name: startDate
@@ -539,9 +541,9 @@ paths:
   /reports/services/{serviceId}/reliability-management/reliability-report-trend:
     get:
       tags:
-      - reports
-      summary: Loads the Reliability report trend for the service for the specified time period defaulting to 1 months and 4 data points
-      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Reports
+      summary: Loads the Reliability report trend for the service for the specified time…
+      description: Requires the privilege `RELIABILITY_REPORTS_READ`
       operationId: getReliabilityReportTrendForService
       parameters:
       - name: serviceId
@@ -590,9 +592,9 @@ paths:
   /reports/team/reliability-report/trend:
     get:
       tags:
-      - reports
+      - Reports
       summary: Returns the trend of Reliability Scores across all services for a given team
-      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `RELIABILITY_REPORTS_READ`
       operationId: getReliabilityReportTrendForTeam
       parameters:
       - name: teamId
@@ -634,9 +636,9 @@ paths:
   /reports/team/detected-risks-report:
     get:
       tags:
-      - reports
+      - Reports
       summary: Loads latest risk evaluation for each eligible service for the team
-      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `RELIABILITY_REPORTS_READ`
       operationId: getRiskEvaluationReportForTeam
       parameters:
       - name: teamId
@@ -660,9 +662,9 @@ paths:
   /reports/team/detected-risks-report/pdf:
     get:
       tags:
-      - reports
-      summary: Loads the team risk report PDF for the specified time frame.
-      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Reports
+      summary: Loads the team risk report PDF for the specified time frame
+      description: Requires the privilege `RELIABILITY_REPORTS_READ`
       operationId: getRiskEvaluationReportForTeamPdf
       parameters:
       - name: teamId
@@ -704,9 +706,9 @@ paths:
   /reports/team/trends:
     get:
       tags:
-      - reports
+      - Reports
       summary: Returns the trend of Reliability Scores across all services for a given team
-      description: Requires the privilege [`RELIABILITY_REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `RELIABILITY_REPORTS_READ`
       operationId: getScoreRiskTrendsForTeam
       parameters:
       - name: teamId
@@ -748,9 +750,9 @@ paths:
   /reports/pricing:
     get:
       tags:
-      - reports
-      summary: Loads the pricing usage for the specified dates and tracking period.
-      description: Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Reports
+      summary: Loads the pricing usage for the specified dates and tracking period
+      description: Requires the privilege `REPORTS_READ`
       operationId: pricingReport
       parameters:
       - name: startDate
@@ -798,9 +800,9 @@ paths:
   /reports/teams:
     get:
       tags:
-      - reports
-      summary: This functionality has moved to GET /reports/teams/paged.Loads the Team Summary for the specified month.
-      description: Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Reports
+      summary: This functionality has moved to GET /reports/teams/paged.Loads the Team Summary…
+      description: Requires the privilege `REPORTS_READ`
       operationId: teamSummaries
       parameters:
       - name: startDate
@@ -837,9 +839,9 @@ paths:
   /reports/teams/paged:
     get:
       tags:
-      - reports
-      summary: Loads the Team Summary for the specified month.
-      description: Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Reports
+      summary: Loads the Team Summary for the specified month
+      description: Requires the privilege `REPORTS_READ`
       operationId: teamSummariesPaged
       parameters:
       - name: startDate
@@ -887,9 +889,9 @@ paths:
   /reports/users:
     get:
       tags:
-      - reports
-      summary: Loads the User Summary for the specified time period.
-      description: Requires the privilege [`REPORTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Reports
+      summary: Loads the User Summary for the specified time period
+      description: Requires the privilege `REPORTS_READ`
       operationId: userSummary
       parameters:
       - name: teamId
@@ -935,6 +937,242 @@ paths:
         - REPORTS_READ
 components:
   schemas:
+    CompanyReliabilityReportGroupedResponse:
+      type: object
+      properties:
+        groupBy:
+          type: string
+          enum:
+          - TEAM
+        groupedServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupedServiceResponse'
+    TeamRiskReport:
+      type: object
+      properties:
+        serviceName:
+          type: string
+        serviceId:
+          type: string
+        riskSummaryStats:
+          $ref: '#/components/schemas/RiskSummaryStats'
+        riskEvaluations:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskEvaluationResponse'
+    TargetingStrategy:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    TeamScoreReport:
+      type: object
+      properties:
+        serviceName:
+          type: string
+        serviceId:
+          type: string
+        reliabilityScore:
+          type: number
+          format: double
+        previousIntervalScore:
+          type: number
+          format: double
+        policyEvaluations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyEvaluation'
+    PagedResponseTeamUsageReport:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamUsageReport'
+    GroupedServiceResponse:
+      type: object
+      properties:
+        groupDetails:
+          $ref: '#/components/schemas/GroupDetails'
+        avgScore:
+          type: number
+          format: double
+        previousIntervalAvgScore:
+          type: number
+          format: double
+        numOfServices:
+          type: integer
+          format: int32
+        atRiskTotal:
+          type: integer
+          format: int32
+        previousIntervalAtRiskTotal:
+          type: integer
+          format: int32
+        numOfSpofs:
+          type: integer
+          format: int32
+        reliabilityReportTrend:
+          $ref: '#/components/schemas/ReportTrend'
+        numOfRuns:
+          type: integer
+          format: int32
+        previousIntervalNumOfRuns:
+          type: integer
+          format: int32
+    TeamOwnerDetails:
+      type: object
+      properties:
+        teamId:
+          type: string
+        teamName:
+          type: string
+        teamOwnerEmail:
+          type: string
+        teamOwnerName:
+          type: string
+    TeamRiskReportResponse:
+      type: object
+      properties:
+        teamId:
+          type: string
+        teamName:
+          type: string
+        teamRiskReports:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamRiskReport'
+    PricingReport:
+      type: object
+      properties:
+        companyId:
+          type: string
+          description: CompanyId for which the pricing report is generated
+        startDate:
+          type: string
+          description: Start date for the pricing report
+        endDate:
+          type: string
+          description: End date for the pricing report
+        trackingPeriod:
+          type: string
+          description: Tracking period of targets for the pricing report which could be Daily, Weekly or Monthly
+          enum:
+          - Daily
+          - Weekly
+          - Monthly
+        usageByTrackingPeriod:
+          type: array
+          description: Pricing usage over the duration requested which is tracked over days, weeks or months
+          items:
+            $ref: '#/components/schemas/PricingUsage'
+    RiskEvaluationResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        evaluatedAt:
+          type: string
+          format: date-time
+        notes:
+          type: string
+        document:
+          type: string
+        isAtRisk:
+          type: boolean
+    TeamReliabilityCategorySummary:
+      type: object
+      properties:
+        category:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        rmTestScore:
+          type: number
+          format: double
+        maxRMTestScore:
+          type: number
+          format: double
+        score:
+          type: number
+          format: double
+        previousIntervalScore:
+          type: number
+          format: double
+        maxScore:
+          type: number
+          format: double
+        rank:
+          type: integer
+          format: int32
+    StatsByDate:
+      type: object
+      properties:
+        trackingDate:
+          type: string
+          format: date
+        value:
+          type: number
+          format: double
+        numOfServices:
+          type: integer
+          format: int32
+        score:
+          type: number
+          format: double
+    RunSummaryServiceStats:
+      type: object
+      properties:
+        runs:
+          type: integer
+          format: int32
+        previousIntervalRuns:
+          type: integer
+          format: int32
+    CompanyReliabilityReportResponse:
+      type: object
+      properties:
+        summary:
+          $ref: '#/components/schemas/ServicesSummary'
+        start:
+          type: string
+          format: date
+        end:
+          type: string
+          format: date
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceReportResponse'
     PolicyEvaluation:
       type: object
       properties:
@@ -997,276 +1235,22 @@ components:
           - RECURRING_SCHEDULE
         triggeredBy:
           type: string
-    TeamReliabilityReportResponse:
+    CompanyReliabilityReportServiceListResponse:
       type: object
       properties:
-        rmTestScore:
-          type: number
-          format: double
-        score:
-          type: number
-          format: double
-        previousIntervalScore:
-          type: number
-          format: double
-        maxScore:
-          type: number
-          format: double
-        teamReliabilityCategorySummary:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/TeamReliabilityCategorySummary'
-    RiskSummaryStats:
-      type: object
-      properties:
-        total:
+        topN:
           type: integer
           format: int32
-        atRisk:
-          type: integer
-          format: int32
-        previousIntervalAtRisk:
-          type: integer
-          format: int32
-        evaluationState:
-          type: string
-          enum:
-          - RISKS_NOT_SUPPORTED
-          - NO_DEPLOYMENT_FOUND
-          - EVALUATED
-          - RISKS_NOT_INCLUDED
-    GremlinMetrics:
-      type: object
-      properties:
-        uniqueUsers:
-          type: integer
-          format: int32
-        uniqueActiveUsers:
-          type: integer
-          format: int32
-        attacksRun:
-          type: integer
-          format: int32
-        uniqueHostsAttacked:
-          type: integer
-          format: int32
-        uniqueTargetsHost:
-          type: integer
-          format: int32
-        uniqueTargetsContainer:
-          type: integer
-          format: int32
-        uniqueTargetsApplication:
-          type: integer
-          format: int32
-        reliabilityTestsRun:
-          type: integer
-          format: int32
-        failureFlagExperimentsRun:
-          type: integer
-          format: int32
-        infrastructureAgents:
-          type: integer
-          format: int32
-        failureFlagAgents:
-          type: integer
-          format: int32
-    RunSummaryStats:
-      type: object
-      properties:
-        reliabilityTests:
-          type: integer
-          format: int32
-        previousIntervalReliabilityTests:
-          type: integer
-          format: int32
-        experiments:
-          type: integer
-          format: int32
-        previousIntervalExperiments:
-          type: integer
-          format: int32
-        scenarios:
-          type: integer
-          format: int32
-        previousIntervalScenarios:
-          type: integer
-          format: int32
-        failureFlags:
-          type: integer
-          format: int32
-        previousIntervalFailureFlags:
-          type: integer
-          format: int32
-        gameDays:
-          type: integer
-          format: int32
-        previousIntervalGameDays:
-          type: integer
-          format: int32
-    TeamScoreReport:
-      type: object
-      properties:
-        serviceName:
-          type: string
-        serviceId:
-          type: string
-        reliabilityScore:
-          type: number
-          format: double
-        previousIntervalScore:
-          type: number
-          format: double
-        policyEvaluations:
-          type: array
-          items:
-            $ref: '#/components/schemas/PolicyEvaluation'
-    RunSummaryServiceStats:
-      type: object
-      properties:
-        runs:
-          type: integer
-          format: int32
-        previousIntervalRuns:
-          type: integer
-          format: int32
-    TeamReliabilityCategorySummary:
-      type: object
-      properties:
-        category:
-          type: string
-          enum:
-          - OTHER
-          - REDUNDANCY
-          - SCALABILITY
-          - DEPENDENCIES
-          - RISKS
-          - EXTRA_CREDIT
-        rmTestScore:
-          type: number
-          format: double
-        maxRMTestScore:
-          type: number
-          format: double
-        score:
-          type: number
-          format: double
-        previousIntervalScore:
-          type: number
-          format: double
-        maxScore:
-          type: number
-          format: double
-        rank:
-          type: integer
-          format: int32
-    PagedResponseTeamUsageReport:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamUsageReport'
-    TeamOwnerDetails:
-      type: object
-      properties:
-        teamId:
-          type: string
-        teamName:
-          type: string
-        teamOwnerEmail:
-          type: string
-        teamOwnerName:
-          type: string
-    PricingUsage:
-      type: object
-      properties:
         start:
           type: string
-          description: Start date for usage which could be the start of day, week or month
+          format: date
         end:
           type: string
-          description: End date for usage which could be the end of day, week or month
-        uniqueTargetsHost:
-          type: integer
-          description: Count of unique targets of type Host tracked in the day, week or month
-          format: int32
-        uniqueTargetsContainer:
-          type: integer
-          description: Count of unique targets of type Container tracked in the day, week or month
-          format: int32
-        uniqueTargetsApplication:
-          type: integer
-          description: Count of unique targets of type Application tracked in the day, week or month
-          format: int32
-        maxActiveAgents:
-          type: integer
-          description: Maximum number of active agents installed at the same time over the tracking period
-          format: int32
-        maxTargetableApplications:
-          type: integer
-          description: Maximum number of active agents installed at the same time over the tracking period
-          format: int32
-      description: Pricing usage over the duration requested which is tracked over days, weeks or months
-    CompanyReliabilityReportGroupedResponse:
-      type: object
-      properties:
-        groupBy:
-          type: string
-          enum:
-          - TEAM
-        groupedServices:
+          format: date
+        services:
           type: array
           items:
-            $ref: '#/components/schemas/GroupedServiceResponse'
-    GroupedServiceResponse:
-      type: object
-      properties:
-        groupDetails:
-          $ref: '#/components/schemas/GroupDetails'
-        avgScore:
-          type: number
-          format: double
-        previousIntervalAvgScore:
-          type: number
-          format: double
-        numOfServices:
-          type: integer
-          format: int32
-        atRiskTotal:
-          type: integer
-          format: int32
-        previousIntervalAtRiskTotal:
-          type: integer
-          format: int32
-        numOfSpofs:
-          type: integer
-          format: int32
-        reliabilityReportTrend:
-          $ref: '#/components/schemas/ReportTrend'
-        numOfRuns:
-          type: integer
-          format: int32
-        previousIntervalNumOfRuns:
-          type: integer
-          format: int32
+            $ref: '#/components/schemas/ServiceReportResponse'
     ServiceReportResponse:
       type: object
       properties:
@@ -1315,39 +1299,6 @@ components:
         numOfSpofs:
           type: integer
           format: int32
-    StatsByDate:
-      type: object
-      properties:
-        trackingDate:
-          type: string
-          format: date
-        value:
-          type: number
-          format: double
-        numOfServices:
-          type: integer
-          format: int32
-        score:
-          type: number
-          format: double
-    TeamRiskReport:
-      type: object
-      properties:
-        serviceName:
-          type: string
-        serviceId:
-          type: string
-        riskSummaryStats:
-          $ref: '#/components/schemas/RiskSummaryStats'
-        riskEvaluations:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskEvaluationResponse'
-    ServiceOwner:
-      type: object
-      properties:
-        identifier:
-          type: string
     ServiceReliabilityReportTrend:
       type: object
       properties:
@@ -1355,22 +1306,21 @@ components:
           type: string
         reliabilityReportTrend:
           $ref: '#/components/schemas/ReportTrend'
-    ServicesSummary:
+    TeamUsageReport:
       type: object
       properties:
-        start:
+        companyId:
           type: string
-          format: date
-        end:
+        teamId:
           type: string
-          format: date
-        topN:
-          type: integer
-          format: int32
-        biggestChangers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceReportResponse'
+        teamName:
+          type: string
+        startDate:
+          type: string
+        endDate:
+          type: string
+        gremlinMetrics:
+          $ref: '#/components/schemas/GremlinMetrics'
     ScoreRiskTrend:
       type: object
       properties:
@@ -1382,47 +1332,6 @@ components:
           $ref: '#/components/schemas/ReportTrend'
         runSummaryStats:
           $ref: '#/components/schemas/RunSummaryStats'
-    TargetingStrategy:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    CompanyReliabilityReportServiceListResponse:
-      type: object
-      properties:
-        topN:
-          type: integer
-          format: int32
-        start:
-          type: string
-          format: date
-        end:
-          type: string
-          format: date
-        services:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceReportResponse'
-    TeamReliabilityScoreReportResponse:
-      type: object
-      properties:
-        teamId:
-          type: string
-        teamName:
-          type: string
-        teamScoreReports:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamScoreReport'
-        aggregatedReliabilityReport:
-          $ref: '#/components/schemas/TeamReliabilityReportResponse'
-        lastUpdatedAt:
-          type: string
-          format: date-time
     ReportTrend:
       type: object
       properties:
@@ -1439,45 +1348,104 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/StatsByDate'
-    PricingReport:
+    PricingUsage:
       type: object
       properties:
-        companyId:
+        start:
           type: string
-          description: CompanyId for which the pricing report is generated
-        startDate:
+          description: Start date for usage which could be the start of day, week or month
+        end:
           type: string
-          description: Start date for the pricing report
-        endDate:
-          type: string
-          description: End date for the pricing report
-        trackingPeriod:
-          type: string
-          description: Tracking period of targets for the pricing report which could be Daily, Weekly or Monthly
-          enum:
-          - Daily
-          - Weekly
-          - Monthly
-        usageByTrackingPeriod:
-          type: array
-          description: Pricing usage over the duration requested which is tracked over days, weeks or months
-          items:
-            $ref: '#/components/schemas/PricingUsage'
-    TeamUsageReport:
+          description: End date for usage which could be the end of day, week or month
+        uniqueTargetsHost:
+          type: integer
+          description: Count of unique targets of type Host tracked in the day, week or month
+          format: int32
+        uniqueTargetsContainer:
+          type: integer
+          description: Count of unique targets of type Container tracked in the day, week or month
+          format: int32
+        uniqueTargetsApplication:
+          type: integer
+          description: Count of unique targets of type Application tracked in the day, week or month
+          format: int32
+        maxActiveAgents:
+          type: integer
+          description: Maximum number of active agents installed at the same time over the tracking period
+          format: int32
+        maxTargetableApplications:
+          type: integer
+          description: Maximum number of active agents installed at the same time over the tracking period
+          format: int32
+      description: Pricing usage over the duration requested which is tracked over days, weeks or months
+    TeamReliabilityScoreReportResponse:
       type: object
       properties:
-        companyId:
-          type: string
         teamId:
           type: string
         teamName:
           type: string
-        startDate:
+        teamScoreReports:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamScoreReport'
+        aggregatedReliabilityReport:
+          $ref: '#/components/schemas/TeamReliabilityReportResponse'
+        lastUpdatedAt:
           type: string
-        endDate:
-          type: string
-        gremlinMetrics:
-          $ref: '#/components/schemas/GremlinMetrics'
+          format: date-time
+    TeamReliabilityReportResponse:
+      type: object
+      properties:
+        rmTestScore:
+          type: number
+          format: double
+        score:
+          type: number
+          format: double
+        previousIntervalScore:
+          type: number
+          format: double
+        maxScore:
+          type: number
+          format: double
+        teamReliabilityCategorySummary:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TeamReliabilityCategorySummary'
+    RunSummaryStats:
+      type: object
+      properties:
+        reliabilityTests:
+          type: integer
+          format: int32
+        previousIntervalReliabilityTests:
+          type: integer
+          format: int32
+        experiments:
+          type: integer
+          format: int32
+        previousIntervalExperiments:
+          type: integer
+          format: int32
+        scenarios:
+          type: integer
+          format: int32
+        previousIntervalScenarios:
+          type: integer
+          format: int32
+        failureFlags:
+          type: integer
+          format: int32
+        previousIntervalFailureFlags:
+          type: integer
+          format: int32
+        gameDays:
+          type: integer
+          format: int32
+        previousIntervalGameDays:
+          type: integer
+          format: int32
     GroupDetails:
       type: object
       properties:
@@ -1487,45 +1455,79 @@ components:
           type: string
         ownerDetails:
           $ref: '#/components/schemas/ServiceOwner'
-    RiskEvaluationResponse:
+    ServiceOwner:
       type: object
       properties:
-        name:
+        identifier:
           type: string
-        id:
-          type: string
-        evaluatedAt:
-          type: string
-          format: date-time
-        notes:
-          type: string
-        document:
-          type: string
-        isAtRisk:
-          type: boolean
-    CompanyReliabilityReportResponse:
+    ServicesSummary:
       type: object
       properties:
-        summary:
-          $ref: '#/components/schemas/ServicesSummary'
         start:
           type: string
           format: date
         end:
           type: string
           format: date
-        services:
+        topN:
+          type: integer
+          format: int32
+        biggestChangers:
           type: array
           items:
             $ref: '#/components/schemas/ServiceReportResponse'
-    TeamRiskReportResponse:
+    GremlinMetrics:
       type: object
       properties:
-        teamId:
+        uniqueUsers:
+          type: integer
+          format: int32
+        uniqueActiveUsers:
+          type: integer
+          format: int32
+        attacksRun:
+          type: integer
+          format: int32
+        uniqueHostsAttacked:
+          type: integer
+          format: int32
+        uniqueTargetsHost:
+          type: integer
+          format: int32
+        uniqueTargetsContainer:
+          type: integer
+          format: int32
+        uniqueTargetsApplication:
+          type: integer
+          format: int32
+        reliabilityTestsRun:
+          type: integer
+          format: int32
+        failureFlagExperimentsRun:
+          type: integer
+          format: int32
+        infrastructureAgents:
+          type: integer
+          format: int32
+        failureFlagAgents:
+          type: integer
+          format: int32
+    RiskSummaryStats:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+        atRisk:
+          type: integer
+          format: int32
+        previousIntervalAtRisk:
+          type: integer
+          format: int32
+        evaluationState:
           type: string
-        teamName:
-          type: string
-        teamRiskReports:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamRiskReport'
+          enum:
+          - RISKS_NOT_SUPPORTED
+          - NO_DEPLOYMENT_FOUND
+          - EVALUATED
+          - RISKS_NOT_INCLUDED

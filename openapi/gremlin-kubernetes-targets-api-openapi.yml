@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents kubernetes.targets API
+  title: Gremlin Kubernetes.targets API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -22,7 +22,7 @@ paths:
       tags:
       - kubernetes.targets
       summary: List all targetable kubernetes object types
-      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `CLIENTS_READ`
       operationId: kinds
       parameters:
       - name: teamId
@@ -64,7 +64,7 @@ paths:
       tags:
       - kubernetes.targets
       summary: List all attackable targets
-      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `CLIENTS_READ`
       operationId: targets
       parameters:
       - name: clientId
@@ -99,7 +99,7 @@ paths:
       tags:
       - kubernetes.targets
       summary: List all attackable targets that match the given label selector
-      description: Requires the privilege [`CLIENTS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      description: Requires the privilege `CLIENTS_READ`
       operationId: targetsBySelector
       parameters:
       - name: teamId

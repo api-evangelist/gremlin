@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents oauth API
+  title: Gremlin OAUTH API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,14 +14,14 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: oauth
+- name: OAuth
   description: OAuth callback endpoints
 paths:
   /oauth/callback:
     get:
       tags:
-      - oauth
-      summary: Handle receiving a code from an OAuth flow.
+      - OAuth
+      summary: Handle receiving a code from an OAuth flow
       operationId: oAuthCallback
       parameters:
       - name: code
@@ -47,8 +47,8 @@ paths:
   /oauth/login:
     get:
       tags:
-      - oauth
-      summary: Initiates a OAuth login.
+      - OAuth
+      summary: Initiates a OAuth login
       operationId: oAuthLogin
       parameters:
       - name: companyName

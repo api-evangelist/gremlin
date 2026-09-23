@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents orgs API
+  title: Gremlin Orgs API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -14,15 +14,15 @@ servers:
 - url: https://api.gremlin.com/v1
   description: Gremlin API v1
 tags:
-- name: orgs
+- name: Orgs
   description: Get and update org preferences. Generate new and delete old client certificates
 paths:
   /orgs/auth/certificate:
     get:
       tags:
-      - orgs
-      summary: Gets the secret key and certificate for this org in PEM format (zipped).
-      description: Requires the privilege [`TEAM_SECURITY_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Orgs
+      summary: Gets the secret key and certificate for this org in PEM format (zipped)
+      description: Requires the privilege `TEAM_SECURITY_READ`
       operationId: downloadClientCredentials
       parameters:
       - name: teamId
@@ -45,11 +45,11 @@ paths:
         - TEAM_SECURITY_READ
     post:
       tags:
-      - orgs
-      summary: Rolls over to use a new certificate.  The current certificate will be saved and still valid for authentication, providing a transition period.
+      - Orgs
+      summary: Rolls over to use a new certificate.
       description: 'SUPER users only
 
-        Requires the privilege [`TEAM_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `TEAM_SECURITY_WRITE`'
       operationId: addNewCertificate
       parameters:
       - name: teamId
@@ -72,11 +72,11 @@ paths:
         - TEAM_SECURITY_WRITE
     delete:
       tags:
-      - orgs
-      summary: Deletes the current credentials and generates new.  For use when the current credentials are compromised.
+      - Orgs
+      summary: Deletes the current credentials and generates new.
       description: 'SUPER users only
 
-        Requires the privilege [`TEAM_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `TEAM_SECURITY_WRITE`'
       operationId: replaceCertificate
       parameters:
       - name: teamId
@@ -100,9 +100,9 @@ paths:
   /orgs:
     get:
       tags:
-      - orgs
-      summary: Get all Teams.
-      description: Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Orgs
+      summary: Get all Teams
+      description: Requires the privilege `TEAMS_READ`
       operationId: info
       parameters:
       - name: prefs
@@ -123,9 +123,9 @@ paths:
         - TEAMS_READ
     post:
       tags:
-      - orgs
-      summary: Creates a new org with provided name.
-      description: Requires the privilege [`COMPANIES_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Orgs
+      summary: Creates a new org with provided name
+      description: Requires the privilege `COMPANIES_WRITE`
       operationId: create_2
       parameters:
       - name: addUser
@@ -160,9 +160,9 @@ paths:
   /orgs/{identifier}:
     get:
       tags:
-      - orgs
-      summary: Get the specified Team.
-      description: Requires the privilege [`TEAMS_READ`](https://www.gremlin.com/docs/user-management/access-control/#privileges)
+      - Orgs
+      summary: Get the specified Team
+      description: Requires the privilege `TEAMS_READ`
       operationId: info_1
       parameters:
       - name: identifier
@@ -189,11 +189,11 @@ paths:
   /orgs/auth/certificate/old:
     delete:
       tags:
-      - orgs
-      summary: Deletes the old certificate for this org.  This is intended for when a transition to new certificates has been completed, or when the old certificate has been compromised.
+      - Orgs
+      summary: Deletes the old certificate for this org.
       description: 'SUPER users only
 
-        Requires the privilege [`TEAM_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `TEAM_SECURITY_WRITE`'
       operationId: invalidateOldCertificate
       parameters:
       - name: teamId
@@ -217,11 +217,11 @@ paths:
   /orgs/auth/secret/reset:
     post:
       tags:
-      - orgs
-      summary: Resets the secret for this Team.
+      - Orgs
+      summary: Resets the secret for this Team
       description: 'SUPER users only
 
-        Requires the privilege [`TEAM_SECURITY_WRITE`](https://www.gremlin.com/docs/user-management/access-control/#privileges)'
+        Requires the privilege `TEAM_SECURITY_WRITE`'
       operationId: secretReset
       parameters:
       - name: teamId

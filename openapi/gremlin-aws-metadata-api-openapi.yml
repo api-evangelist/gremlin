@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Gremlin agents aws.metadata API
+  title: Gremlin Aws.metadata API
   description: The API for interacting with the Gremlin Failure-as-a-Service platform
   termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
   contact:
@@ -22,7 +22,11 @@ paths:
       tags:
       - aws.metadata
       summary: Queries Gremlin's view of Autoscaling Groups in a given AWS account
-      description: "This endpoint returns Gremlin's view of Autoscaling Groups in a given AWS account.  The `domain` parameter refers to the AWS AccountId.  \nNOTE: This endpoint may (or may not) return Autoscaling Groups which have already been assigned to Gremlin Services, or ones which we cannot assign to Gremlin Services\nRequires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+      description: 'This endpoint returns Gremlin''s view of Autoscaling Groups in a given AWS account. The `domain` parameter refers to the AWS AccountId.
+
+        NOTE: This endpoint may (or may not) return Autoscaling Groups which have already been assigned to Gremlin Services, or ones which we cannot assign to Gremlin Services
+
+        Requires the privilege `MINIMUM_TEAM_PRIVILEGES`'
       operationId: getAutoscalingGroupsForAccount
       parameters:
       - name: domain
@@ -60,8 +64,13 @@ paths:
     get:
       tags:
       - aws.metadata
-      summary: Returns the policy document necessary for Gremlin to access AWS resources.
-      description: "This endpoint provides the policy document and associated trust policies so that Gremlin can access an arbitrary AWS account. This endpoint also provides a link to a CloudFormationTemplate for applying this to your AWS account. \nSee: https://www.gremlin.com/docs/aws-quick-start-guide for more info\n\nRequires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+      summary: Returns the policy document necessary for Gremlin to access AWS resources
+      description: 'This endpoint provides the policy document and associated trust policies so that Gremlin can access an arbitrary AWS account. This endpoint also provides a link to a CloudFormationTemplate for applying this to your AWS account.
+
+        See: https://www.gremlin.com/docs/aws-quick-start-guide for more info
+
+
+        Requires the privilege `MINIMUM_TEAM_PRIVILEGES`'
       operationId: getAwsMetadataIamRole
       parameters:
       - name: teamId
@@ -89,7 +98,13 @@ paths:
       tags:
       - aws.metadata
       summary: Queries Gremlin's view of Load balancers in a given AWS account
-      description: "This endpoint returns Gremlin's view of Load Balancers in a given AWS account.  These can then be used to create Gremlin Services or Intelligent Health checks.  \nThe `domain` parameter refers to the AWS AccountId.  \nNOTE: This endpoint may (or may not) return Load Balancers which have already been assigned to Gremlin Services, or ones which we cannot assign to Gremlin Services (eg. LBs with no hosts behind them)\nRequires the privilege [`MINIMUM_TEAM_PRIVILEGES`](https://www.gremlin.com/docs/user-management/access-control/#privileges)"
+      description: 'This endpoint returns Gremlin''s view of Load Balancers in a given AWS account. These can then be used to create Gremlin Services or Intelligent Health checks.
+
+        The `domain` parameter refers to the AWS AccountId.
+
+        NOTE: This endpoint may (or may not) return Load Balancers which have already been assigned to Gremlin Services, or ones which we cannot assign to Gremlin Services (eg. LBs with no hosts behind them)
+
+        Requires the privilege `MINIMUM_TEAM_PRIVILEGES`'
       operationId: getLoadBalancersForAccount
       parameters:
       - name: domain
@@ -125,15 +140,6 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
 components:
   schemas:
-    AwsAutoscalingGroupsForAccount:
-      type: object
-      properties:
-        domain:
-          type: string
-        autoscalingGroups:
-          type: array
-          items:
-            $ref: '#/components/schemas/AwsAutoscalingGroupResponse'
     TargetingStrategy:
       required:
       - type
@@ -143,15 +149,6 @@ components:
           type: string
       discriminator:
         propertyName: type
-    AwsLoadBalancersForAccount:
-      type: object
-      properties:
-        domain:
-          type: string
-        loadBalancers:
-          type: array
-          items:
-            $ref: '#/components/schemas/AwsLoadBalancerResponse'
     AwsLoadBalancerResponse:
       type: object
       properties:
@@ -181,6 +178,15 @@ components:
         discoveredAt:
           type: string
           format: date-time
+    AwsLoadBalancersForAccount:
+      type: object
+      properties:
+        domain:
+          type: string
+        loadBalancers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AwsLoadBalancerResponse'
     AwsMetadataIamRoleResponse:
       type: object
       properties:
@@ -210,3 +216,12 @@ components:
         discoveredAt:
           type: string
           format: date-time
+    AwsAutoscalingGroupsForAccount:
+      type: object
+      properties:
+        domain:
+          type: string
+        autoscalingGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/AwsAutoscalingGroupResponse'
