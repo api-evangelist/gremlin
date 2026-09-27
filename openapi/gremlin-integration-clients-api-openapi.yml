@@ -191,6 +191,21 @@ components:
           type: array
           items:
             type: string
+    IdentitiesPrivateNetworkClient:
+      type: object
+      properties:
+        active:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkClient'
+        idle:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkClient'
+        inactive:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkClient'
     PrivateNetworkClient:
       type: object
       properties:
@@ -248,18 +263,3 @@ components:
           type: boolean
         gremlinClientVersion:
           type: string
-    IdentitiesPrivateNetworkClient:
-      type: object
-      properties:
-        active:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrivateNetworkClient'
-        idle:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrivateNetworkClient'
-        inactive:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrivateNetworkClient'

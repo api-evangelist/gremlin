@@ -198,6 +198,20 @@ components:
           type: object
           additionalProperties:
             type: string
+    CloudRunPageToken:
+      required:
+      - cloudRunRegions
+      type: object
+      properties:
+        cloudRunRegions:
+          type: array
+          items:
+            type: string
+        regionIndex:
+          type: integer
+          format: int32
+        inner:
+          type: string
     PagedResponseResourceItem:
       type: object
       properties:
@@ -222,20 +236,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResourceItem'
-    CloudRunPageToken:
-      required:
-      - cloudRunRegions
-      type: object
-      properties:
-        cloudRunRegions:
-          type: array
-          items:
-            type: string
-        regionIndex:
-          type: integer
-          format: int32
-        inner:
-          type: string
     AllPageToken:
       type: object
       properties:

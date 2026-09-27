@@ -1157,132 +1157,49 @@ paths:
         - SCENARIOS_WRITE
 components:
   schemas:
-    TargetingStrategy:
+    EvaluationConfiguration:
       required:
-      - type
+      - okStatusCodes
       type: object
       properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    ScenarioRunGraph:
-      type: object
-      properties:
-        nodes:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/GraphNodeObject'
-        start_id:
-          type: string
-          writeOnly: true
-        observers:
-          type: array
-          items:
-            $ref: '#/components/schemas/StatusCheckNode'
-        current_id:
-          type: string
-          writeOnly: true
-        external_actions:
-          type: array
-          writeOnly: true
-          items:
-            $ref: '#/components/schemas/ExternalActionNode'
-        external_rollbacks:
-          type: array
-          writeOnly: true
-          items:
-            $ref: '#/components/schemas/RollbackExternalActionNode'
-        startId:
-          type: string
-        externalActions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalActionNode'
-        externalRollbacks:
-          type: array
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/RollbackExternalActionNode'
-        currentId:
-          type: string
-          readOnly: true
-        next:
-          $ref: '#/components/schemas/GraphNodeObject'
-        nextId:
-          type: string
-        nodesRecursive:
-          type: array
-          items:
-            $ref: '#/components/schemas/GraphNodeObject'
-        expectedLengthWithDelays:
+        okLatencyMaxMs:
           type: integer
+          description: The maximum latency in milliseconds for a successful status check
           format: int32
-          readOnly: true
-        eligibleForServiceCreation:
-          type: boolean
-        expectedLength:
-          type: integer
-          format: int32
-          readOnly: true
-        attackTypeQuantity:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-            readOnly: true
-          readOnly: true
-        providersCountForNodes:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int32
-            readOnly: true
-          readOnly: true
-    ResponseBodyEvaluation:
-      required:
-      - op
-      - predicates
-      type: object
-      properties:
-        op:
-          type: string
-          description: The operation to logically combine predicates into a success or failure
-          enum:
-          - AND
-          - OR
-        predicates:
+        okStatusCodes:
           type: array
-          description: The list of predicates to evaluate against the status check response body
+          description: The list of successful response status codes for a successful status check
           items:
-            $ref: '#/components/schemas/PredicateObject'
-      description: The configuration for evaluating the success of a response body
-    ExternalActionRequest:
-      required:
-      - type
-      type: object
-      properties:
-        semanticType:
-          type: string
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    RunScenarioRequest:
-      title: ScenarioRun.Input
-      type: object
-      properties:
-        hypothesis:
-          type: string
-    TargetSampling:
-      required:
-      - type
+            type: string
+            description: The list of successful response status codes for a successful status check
+        responseBodyEvaluation:
+          $ref: '#/components/schemas/ResponseBodyEvaluation'
+      description: The configuration for evaluating the success/failure of a status check
+    FormDataContentDisposition:
       type: object
       properties:
         type:
           type: string
-      discriminator:
-        propertyName: type
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+        fileName:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        readDate:
+          type: string
+          format: date-time
+        size:
+          type: integer
+          format: int64
+        name:
+          type: string
     UpdateScenarioRequest:
       title: UpdateScenario.Input
       type: object
@@ -1300,151 +1217,40 @@ components:
           - AT_LEAST_ONE_FAILED
         graph:
           $ref: '#/components/schemas/ScenarioGraph'
-    ScenarioScheduleResponse:
-      type: object
-      properties:
-        orgId:
-          type: string
-        guid:
-          type: string
-        scenarioId:
-          type: string
-        scenarioName:
-          type: string
-        trigger:
-          type: object
-          properties:
-            windowType:
-              type: string
-              enum:
-              - Once
-              - Random
-            type:
-              type: string
-            templateId:
-              type: string
-            optionalTemplateId:
-              type: string
-            empty:
-              type: boolean
-          additionalProperties:
-            type: object
-        createdBy:
-          type: string
-        createSource:
-          type: string
-          enum:
-          - WebApp
-          - Api
-          - Scheduled
-          - Manual
-          - Spinnaker
-          - Concord
-          - GremlinFeeder
-          - GremlinSdkPython
-          - Scenario
-          - Chao
-          - K8sBackend
-          - Website
-          - Neotys
-          - IntegrationClient
-          - Validation
-        triggerSource:
-          type: string
-          enum:
-          - MANUAL
-          - RUN_ALL
-          - SCHEDULED
-          - RECURRING_SCHEDULE
-        enabled:
-          type: boolean
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        nextTriggerTime:
-          type: string
-          format: date-time
-        targets:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceTarget'
-        failureFlagTargets:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailureFlagTarget'
-    CompletedScenarioRunResponse:
-      type: object
-      properties:
-        scenarioId:
-          type: string
-        scenarioName:
-          type: string
-        runNumber:
-          type: integer
-          format: int64
-        targets:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceTarget'
-        triggerSource:
-          type: string
-          enum:
-          - MANUAL
-          - RUN_ALL
-          - SCHEDULED
-          - RECURRING_SCHEDULE
-        triggeredBy:
-          type: string
-        status:
-          type: string
-          enum:
-          - Passed
-          - Failed
-          - Unsure
-        createdAt:
-          type: string
-          format: date-time
-        endTime:
-          type: string
-          format: date-time
-        failureFlagTargets:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailureFlagTarget'
-        passCriteria:
-          type: string
-          enum:
-          - ALL_PASS
-          - AT_LEAST_ONE_FAILED
-    Selector:
+    TargetingStrategy:
       required:
-      - labels
-      - name
+      - type
       type: object
       properties:
-        name:
+        type:
           type: string
-        labels:
-          type: object
-          additionalProperties:
-            type: array
-            description: Label selectors for matching resources
-            example:
-              foo:
-              - bar
-              - baz
-            items:
-              type: string
-              description: Label selectors for matching resources
-              example: '{"foo":["bar","baz"]}'
-          description: Label selectors for matching resources
-          example:
-            foo:
-            - bar
-            - baz
+      discriminator:
+        propertyName: type
+    RollbackExternalActionNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          referenceExternalActionId:
+            type: string
+          state:
+            $ref: '#/components/schemas/State'
+          stateDetails:
+            $ref: '#/components/schemas/ExternalCallFailedException'
+          externalActionRequest:
+            $ref: '#/components/schemas/ExternalActionRequest'
+          externalActionLifecycle:
+            type: string
+            enum:
+            - NotStarted
+            - Active
+            - HaltRequested
+            - Successful
+            - Halted
+            - Failed
+          didExternalActionNoOp:
+            type: boolean
     PagedResponseScenarioRunResponse:
       type: object
       properties:
@@ -1469,61 +1275,68 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ScenarioRunResponse'
-    StatusCheckNode:
+    GameDayInfo:
       type: object
-      allOf:
-      - $ref: '#/components/schemas/GraphNodeObject'
-      - type: object
-        properties:
-          state:
-            $ref: '#/components/schemas/State'
-          name:
+      properties:
+        guid:
+          type: string
+        name:
+          type: string
+    EndpointConfiguration:
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          type: string
+          description: The URL of the status check
+          format: url
+        method:
+          type: string
+          description: The method type of the status check
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+        headers:
+          type: object
+          additionalProperties:
             type: string
-          description:
-            type: string
-          thirdPartyPresets:
-            type: string
-          category:
-            type: string
-            enum:
-            - ERRORS
-            - LATENCY
-            - REQUESTS
-            - UNKNOWN
-          requestConfiguration:
-            $ref: '#/components/schemas/StatusCheckNodeRequest'
-          endpointConfiguration:
-            $ref: '#/components/schemas/EndpointConfiguration'
-          rawEndpointConfiguration:
-            $ref: '#/components/schemas/EndpointConfiguration'
-          evaluationConfiguration:
-            $ref: '#/components/schemas/EvaluationConfiguration'
-          statusCheckId:
-            type: string
-          externalIntegrationId:
-            type: string
-          statusCheckReferenceId:
-            type: string
-          isPrivateNetwork:
-            type: boolean
-          isHaltable:
-            type: boolean
-          payload:
-            type: string
-          isAutoGenerated:
-            type: boolean
-          autoGeneratedStatusCheckId:
-            type: string
-          resourceIdentifier:
-            type: string
-          statusCheckRequest:
-            $ref: '#/components/schemas/StatusCheckNodeRequest'
-          intervalSeconds:
-            type: integer
-            format: int32
-          additionalTimeInSecsToRunAfterCompletion:
-            type: integer
-            format: int32
+            description: Optional request headers to be used when the status check is invoked
+          description: Optional request headers to be used when the status check is invoked
+        payload:
+          type: string
+          description: Payload for POST type of request
+        headersArn:
+          type: string
+          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
+    CreateScenarioRequest:
+      title: Scenario.Input
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        hypothesis:
+          type: string
+        passCriteria:
+          type: string
+          enum:
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
+        graph:
+          $ref: '#/components/schemas/ScenarioGraph'
+        recommendedScenarioId:
+          type: string
+        createdFromType:
+          type: string
+          enum:
+          - Recommended
+          - Shared
+        createdFromId:
+          type: string
     ExternalCallFailedException:
       type: object
       properties:
@@ -1620,8 +1433,127 @@ components:
                 type: string
         localizedMessage:
           type: string
-    HasCompareFunctionObject:
+    HaltRequest:
       type: object
+      properties:
+        reason:
+          type: string
+          description: The reason why this halt this requested.
+        reference:
+          type: string
+          description: A reference to why this halt was requested.
+    CompletedScenarioRunResponse:
+      type: object
+      properties:
+        scenarioId:
+          type: string
+        scenarioName:
+          type: string
+        runNumber:
+          type: integer
+          format: int64
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTarget'
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        triggeredBy:
+          type: string
+        status:
+          type: string
+          enum:
+          - Passed
+          - Failed
+          - Unsure
+        createdAt:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        failureFlagTargets:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailureFlagTarget'
+        passCriteria:
+          type: string
+          enum:
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
+    TargetSampling:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    StatusCheckNodeRequest:
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    PagedResponseCompletedScenarioRunResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompletedScenarioRunResponse'
+    ScenarioRunResults:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - Passed
+          - Failed
+          - Unsure
+        incidentDetected:
+          type: boolean
+        incidentMitigated:
+          type: boolean
+    ServiceTarget:
+      required:
+      - targetingStrategy
+      type: object
+      properties:
+        serviceId:
+          type: string
+        targetingStrategy:
+          $ref: '#/components/schemas/TargetingStrategy'
+    RunScenarioRequest:
+      title: ScenarioRun.Input
+      type: object
+      properties:
+        hypothesis:
+          type: string
     PredicateObject:
       required:
       - jpQuery
@@ -1647,61 +1579,122 @@ components:
       description: The list of predicates to evaluate against the status check response body
       discriminator:
         propertyName: type
-    CreateScenarioRequest:
-      title: Scenario.Input
+    ScenarioScheduleResponse:
       type: object
       properties:
+        orgId:
+          type: string
+        guid:
+          type: string
+        scenarioId:
+          type: string
+        scenarioName:
+          type: string
+        trigger:
+          type: object
+          properties:
+            windowType:
+              type: string
+              enum:
+              - Once
+              - Random
+            type:
+              type: string
+            templateId:
+              type: string
+            optionalTemplateId:
+              type: string
+            empty:
+              type: boolean
+          additionalProperties:
+            type: object
+        createdBy:
+          type: string
+        createSource:
+          type: string
+          enum:
+          - WebApp
+          - Api
+          - Scheduled
+          - Manual
+          - Spinnaker
+          - Concord
+          - GremlinFeeder
+          - GremlinSdkPython
+          - Scenario
+          - Chao
+          - K8sBackend
+          - Website
+          - Neotys
+          - IntegrationClient
+          - Validation
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        enabled:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        nextTriggerTime:
+          type: string
+          format: date-time
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTarget'
+        failureFlagTargets:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailureFlagTarget'
+    SharedScenarioResponse:
+      type: object
+      properties:
+        sharedByTeam:
+          type: string
+        guid:
+          type: string
         name:
           type: string
         description:
           type: string
         hypothesis:
           type: string
+        graph:
+          $ref: '#/components/schemas/ScenarioGraph'
+        sharedBy:
+          type: string
+        sharedFromScenario:
+          type: string
+        createSource:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        recommendedScenarioId:
+          type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        editCounter:
+          type: integer
+          format: int32
         passCriteria:
           type: string
           enum:
           - ALL_PASS
           - AT_LEAST_ONE_FAILED
-        graph:
-          $ref: '#/components/schemas/ScenarioGraph'
-        recommendedScenarioId:
-          type: string
-        createdFromType:
-          type: string
-          enum:
-          - Recommended
-          - Shared
-        createdFromId:
-          type: string
-    HaltRequest:
-      type: object
-      properties:
-        reason:
-          type: string
-          description: The reason why this halt this requested.
-        reference:
-          type: string
-          description: A reference to why this halt was requested.
-    FailureFlagTarget:
-      type: object
-      properties:
-        app:
-          $ref: '#/components/schemas/Selector'
-        flag:
-          $ref: '#/components/schemas/Selector'
-        appInstanceSampling:
-          $ref: '#/components/schemas/TargetSampling'
-        resolvedAppInstanceIds:
-          type: array
-          items:
-            type: string
-    StatusCheckNodeRequest:
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
     ScenarioGraph:
       type: object
       properties:
@@ -1752,51 +1745,158 @@ components:
             format: int32
             readOnly: true
           readOnly: true
-    FormDataContentDisposition:
+    ExternalActionNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          externalActionRequest:
+            $ref: '#/components/schemas/ExternalActionRequest'
+          state:
+            $ref: '#/components/schemas/State'
+          stateDetails:
+            $ref: '#/components/schemas/ExternalCallFailedException'
+    HasCompareFunctionObject:
+      type: object
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body
+    FailureFlagTarget:
+      type: object
+      properties:
+        app:
+          $ref: '#/components/schemas/Selector'
+        flag:
+          $ref: '#/components/schemas/Selector'
+        appInstanceSampling:
+          $ref: '#/components/schemas/TargetSampling'
+        resolvedAppInstanceIds:
+          type: array
+          items:
+            type: string
+    GraphNodeObject:
       type: object
       properties:
         type:
           type: string
-        parameters:
+          enum:
+          - Concurrent
+          - ContinuousStatusCheck
+          - StatusCheckNode
+          - Delay
+          - InfraAttack
+          - SynchronousStatusCheck
+          - Continuous
+          - FailureFlag
+          - ExternalAction
+          - RollbackExternalAction
+        id:
+          type: string
+        state:
           type: object
-          additionalProperties:
-            type: string
-        fileName:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        modificationDate:
-          type: string
-          format: date-time
-        readDate:
-          type: string
-          format: date-time
-        size:
-          type: integer
-          format: int64
-        name:
-          type: string
-    GameDayInfo:
-      type: object
-      properties:
+          readOnly: true
         guid:
           type: string
-        name:
+        next:
           type: string
-    ScenarioRunResults:
+      discriminator:
+        propertyName: type
+    StatusCheckNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          state:
+            $ref: '#/components/schemas/State'
+          name:
+            type: string
+          description:
+            type: string
+          thirdPartyPresets:
+            type: string
+          category:
+            type: string
+            enum:
+            - ERRORS
+            - LATENCY
+            - REQUESTS
+            - UNKNOWN
+          requestConfiguration:
+            $ref: '#/components/schemas/StatusCheckNodeRequest'
+          endpointConfiguration:
+            $ref: '#/components/schemas/EndpointConfiguration'
+          rawEndpointConfiguration:
+            $ref: '#/components/schemas/EndpointConfiguration'
+          evaluationConfiguration:
+            $ref: '#/components/schemas/EvaluationConfiguration'
+          statusCheckId:
+            type: string
+          externalIntegrationId:
+            type: string
+          statusCheckReferenceId:
+            type: string
+          isPrivateNetwork:
+            type: boolean
+          isHaltable:
+            type: boolean
+          payload:
+            type: string
+          isAutoGenerated:
+            type: boolean
+          autoGeneratedStatusCheckId:
+            type: string
+          resourceIdentifier:
+            type: string
+          statusCheckRequest:
+            $ref: '#/components/schemas/StatusCheckNodeRequest'
+          intervalSeconds:
+            type: integer
+            format: int32
+          additionalTimeInSecsToRunAfterCompletion:
+            type: integer
+            format: int32
+    State:
       type: object
       properties:
-        status:
+        lifecycle:
           type: string
           enum:
-          - Passed
+          - NotStarted
+          - Active
+          - HaltRequested
+          - Successful
+          - Halted
           - Failed
-          - Unsure
-        incidentDetected:
-          type: boolean
-        incidentMitigated:
-          type: boolean
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        failedReason:
+          type: string
+        nodeHaltedByGuid:
+          type: string
+        nodeHaltedById:
+          type: string
+      readOnly: true
     ScenarioRunResponse:
       type: object
       properties:
@@ -1869,175 +1969,32 @@ components:
           - AT_LEAST_ONE_FAILED
         largeScaleTestId:
           type: string
-    ServiceTarget:
+    Selector:
       required:
-      - targetingStrategy
+      - labels
+      - name
       type: object
       properties:
-        serviceId:
+        name:
           type: string
-        targetingStrategy:
-          $ref: '#/components/schemas/TargetingStrategy'
-    EvaluationConfiguration:
-      required:
-      - okStatusCodes
-      type: object
-      properties:
-        okLatencyMaxMs:
-          type: integer
-          description: The maximum latency in milliseconds for a successful status check
-          format: int32
-        okStatusCodes:
-          type: array
-          description: The list of successful response status codes for a successful status check
-          items:
-            type: string
-            description: The list of successful response status codes for a successful status check
-        responseBodyEvaluation:
-          $ref: '#/components/schemas/ResponseBodyEvaluation'
-      description: The configuration for evaluating the success/failure of a status check
-    RollbackExternalActionNode:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/GraphNodeObject'
-      - type: object
-        properties:
-          referenceExternalActionId:
-            type: string
-          state:
-            $ref: '#/components/schemas/State'
-          stateDetails:
-            $ref: '#/components/schemas/ExternalCallFailedException'
-          externalActionRequest:
-            $ref: '#/components/schemas/ExternalActionRequest'
-          externalActionLifecycle:
-            type: string
-            enum:
-            - NotStarted
-            - Active
-            - HaltRequested
-            - Successful
-            - Halted
-            - Failed
-          didExternalActionNoOp:
-            type: boolean
-    State:
-      type: object
-      properties:
-        lifecycle:
-          type: string
-          enum:
-          - NotStarted
-          - Active
-          - HaltRequested
-          - Successful
-          - Halted
-          - Failed
-        startTime:
-          type: string
-          format: date-time
-        endTime:
-          type: string
-          format: date-time
-        failedReason:
-          type: string
-        nodeHaltedByGuid:
-          type: string
-        nodeHaltedById:
-          type: string
-      readOnly: true
-    PagedResponseCompletedScenarioRunResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompletedScenarioRunResponse'
-    EndpointConfiguration:
-      required:
-      - url
-      type: object
-      properties:
-        url:
-          type: string
-          description: The URL of the status check
-          format: url
-        method:
-          type: string
-          description: The method type of the status check
-          enum:
-          - GET
-          - POST
-          - PUT
-          - PATCH
-        headers:
+        labels:
           type: object
           additionalProperties:
-            type: string
-            description: Optional request headers to be used when the status check is invoked
-          description: Optional request headers to be used when the status check is invoked
-        payload:
-          type: string
-          description: Payload for POST type of request
-        headersArn:
-          type: string
-          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
-    GraphNodeObject:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Concurrent
-          - ContinuousStatusCheck
-          - StatusCheckNode
-          - Delay
-          - InfraAttack
-          - SynchronousStatusCheck
-          - Continuous
-          - FailureFlag
-          - ExternalAction
-          - RollbackExternalAction
-        id:
-          type: string
-        state:
-          type: object
-          readOnly: true
-        guid:
-          type: string
-        next:
-          type: string
-      discriminator:
-        propertyName: type
-    ExternalActionNode:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/GraphNodeObject'
-      - type: object
-        properties:
-          externalActionRequest:
-            $ref: '#/components/schemas/ExternalActionRequest'
-          state:
-            $ref: '#/components/schemas/State'
-          stateDetails:
-            $ref: '#/components/schemas/ExternalCallFailedException'
+            type: array
+            description: Label selectors for matching resources
+            example:
+              foo:
+              - bar
+              - baz
+            items:
+              type: string
+              description: Label selectors for matching resources
+              example: '{"foo":["bar","baz"]}'
+          description: Label selectors for matching resources
+          example:
+            foo:
+            - bar
+            - baz
     ScenarioResponse:
       type: object
       properties:
@@ -2101,44 +2058,87 @@ components:
           - AT_LEAST_ONE_FAILED
         eligibleForServiceCreation:
           type: boolean
-    SharedScenarioResponse:
+    ScenarioRunGraph:
       type: object
       properties:
-        sharedByTeam:
-          type: string
-        guid:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        hypothesis:
-          type: string
-        graph:
-          $ref: '#/components/schemas/ScenarioGraph'
-        sharedBy:
-          type: string
-        sharedFromScenario:
-          type: string
-        createSource:
-          type: string
-        createdAt:
-          type: string
-        updatedAt:
-          type: string
-        recommendedScenarioId:
-          type: string
-        multiSelectTags:
+        nodes:
           type: object
           additionalProperties:
-            type: array
-            items:
-              type: string
-        editCounter:
+            $ref: '#/components/schemas/GraphNodeObject'
+        start_id:
+          type: string
+          writeOnly: true
+        observers:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusCheckNode'
+        current_id:
+          type: string
+          writeOnly: true
+        external_actions:
+          type: array
+          writeOnly: true
+          items:
+            $ref: '#/components/schemas/ExternalActionNode'
+        external_rollbacks:
+          type: array
+          writeOnly: true
+          items:
+            $ref: '#/components/schemas/RollbackExternalActionNode'
+        startId:
+          type: string
+        externalActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalActionNode'
+        externalRollbacks:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/RollbackExternalActionNode'
+        currentId:
+          type: string
+          readOnly: true
+        next:
+          $ref: '#/components/schemas/GraphNodeObject'
+        nextId:
+          type: string
+        nodesRecursive:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphNodeObject'
+        expectedLengthWithDelays:
           type: integer
           format: int32
-        passCriteria:
+          readOnly: true
+        eligibleForServiceCreation:
+          type: boolean
+        expectedLength:
+          type: integer
+          format: int32
+          readOnly: true
+        attackTypeQuantity:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+            readOnly: true
+          readOnly: true
+        providersCountForNodes:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+            readOnly: true
+          readOnly: true
+    ExternalActionRequest:
+      required:
+      - type
+      type: object
+      properties:
+        semanticType:
           type: string
-          enum:
-          - ALL_PASS
-          - AT_LEAST_ONE_FAILED
+        type:
+          type: string
+      discriminator:
+        propertyName: type

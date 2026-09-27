@@ -340,6 +340,115 @@ paths:
         - TEAMS_READ
 components:
   schemas:
+    TeamProfile:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int32
+        experience:
+          type: string
+        goal:
+          type: array
+          items:
+            type: string
+        databases:
+          type: array
+          items:
+            type: string
+        messaging:
+          type: array
+          items:
+            type: string
+        containers:
+          type: array
+          items:
+            type: string
+        cloudProvider:
+          type: array
+          items:
+            type: string
+        monitoring:
+          type: array
+          items:
+            type: string
+        completedByUsers:
+          type: array
+          items:
+            type: string
+        skippedByUsers:
+          type: array
+          items:
+            type: string
+        updatedBy:
+          type: string
+        logging:
+          type: array
+          items:
+            type: string
+        paging:
+          type: array
+          items:
+            type: string
+        incidents:
+          type: array
+          items:
+            type: string
+        updatedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+    SemanticVersion:
+      type: object
+      properties:
+        major:
+          type: integer
+          format: int32
+        minor:
+          type: integer
+          format: int32
+        patch:
+          type: integer
+          format: int32
+    Prefs:
+      type: object
+      properties:
+        autoAddUsers:
+          type: boolean
+        domain:
+          type: string
+        testRunRestrictionWindows:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunRestrictionWindow'
+      description: Prefs for team
+    ClientVersionRange:
+      type: object
+      properties:
+        minimum:
+          $ref: '#/components/schemas/SemanticVersion'
+        maximum:
+          $ref: '#/components/schemas/SemanticVersion'
+      description: A Map representing the minimum and maximum client versions authenticated with this Team.
+    Field:
+      type: object
+      properties:
+        field:
+          type: string
+        presets:
+          type: array
+          items:
+            type: string
+        multiple:
+          type: boolean
+        answer:
+          type: array
+          items:
+            type: string
+        prompt:
+          $ref: '#/components/schemas/Prompt'
     PagedResponseTeamResponse:
       type: object
       properties:
@@ -428,42 +537,44 @@ components:
           type: string
           description: An ISO8601 timestamp representing the time at which this team was created
           format: date-time
-    Prompt:
+    ScheduleWindow:
+      required:
+      - end
+      - start
       type: object
       properties:
-        prefix:
+        start:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
           type: string
-        suffix:
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+        end:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
           type: string
-    Field:
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+    TestRunRestrictionWindow:
+      required:
+      - dayOfWeek
+      - windowsForDay
       type: object
       properties:
-        field:
+        dayOfWeek:
           type: string
-        presets:
+          enum:
+          - M
+          - T
+          - W
+          - Th
+          - F
+          - S
+          - Su
+        windowsForDay:
+          maxItems: 3
+          minItems: 0
           type: array
           items:
-            type: string
-        multiple:
-          type: boolean
-        answer:
-          type: array
-          items:
-            type: string
-        prompt:
-          $ref: '#/components/schemas/Prompt'
-    Prefs:
-      type: object
-      properties:
-        autoAddUsers:
-          type: boolean
-        domain:
-          type: string
-        testRunRestrictionWindows:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestRunRestrictionWindow'
-      description: Prefs for team
+            $ref: '#/components/schemas/ScheduleWindow'
     PrefsPatch:
       type: object
       properties:
@@ -474,18 +585,13 @@ components:
           items:
             $ref: '#/components/schemas/TestRunRestrictionWindow'
       description: Prefs on team level
-    SemanticVersion:
+    Prompt:
       type: object
       properties:
-        major:
-          type: integer
-          format: int32
-        minor:
-          type: integer
-          format: int32
-        patch:
-          type: integer
-          format: int32
+        prefix:
+          type: string
+        suffix:
+          type: string
     TeamProfilePrompt:
       type: object
       properties:
@@ -509,109 +615,3 @@ components:
           type: array
           items:
             type: string
-    TestRunRestrictionWindow:
-      required:
-      - dayOfWeek
-      - windowsForDay
-      type: object
-      properties:
-        dayOfWeek:
-          type: string
-          enum:
-          - M
-          - T
-          - W
-          - Th
-          - F
-          - S
-          - Su
-        windowsForDay:
-          maxItems: 3
-          minItems: 0
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleWindow'
-    ScheduleWindow:
-      required:
-      - end
-      - start
-      type: object
-      properties:
-        start:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
-        end:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
-    ClientVersionRange:
-      type: object
-      properties:
-        minimum:
-          $ref: '#/components/schemas/SemanticVersion'
-        maximum:
-          $ref: '#/components/schemas/SemanticVersion'
-      description: A Map representing the minimum and maximum client versions authenticated with this Team.
-    TeamProfile:
-      type: object
-      properties:
-        version:
-          type: integer
-          format: int32
-        experience:
-          type: string
-        goal:
-          type: array
-          items:
-            type: string
-        databases:
-          type: array
-          items:
-            type: string
-        messaging:
-          type: array
-          items:
-            type: string
-        containers:
-          type: array
-          items:
-            type: string
-        cloudProvider:
-          type: array
-          items:
-            type: string
-        monitoring:
-          type: array
-          items:
-            type: string
-        completedByUsers:
-          type: array
-          items:
-            type: string
-        skippedByUsers:
-          type: array
-          items:
-            type: string
-        updatedBy:
-          type: string
-        logging:
-          type: array
-          items:
-            type: string
-        paging:
-          type: array
-          items:
-            type: string
-        incidents:
-          type: array
-          items:
-            type: string
-        updatedAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time

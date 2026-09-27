@@ -368,16 +368,42 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
 components:
   schemas:
-    CreateJiraIssueRequest:
+    GremlinEntityReference:
       required:
-      - entity
-      - fields
+      - id
+      - type
       type: object
       properties:
-        entity:
-          $ref: '#/components/schemas/GremlinEntityReference'
-        fields:
-          $ref: '#/components/schemas/CreateJiraIssueFields'
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - SCENARIO_RUN
+          - GAME_DAY
+          - SERVICE
+          - ATTACK
+          - SCENARIO
+        serviceEntityType:
+          type: boolean
+    JiraPriority:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        iconUrl:
+          type: string
+    JiraId:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
     CreateJiraIssueFields:
       required:
       - issuetype
@@ -401,39 +427,13 @@ components:
           type: array
           items:
             type: string
-    JiraPriority:
+    CreateJiraIssueRequest:
       required:
-      - id
+      - entity
+      - fields
       type: object
       properties:
-        id:
-          type: string
-        name:
-          type: string
-        iconUrl:
-          type: string
-    GremlinEntityReference:
-      required:
-      - id
-      - type
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - SCENARIO_RUN
-          - GAME_DAY
-          - SERVICE
-          - ATTACK
-          - SCENARIO
-        serviceEntityType:
-          type: boolean
-    JiraId:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
+        entity:
+          $ref: '#/components/schemas/GremlinEntityReference'
+        fields:
+          $ref: '#/components/schemas/CreateJiraIssueFields'

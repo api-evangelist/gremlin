@@ -169,111 +169,6 @@ paths:
           description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
 components:
   schemas:
-    StrategyObject:
-      type: object
-      properties:
-        k8sObjects:
-          type: array
-          items:
-            type: object
-        containerSelection:
-          $ref: '#/components/schemas/ContainerSelection'
-        k8sObjectsInternal:
-          type: array
-          items:
-            $ref: '#/components/schemas/K8sObjectOnAttack'
-        count:
-          type: integer
-          format: int32
-        percentage:
-          type: integer
-          format: int32
-    Command:
-      type: object
-      properties:
-        providers:
-          type: array
-          items:
-            type: string
-        args:
-          type: array
-          items:
-            type: string
-        trafficImpactMapping:
-          $ref: '#/components/schemas/TaskTrafficImpactMappingInput'
-        trafficImpactFromWithSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          writeOnly: true
-        trafficImpactWithDependencyIds:
-          type: array
-          writeOnly: true
-          items:
-            type: string
-        type:
-          type: string
-        templateId:
-          type: string
-        optionalTemplateId:
-          type: string
-        empty:
-          type: boolean
-      additionalProperties:
-        type: object
-    HaltRequest:
-      type: object
-      properties:
-        reason:
-          type: string
-          description: The reason why this halt this requested.
-        reference:
-          type: string
-          description: A reference to why this halt was requested.
-    ContainerSelection:
-      type: object
-      properties:
-        selectionType:
-          type: string
-          enum:
-          - EXACT
-          - ALL
-          - ANY
-        containerNames:
-          type: array
-          items:
-            type: string
-    TargetObject:
-      type: object
-      properties:
-        strategy:
-          $ref: '#/components/schemas/StrategyObject'
-    Attack:
-      type: object
-      properties:
-        impactDefinition:
-          $ref: '#/components/schemas/Command'
-        targetDefinition:
-          $ref: '#/components/schemas/TargetObject'
-        includeNewTargets:
-          type: boolean
-        continueOnEmptyTargets:
-          type: boolean
-    TaskTrafficImpactMappingInput:
-      type: object
-      properties:
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        dependencyIds:
-          type: array
-          items:
-            type: string
     K8sObjectOnAttack:
       type: object
       properties:
@@ -326,3 +221,108 @@ components:
           type: boolean
         attackUid:
           type: string
+    ContainerSelection:
+      type: object
+      properties:
+        selectionType:
+          type: string
+          enum:
+          - EXACT
+          - ALL
+          - ANY
+        containerNames:
+          type: array
+          items:
+            type: string
+    HaltRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: The reason why this halt this requested.
+        reference:
+          type: string
+          description: A reference to why this halt was requested.
+    Command:
+      type: object
+      properties:
+        providers:
+          type: array
+          items:
+            type: string
+        args:
+          type: array
+          items:
+            type: string
+        trafficImpactMapping:
+          $ref: '#/components/schemas/TaskTrafficImpactMappingInput'
+        trafficImpactFromWithSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          writeOnly: true
+        trafficImpactWithDependencyIds:
+          type: array
+          writeOnly: true
+          items:
+            type: string
+        type:
+          type: string
+        templateId:
+          type: string
+        optionalTemplateId:
+          type: string
+        empty:
+          type: boolean
+      additionalProperties:
+        type: object
+    StrategyObject:
+      type: object
+      properties:
+        k8sObjects:
+          type: array
+          items:
+            type: object
+        containerSelection:
+          $ref: '#/components/schemas/ContainerSelection'
+        k8sObjectsInternal:
+          type: array
+          items:
+            $ref: '#/components/schemas/K8sObjectOnAttack'
+        count:
+          type: integer
+          format: int32
+        percentage:
+          type: integer
+          format: int32
+    TargetObject:
+      type: object
+      properties:
+        strategy:
+          $ref: '#/components/schemas/StrategyObject'
+    TaskTrafficImpactMappingInput:
+      type: object
+      properties:
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        dependencyIds:
+          type: array
+          items:
+            type: string
+    Attack:
+      type: object
+      properties:
+        impactDefinition:
+          $ref: '#/components/schemas/Command'
+        targetDefinition:
+          $ref: '#/components/schemas/TargetObject'
+        includeNewTargets:
+          type: boolean
+        continueOnEmptyTargets:
+          type: boolean

@@ -82,14 +82,6 @@ components:
           type: string
           format: date-time
       description: A collection of states
-    ScopeDetail:
-      type: object
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-      description: Detailed information about the scope of this experiment. This contains information such as which containerId or Linux namespace is targeted.
     ClientState:
       type: object
       properties:
@@ -99,18 +91,6 @@ components:
           type: string
           format: date-time
       description: A collection of states an execution goes through during its lifecycle, along with their corresponding timestamps. This list can be used to create a timeline of what happened to a particular target during an experiment. Meanings of specific state values can be found at https://www.gremlin.com/docs/fault-injection-experiments#experiment-stages
-    EventCode:
-      type: object
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-        code:
-          type: string
-        message:
-          type: string
-        link:
-          type: string
     ExecutionResponse:
       title: Execution
       type: object
@@ -293,3 +273,23 @@ components:
           items:
             $ref: '#/components/schemas/ScopeDetail'
       description: An execution represents a portion of an experiment, run against a specific target. There is one target associated with every target of an experiment.
+    EventCode:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        code:
+          type: string
+        message:
+          type: string
+        link:
+          type: string
+    ScopeDetail:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+      description: Detailed information about the scope of this experiment. This contains information such as which containerId or Linux namespace is targeted.

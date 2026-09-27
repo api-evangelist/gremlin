@@ -61,7 +61,7 @@
     "gremlin-webhooks-api-openapi.yml"
   ],
   "archived": [
-    "deleted 3 superseded output(s) from the previous generation"
+    "deleted 2 superseded output(s) from the previous generation"
   ],
   "errors": [],
   "warnings": [],
@@ -69,8 +69,8 @@
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "gremlin-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
     "gremlin-openapi.yml: declared missing tag: executions",
-    "superseded outputs removed: gremlin-api-keys-api-openapi.yml, gremlin-o-auth-api-openapi.yml, gremlin-shared-assets-api-openapi.yml",
-    "apis.yml register: written (+3 apis, 55 total)"
+    "superseded outputs removed: gremlin-api-keys-api-openapi.yml, gremlin-shared-assets-api-openapi.yml",
+    "apis.yml register: written (+2 apis, 55 total)"
   ],
   "skipped": [
     "gremlin-agents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -106,7 +106,7 @@
     "gremlin-newrelic-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "gremlin-notification-integrations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "gremlin-notification-settings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "gremlin-o-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "gremlin-oauth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "gremlin-orgs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "gremlin-pagerduty-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "gremlin-providers-api-openapi.yml: previously refined output, superseded by openapi/_original/",

@@ -426,13 +426,6 @@ paths:
         - COMPANY_USERS_WRITE
 components:
   schemas:
-    UpdateUserInfoRequest:
-      type: object
-      properties:
-        first_name:
-          type: string
-        last_name:
-          type: string
     AddUserRequest:
       required:
       - identifier
@@ -442,3 +435,10 @@ components:
           type: string
           description: The unique identifier for the user (user's email)
       description: represents a request to add an existing user to a team
+    UpdateUserInfoRequest:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string

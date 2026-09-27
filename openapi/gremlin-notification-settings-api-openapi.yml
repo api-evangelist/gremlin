@@ -77,22 +77,6 @@ paths:
         - TEAMS_WRITE
 components:
   schemas:
-    ChannelSettings:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        updatedBy:
-          type: string
-        updatedAt:
-          type: string
-    SubjectSettings:
-      type: object
-      properties:
-        scopes:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ScopeSettings'
     TeamNotificationSettings:
       required:
       - subjects
@@ -109,3 +93,19 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/ChannelSettings'
+    ChannelSettings:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        updatedBy:
+          type: string
+        updatedAt:
+          type: string
+    SubjectSettings:
+      type: object
+      properties:
+        scopes:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ScopeSettings'

@@ -181,35 +181,6 @@ paths:
         - TEST_SUITES_READ
 components:
   schemas:
-    TestSuiteResponse:
-      type: object
-      properties:
-        identifier:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        testResponses:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestResponse'
-        targetTeamIds:
-          type: array
-          items:
-            type: string
-        excludedRiskIds:
-          type: array
-          items:
-            type: string
-        default:
-          type: boolean
-        isDefault:
-          type: boolean
-        official:
-          type: boolean
-        isOfficial:
-          type: boolean
     RiskResponse:
       type: object
       properties:
@@ -232,90 +203,6 @@ components:
           - AWS_AUTO_SCALING_GROUP
         disabled:
           type: boolean
-    TestPolicyResponse:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        policyCategory:
-          type: string
-          enum:
-          - OTHER
-          - REDUNDANCY
-          - SCALABILITY
-          - DEPENDENCIES
-          - RISKS
-          - EXTRA_CREDIT
-        policyTarget:
-          type: string
-          enum:
-          - SERVICE
-          - SERVICE_DEPENDENCY
-        reliabilityTestId:
-          type: string
-    ScenarioToPromote:
-      required:
-      - scenarioId
-      - scenarioType
-      type: object
-      properties:
-        scenarioId:
-          type: string
-        scenarioType:
-          type: string
-          enum:
-          - RECOMMENDED
-          - SHARED
-          - GENERAL
-        teamId:
-          type: string
-    CreateTestSuiteRequest:
-      title: CreateTestSuiteRequest.Input
-      required:
-      - name
-      - scenarios
-      type: object
-      properties:
-        name:
-          type: string
-        targetTeamIds:
-          type: array
-          items:
-            type: string
-        scenarios:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestSuiteScenario'
-        excludedRiskIds:
-          type: array
-          items:
-            type: string
-      description: Create a request to create a test suite for a team
-    TestSuiteScenario:
-      required:
-      - description
-      - name
-      - policyCategory
-      - scenarioToPromote
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        policyCategory:
-          type: string
-          enum:
-          - OTHER
-          - REDUNDANCY
-          - SCALABILITY
-          - DEPENDENCIES
-          - RISKS
-          - EXTRA_CREDIT
-        scenarioToPromote:
-          $ref: '#/components/schemas/ScenarioToPromote'
     UpdateTestSuiteRequest:
       title: UpdateTestSuiteRequest.Input
       type: object
@@ -335,22 +222,6 @@ components:
           items:
             type: string
       description: Update a test suite for a team
-    TestResponse:
-      type: object
-      properties:
-        testPolicy:
-          $ref: '#/components/schemas/TestPolicyResponse'
-        sourceScenarioId:
-          type: string
-        sourceScenarioType:
-          type: string
-          enum:
-          - RECOMMENDED
-          - SHARED
-          - GENERAL
-        sourceScenarioEditCounter:
-          type: integer
-          format: int32
     ScenarioInfo:
       required:
       - description
@@ -383,5 +254,134 @@ components:
           - GENERAL
         reliabilityTestId:
           type: string
+        teamId:
+          type: string
+    TestPolicyResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        policyCategory:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        policyTarget:
+          type: string
+          enum:
+          - SERVICE
+          - SERVICE_DEPENDENCY
+        reliabilityTestId:
+          type: string
+    TestSuiteScenario:
+      required:
+      - description
+      - name
+      - policyCategory
+      - scenarioToPromote
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        policyCategory:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        scenarioToPromote:
+          $ref: '#/components/schemas/ScenarioToPromote'
+    TestResponse:
+      type: object
+      properties:
+        testPolicy:
+          $ref: '#/components/schemas/TestPolicyResponse'
+        sourceScenarioId:
+          type: string
+        sourceScenarioType:
+          type: string
+          enum:
+          - RECOMMENDED
+          - SHARED
+          - GENERAL
+        sourceScenarioEditCounter:
+          type: integer
+          format: int32
+    TestSuiteResponse:
+      type: object
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        testResponses:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestResponse'
+        targetTeamIds:
+          type: array
+          items:
+            type: string
+        excludedRiskIds:
+          type: array
+          items:
+            type: string
+        default:
+          type: boolean
+        isDefault:
+          type: boolean
+        official:
+          type: boolean
+        isOfficial:
+          type: boolean
+    CreateTestSuiteRequest:
+      title: CreateTestSuiteRequest.Input
+      required:
+      - name
+      - scenarios
+      type: object
+      properties:
+        name:
+          type: string
+        targetTeamIds:
+          type: array
+          items:
+            type: string
+        scenarios:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestSuiteScenario'
+        excludedRiskIds:
+          type: array
+          items:
+            type: string
+      description: Create a request to create a test suite for a team
+    ScenarioToPromote:
+      required:
+      - scenarioId
+      - scenarioType
+      type: object
+      properties:
+        scenarioId:
+          type: string
+        scenarioType:
+          type: string
+          enum:
+          - RECOMMENDED
+          - SHARED
+          - GENERAL
         teamId:
           type: string

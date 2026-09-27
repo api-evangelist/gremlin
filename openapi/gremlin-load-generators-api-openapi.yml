@@ -179,97 +179,24 @@ paths:
         - WEBHOOKS_WRITE
 components:
   schemas:
-    WebhookEndpoint:
+    EvaluationConfiguration:
+      required:
+      - okStatusCodes
       type: object
       properties:
-        uri:
-          type: string
-          description: The uri of this webhook endpoint
-          format: url
-        headers:
-          type: object
-          additionalProperties:
+        okLatencyMaxMs:
+          type: integer
+          description: The maximum latency in milliseconds for a successful status check
+          format: int32
+        okStatusCodes:
+          type: array
+          description: The list of successful response status codes for a successful status check
+          items:
             type: string
-            description: The request headers to be included when invoking this webhook endpoint
-          description: The request headers to be included when invoking this webhook endpoint
-        method:
-          type: string
-          description: The request method to be used when invoking this webhook endpoint
-          enum:
-          - GET
-          - POST
-          - PUT
-          - PATCH
-      description: The webhook endpoint configuration for this webhook
-    TeamExternalIntegrationReference:
-      title: StatusCheckRequest.TeamExternalIntegrationReference
-      required:
-      - name
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of the external integration for the health check to be created/updated
-          enum:
-          - JIRA
-          - DATADOG
-          - DATADOG_EU
-          - DATADOG_US3
-          - DATADOG_US5
-          - DATADOG_US1_FED
-          - PAGERDUTY
-          - NEWRELIC
-          - GRAFANA
-          - DYNATRACE
-          - APPDYNAMICS
-          - PROMETHEUS
-          - CUSTOM
-          - K6
-          - LOAD_GENERATOR_CUSTOM
-          - AWS
-          - AZURE
-        observabilityToolType:
-          type: string
-          description: The observability tool type of the external integration for the health check to be created/updated
-          enum:
-          - DATADOG
-          - PAGERDUTY
-          - NEWRELIC
-          - GRAFANA
-          - DYNATRACE
-          - APPDYNAMICS
-          - PROMETHEUS
-          - CUSTOM
-          - AWS
-          - AZURE
-        domain:
-          type: string
-          description: The domain of the observability tool type of the external integration for the health check to be created/updated
-        name:
-          type: string
-          description: The name of the external integration for the health check to be created/updated
-      description: Represents the configuration for referencing an external integration
-    LoadGeneratorResponse:
-      required:
-      - name
-      - webhookStartLoadTrigger
-      type: object
-      properties:
-        identifier:
-          type: string
-          description: The identifier of this load generator
-        name:
-          type: string
-          description: The name of the load generator to be created/updated
-        webhookStartLoadTrigger:
-          $ref: '#/components/schemas/Webhook'
-        webhookStatusCheck:
-          $ref: '#/components/schemas/Webhook'
-        webhookStopLoadTrigger:
-          $ref: '#/components/schemas/Webhook'
-        active:
-          type: boolean
-          description: Load generator is active
+            description: The list of successful response status codes for a successful status check
+        responseBodyEvaluation:
+          $ref: '#/components/schemas/ResponseBodyEvaluation'
+      description: The configuration for evaluating the success/failure of a status check
     ResponseBodyEvaluation:
       required:
       - op
@@ -290,103 +217,6 @@ components:
       description: The configuration for evaluating the success of a response body
     HasCompareFunctionObject:
       type: object
-    LoadGeneratorRequest:
-      required:
-      - name
-      - webhookStartLoadTrigger
-      type: object
-      properties:
-        identifier:
-          type: string
-          description: The identifier of this load generator
-        name:
-          type: string
-          description: The name of the load generator to be created/updated
-        webhookStartLoadTrigger:
-          $ref: '#/components/schemas/WebhookRequest'
-        webhookStatusCheck:
-          $ref: '#/components/schemas/WebhookRequest'
-        webhookStopLoadTrigger:
-          $ref: '#/components/schemas/WebhookRequest'
-        active:
-          type: boolean
-    WebhookRequest:
-      required:
-      - method
-      - name
-      - uri
-      type: object
-      properties:
-        identifier:
-          type: string
-          description: The identifier of this webhook
-        name:
-          type: string
-          description: The name of the webhook to be created/updated
-        description:
-          type: string
-          description: The description of the webhook to be created/updated
-        isPrivateNetwork:
-          type: boolean
-        uri:
-          type: string
-          description: The URI of the webhook
-          format: url
-        method:
-          type: string
-          description: The HTTP request method to use when the webhook is invoked
-          enum:
-          - GET
-          - POST
-          - PUT
-          - PATCH
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-            description: Optional request headers to be used when the webhook is invoked
-          description: Optional request headers to be used when the webhook is invoked
-        triggerEvents:
-          type: array
-          description: The list of attack events that should cause the webhook to be invoked
-          items:
-            type: string
-            description: The list of attack events that should cause the webhook to be invoked
-            enum:
-            - INITIALIZING
-            - RUNNING
-            - FINISHED
-        state:
-          type: string
-          description: State (active/deactivated) of the webhook
-          enum:
-          - ACTIVE
-          - DEACTIVATED
-        payload:
-          type: string
-          description: The payload to be sent when the webhook is invoked
-        teamExternalIntegration:
-          $ref: '#/components/schemas/TeamExternalIntegrationReference'
-        evaluationConfiguration:
-          $ref: '#/components/schemas/EvaluationConfiguration'
-        type:
-          type: string
-          description: The type of this webhook
-          enum:
-          - TASK
-          - STATUS_CHECK
-          - LOAD_GENERATOR_TRIGGER
-          - LOAD_GENERATOR_STATUS_CHECK
-          - PREREQUISITE
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            description: The tags associated with this webhook
-            items:
-              type: string
-              description: The tags associated with this webhook
-          description: The tags associated with this webhook
     Webhook:
       type: object
       properties:
@@ -487,21 +317,191 @@ components:
       description: The list of predicates to evaluate against the status check response body
       discriminator:
         propertyName: type
-    EvaluationConfiguration:
+    LoadGeneratorResponse:
       required:
-      - okStatusCodes
+      - name
+      - webhookStartLoadTrigger
       type: object
       properties:
-        okLatencyMaxMs:
-          type: integer
-          description: The maximum latency in milliseconds for a successful status check
-          format: int32
-        okStatusCodes:
+        identifier:
+          type: string
+          description: The identifier of this load generator
+        name:
+          type: string
+          description: The name of the load generator to be created/updated
+        webhookStartLoadTrigger:
+          $ref: '#/components/schemas/Webhook'
+        webhookStatusCheck:
+          $ref: '#/components/schemas/Webhook'
+        webhookStopLoadTrigger:
+          $ref: '#/components/schemas/Webhook'
+        active:
+          type: boolean
+          description: Load generator is active
+    WebhookRequest:
+      required:
+      - method
+      - name
+      - uri
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The identifier of this webhook
+        name:
+          type: string
+          description: The name of the webhook to be created/updated
+        description:
+          type: string
+          description: The description of the webhook to be created/updated
+        isPrivateNetwork:
+          type: boolean
+        uri:
+          type: string
+          description: The URI of the webhook
+          format: url
+        method:
+          type: string
+          description: The HTTP request method to use when the webhook is invoked
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Optional request headers to be used when the webhook is invoked
+          description: Optional request headers to be used when the webhook is invoked
+        triggerEvents:
           type: array
-          description: The list of successful response status codes for a successful status check
+          description: The list of attack events that should cause the webhook to be invoked
           items:
             type: string
-            description: The list of successful response status codes for a successful status check
-        responseBodyEvaluation:
-          $ref: '#/components/schemas/ResponseBodyEvaluation'
-      description: The configuration for evaluating the success/failure of a status check
+            description: The list of attack events that should cause the webhook to be invoked
+            enum:
+            - INITIALIZING
+            - RUNNING
+            - FINISHED
+        state:
+          type: string
+          description: State (active/deactivated) of the webhook
+          enum:
+          - ACTIVE
+          - DEACTIVATED
+        payload:
+          type: string
+          description: The payload to be sent when the webhook is invoked
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+        evaluationConfiguration:
+          $ref: '#/components/schemas/EvaluationConfiguration'
+        type:
+          type: string
+          description: The type of this webhook
+          enum:
+          - TASK
+          - STATUS_CHECK
+          - LOAD_GENERATOR_TRIGGER
+          - LOAD_GENERATOR_STATUS_CHECK
+          - PREREQUISITE
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            description: The tags associated with this webhook
+            items:
+              type: string
+              description: The tags associated with this webhook
+          description: The tags associated with this webhook
+    WebhookEndpoint:
+      type: object
+      properties:
+        uri:
+          type: string
+          description: The uri of this webhook endpoint
+          format: url
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: The request headers to be included when invoking this webhook endpoint
+          description: The request headers to be included when invoking this webhook endpoint
+        method:
+          type: string
+          description: The request method to be used when invoking this webhook endpoint
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+      description: The webhook endpoint configuration for this webhook
+    TeamExternalIntegrationReference:
+      title: StatusCheckRequest.TeamExternalIntegrationReference
+      required:
+      - name
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of the external integration for the health check to be created/updated
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+        observabilityToolType:
+          type: string
+          description: The observability tool type of the external integration for the health check to be created/updated
+          enum:
+          - DATADOG
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - AWS
+          - AZURE
+        domain:
+          type: string
+          description: The domain of the observability tool type of the external integration for the health check to be created/updated
+        name:
+          type: string
+          description: The name of the external integration for the health check to be created/updated
+      description: Represents the configuration for referencing an external integration
+    LoadGeneratorRequest:
+      required:
+      - name
+      - webhookStartLoadTrigger
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The identifier of this load generator
+        name:
+          type: string
+          description: The name of the load generator to be created/updated
+        webhookStartLoadTrigger:
+          $ref: '#/components/schemas/WebhookRequest'
+        webhookStatusCheck:
+          $ref: '#/components/schemas/WebhookRequest'
+        webhookStopLoadTrigger:
+          $ref: '#/components/schemas/WebhookRequest'
+        active:
+          type: boolean

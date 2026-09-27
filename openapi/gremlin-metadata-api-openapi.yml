@@ -49,17 +49,13 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
 components:
   schemas:
-    ArgGroup:
+    Versioning:
       type: object
       properties:
-        name:
+        version:
           type: string
-        description:
-          type: string
-        args:
-          type: array
-          items:
-            type: string
+        deprecated:
+          type: boolean
     InfraAttackArgObject:
       type: object
       properties:
@@ -117,8 +113,23 @@ components:
           type: object
           additionalProperties:
             type: object
-    ValidatorObject:
+    DisplayConfig:
       type: object
+      properties:
+        grouped_args:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+        arg_groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArgGroup'
+        values:
+          type: array
+          items:
+            type: string
     InfraAttackMetadata:
       type: object
       properties:
@@ -161,27 +172,16 @@ components:
           type: object
           additionalProperties:
             type: string
-    Versioning:
+    ValidatorObject:
+      type: object
+    ArgGroup:
       type: object
       properties:
-        version:
+        name:
           type: string
-        deprecated:
-          type: boolean
-    DisplayConfig:
-      type: object
-      properties:
-        grouped_args:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-        arg_groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/ArgGroup'
-        values:
+        description:
+          type: string
+        args:
           type: array
           items:
             type: string

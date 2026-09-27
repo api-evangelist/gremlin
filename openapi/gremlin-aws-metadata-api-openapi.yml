@@ -140,15 +140,28 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
 components:
   schemas:
-    TargetingStrategy:
-      required:
-      - type
+    AwsMetadataIamRoleResponse:
       type: object
       properties:
-        type:
+        cfnTemplateLink:
           type: string
-      discriminator:
-        propertyName: type
+        permissionPolicy:
+          type: string
+        managedPolicies:
+          type: array
+          items:
+            type: string
+        trustPolicy:
+          type: string
+    AwsAutoscalingGroupsForAccount:
+      type: object
+      properties:
+        domain:
+          type: string
+        autoscalingGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/AwsAutoscalingGroupResponse'
     AwsLoadBalancerResponse:
       type: object
       properties:
@@ -187,19 +200,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AwsLoadBalancerResponse'
-    AwsMetadataIamRoleResponse:
+    TargetingStrategy:
+      required:
+      - type
       type: object
       properties:
-        cfnTemplateLink:
+        type:
           type: string
-        permissionPolicy:
-          type: string
-        managedPolicies:
-          type: array
-          items:
-            type: string
-        trustPolicy:
-          type: string
+      discriminator:
+        propertyName: type
     AwsAutoscalingGroupResponse:
       type: object
       properties:
@@ -216,12 +225,3 @@ components:
         discoveredAt:
           type: string
           format: date-time
-    AwsAutoscalingGroupsForAccount:
-      type: object
-      properties:
-        domain:
-          type: string
-        autoscalingGroups:
-          type: array
-          items:
-            $ref: '#/components/schemas/AwsAutoscalingGroupResponse'

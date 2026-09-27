@@ -165,95 +165,6 @@ paths:
         - ROLES_WRITE
 components:
   schemas:
-    RoleResponse:
-      type: object
-      properties:
-        key:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        type:
-          type: string
-          enum:
-          - Company
-          - Team
-        privileges:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-            enum:
-            - ADMIN
-            - DEV
-            - ALL_API_KEYS_READ
-            - API_KEYS_READ
-            - API_KEYS_WRITE
-            - COMPANIES_READ
-            - COMPANIES_WRITE
-            - COMPANY_INTEGRATIONS_READ
-            - COMPANY_INTEGRATIONS_WRITE
-            - COMPANY_PREFERENCES_WRITE
-            - COMPANY_SECURITY_WRITE
-            - COMPANY_SECURITY_READ
-            - COMPANY_SAMLCLAIM_ALIAS_READ
-            - COMPANY_SAMLCLAIM_ALIAS_WRITE
-            - COMPANY_USERS_READ
-            - COMPANY_USERS_WRITE
-            - HALT_ALL
-            - LARGE_SCALE_TESTS_READ
-            - LARGE_SCALE_TESTS_WRITE
-            - DISASTER_RECOVERY_TESTS_READ
-            - DISASTER_RECOVERY_TESTS_WRITE
-            - MINIMUM_COMPANY_PRIVILEGES
-            - PROMOTE_DEMOTE_OWNER
-            - RELIABILITY_REPORTS_READ
-            - REPORTS_READ
-            - ROLES_WRITE
-            - SECURITY_REPORTS_READ
-            - TEAMS_READ
-            - TEST_SUITES_READ
-            - TEST_SUITES_WRITE
-            - CLIENTS_READ
-            - CLIENTS_WRITE
-            - EXPERIMENTS_READ
-            - EXPERIMENTS_RUN
-            - EXPERIMENTS_WRITE
-            - FAULT_CPU
-            - FAULT_IO
-            - FAULT_MEMORY
-            - FAULT_DISK
-            - FAULT_BLACKHOLE
-            - FAULT_DNS
-            - FAULT_LATENCY
-            - FAULT_PACKET_LOSS
-            - FAULT_COLLECT_CERTS
-            - FAULT_SHUTDOWN
-            - FAULT_TIME_TRAVEL
-            - FAULT_PROCESS_KILLER
-            - FAULT_PROCESS_EXHAUSTION
-            - FAULT_GPU
-            - HALT_WRITE
-            - IMAGES_READ
-            - IMAGES_WRITE
-            - INTEGRATIONS_READ
-            - INTEGRATIONS_WRITE
-            - MINIMUM_TEAM_PRIVILEGES
-            - SCENARIO_SHARE_WRITE
-            - SCENARIOS_READ
-            - SCENARIOS_RUN
-            - SCENARIOS_WRITE
-            - SERVICES_READ
-            - SERVICES_RUN
-            - SERVICES_WRITE
-            - TEAM_SECURITY_READ
-            - TEAM_SECURITY_WRITE
-            - TEAMS_WRITE
-            - USERS_READ
-            - USERS_WRITE
-            - WEBHOOKS_READ
-            - WEBHOOKS_WRITE
     Privileges:
       type: object
       properties:
@@ -276,51 +187,11 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/RoleResponse'
-    PrivilegeDefinition:
+    RoleResponse:
       type: object
       properties:
         key:
           type: string
-        description:
-          type: string
-        category:
-          type: string
-          enum:
-          - NONE
-          - REQUIRED
-          - ADMINISTRATIVE
-          - ALL_API_KEYS
-          - API_KEYS
-          - CLIENTS
-          - COMPANIES
-          - COMPANY_PREFERENCES
-          - COMPANY_SECURITY
-          - COMPANY_USERS
-          - EXPERIMENTS
-          - FAULT
-          - HALT
-          - HALT_ALL
-          - IMAGES
-          - INTEGRATIONS
-          - DISASTER_RECOVERY_TESTS
-          - RELIABILITY_REPORTS
-          - REPORTS
-          - ROLES
-          - SCENARIOS
-          - SCENARIO_SHARE
-          - SECURITY_REPORTS
-          - SERVICES
-          - TEAMS
-          - TEAM_SECURITY
-          - TEST_SUITES
-          - USERS
-          - WEBHOOKS
-    CreateCustomRoleRequest:
-      required:
-      - name
-      - type
-      type: object
-      properties:
         name:
           type: string
         description:
@@ -414,6 +285,45 @@ components:
           $ref: '#/components/schemas/Roles'
         privileges:
           $ref: '#/components/schemas/Privileges'
+    PrivilegeDefinition:
+      type: object
+      properties:
+        key:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+          enum:
+          - NONE
+          - REQUIRED
+          - ADMINISTRATIVE
+          - ALL_API_KEYS
+          - API_KEYS
+          - CLIENTS
+          - COMPANIES
+          - COMPANY_PREFERENCES
+          - COMPANY_SECURITY
+          - COMPANY_USERS
+          - EXPERIMENTS
+          - FAULT
+          - HALT
+          - HALT_ALL
+          - IMAGES
+          - INTEGRATIONS
+          - DISASTER_RECOVERY_TESTS
+          - RELIABILITY_REPORTS
+          - REPORTS
+          - ROLES
+          - SCENARIOS
+          - SCENARIO_SHARE
+          - SECURITY_REPORTS
+          - SERVICES
+          - TEAMS
+          - TEAM_SECURITY
+          - TEST_SUITES
+          - USERS
+          - WEBHOOKS
     UpdateCustomRoleRequest:
       type: object
       properties:
@@ -421,6 +331,96 @@ components:
           type: string
         description:
           type: string
+        privileges:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - ADMIN
+            - DEV
+            - ALL_API_KEYS_READ
+            - API_KEYS_READ
+            - API_KEYS_WRITE
+            - COMPANIES_READ
+            - COMPANIES_WRITE
+            - COMPANY_INTEGRATIONS_READ
+            - COMPANY_INTEGRATIONS_WRITE
+            - COMPANY_PREFERENCES_WRITE
+            - COMPANY_SECURITY_WRITE
+            - COMPANY_SECURITY_READ
+            - COMPANY_SAMLCLAIM_ALIAS_READ
+            - COMPANY_SAMLCLAIM_ALIAS_WRITE
+            - COMPANY_USERS_READ
+            - COMPANY_USERS_WRITE
+            - HALT_ALL
+            - LARGE_SCALE_TESTS_READ
+            - LARGE_SCALE_TESTS_WRITE
+            - DISASTER_RECOVERY_TESTS_READ
+            - DISASTER_RECOVERY_TESTS_WRITE
+            - MINIMUM_COMPANY_PRIVILEGES
+            - PROMOTE_DEMOTE_OWNER
+            - RELIABILITY_REPORTS_READ
+            - REPORTS_READ
+            - ROLES_WRITE
+            - SECURITY_REPORTS_READ
+            - TEAMS_READ
+            - TEST_SUITES_READ
+            - TEST_SUITES_WRITE
+            - CLIENTS_READ
+            - CLIENTS_WRITE
+            - EXPERIMENTS_READ
+            - EXPERIMENTS_RUN
+            - EXPERIMENTS_WRITE
+            - FAULT_CPU
+            - FAULT_IO
+            - FAULT_MEMORY
+            - FAULT_DISK
+            - FAULT_BLACKHOLE
+            - FAULT_DNS
+            - FAULT_LATENCY
+            - FAULT_PACKET_LOSS
+            - FAULT_COLLECT_CERTS
+            - FAULT_SHUTDOWN
+            - FAULT_TIME_TRAVEL
+            - FAULT_PROCESS_KILLER
+            - FAULT_PROCESS_EXHAUSTION
+            - FAULT_GPU
+            - HALT_WRITE
+            - IMAGES_READ
+            - IMAGES_WRITE
+            - INTEGRATIONS_READ
+            - INTEGRATIONS_WRITE
+            - MINIMUM_TEAM_PRIVILEGES
+            - SCENARIO_SHARE_WRITE
+            - SCENARIOS_READ
+            - SCENARIOS_RUN
+            - SCENARIOS_WRITE
+            - SERVICES_READ
+            - SERVICES_RUN
+            - SERVICES_WRITE
+            - TEAM_SECURITY_READ
+            - TEAM_SECURITY_WRITE
+            - TEAMS_WRITE
+            - USERS_READ
+            - USERS_WRITE
+            - WEBHOOKS_READ
+            - WEBHOOKS_WRITE
+    CreateCustomRoleRequest:
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+          enum:
+          - Company
+          - Team
         privileges:
           uniqueItems: true
           type: array

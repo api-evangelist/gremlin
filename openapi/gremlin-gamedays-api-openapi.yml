@@ -373,94 +373,49 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
 components:
   schemas:
-    GameDayExecution:
+    EvaluationConfiguration:
+      required:
+      - okStatusCodes
       type: object
       properties:
-        createdBy:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        lastRunAt:
-          type: string
-          format: date-time
-        results:
+        okLatencyMaxMs:
+          type: integer
+          description: The maximum latency in milliseconds for a successful status check
+          format: int32
+        okStatusCodes:
           type: array
+          description: The list of successful response status codes for a successful status check
           items:
-            $ref: '#/components/schemas/ExecutionResult'
-    ScenarioRunGraph:
+            type: string
+            description: The list of successful response status codes for a successful status check
+        responseBodyEvaluation:
+          $ref: '#/components/schemas/ResponseBodyEvaluation'
+      description: The configuration for evaluating the success/failure of a status check
+    FormDataContentDisposition:
       type: object
       properties:
-        nodes:
+        type:
+          type: string
+        parameters:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/GraphNodeObject'
-        start_id:
+            type: string
+        fileName:
           type: string
-          writeOnly: true
-        observers:
-          type: array
-          items:
-            $ref: '#/components/schemas/StatusCheckNode'
-        current_id:
+        creationDate:
           type: string
-          writeOnly: true
-        external_actions:
-          type: array
-          writeOnly: true
-          items:
-            $ref: '#/components/schemas/ExternalActionNode'
-        external_rollbacks:
-          type: array
-          writeOnly: true
-          items:
-            $ref: '#/components/schemas/RollbackExternalActionNode'
-        startId:
+          format: date-time
+        modificationDate:
           type: string
-        externalActions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalActionNode'
-        externalRollbacks:
-          type: array
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/RollbackExternalActionNode'
-        currentId:
+          format: date-time
+        readDate:
           type: string
-          readOnly: true
-        next:
-          $ref: '#/components/schemas/GraphNodeObject'
-        nextId:
-          type: string
-        nodesRecursive:
-          type: array
-          items:
-            $ref: '#/components/schemas/GraphNodeObject'
-        expectedLengthWithDelays:
+          format: date-time
+        size:
           type: integer
-          format: int32
-          readOnly: true
-        eligibleForServiceCreation:
-          type: boolean
-        expectedLength:
-          type: integer
-          format: int32
-          readOnly: true
-        attackTypeQuantity:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-            readOnly: true
-          readOnly: true
-        providersCountForNodes:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int32
-            readOnly: true
-          readOnly: true
+          format: int64
+        name:
+          type: string
     UpdateGameDaySummaryRequest:
       title: UpdateGameDaySummaryRequest.Input
       type: object
@@ -470,64 +425,31 @@ components:
         actions:
           type: string
       description: Represents a request to update a GameDay summary for a team
-    ExternalActionRequest:
-      required:
-      - type
+    RollbackExternalActionNode:
       type: object
-      properties:
-        semanticType:
-          type: string
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    CreateGameDayPlanRequest:
-      title: CreateGameDayPlanRequest.Input
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-        goal:
-          type: string
-        type:
-          type: string
-          enum:
-          - Exploratory
-          - TrainTeams
-          - ValidatePastOutages
-          - TuneObservability
-          - Other
-        participants:
-          maxItems: 20
-          minItems: 0
-          type: array
-          items:
-            $ref: '#/components/schemas/Participant'
-        scenarioIds:
-          maxItems: 20
-          minItems: 0
-          type: array
-          items:
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          referenceExternalActionId:
             type: string
-        environment:
-          type: string
-        dashboards:
-          maxItems: 20
-          minItems: 0
-          type: array
-          items:
+          state:
+            $ref: '#/components/schemas/State'
+          stateDetails:
+            $ref: '#/components/schemas/ExternalCallFailedException'
+          externalActionRequest:
+            $ref: '#/components/schemas/ExternalActionRequest'
+          externalActionLifecycle:
             type: string
-            format: uri
-        runbooks:
-          maxItems: 20
-          minItems: 0
-          type: array
-          items:
-            type: string
-            format: uri
-      description: Represents a request to create a GameDay plan for a team
+            enum:
+            - NotStarted
+            - Active
+            - HaltRequested
+            - Successful
+            - Halted
+            - Failed
+          didExternalActionNoOp:
+            type: boolean
     ExecutionResult:
       type: object
       properties:
@@ -568,105 +490,42 @@ components:
         lastRunVersion:
           type: integer
           format: int32
-    GameDaySummary:
-      type: object
-      properties:
-        createdBy:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedBy:
-          type: string
-        updatedAt:
-          type: string
-          format: date-time
-        notes:
-          type: string
-        actions:
-          type: string
-        gameDayImages:
-          type: array
-          items:
-            type: string
-    ScenarioSummary:
+    GameDayInfo:
       type: object
       properties:
         guid:
           type: string
         name:
           type: string
-    Participant:
-      title: CreateGameDayPlanRequest.Participant
+    EndpointConfiguration:
       required:
-      - position
+      - url
       type: object
       properties:
-        position:
+        url:
           type: string
+          description: The URL of the status check
+          format: url
+        method:
+          type: string
+          description: The method type of the status check
           enum:
-          - Owner
-          - Coordinator
-          - Observer
-          - Reporter
-        email:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Optional request headers to be used when the status check is invoked
+          description: Optional request headers to be used when the status check is invoked
+        payload:
           type: string
-      description: Represents a participant in the GameDay
-    StatusCheckNode:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/GraphNodeObject'
-      - type: object
-        properties:
-          state:
-            $ref: '#/components/schemas/State'
-          name:
-            type: string
-          description:
-            type: string
-          thirdPartyPresets:
-            type: string
-          category:
-            type: string
-            enum:
-            - ERRORS
-            - LATENCY
-            - REQUESTS
-            - UNKNOWN
-          requestConfiguration:
-            $ref: '#/components/schemas/StatusCheckNodeRequest'
-          endpointConfiguration:
-            $ref: '#/components/schemas/EndpointConfiguration'
-          rawEndpointConfiguration:
-            $ref: '#/components/schemas/EndpointConfiguration'
-          evaluationConfiguration:
-            $ref: '#/components/schemas/EvaluationConfiguration'
-          statusCheckId:
-            type: string
-          externalIntegrationId:
-            type: string
-          statusCheckReferenceId:
-            type: string
-          isPrivateNetwork:
-            type: boolean
-          isHaltable:
-            type: boolean
-          payload:
-            type: string
-          isAutoGenerated:
-            type: boolean
-          autoGeneratedStatusCheckId:
-            type: string
-          resourceIdentifier:
-            type: string
-          statusCheckRequest:
-            $ref: '#/components/schemas/StatusCheckNodeRequest'
-          intervalSeconds:
-            type: integer
-            format: int32
-          additionalTimeInSecsToRunAfterCompletion:
-            type: integer
-            format: int32
+          description: Payload for POST type of request
+        headersArn:
+          type: string
+          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
     ExternalCallFailedException:
       type: object
       properties:
@@ -763,8 +622,33 @@ components:
                 type: string
         localizedMessage:
           type: string
-    HasCompareFunctionObject:
+    ScenarioSummary:
       type: object
+      properties:
+        guid:
+          type: string
+        name:
+          type: string
+    StatusCheckNodeRequest:
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    ScenarioRunResults:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - Passed
+          - Failed
+          - Unsure
+        incidentDetected:
+          type: boolean
+        incidentMitigated:
+          type: boolean
     PredicateObject:
       required:
       - jpQuery
@@ -790,8 +674,93 @@ components:
       description: The list of predicates to evaluate against the status check response body
       discriminator:
         propertyName: type
-    UpdateGameDayPlanRequest:
-      title: UpdateGameDayPlanRequest.Input
+    GameDayResponse:
+      type: object
+      properties:
+        guid:
+          type: string
+        teamId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        plan:
+          $ref: '#/components/schemas/GameDayPlan'
+        summary:
+          $ref: '#/components/schemas/GameDaySummary'
+        execution:
+          $ref: '#/components/schemas/GameDayExecution'
+    Participant:
+      title: CreateGameDayPlanRequest.Participant
+      required:
+      - position
+      type: object
+      properties:
+        position:
+          type: string
+          enum:
+          - Owner
+          - Coordinator
+          - Observer
+          - Reporter
+        email:
+          type: string
+      description: Represents a participant in the GameDay
+    ExternalActionNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          externalActionRequest:
+            $ref: '#/components/schemas/ExternalActionRequest'
+          state:
+            $ref: '#/components/schemas/State'
+          stateDetails:
+            $ref: '#/components/schemas/ExternalCallFailedException'
+    GameDayExecution:
+      type: object
+      properties:
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        lastRunAt:
+          type: string
+          format: date-time
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExecutionResult'
+    GameDaySummary:
+      type: object
+      properties:
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        notes:
+          type: string
+        actions:
+          type: string
+        gameDayImages:
+          type: array
+          items:
+            type: string
+    CreateGameDayPlanRequest:
+      title: CreateGameDayPlanRequest.Input
+      required:
+      - name
       type: object
       properties:
         name:
@@ -834,59 +803,179 @@ components:
           items:
             type: string
             format: uri
-      description: Represents a request to update a GameDay plan for a team
-    StatusCheckNodeRequest:
+      description: Represents a request to create a GameDay plan for a team
+    HasCompareFunctionObject:
+      type: object
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body
+    GraphNodeObject:
       type: object
       properties:
         type:
+          type: string
+          enum:
+          - Concurrent
+          - ContinuousStatusCheck
+          - StatusCheckNode
+          - Delay
+          - InfraAttack
+          - SynchronousStatusCheck
+          - Continuous
+          - FailureFlag
+          - ExternalAction
+          - RollbackExternalAction
+        id:
+          type: string
+        state:
+          type: object
+          readOnly: true
+        guid:
+          type: string
+        next:
           type: string
       discriminator:
         propertyName: type
-    FormDataContentDisposition:
+    StatusCheckNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          state:
+            $ref: '#/components/schemas/State'
+          name:
+            type: string
+          description:
+            type: string
+          thirdPartyPresets:
+            type: string
+          category:
+            type: string
+            enum:
+            - ERRORS
+            - LATENCY
+            - REQUESTS
+            - UNKNOWN
+          requestConfiguration:
+            $ref: '#/components/schemas/StatusCheckNodeRequest'
+          endpointConfiguration:
+            $ref: '#/components/schemas/EndpointConfiguration'
+          rawEndpointConfiguration:
+            $ref: '#/components/schemas/EndpointConfiguration'
+          evaluationConfiguration:
+            $ref: '#/components/schemas/EvaluationConfiguration'
+          statusCheckId:
+            type: string
+          externalIntegrationId:
+            type: string
+          statusCheckReferenceId:
+            type: string
+          isPrivateNetwork:
+            type: boolean
+          isHaltable:
+            type: boolean
+          payload:
+            type: string
+          isAutoGenerated:
+            type: boolean
+          autoGeneratedStatusCheckId:
+            type: string
+          resourceIdentifier:
+            type: string
+          statusCheckRequest:
+            $ref: '#/components/schemas/StatusCheckNodeRequest'
+          intervalSeconds:
+            type: integer
+            format: int32
+          additionalTimeInSecsToRunAfterCompletion:
+            type: integer
+            format: int32
+    GameDayPlan:
       type: object
       properties:
+        name:
+          type: string
+        goal:
+          type: string
         type:
           type: string
-        parameters:
-          type: object
-          additionalProperties:
+          enum:
+          - Exploratory
+          - TrainTeams
+          - ValidatePastOutages
+          - TuneObservability
+          - Other
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        participants:
+          type: array
+          items:
+            $ref: '#/components/schemas/Participant'
+        scenarios:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioSummary'
+        environment:
+          type: string
+        dashboards:
+          type: array
+          items:
             type: string
-        fileName:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        modificationDate:
-          type: string
-          format: date-time
-        readDate:
-          type: string
-          format: date-time
-        size:
-          type: integer
-          format: int64
-        name:
-          type: string
-    GameDayInfo:
+            format: uri
+        runbooks:
+          type: array
+          items:
+            type: string
+            format: uri
+    State:
       type: object
       properties:
-        guid:
-          type: string
-        name:
-          type: string
-    ScenarioRunResults:
-      type: object
-      properties:
-        status:
+        lifecycle:
           type: string
           enum:
-          - Passed
+          - NotStarted
+          - Active
+          - HaltRequested
+          - Successful
+          - Halted
           - Failed
-          - Unsure
-        incidentDetected:
-          type: boolean
-        incidentMitigated:
-          type: boolean
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        failedReason:
+          type: string
+        nodeHaltedByGuid:
+          type: string
+        nodeHaltedById:
+          type: string
+      readOnly: true
     ScenarioRunResponse:
       type: object
       properties:
@@ -959,69 +1048,8 @@ components:
           - AT_LEAST_ONE_FAILED
         largeScaleTestId:
           type: string
-    GameDayResponse:
-      type: object
-      properties:
-        guid:
-          type: string
-        teamId:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        plan:
-          $ref: '#/components/schemas/GameDayPlan'
-        summary:
-          $ref: '#/components/schemas/GameDaySummary'
-        execution:
-          $ref: '#/components/schemas/GameDayExecution'
-    EvaluationConfiguration:
-      required:
-      - okStatusCodes
-      type: object
-      properties:
-        okLatencyMaxMs:
-          type: integer
-          description: The maximum latency in milliseconds for a successful status check
-          format: int32
-        okStatusCodes:
-          type: array
-          description: The list of successful response status codes for a successful status check
-          items:
-            type: string
-            description: The list of successful response status codes for a successful status check
-        responseBodyEvaluation:
-          $ref: '#/components/schemas/ResponseBodyEvaluation'
-      description: The configuration for evaluating the success/failure of a status check
-    RollbackExternalActionNode:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/GraphNodeObject'
-      - type: object
-        properties:
-          referenceExternalActionId:
-            type: string
-          state:
-            $ref: '#/components/schemas/State'
-          stateDetails:
-            $ref: '#/components/schemas/ExternalCallFailedException'
-          externalActionRequest:
-            $ref: '#/components/schemas/ExternalActionRequest'
-          externalActionLifecycle:
-            type: string
-            enum:
-            - NotStarted
-            - Active
-            - HaltRequested
-            - Successful
-            - Halted
-            - Failed
-          didExternalActionNoOp:
-            type: boolean
-    GameDayPlan:
+    UpdateGameDayPlanRequest:
+      title: UpdateGameDayPlanRequest.Input
       type: object
       properties:
         name:
@@ -1036,144 +1064,116 @@ components:
           - ValidatePastOutages
           - TuneObservability
           - Other
-        createdBy:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedBy:
-          type: string
-        updatedAt:
-          type: string
-          format: date-time
         participants:
+          maxItems: 20
+          minItems: 0
           type: array
           items:
             $ref: '#/components/schemas/Participant'
-        scenarios:
+        scenarioIds:
+          maxItems: 20
+          minItems: 0
           type: array
           items:
-            $ref: '#/components/schemas/ScenarioSummary'
+            type: string
         environment:
           type: string
         dashboards:
+          maxItems: 20
+          minItems: 0
           type: array
           items:
             type: string
             format: uri
         runbooks:
+          maxItems: 20
+          minItems: 0
           type: array
           items:
             type: string
             format: uri
-    State:
+      description: Represents a request to update a GameDay plan for a team
+    ScenarioRunGraph:
       type: object
       properties:
-        lifecycle:
-          type: string
-          enum:
-          - NotStarted
-          - Active
-          - HaltRequested
-          - Successful
-          - Halted
-          - Failed
-        startTime:
-          type: string
-          format: date-time
-        endTime:
-          type: string
-          format: date-time
-        failedReason:
-          type: string
-        nodeHaltedByGuid:
-          type: string
-        nodeHaltedById:
-          type: string
-      readOnly: true
-    EndpointConfiguration:
-      required:
-      - url
-      type: object
-      properties:
-        url:
-          type: string
-          description: The URL of the status check
-          format: url
-        method:
-          type: string
-          description: The method type of the status check
-          enum:
-          - GET
-          - POST
-          - PUT
-          - PATCH
-        headers:
+        nodes:
           type: object
           additionalProperties:
-            type: string
-            description: Optional request headers to be used when the status check is invoked
-          description: Optional request headers to be used when the status check is invoked
-        payload:
+            $ref: '#/components/schemas/GraphNodeObject'
+        start_id:
           type: string
-          description: Payload for POST type of request
-        headersArn:
+          writeOnly: true
+        observers:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusCheckNode'
+        current_id:
           type: string
-          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
-    GraphNodeObject:
+          writeOnly: true
+        external_actions:
+          type: array
+          writeOnly: true
+          items:
+            $ref: '#/components/schemas/ExternalActionNode'
+        external_rollbacks:
+          type: array
+          writeOnly: true
+          items:
+            $ref: '#/components/schemas/RollbackExternalActionNode'
+        startId:
+          type: string
+        externalActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalActionNode'
+        externalRollbacks:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/RollbackExternalActionNode'
+        currentId:
+          type: string
+          readOnly: true
+        next:
+          $ref: '#/components/schemas/GraphNodeObject'
+        nextId:
+          type: string
+        nodesRecursive:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphNodeObject'
+        expectedLengthWithDelays:
+          type: integer
+          format: int32
+          readOnly: true
+        eligibleForServiceCreation:
+          type: boolean
+        expectedLength:
+          type: integer
+          format: int32
+          readOnly: true
+        attackTypeQuantity:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+            readOnly: true
+          readOnly: true
+        providersCountForNodes:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+            readOnly: true
+          readOnly: true
+    ExternalActionRequest:
+      required:
+      - type
       type: object
       properties:
+        semanticType:
+          type: string
         type:
-          type: string
-          enum:
-          - Concurrent
-          - ContinuousStatusCheck
-          - StatusCheckNode
-          - Delay
-          - InfraAttack
-          - SynchronousStatusCheck
-          - Continuous
-          - FailureFlag
-          - ExternalAction
-          - RollbackExternalAction
-        id:
-          type: string
-        state:
-          type: object
-          readOnly: true
-        guid:
-          type: string
-        next:
           type: string
       discriminator:
         propertyName: type
-    ExternalActionNode:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/GraphNodeObject'
-      - type: object
-        properties:
-          externalActionRequest:
-            $ref: '#/components/schemas/ExternalActionRequest'
-          state:
-            $ref: '#/components/schemas/State'
-          stateDetails:
-            $ref: '#/components/schemas/ExternalCallFailedException'
-    ResponseBodyEvaluation:
-      required:
-      - op
-      - predicates
-      type: object
-      properties:
-        op:
-          type: string
-          description: The operation to logically combine predicates into a success or failure
-          enum:
-          - AND
-          - OR
-        predicates:
-          type: array
-          description: The list of predicates to evaluate against the status check response body
-          items:
-            $ref: '#/components/schemas/PredicateObject'
-      description: The configuration for evaluating the success of a response body

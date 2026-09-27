@@ -456,6 +456,132 @@ paths:
         - CLIENTS_READ
 components:
   schemas:
+    TheirRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        teamId:
+          type: string
+        teamName:
+          type: string
+        namespace:
+          type: string
+        currentStatus:
+          type: string
+          enum:
+          - REQUESTED
+          - APPROVED
+          - DENIED
+          - REVOKED
+          - DELETED
+        requester:
+          type: string
+        approver:
+          type: string
+    UpdateAllRequests:
+      required:
+      - requestIds
+      type: object
+      properties:
+        requestIds:
+          type: array
+          items:
+            type: string
+    SemanticVersion:
+      type: object
+      properties:
+        major:
+          type: integer
+          format: int32
+        minor:
+          type: integer
+          format: int32
+        patch:
+          type: integer
+          format: int32
+    OutstandingRequests:
+      type: object
+      properties:
+        assetToRequestMap:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/SharedAsset'
+        idToTeamMapping:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SharedTeam'
+    SharedAssetUpdate:
+      type: object
+      properties:
+        assetToRequestMap:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/SharedAsset'
+    AccessRequest:
+      type: object
+      properties:
+        owningTeamId:
+          type: string
+        assetId:
+          type: string
+        namespace:
+          type: string
+        teamToShareWith:
+          type: string
+    MyRequest:
+      type: object
+      properties:
+        requestId:
+          type: string
+        namespace:
+          type: string
+        currentStatus:
+          type: string
+          enum:
+          - REQUESTED
+          - APPROVED
+          - DENIED
+          - REVOKED
+          - DELETED
+        requester:
+          type: string
+        approver:
+          type: string
+    SharableAssetsWithRequestsResponse:
+      type: object
+      properties:
+        availableClusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableClusterResponse'
+        myClusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/MyClusterResponse'
+    SharedTeam:
+      type: object
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        usersCount:
+          type: integer
+          format: int64
+    NewRequestRequest:
+      required:
+      - newRequests
+      type: object
+      properties:
+        newRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessRequest'
     MyClusterResponse:
       type: object
       properties:
@@ -484,58 +610,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TheirRequest'
-    MyRequest:
-      type: object
-      properties:
-        requestId:
-          type: string
-        namespace:
-          type: string
-        currentStatus:
-          type: string
-          enum:
-          - REQUESTED
-          - APPROVED
-          - DENIED
-          - REVOKED
-          - DELETED
-        requester:
-          type: string
-        approver:
-          type: string
-    TheirRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        teamId:
-          type: string
-        teamName:
-          type: string
-        namespace:
-          type: string
-        currentStatus:
-          type: string
-          enum:
-          - REQUESTED
-          - APPROVED
-          - DENIED
-          - REVOKED
-          - DELETED
-        requester:
-          type: string
-        approver:
-          type: string
-    SharedTeam:
-      type: object
-      properties:
-        identifier:
-          type: string
-        name:
-          type: string
-        usersCount:
-          type: integer
-          format: int64
     SharedAsset:
       type: object
       properties:
@@ -570,80 +644,6 @@ components:
         namespace:
           type: string
         requestId:
-          type: string
-    NewRequestRequest:
-      required:
-      - newRequests
-      type: object
-      properties:
-        newRequests:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccessRequest'
-    SharableAssetsWithRequestsResponse:
-      type: object
-      properties:
-        availableClusters:
-          type: array
-          items:
-            $ref: '#/components/schemas/AvailableClusterResponse'
-        myClusters:
-          type: array
-          items:
-            $ref: '#/components/schemas/MyClusterResponse'
-    SharedAssetUpdate:
-      type: object
-      properties:
-        assetToRequestMap:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/SharedAsset'
-    SemanticVersion:
-      type: object
-      properties:
-        major:
-          type: integer
-          format: int32
-        minor:
-          type: integer
-          format: int32
-        patch:
-          type: integer
-          format: int32
-    UpdateAllRequests:
-      required:
-      - requestIds
-      type: object
-      properties:
-        requestIds:
-          type: array
-          items:
-            type: string
-    OutstandingRequests:
-      type: object
-      properties:
-        assetToRequestMap:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/SharedAsset'
-        idToTeamMapping:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/SharedTeam'
-    AccessRequest:
-      type: object
-      properties:
-        owningTeamId:
-          type: string
-        assetId:
-          type: string
-        namespace:
-          type: string
-        teamToShareWith:
           type: string
     AvailableClusterResponse:
       type: object

@@ -186,39 +186,83 @@ paths:
         - CLIENTS_WRITE
 components:
   schemas:
-    Warning:
+    SemanticVersion:
       type: object
       properties:
-        key:
-          type: string
-          enum:
-          - W000
-          - W001
-          - W002
-          - W003
-          - Unknown
-        link:
-          type: string
-        summary:
-          type: string
-    ValidationAttack:
-      type: object
-      properties:
-        agentTimestamp:
+        major:
           type: integer
-          format: int64
-        clientVersion:
+          format: int32
+        minor:
+          type: integer
+          format: int32
+        patch:
+          type: integer
+          format: int32
+    Container:
+      required:
+      - id
+      type: object
+      properties:
+        id:
           type: string
-        results:
+        name:
+          type: string
+        image:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        dns_servers:
+          type: array
+          writeOnly: true
+          items:
+            type: string
+        dnsServers:
           type: array
           items:
-            $ref: '#/components/schemas/ValidationAttackResult'
-        clientStatus:
+            type: string
+    GpuInfo:
+      type: object
+      properties:
+        name:
           type: string
-          enum:
-          - HEALTHY
-          - IMPAIRED
-          - UNHEALTHY
+        driver:
+          type: string
+        memory_size:
+          type: integer
+          format: int64
+    HardwareInfo:
+      type: object
+      properties:
+        cpu_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CpuInfo'
+        memory_size:
+          type: integer
+          format: int64
+        gpu_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GpuInfo'
+    NetworkInterface:
+      required:
+      - ip_addresses
+      type: object
+      properties:
+        name:
+          type: string
+        ip_addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPAddress'
+        is_default:
+          type: boolean
+        is_physical:
+          type: boolean
+        is_virtual:
+          type: boolean
     Client:
       type: object
       properties:
@@ -331,49 +375,6 @@ components:
           enum:
           - Linux
           - Windows
-    Container:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        image:
-          type: string
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        dns_servers:
-          type: array
-          writeOnly: true
-          items:
-            type: string
-        dnsServers:
-          type: array
-          items:
-            type: string
-    VersionInfo:
-      type: object
-      properties:
-        gremlind:
-          $ref: '#/components/schemas/SemanticVersion'
-        gremlin:
-          $ref: '#/components/schemas/SemanticVersion'
-    SemanticVersion:
-      type: object
-      properties:
-        major:
-          type: integer
-          format: int32
-        minor:
-          type: integer
-          format: int32
-        patch:
-          type: integer
-          format: int32
     ValidationAttackResult:
       type: object
       properties:
@@ -400,28 +401,28 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/NetworkInterface'
-    CpuInfo:
+    VersionInfo:
       type: object
       properties:
-        name:
-          type: string
-    NetworkInterface:
-      required:
-      - ip_addresses
+        gremlind:
+          $ref: '#/components/schemas/SemanticVersion'
+        gremlin:
+          $ref: '#/components/schemas/SemanticVersion'
+    Warning:
       type: object
       properties:
-        name:
+        key:
           type: string
-        ip_addresses:
-          type: array
-          items:
-            $ref: '#/components/schemas/IPAddress'
-        is_default:
-          type: boolean
-        is_physical:
-          type: boolean
-        is_virtual:
-          type: boolean
+          enum:
+          - W000
+          - W001
+          - W002
+          - W003
+          - Unknown
+        link:
+          type: string
+        summary:
+          type: string
     IPAddress:
       type: object
       properties:
@@ -433,27 +434,26 @@ components:
           - INET
           - INET6
           - UNIX
-    HardwareInfo:
-      type: object
-      properties:
-        cpu_data:
-          type: array
-          items:
-            $ref: '#/components/schemas/CpuInfo'
-        memory_size:
-          type: integer
-          format: int64
-        gpu_data:
-          type: array
-          items:
-            $ref: '#/components/schemas/GpuInfo'
-    GpuInfo:
+    CpuInfo:
       type: object
       properties:
         name:
           type: string
-        driver:
-          type: string
-        memory_size:
+    ValidationAttack:
+      type: object
+      properties:
+        agentTimestamp:
           type: integer
           format: int64
+        clientVersion:
+          type: string
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationAttackResult'
+        clientStatus:
+          type: string
+          enum:
+          - HEALTHY
+          - IMPAIRED
+          - UNHEALTHY
