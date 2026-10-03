@@ -186,6 +186,23 @@ paths:
         - CLIENTS_WRITE
 components:
   schemas:
+    NetworkInterfaceData:
+      type: object
+      properties:
+        interfaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/NetworkInterface'
+    GpuInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        driver:
+          type: string
+        memory_size:
+          type: integer
+          format: int64
     SemanticVersion:
       type: object
       properties:
@@ -198,40 +215,6 @@ components:
         patch:
           type: integer
           format: int32
-    Container:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        image:
-          type: string
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        dns_servers:
-          type: array
-          writeOnly: true
-          items:
-            type: string
-        dnsServers:
-          type: array
-          items:
-            type: string
-    GpuInfo:
-      type: object
-      properties:
-        name:
-          type: string
-        driver:
-          type: string
-        memory_size:
-          type: integer
-          format: int64
     HardwareInfo:
       type: object
       properties:
@@ -263,6 +246,71 @@ components:
           type: boolean
         is_virtual:
           type: boolean
+    VersionInfo:
+      type: object
+      properties:
+        gremlind:
+          $ref: '#/components/schemas/SemanticVersion'
+        gremlin:
+          $ref: '#/components/schemas/SemanticVersion'
+    ValidationAttackResult:
+      type: object
+      properties:
+        attackType:
+          type: string
+        status:
+          type: string
+          enum:
+          - SUCCESS
+          - ERROR
+        rawErrors:
+          type: array
+          items:
+            type: string
+        targeting:
+          type: string
+          enum:
+          - CONTAINER
+          - HOST
+    Container:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        image:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        dns_servers:
+          type: array
+          writeOnly: true
+          items:
+            type: string
+        dnsServers:
+          type: array
+          items:
+            type: string
+    Warning:
+      type: object
+      properties:
+        key:
+          type: string
+          enum:
+          - W000
+          - W001
+          - W002
+          - W003
+          - Unknown
+        link:
+          type: string
+        summary:
+          type: string
     Client:
       type: object
       properties:
@@ -375,54 +423,6 @@ components:
           enum:
           - Linux
           - Windows
-    ValidationAttackResult:
-      type: object
-      properties:
-        attackType:
-          type: string
-        status:
-          type: string
-          enum:
-          - SUCCESS
-          - ERROR
-        rawErrors:
-          type: array
-          items:
-            type: string
-        targeting:
-          type: string
-          enum:
-          - CONTAINER
-          - HOST
-    NetworkInterfaceData:
-      type: object
-      properties:
-        interfaces:
-          type: array
-          items:
-            $ref: '#/components/schemas/NetworkInterface'
-    VersionInfo:
-      type: object
-      properties:
-        gremlind:
-          $ref: '#/components/schemas/SemanticVersion'
-        gremlin:
-          $ref: '#/components/schemas/SemanticVersion'
-    Warning:
-      type: object
-      properties:
-        key:
-          type: string
-          enum:
-          - W000
-          - W001
-          - W002
-          - W003
-          - Unknown
-        link:
-          type: string
-        summary:
-          type: string
     IPAddress:
       type: object
       properties:

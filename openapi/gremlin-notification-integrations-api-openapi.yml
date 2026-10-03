@@ -123,20 +123,6 @@ paths:
         - COMPANY_INTEGRATIONS_READ
 components:
   schemas:
-    TeamData:
-      type: object
-      properties:
-        team_id:
-          type: string
-        executable_events:
-          type: array
-          items:
-            type: string
-            enum:
-            - START
-            - END
-            - STAGE_TRANSITION
-            - ERROR
     CreateIntegrationRequest:
       required:
       - teams
@@ -145,6 +131,19 @@ components:
         hostname:
           type: string
         webhook:
+          type: string
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamData'
+        api_key:
+          type: string
+    Data:
+      type: object
+      properties:
+        webhook:
+          type: string
+        baseUrl:
           type: string
         teams:
           type: array
@@ -169,16 +168,17 @@ components:
           format: date-time
         data:
           $ref: '#/components/schemas/Data'
-    Data:
+    TeamData:
       type: object
       properties:
-        webhook:
+        team_id:
           type: string
-        baseUrl:
-          type: string
-        teams:
+        executable_events:
           type: array
           items:
-            $ref: '#/components/schemas/TeamData'
-        api_key:
-          type: string
+            type: string
+            enum:
+            - START
+            - END
+            - STAGE_TRANSITION
+            - ERROR

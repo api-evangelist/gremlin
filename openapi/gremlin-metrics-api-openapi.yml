@@ -97,15 +97,6 @@ paths:
         - EXPERIMENTS_READ
 components:
   schemas:
-    MetricPoint:
-      type: object
-      properties:
-        timestamp:
-          type: integer
-          format: int64
-        value:
-          type: number
-          format: double
     TimeRange:
       type: object
       properties:
@@ -115,13 +106,14 @@ components:
         end:
           type: integer
           format: int64
-    TaskMetrics:
+    YAxisLine:
       type: object
       properties:
-        taskId:
+        value:
+          type: number
+          format: double
+        label:
           type: string
-        metrics:
-          $ref: '#/components/schemas/AttackMetricsDisplayResponse'
     AttackMetricsDisplayResponse:
       type: object
       properties:
@@ -170,11 +162,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/YAxisLine'
-    YAxisLine:
+    TaskMetrics:
       type: object
       properties:
+        taskId:
+          type: string
+        metrics:
+          $ref: '#/components/schemas/AttackMetricsDisplayResponse'
+    MetricPoint:
+      type: object
+      properties:
+        timestamp:
+          type: integer
+          format: int64
         value:
           type: number
           format: double
-        label:
-          type: string

@@ -160,35 +160,13 @@ paths:
         - INTEGRATIONS_WRITE
 components:
   schemas:
-    EndpointConfiguration:
+    TestPrivateNetworkEvaluationConfigurationRequest:
       required:
-      - url
+      - evaluationConfiguration
       type: object
       properties:
-        url:
-          type: string
-          description: The URL of the status check
-          format: url
-        method:
-          type: string
-          description: The method type of the status check
-          enum:
-          - GET
-          - POST
-          - PUT
-          - PATCH
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-            description: Optional request headers to be used when the status check is invoked
-          description: Optional request headers to be used when the status check is invoked
-        payload:
-          type: string
-          description: Payload for POST type of request
-        headersArn:
-          type: string
-          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
+        evaluationConfiguration:
+          $ref: '#/components/schemas/EvaluationConfiguration'
     EvaluationConfiguration:
       required:
       - okStatusCodes
@@ -207,6 +185,25 @@ components:
         responseBodyEvaluation:
           $ref: '#/components/schemas/ResponseBodyEvaluation'
       description: The configuration for evaluating the success/failure of a status check
+    CreatePrivateNetworkInvocationRequest:
+      required:
+      - endpointConfiguration
+      type: object
+      properties:
+        endpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+        webhookId:
+          type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    HasCompareFunctionObject:
+      type: object
     ResponseBodyEvaluation:
       required:
       - op
@@ -225,33 +222,6 @@ components:
           items:
             $ref: '#/components/schemas/PredicateObject'
       description: The configuration for evaluating the success of a response body
-    HasCompareFunctionObject:
-      type: object
-    PredicateObject:
-      required:
-      - jpQuery
-      - rValue
-      - type
-      type: object
-      properties:
-        comparator:
-          $ref: '#/components/schemas/HasCompareFunctionObject'
-        type:
-          type: string
-          description: The type of primitive this predicate operates on
-          enum:
-          - String
-          - Number
-          - Boolean
-        jpQuery:
-          type: string
-          description: The json path query to run to read from the response body
-        rValue:
-          type: object
-          description: The right hand value of the predicate
-      description: The list of predicates to evaluate against the status check response body
-      discriminator:
-        propertyName: type
     PrivateNetworkInvocationModel:
       type: object
       properties:
@@ -304,43 +274,6 @@ components:
             type: array
             items:
               type: string
-    CreatePrivateNetworkInvocationRequest:
-      required:
-      - endpointConfiguration
-      type: object
-      properties:
-        endpointConfiguration:
-          $ref: '#/components/schemas/EndpointConfiguration'
-        teamExternalIntegration:
-          $ref: '#/components/schemas/TeamExternalIntegrationReference'
-        webhookId:
-          type: string
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-    PrivateNetworkResponsePropertiesModel:
-      type: object
-      properties:
-        invocationTime:
-          type: string
-          format: date-time
-        httpStatusCode:
-          type: integer
-          format: int32
-        requestLatencyMs:
-          type: integer
-          format: int32
-        responseBody:
-          type: string
-        contentType:
-          type: string
-        responseHeaders:
-          type: object
-          additionalProperties:
-            type: string
     TeamExternalIntegrationReference:
       title: StatusCheckRequest.TeamExternalIntegrationReference
       required:
@@ -409,13 +342,80 @@ components:
           type: string
         headersArn:
           type: string
-    TestPrivateNetworkEvaluationConfigurationRequest:
+    PredicateObject:
       required:
-      - evaluationConfiguration
+      - jpQuery
+      - rValue
+      - type
       type: object
       properties:
-        evaluationConfiguration:
-          $ref: '#/components/schemas/EvaluationConfiguration'
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
+    PrivateNetworkResponsePropertiesModel:
+      type: object
+      properties:
+        invocationTime:
+          type: string
+          format: date-time
+        httpStatusCode:
+          type: integer
+          format: int32
+        requestLatencyMs:
+          type: integer
+          format: int32
+        responseBody:
+          type: string
+        contentType:
+          type: string
+        responseHeaders:
+          type: object
+          additionalProperties:
+            type: string
+    EndpointConfiguration:
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          type: string
+          description: The URL of the status check
+          format: url
+        method:
+          type: string
+          description: The method type of the status check
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Optional request headers to be used when the status check is invoked
+          description: Optional request headers to be used when the status check is invoked
+        payload:
+          type: string
+          description: Payload for POST type of request
+        headersArn:
+          type: string
+          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
     PrivateNetworkInvocationModelResponse:
       type: object
       properties:

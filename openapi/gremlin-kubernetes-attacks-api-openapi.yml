@@ -169,6 +169,59 @@ paths:
           description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
 components:
   schemas:
+    Command:
+      type: object
+      properties:
+        providers:
+          type: array
+          items:
+            type: string
+        args:
+          type: array
+          items:
+            type: string
+        trafficImpactMapping:
+          $ref: '#/components/schemas/TaskTrafficImpactMappingInput'
+        trafficImpactFromWithSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          writeOnly: true
+        trafficImpactWithDependencyIds:
+          type: array
+          writeOnly: true
+          items:
+            type: string
+        type:
+          type: string
+        templateId:
+          type: string
+        optionalTemplateId:
+          type: string
+        empty:
+          type: boolean
+      additionalProperties:
+        type: object
+    TaskTrafficImpactMappingInput:
+      type: object
+      properties:
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        dependencyIds:
+          type: array
+          items:
+            type: string
+    TargetObject:
+      type: object
+      properties:
+        strategy:
+          $ref: '#/components/schemas/StrategyObject'
     K8sObjectOnAttack:
       type: object
       properties:
@@ -221,6 +274,25 @@ components:
           type: boolean
         attackUid:
           type: string
+    StrategyObject:
+      type: object
+      properties:
+        k8sObjects:
+          type: array
+          items:
+            type: object
+        containerSelection:
+          $ref: '#/components/schemas/ContainerSelection'
+        k8sObjectsInternal:
+          type: array
+          items:
+            $ref: '#/components/schemas/K8sObjectOnAttack'
+        count:
+          type: integer
+          format: int32
+        percentage:
+          type: integer
+          format: int32
     ContainerSelection:
       type: object
       properties:
@@ -243,78 +315,6 @@ components:
         reference:
           type: string
           description: A reference to why this halt was requested.
-    Command:
-      type: object
-      properties:
-        providers:
-          type: array
-          items:
-            type: string
-        args:
-          type: array
-          items:
-            type: string
-        trafficImpactMapping:
-          $ref: '#/components/schemas/TaskTrafficImpactMappingInput'
-        trafficImpactFromWithSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          writeOnly: true
-        trafficImpactWithDependencyIds:
-          type: array
-          writeOnly: true
-          items:
-            type: string
-        type:
-          type: string
-        templateId:
-          type: string
-        optionalTemplateId:
-          type: string
-        empty:
-          type: boolean
-      additionalProperties:
-        type: object
-    StrategyObject:
-      type: object
-      properties:
-        k8sObjects:
-          type: array
-          items:
-            type: object
-        containerSelection:
-          $ref: '#/components/schemas/ContainerSelection'
-        k8sObjectsInternal:
-          type: array
-          items:
-            $ref: '#/components/schemas/K8sObjectOnAttack'
-        count:
-          type: integer
-          format: int32
-        percentage:
-          type: integer
-          format: int32
-    TargetObject:
-      type: object
-      properties:
-        strategy:
-          $ref: '#/components/schemas/StrategyObject'
-    TaskTrafficImpactMappingInput:
-      type: object
-      properties:
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        dependencyIds:
-          type: array
-          items:
-            type: string
     Attack:
       type: object
       properties:

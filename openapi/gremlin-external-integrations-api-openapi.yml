@@ -538,55 +538,13 @@ paths:
         - INTEGRATIONS_WRITE
 components:
   schemas:
-    CreateTeamExternalIntegrationRequest:
-      required:
-      - lastAuthenticationStatus
-      - name
-      - privateNetwork
+    TeamExternalIntegrationsResponse:
       type: object
       properties:
-        url:
-          type: string
-          description: Uri of the configuration
-          format: url
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-            description: Headers of configuration
-          description: Headers of configuration
-        headersArn:
-          type: string
-          description: Arn of remote header configuration
-        name:
-          type: string
-          description: Name of configuration
-        privateNetwork:
-          type: boolean
-          description: Is private network
-        lastAuthenticationStatus:
-          type: string
-          description: Last authentication status
-          enum:
-          - AUTHENTICATED
-          - UNAUTHENTICATED
-          - UNTESTED
-        integrationSpecificValues:
-          type: object
-          additionalProperties:
-            type: string
-            description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
-          description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            description: The tags associated with this integration
-            items:
-              type: string
-              description: The tags associated with this integration
-          description: The tags associated with this integration
-      description: Represents the configuration for an external integration
+        integrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamExternalIntegrationResponse'
     TeamExternalIntegrationResponse:
       type: object
       properties:
@@ -665,13 +623,6 @@ components:
             type: array
             items:
               type: string
-    TeamExternalIntegrationsResponse:
-      type: object
-      properties:
-        integrations:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamExternalIntegrationResponse'
     ExternalIntegrationResponse:
       type: object
       properties:
@@ -701,3 +652,52 @@ components:
           type: string
         url:
           type: string
+    CreateTeamExternalIntegrationRequest:
+      required:
+      - lastAuthenticationStatus
+      - name
+      - privateNetwork
+      type: object
+      properties:
+        url:
+          type: string
+          description: Uri of the configuration
+          format: url
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Headers of configuration
+          description: Headers of configuration
+        headersArn:
+          type: string
+          description: Arn of remote header configuration
+        name:
+          type: string
+          description: Name of configuration
+        privateNetwork:
+          type: boolean
+          description: Is private network
+        lastAuthenticationStatus:
+          type: string
+          description: Last authentication status
+          enum:
+          - AUTHENTICATED
+          - UNAUTHENTICATED
+          - UNTESTED
+        integrationSpecificValues:
+          type: object
+          additionalProperties:
+            type: string
+            description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+          description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            description: The tags associated with this integration
+            items:
+              type: string
+              description: The tags associated with this integration
+          description: The tags associated with this integration
+      description: Represents the configuration for an external integration

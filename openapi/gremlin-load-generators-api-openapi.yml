@@ -197,26 +197,6 @@ components:
         responseBodyEvaluation:
           $ref: '#/components/schemas/ResponseBodyEvaluation'
       description: The configuration for evaluating the success/failure of a status check
-    ResponseBodyEvaluation:
-      required:
-      - op
-      - predicates
-      type: object
-      properties:
-        op:
-          type: string
-          description: The operation to logically combine predicates into a success or failure
-          enum:
-          - AND
-          - OR
-        predicates:
-          type: array
-          description: The list of predicates to evaluate against the status check response body
-          items:
-            $ref: '#/components/schemas/PredicateObject'
-      description: The configuration for evaluating the success of a response body
-    HasCompareFunctionObject:
-      type: object
     Webhook:
       type: object
       properties:
@@ -292,6 +272,117 @@ components:
               type: string
               description: The tags associated with this webhook
           description: The tags associated with this webhook
+    WebhookEndpoint:
+      type: object
+      properties:
+        uri:
+          type: string
+          description: The uri of this webhook endpoint
+          format: url
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: The request headers to be included when invoking this webhook endpoint
+          description: The request headers to be included when invoking this webhook endpoint
+        method:
+          type: string
+          description: The request method to be used when invoking this webhook endpoint
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+      description: The webhook endpoint configuration for this webhook
+    HasCompareFunctionObject:
+      type: object
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body
+    LoadGeneratorResponse:
+      required:
+      - name
+      - webhookStartLoadTrigger
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The identifier of this load generator
+        name:
+          type: string
+          description: The name of the load generator to be created/updated
+        webhookStartLoadTrigger:
+          $ref: '#/components/schemas/Webhook'
+        webhookStatusCheck:
+          $ref: '#/components/schemas/Webhook'
+        webhookStopLoadTrigger:
+          $ref: '#/components/schemas/Webhook'
+        active:
+          type: boolean
+          description: Load generator is active
+    TeamExternalIntegrationReference:
+      title: StatusCheckRequest.TeamExternalIntegrationReference
+      required:
+      - name
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of the external integration for the health check to be created/updated
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+        observabilityToolType:
+          type: string
+          description: The observability tool type of the external integration for the health check to be created/updated
+          enum:
+          - DATADOG
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - AWS
+          - AZURE
+        domain:
+          type: string
+          description: The domain of the observability tool type of the external integration for the health check to be created/updated
+        name:
+          type: string
+          description: The name of the external integration for the health check to be created/updated
+      description: Represents the configuration for referencing an external integration
     PredicateObject:
       required:
       - jpQuery
@@ -317,27 +408,6 @@ components:
       description: The list of predicates to evaluate against the status check response body
       discriminator:
         propertyName: type
-    LoadGeneratorResponse:
-      required:
-      - name
-      - webhookStartLoadTrigger
-      type: object
-      properties:
-        identifier:
-          type: string
-          description: The identifier of this load generator
-        name:
-          type: string
-          description: The name of the load generator to be created/updated
-        webhookStartLoadTrigger:
-          $ref: '#/components/schemas/Webhook'
-        webhookStatusCheck:
-          $ref: '#/components/schemas/Webhook'
-        webhookStopLoadTrigger:
-          $ref: '#/components/schemas/Webhook'
-        active:
-          type: boolean
-          description: Load generator is active
     WebhookRequest:
       required:
       - method
@@ -415,76 +485,6 @@ components:
               type: string
               description: The tags associated with this webhook
           description: The tags associated with this webhook
-    WebhookEndpoint:
-      type: object
-      properties:
-        uri:
-          type: string
-          description: The uri of this webhook endpoint
-          format: url
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-            description: The request headers to be included when invoking this webhook endpoint
-          description: The request headers to be included when invoking this webhook endpoint
-        method:
-          type: string
-          description: The request method to be used when invoking this webhook endpoint
-          enum:
-          - GET
-          - POST
-          - PUT
-          - PATCH
-      description: The webhook endpoint configuration for this webhook
-    TeamExternalIntegrationReference:
-      title: StatusCheckRequest.TeamExternalIntegrationReference
-      required:
-      - name
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of the external integration for the health check to be created/updated
-          enum:
-          - JIRA
-          - DATADOG
-          - DATADOG_EU
-          - DATADOG_US3
-          - DATADOG_US5
-          - DATADOG_US1_FED
-          - PAGERDUTY
-          - NEWRELIC
-          - GRAFANA
-          - DYNATRACE
-          - APPDYNAMICS
-          - PROMETHEUS
-          - CUSTOM
-          - K6
-          - LOAD_GENERATOR_CUSTOM
-          - AWS
-          - AZURE
-        observabilityToolType:
-          type: string
-          description: The observability tool type of the external integration for the health check to be created/updated
-          enum:
-          - DATADOG
-          - PAGERDUTY
-          - NEWRELIC
-          - GRAFANA
-          - DYNATRACE
-          - APPDYNAMICS
-          - PROMETHEUS
-          - CUSTOM
-          - AWS
-          - AZURE
-        domain:
-          type: string
-          description: The domain of the observability tool type of the external integration for the health check to be created/updated
-        name:
-          type: string
-          description: The name of the external integration for the health check to be created/updated
-      description: Represents the configuration for referencing an external integration
     LoadGeneratorRequest:
       required:
       - name

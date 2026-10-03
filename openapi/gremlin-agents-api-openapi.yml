@@ -88,35 +88,6 @@ paths:
         - CLIENTS_READ
 components:
   schemas:
-    AgentResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - Infrastructure
-          - FailureFlag
-        status:
-          type: string
-          enum:
-          - Active
-          - Idle
-          - Deactivated
-        warningCount:
-          type: integer
-          format: int32
-        instanceCount:
-          type: integer
-          description: For Failure Flags applications this is the recent/active instance count for that application. This value may be null when the count is unknown or unavailable (for example, legacy apps or not yet computed). For Infra this field is null.
-          format: int32
-        tags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
     PagedResponseAgentResponse:
       type: object
       properties:
@@ -148,6 +119,35 @@ components:
           type: string
         lastEvaluatedSK:
           type: string
+    AgentResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - Infrastructure
+          - FailureFlag
+        status:
+          type: string
+          enum:
+          - Active
+          - Idle
+          - Deactivated
+        warningCount:
+          type: integer
+          format: int32
+        instanceCount:
+          type: integer
+          description: For Failure Flags applications this is the recent/active instance count for that application. This value may be null when the count is unknown or unavailable (for example, legacy apps or not yet computed). For Infra this field is null.
+          format: int32
+        tags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
     AgentSummaryResponse:
       type: object
       properties:

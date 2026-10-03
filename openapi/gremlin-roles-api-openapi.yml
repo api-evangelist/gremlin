@@ -165,28 +165,54 @@ paths:
         - ROLES_WRITE
 components:
   schemas:
-    Privileges:
+    RolesResponse:
       type: object
       properties:
-        company:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/PrivilegeDefinition'
-        team:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/PrivilegeDefinition'
-    Roles:
+        customRoles:
+          $ref: '#/components/schemas/Roles'
+        roles:
+          $ref: '#/components/schemas/Roles'
+        privileges:
+          $ref: '#/components/schemas/Privileges'
+    PrivilegeDefinition:
       type: object
       properties:
-        company:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/RoleResponse'
-        team:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/RoleResponse'
+        key:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+          enum:
+          - NONE
+          - REQUIRED
+          - ADMINISTRATIVE
+          - ALL_API_KEYS
+          - API_KEYS
+          - CLIENTS
+          - COMPANIES
+          - COMPANY_PREFERENCES
+          - COMPANY_SECURITY
+          - COMPANY_USERS
+          - EXPERIMENTS
+          - FAULT
+          - HALT
+          - HALT_ALL
+          - IMAGES
+          - INTEGRATIONS
+          - DISASTER_RECOVERY_TESTS
+          - RELIABILITY_REPORTS
+          - REPORTS
+          - ROLES
+          - SCENARIOS
+          - SCENARIO_SHARE
+          - SECURITY_REPORTS
+          - SERVICES
+          - TEAMS
+          - TEAM_SECURITY
+          - TEST_SUITES
+          - USERS
+          - WEBHOOKS
     RoleResponse:
       type: object
       properties:
@@ -276,54 +302,17 @@ components:
             - USERS_WRITE
             - WEBHOOKS_READ
             - WEBHOOKS_WRITE
-    RolesResponse:
+    Privileges:
       type: object
       properties:
-        customRoles:
-          $ref: '#/components/schemas/Roles'
-        roles:
-          $ref: '#/components/schemas/Roles'
-        privileges:
-          $ref: '#/components/schemas/Privileges'
-    PrivilegeDefinition:
-      type: object
-      properties:
-        key:
-          type: string
-        description:
-          type: string
-        category:
-          type: string
-          enum:
-          - NONE
-          - REQUIRED
-          - ADMINISTRATIVE
-          - ALL_API_KEYS
-          - API_KEYS
-          - CLIENTS
-          - COMPANIES
-          - COMPANY_PREFERENCES
-          - COMPANY_SECURITY
-          - COMPANY_USERS
-          - EXPERIMENTS
-          - FAULT
-          - HALT
-          - HALT_ALL
-          - IMAGES
-          - INTEGRATIONS
-          - DISASTER_RECOVERY_TESTS
-          - RELIABILITY_REPORTS
-          - REPORTS
-          - ROLES
-          - SCENARIOS
-          - SCENARIO_SHARE
-          - SECURITY_REPORTS
-          - SERVICES
-          - TEAMS
-          - TEAM_SECURITY
-          - TEST_SUITES
-          - USERS
-          - WEBHOOKS
+        company:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/PrivilegeDefinition'
+        team:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/PrivilegeDefinition'
     UpdateCustomRoleRequest:
       type: object
       properties:
@@ -406,6 +395,17 @@ components:
             - USERS_WRITE
             - WEBHOOKS_READ
             - WEBHOOKS_WRITE
+    Roles:
+      type: object
+      properties:
+        company:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/RoleResponse'
+        team:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/RoleResponse'
     CreateCustomRoleRequest:
       required:
       - name

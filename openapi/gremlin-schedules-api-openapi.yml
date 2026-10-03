@@ -621,14 +621,228 @@ paths:
         - SERVICES_READ
 components:
   schemas:
-    DateTimeZone:
+    ServiceScheduleResponse:
       type: object
       properties:
-        id:
+        teamId:
           type: string
-        fixed:
+        serviceId:
+          type: string
+        serviceName:
+          type: string
+        nextReliabilityTestId:
+          type: string
+        nextReliabilityTestName:
+          type: string
+        nextReliabilityDependencyId:
+          type: string
+        nextReliabilityDependencyName:
+          type: string
+        nextFailureFlagName:
+          type: string
+        nextTestTriggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        nextTestTriggeredBy:
+          type: string
+        nextTriggerTime:
+          type: string
+          format: date-time
+    TaskTrafficImpactMappingInput:
+      type: object
+      properties:
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        dependencyIds:
+          type: array
+          items:
+            type: string
+    CreateScenarioScheduleRequest:
+      title: ScenarioSchedule.Input
+      type: object
+      properties:
+        trigger:
+          type: object
+          properties:
+            windowType:
+              type: string
+              enum:
+              - Once
+              - Random
+            type:
+              type: string
+            templateId:
+              type: string
+            optionalTemplateId:
+              type: string
+            empty:
+              type: boolean
+          additionalProperties:
+            type: object
+        enabled:
           type: boolean
-    TargetingStrategy:
+        scenarioId:
+          type: string
+    ScenarioScheduleResponse:
+      type: object
+      properties:
+        orgId:
+          type: string
+        guid:
+          type: string
+        scenarioId:
+          type: string
+        scenarioName:
+          type: string
+        trigger:
+          type: object
+          properties:
+            windowType:
+              type: string
+              enum:
+              - Once
+              - Random
+            type:
+              type: string
+            templateId:
+              type: string
+            optionalTemplateId:
+              type: string
+            empty:
+              type: boolean
+          additionalProperties:
+            type: object
+        createdBy:
+          type: string
+        createSource:
+          type: string
+          enum:
+          - WebApp
+          - Api
+          - Scheduled
+          - Manual
+          - Spinnaker
+          - Concord
+          - GremlinFeeder
+          - GremlinSdkPython
+          - Scenario
+          - Chao
+          - K8sBackend
+          - Website
+          - Neotys
+          - IntegrationClient
+          - Validation
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        enabled:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        nextTriggerTime:
+          type: string
+          format: date-time
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTarget'
+        failureFlagTargets:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailureFlagTarget'
+    ServiceCommand:
+      type: object
+      properties:
+        infraCommandType:
+          type: string
+          enum:
+          - CPU
+          - IO
+          - Memory
+          - Disk
+          - Thread_Bomb
+          - Blackhole
+          - DNS
+          - Latency
+          - Packet_Loss
+          - Collect_Certs
+          - Shutdown
+          - Time_Travel
+          - Process_Killer
+          - Process_Exhaustion
+          - GPU
+          - Unknown
+        infraCommandArgs:
+          $ref: '#/components/schemas/InfraCommandArgs'
+    FailureFlagTarget:
+      type: object
+      properties:
+        app:
+          $ref: '#/components/schemas/Selector'
+        flag:
+          $ref: '#/components/schemas/Selector'
+        appInstanceSampling:
+          $ref: '#/components/schemas/TargetSampling'
+        resolvedAppInstanceIds:
+          type: array
+          items:
+            type: string
+    InfraCommandArgs:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - CPU
+          - IO
+          - Memory
+          - Disk
+          - Thread_Bomb
+          - Blackhole
+          - DNS
+          - Latency
+          - Packet_Loss
+          - Collect_Certs
+          - Shutdown
+          - Time_Travel
+          - Process_Killer
+          - Process_Exhaustion
+          - GPU
+          - Unknown
+        unknownArgs:
+          type: object
+          additionalProperties:
+            type: string
+        duplicateArgs:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: string
+        cliArgs:
+          type: array
+          items:
+            type: string
+        lengthOrZero:
+          type: integer
+          format: int32
+    TargetSampling:
       required:
       - type
       type: object
@@ -737,298 +951,6 @@ components:
           items:
             type: integer
             format: int32
-    AttackConfiguration:
-      required:
-      - command
-      - targets
-      type: object
-      properties:
-        command:
-          $ref: '#/components/schemas/ServiceCommand'
-        targets:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceTarget'
-        sampling:
-          $ref: '#/components/schemas/TargetSampling'
-    UpdateScenarioScheduleRequest:
-      type: object
-      properties:
-        trigger:
-          type: object
-          properties:
-            windowType:
-              type: string
-              enum:
-              - Once
-              - Random
-            type:
-              type: string
-            templateId:
-              type: string
-            optionalTemplateId:
-              type: string
-            empty:
-              type: boolean
-          additionalProperties:
-            type: object
-        enabled:
-          type: boolean
-    Chronology:
-      type: object
-      properties:
-        zone:
-          $ref: '#/components/schemas/DateTimeZone'
-    InfraCommandArgs:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - CPU
-          - IO
-          - Memory
-          - Disk
-          - Thread_Bomb
-          - Blackhole
-          - DNS
-          - Latency
-          - Packet_Loss
-          - Collect_Certs
-          - Shutdown
-          - Time_Travel
-          - Process_Killer
-          - Process_Exhaustion
-          - GPU
-          - Unknown
-        unknownArgs:
-          type: object
-          additionalProperties:
-            type: string
-        duplicateArgs:
-          type: array
-          items:
-            type: object
-            additionalProperties:
-              type: string
-        cliArgs:
-          type: array
-          items:
-            type: string
-        lengthOrZero:
-          type: integer
-          format: int32
-    PagedResponseScenarioScheduleResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScenarioScheduleResponse'
-    TargetSampling:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    ServiceTarget:
-      required:
-      - targetingStrategy
-      type: object
-      properties:
-        serviceId:
-          type: string
-        targetingStrategy:
-          $ref: '#/components/schemas/TargetingStrategy'
-    ServiceScheduleResponse:
-      type: object
-      properties:
-        teamId:
-          type: string
-        serviceId:
-          type: string
-        serviceName:
-          type: string
-        nextReliabilityTestId:
-          type: string
-        nextReliabilityTestName:
-          type: string
-        nextReliabilityDependencyId:
-          type: string
-        nextReliabilityDependencyName:
-          type: string
-        nextFailureFlagName:
-          type: string
-        nextTestTriggerSource:
-          type: string
-          enum:
-          - MANUAL
-          - RUN_ALL
-          - SCHEDULED
-          - RECURRING_SCHEDULE
-        nextTestTriggeredBy:
-          type: string
-        nextTriggerTime:
-          type: string
-          format: date-time
-    ServiceCommand:
-      type: object
-      properties:
-        infraCommandType:
-          type: string
-          enum:
-          - CPU
-          - IO
-          - Memory
-          - Disk
-          - Thread_Bomb
-          - Blackhole
-          - DNS
-          - Latency
-          - Packet_Loss
-          - Collect_Certs
-          - Shutdown
-          - Time_Travel
-          - Process_Killer
-          - Process_Exhaustion
-          - GPU
-          - Unknown
-        infraCommandArgs:
-          $ref: '#/components/schemas/InfraCommandArgs'
-    ScenarioScheduleResponse:
-      type: object
-      properties:
-        orgId:
-          type: string
-        guid:
-          type: string
-        scenarioId:
-          type: string
-        scenarioName:
-          type: string
-        trigger:
-          type: object
-          properties:
-            windowType:
-              type: string
-              enum:
-              - Once
-              - Random
-            type:
-              type: string
-            templateId:
-              type: string
-            optionalTemplateId:
-              type: string
-            empty:
-              type: boolean
-          additionalProperties:
-            type: object
-        createdBy:
-          type: string
-        createSource:
-          type: string
-          enum:
-          - WebApp
-          - Api
-          - Scheduled
-          - Manual
-          - Spinnaker
-          - Concord
-          - GremlinFeeder
-          - GremlinSdkPython
-          - Scenario
-          - Chao
-          - K8sBackend
-          - Website
-          - Neotys
-          - IntegrationClient
-          - Validation
-        triggerSource:
-          type: string
-          enum:
-          - MANUAL
-          - RUN_ALL
-          - SCHEDULED
-          - RECURRING_SCHEDULE
-        enabled:
-          type: boolean
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        nextTriggerTime:
-          type: string
-          format: date-time
-        targets:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceTarget'
-        failureFlagTargets:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailureFlagTarget'
-    TargetStrategy:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Exact
-          - Regex
-          - Random
-        strategy:
-          $ref: '#/components/schemas/Strategy'
-        containerLabels:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        hostTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        allContainers:
-          type: boolean
-        allHosts:
-          type: boolean
-        hostIds:
-          type: array
-          items:
-            type: string
-        containerIds:
-          type: array
-          items:
-            type: string
-        hostsInput:
-          type: object
-        containersInput:
-          type: object
     Interval:
       type: object
       properties:
@@ -1050,287 +972,6 @@ components:
           type: boolean
         beforeNow:
           type: boolean
-    Window:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Once
-          - Random
-        triggerTimesLeft:
-          type: array
-          items:
-            type: integer
-            format: int32
-        end:
-          type: string
-          format: date-time
-        start:
-          type: string
-          format: date-time
-        interval:
-          $ref: '#/components/schemas/Interval'
-        maxRunsPerWindow:
-          type: integer
-          format: int32
-    FailureFlagTarget:
-      type: object
-      properties:
-        app:
-          $ref: '#/components/schemas/Selector'
-        flag:
-          $ref: '#/components/schemas/Selector'
-        appInstanceSampling:
-          $ref: '#/components/schemas/TargetSampling'
-        resolvedAppInstanceIds:
-          type: array
-          items:
-            type: string
-    Strategy:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Exact
-          - RandomCount
-          - RandomPercent
-        tags:
-          type: object
-          additionalProperties:
-            type: string
-        multiSelectLabels:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        allHosts:
-          type: boolean
-        allContainers:
-          type: boolean
-        hostIds:
-          type: array
-          items:
-            type: string
-        containerIds:
-          type: array
-          items:
-            type: string
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-    Input:
-      type: object
-      properties:
-        command:
-          type: object
-          properties:
-            providers:
-              type: array
-              items:
-                type: string
-            args:
-              type: array
-              items:
-                type: string
-            trafficImpactMapping:
-              $ref: '#/components/schemas/TaskTrafficImpactMappingInput'
-            trafficImpactFromWithSelectTags:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: string
-              writeOnly: true
-            trafficImpactWithDependencyIds:
-              type: array
-              writeOnly: true
-              items:
-                type: string
-            type:
-              type: string
-            templateId:
-              type: string
-            optionalTemplateId:
-              type: string
-            empty:
-              type: boolean
-          additionalProperties:
-            type: object
-        target:
-          type: object
-          properties:
-            multiSelectTags:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: string
-            strategyInput:
-              $ref: '#/components/schemas/TargetStrategy'
-            multiSelectLabels:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: string
-            type:
-              type: string
-            templateId:
-              type: string
-            optionalTemplateId:
-              type: string
-            empty:
-              type: boolean
-            tags:
-              type: object
-              additionalProperties:
-                type: string
-              writeOnly: true
-          additionalProperties:
-            type: object
-        trigger:
-          type: object
-          properties:
-            windowType:
-              type: string
-              enum:
-              - Once
-              - Random
-            type:
-              type: string
-            templateId:
-              type: string
-            optionalTemplateId:
-              type: string
-            empty:
-              type: boolean
-          additionalProperties:
-            type: object
-        attackConfiguration:
-          $ref: '#/components/schemas/AttackConfiguration'
-    PagedResponseServiceScheduleResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceScheduleResponse'
-    Selector:
-      required:
-      - labels
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-        labels:
-          type: object
-          additionalProperties:
-            type: array
-            description: Label selectors for matching resources
-            example:
-              foo:
-              - bar
-              - baz
-            items:
-              type: string
-              description: Label selectors for matching resources
-              example: '{"foo":["bar","baz"]}'
-          description: Label selectors for matching resources
-          example:
-            foo:
-            - bar
-            - baz
-    CreateScenarioScheduleRequest:
-      title: ScenarioSchedule.Input
-      type: object
-      properties:
-        trigger:
-          type: object
-          properties:
-            windowType:
-              type: string
-              enum:
-              - Once
-              - Random
-            type:
-              type: string
-            templateId:
-              type: string
-            optionalTemplateId:
-              type: string
-            empty:
-              type: boolean
-          additionalProperties:
-            type: object
-        enabled:
-          type: boolean
-        scenarioId:
-          type: string
-    TaskTrafficImpactMappingInput:
-      type: object
-      properties:
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        dependencyIds:
-          type: array
-          items:
-            type: string
-    PagedResponseScheduleResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleResponse'
     ScheduleResponse:
       type: object
       properties:
@@ -1465,3 +1106,362 @@ components:
         nextTriggerTime:
           type: string
           format: date-time
+    TargetStrategy:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Exact
+          - Regex
+          - Random
+        strategy:
+          $ref: '#/components/schemas/Strategy'
+        containerLabels:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        hostTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        allContainers:
+          type: boolean
+        allHosts:
+          type: boolean
+        hostIds:
+          type: array
+          items:
+            type: string
+        containerIds:
+          type: array
+          items:
+            type: string
+        hostsInput:
+          type: object
+        containersInput:
+          type: object
+    Window:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Once
+          - Random
+        triggerTimesLeft:
+          type: array
+          items:
+            type: integer
+            format: int32
+        end:
+          type: string
+          format: date-time
+        start:
+          type: string
+          format: date-time
+        interval:
+          $ref: '#/components/schemas/Interval'
+        maxRunsPerWindow:
+          type: integer
+          format: int32
+    PagedResponseScheduleResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleResponse'
+    TargetingStrategy:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    PagedResponseScenarioScheduleResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioScheduleResponse'
+    PagedResponseServiceScheduleResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceScheduleResponse'
+    Input:
+      type: object
+      properties:
+        command:
+          type: object
+          properties:
+            providers:
+              type: array
+              items:
+                type: string
+            args:
+              type: array
+              items:
+                type: string
+            trafficImpactMapping:
+              $ref: '#/components/schemas/TaskTrafficImpactMappingInput'
+            trafficImpactFromWithSelectTags:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+              writeOnly: true
+            trafficImpactWithDependencyIds:
+              type: array
+              writeOnly: true
+              items:
+                type: string
+            type:
+              type: string
+            templateId:
+              type: string
+            optionalTemplateId:
+              type: string
+            empty:
+              type: boolean
+          additionalProperties:
+            type: object
+        target:
+          type: object
+          properties:
+            multiSelectTags:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+            strategyInput:
+              $ref: '#/components/schemas/TargetStrategy'
+            multiSelectLabels:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+            type:
+              type: string
+            templateId:
+              type: string
+            optionalTemplateId:
+              type: string
+            empty:
+              type: boolean
+            tags:
+              type: object
+              additionalProperties:
+                type: string
+              writeOnly: true
+          additionalProperties:
+            type: object
+        trigger:
+          type: object
+          properties:
+            windowType:
+              type: string
+              enum:
+              - Once
+              - Random
+            type:
+              type: string
+            templateId:
+              type: string
+            optionalTemplateId:
+              type: string
+            empty:
+              type: boolean
+          additionalProperties:
+            type: object
+        attackConfiguration:
+          $ref: '#/components/schemas/AttackConfiguration'
+    DateTimeZone:
+      type: object
+      properties:
+        id:
+          type: string
+        fixed:
+          type: boolean
+    ServiceTarget:
+      required:
+      - targetingStrategy
+      type: object
+      properties:
+        serviceId:
+          type: string
+        targetingStrategy:
+          $ref: '#/components/schemas/TargetingStrategy'
+    UpdateScenarioScheduleRequest:
+      type: object
+      properties:
+        trigger:
+          type: object
+          properties:
+            windowType:
+              type: string
+              enum:
+              - Once
+              - Random
+            type:
+              type: string
+            templateId:
+              type: string
+            optionalTemplateId:
+              type: string
+            empty:
+              type: boolean
+          additionalProperties:
+            type: object
+        enabled:
+          type: boolean
+    Strategy:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Exact
+          - RandomCount
+          - RandomPercent
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        multiSelectLabels:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        allHosts:
+          type: boolean
+        allContainers:
+          type: boolean
+        hostIds:
+          type: array
+          items:
+            type: string
+        containerIds:
+          type: array
+          items:
+            type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    Selector:
+      required:
+      - labels
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: array
+            description: Label selectors for matching resources
+            example:
+              foo:
+              - bar
+              - baz
+            items:
+              type: string
+              description: Label selectors for matching resources
+              example: '{"foo":["bar","baz"]}'
+          description: Label selectors for matching resources
+          example:
+            foo:
+            - bar
+            - baz
+    Chronology:
+      type: object
+      properties:
+        zone:
+          $ref: '#/components/schemas/DateTimeZone'
+    AttackConfiguration:
+      required:
+      - command
+      - targets
+      type: object
+      properties:
+        command:
+          $ref: '#/components/schemas/ServiceCommand'
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTarget'
+        sampling:
+          $ref: '#/components/schemas/TargetSampling'

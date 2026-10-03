@@ -122,54 +122,6 @@ components:
         responseBodyEvaluation:
           $ref: '#/components/schemas/ResponseBodyEvaluation'
       description: The configuration for evaluating the success/failure of a status check
-    ServiceRunDetails:
-      type: object
-      properties:
-        teamId:
-          type: string
-        teamName:
-          type: string
-        serviceId:
-          type: string
-        serviceName:
-          type: string
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        scenarioRunId:
-          type: string
-        scenarioRunNumber:
-          type: integer
-          format: int64
-        scenarioRunStage:
-          type: string
-        scenarioPassCriteria:
-          type: string
-          enum:
-          - ALL_PASS
-          - AT_LEAST_ONE_FAILED
-        scenarioRunStatus:
-          type: string
-        scenarioRunStartTime:
-          type: string
-          format: date-time
-        scenarioRunEndTime:
-          type: string
-          format: date-time
-    ScenarioOverrides:
-      type: object
-      properties:
-        zones:
-          type: array
-          items:
-            type: string
-        dns:
-          type: string
-        failureFlag:
-          $ref: '#/components/schemas/Selector'
     RollbackExternalActionNode:
       type: object
       allOf:
@@ -195,59 +147,6 @@ components:
             - Failed
           didExternalActionNoOp:
             type: boolean
-    PagedResponseLargeScaleTestReportResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/LargeScaleTestReportResponse'
-    EndpointConfiguration:
-      required:
-      - url
-      type: object
-      properties:
-        url:
-          type: string
-          description: The URL of the status check
-          format: url
-        method:
-          type: string
-          description: The method type of the status check
-          enum:
-          - GET
-          - POST
-          - PUT
-          - PATCH
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-            description: Optional request headers to be used when the status check is invoked
-          description: Optional request headers to be used when the status check is invoked
-        payload:
-          type: string
-          description: Payload for POST type of request
-        headersArn:
-          type: string
-          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
     ExternalCallFailedException:
       type: object
       properties:
@@ -344,73 +243,6 @@ components:
                 type: string
         localizedMessage:
           type: string
-    LargeScaleTestReportResponse:
-      type: object
-      properties:
-        companyId:
-          type: string
-        identifier:
-          type: string
-        name:
-          type: string
-        reliabilityTest:
-          $ref: '#/components/schemas/ReliabilityTestResponse'
-        actualTestDurationMillis:
-          type: integer
-          format: int64
-        startTime:
-          type: string
-          format: date-time
-        endTime:
-          type: string
-          format: date-time
-        sortedRunResults:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceRunDetails'
-        participationSummary:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-        statusChecks:
-          type: array
-          items:
-            $ref: '#/components/schemas/StatusCheckNode'
-        scenarioOverrides:
-          $ref: '#/components/schemas/ScenarioOverrides'
-    StatusCheckNodeRequest:
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    PredicateObject:
-      required:
-      - jpQuery
-      - rValue
-      - type
-      type: object
-      properties:
-        comparator:
-          $ref: '#/components/schemas/HasCompareFunctionObject'
-        type:
-          type: string
-          description: The type of primitive this predicate operates on
-          enum:
-          - String
-          - Number
-          - Boolean
-        jpQuery:
-          type: string
-          description: The json path query to run to read from the response body
-        rValue:
-          type: object
-          description: The right hand value of the predicate
-      description: The list of predicates to evaluate against the status check response body
-      discriminator:
-        propertyName: type
     ScenarioGraph:
       type: object
       properties:
@@ -461,78 +293,66 @@ components:
             format: int32
             readOnly: true
           readOnly: true
-    ExternalActionNode:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/GraphNodeObject'
-      - type: object
-        properties:
-          externalActionRequest:
-            $ref: '#/components/schemas/ExternalActionRequest'
-          state:
-            $ref: '#/components/schemas/State'
-          stateDetails:
-            $ref: '#/components/schemas/ExternalCallFailedException'
-    ReliabilityTestResponse:
+    LargeScaleTestReportResponse:
       type: object
       properties:
-        accessType:
+        companyId:
           type: string
-          enum:
-          - Global
-          - Company
-          - Team
-        guid:
+        identifier:
           type: string
-        scenario:
-          $ref: '#/components/schemas/ScenarioResponse'
-    HasCompareFunctionObject:
-      type: object
-    ResponseBodyEvaluation:
-      required:
-      - op
-      - predicates
-      type: object
-      properties:
-        op:
+        name:
           type: string
-          description: The operation to logically combine predicates into a success or failure
-          enum:
-          - AND
-          - OR
-        predicates:
+        reliabilityTest:
+          $ref: '#/components/schemas/ReliabilityTestResponse'
+        actualTestDurationMillis:
+          type: integer
+          format: int64
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        sortedRunResults:
           type: array
-          description: The list of predicates to evaluate against the status check response body
           items:
-            $ref: '#/components/schemas/PredicateObject'
-      description: The configuration for evaluating the success of a response body
-    GraphNodeObject:
+            $ref: '#/components/schemas/ServiceRunDetails'
+        participationSummary:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        statusChecks:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusCheckNode'
+        scenarioOverrides:
+          $ref: '#/components/schemas/ScenarioOverrides'
+    State:
       type: object
       properties:
-        type:
+        lifecycle:
           type: string
           enum:
-          - Concurrent
-          - ContinuousStatusCheck
-          - StatusCheckNode
-          - Delay
-          - InfraAttack
-          - SynchronousStatusCheck
-          - Continuous
-          - FailureFlag
-          - ExternalAction
-          - RollbackExternalAction
-        id:
+          - NotStarted
+          - Active
+          - HaltRequested
+          - Successful
+          - Halted
+          - Failed
+        startTime:
           type: string
-        state:
-          type: object
-          readOnly: true
-        guid:
+          format: date-time
+        endTime:
           type: string
-        next:
+          format: date-time
+        failedReason:
           type: string
-      discriminator:
-        propertyName: type
+        nodeHaltedByGuid:
+          type: string
+        nodeHaltedById:
+          type: string
+      readOnly: true
     StatusCheckNode:
       type: object
       allOf:
@@ -588,57 +408,139 @@ components:
           additionalTimeInSecsToRunAfterCompletion:
             type: integer
             format: int32
-    State:
+    StatusCheckNodeRequest:
       type: object
       properties:
-        lifecycle:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    HasCompareFunctionObject:
+      type: object
+    GraphNodeObject:
+      type: object
+      properties:
+        type:
           type: string
           enum:
-          - NotStarted
-          - Active
-          - HaltRequested
-          - Successful
-          - Halted
-          - Failed
-        startTime:
+          - Concurrent
+          - ContinuousStatusCheck
+          - StatusCheckNode
+          - Delay
+          - InfraAttack
+          - SynchronousStatusCheck
+          - Continuous
+          - FailureFlag
+          - ExternalAction
+          - RollbackExternalAction
+        id:
           type: string
-          format: date-time
-        endTime:
+        state:
+          type: object
+          readOnly: true
+        guid:
           type: string
-          format: date-time
-        failedReason:
+        next:
           type: string
-        nodeHaltedByGuid:
-          type: string
-        nodeHaltedById:
-          type: string
-      readOnly: true
-    Selector:
+      discriminator:
+        propertyName: type
+    ExternalActionRequest:
       required:
-      - labels
-      - name
+      - type
       type: object
       properties:
-        name:
+        semanticType:
           type: string
-        labels:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    ScenarioOverrides:
+      type: object
+      properties:
+        zones:
+          type: array
+          items:
+            type: string
+        dns:
+          type: string
+        failureFlag:
+          $ref: '#/components/schemas/Selector'
+    ServiceRunDetails:
+      type: object
+      properties:
+        teamId:
+          type: string
+        teamName:
+          type: string
+        serviceId:
+          type: string
+        serviceName:
+          type: string
+        multiSelectTags:
           type: object
           additionalProperties:
             type: array
-            description: Label selectors for matching resources
-            example:
-              foo:
-              - bar
-              - baz
             items:
               type: string
-              description: Label selectors for matching resources
-              example: '{"foo":["bar","baz"]}'
-          description: Label selectors for matching resources
-          example:
-            foo:
-            - bar
-            - baz
+        scenarioRunId:
+          type: string
+        scenarioRunNumber:
+          type: integer
+          format: int64
+        scenarioRunStage:
+          type: string
+        scenarioPassCriteria:
+          type: string
+          enum:
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
+        scenarioRunStatus:
+          type: string
+        scenarioRunStartTime:
+          type: string
+          format: date-time
+        scenarioRunEndTime:
+          type: string
+          format: date-time
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
+      type: object
+      properties:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
+    ReliabilityTestResponse:
+      type: object
+      properties:
+        accessType:
+          type: string
+          enum:
+          - Global
+          - Company
+          - Team
+        guid:
+          type: string
+        scenario:
+          $ref: '#/components/schemas/ScenarioResponse'
     ScenarioResponse:
       type: object
       properties:
@@ -702,14 +604,112 @@ components:
           - AT_LEAST_ONE_FAILED
         eligibleForServiceCreation:
           type: boolean
-    ExternalActionRequest:
+    EndpointConfiguration:
       required:
-      - type
+      - url
       type: object
       properties:
-        semanticType:
+        url:
           type: string
-        type:
+          description: The URL of the status check
+          format: url
+        method:
           type: string
-      discriminator:
-        propertyName: type
+          description: The method type of the status check
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Optional request headers to be used when the status check is invoked
+          description: Optional request headers to be used when the status check is invoked
+        payload:
+          type: string
+          description: Payload for POST type of request
+        headersArn:
+          type: string
+          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body
+    PagedResponseLargeScaleTestReportResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LargeScaleTestReportResponse'
+    Selector:
+      required:
+      - labels
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: array
+            description: Label selectors for matching resources
+            example:
+              foo:
+              - bar
+              - baz
+            items:
+              type: string
+              description: Label selectors for matching resources
+              example: '{"foo":["bar","baz"]}'
+          description: Label selectors for matching resources
+          example:
+            foo:
+            - bar
+            - baz
+    ExternalActionNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          externalActionRequest:
+            $ref: '#/components/schemas/ExternalActionRequest'
+          state:
+            $ref: '#/components/schemas/State'
+          stateDetails:
+            $ref: '#/components/schemas/ExternalCallFailedException'

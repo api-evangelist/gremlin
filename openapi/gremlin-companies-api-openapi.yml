@@ -1202,65 +1202,46 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateUserRequest:
+    InviteUserFromSelfSignupRequest:
       required:
-      - code
+      - companyName
       - email
       type: object
       properties:
         email:
           type: string
-          description: The unique identifier for the user (user's email)
-        password:
+        firstName:
+          maxLength: 50
+          minLength: 1
           type: string
-          description: The password for the user (optional if using SSO)
-        code:
+        lastName:
+          maxLength: 50
+          minLength: 1
           type: string
-          description: The user's invite code they received in their email
-        allow_us_storage:
-          type: boolean
-          description: If the user's information is allowed to be stored in U.S. based servers
-      description: Represents a request to create a new user within the company
-    CompanyResponse:
+        companyName:
+          maxLength: 50
+          minLength: 1
+          type: string
+      description: Represents a request to create a new user from the self signup page
+    Zone:
+      required:
+      - cidrs
+      - includeAllAgents
       type: object
       properties:
-        entitlements:
-          $ref: '#/components/schemas/CompanyEntitlementsResponse'
-        identifier:
+        zoneId:
           type: string
-        name:
-          type: string
-        prefs:
-          $ref: '#/components/schemas/Prefs'
-        samlIdpPrefs:
-          $ref: '#/components/schemas/SamlIdpPrefs'
-        authMethodPrefs:
-          $ref: '#/components/schemas/AuthMethodPrefs'
-        internal:
-          type: boolean
-        createdBy:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        orgs:
+          description: The name for the zone
+        cidrs:
           type: array
+          description: Extra CIDRs to use when running zone-based network experiments
           items:
-            $ref: '#/components/schemas/Info'
-        alias:
-          type: string
-        defaultCompanyRole:
-          type: string
-        defaultTeamRole:
-          type: string
-        haltAllCoolDownEnd:
-          type: string
-          format: date-time
-        oauthSettings:
-          $ref: '#/components/schemas/OAuthSettings'
+            type: string
+            description: Extra CIDRs to use when running zone-based network experiments
+        includeAllAgents:
+          type: boolean
+          description: Determine if Gremlin agents across company should be used
+      description: A zone setting for zonal tests
     UpdateCompanyAuthMethodPrefsRequest:
       type: object
       properties:
@@ -1306,6 +1287,108 @@ components:
           type: boolean
           description: If logins via SAML should be required
       description: Represents a request to update the authentication method preferences for a company. When not passed, value of the pref is set to the Gremlin decided default value
+    InviteUserRequest:
+      required:
+      - identifier
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The unique identifier for the user (user's email)
+        first_name:
+          type: string
+          description: The user's first name
+        last_name:
+          type: string
+          description: The user's last name
+        source_detail:
+          type: string
+          enum:
+          - Onboarding
+        user_principal:
+          $ref: '#/components/schemas/GremlinUserPrincipal'
+      description: Represents a request to invite a user to Gremlin.
+    TestRunRestrictionWindow:
+      required:
+      - dayOfWeek
+      - windowsForDay
+      type: object
+      properties:
+        dayOfWeek:
+          type: string
+          enum:
+          - M
+          - T
+          - W
+          - Th
+          - F
+          - S
+          - Su
+        windowsForDay:
+          maxItems: 3
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleWindow'
+    SamlAliasIDs:
+      type: object
+      properties:
+        aliasIds:
+          type: array
+          items:
+            type: string
+    UpdateOAuthSettingsRequest:
+      required:
+      - authorizationUri
+      - clientId
+      - clientSecret
+      - tokenUri
+      - userInfoUri
+      type: object
+      properties:
+        authorizationUri:
+          type: string
+          description: OAuth providers authorization endpoint
+          format: uri
+        tokenUri:
+          type: string
+          description: OAuth providers token endpoint
+          format: uri
+        userInfoUri:
+          type: string
+          description: OAuth providers user info endpoint
+          format: uri
+        clientId:
+          type: string
+          description: The clientId created when registering Gremlin with your OAuth provider
+        clientSecret:
+          type: string
+          description: The client secret created when registering Gremlin with your OAuth provider
+        scope:
+          type: string
+          description: The scope to be used for the OAuth authorization request. (default is 'email')
+      description: A request to update the OAuth settings for a company
+    TeamRoles:
+      type: object
+      properties:
+        teamId:
+          type: string
+        teamName:
+          type: string
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssignedRole'
+    CompanyPatch:
+      title: CompanyPatch.Input
+      type: object
+      properties:
+        prefs:
+          $ref: '#/components/schemas/PrefsPatch'
+        defaultCompanyRole:
+          type: string
+        defaultTeamRole:
+          type: string
     ScheduleWindow:
       required:
       - end
@@ -1322,48 +1405,153 @@ components:
           type: string
           description: Time in HH:mm format (24-hour)
           example: '14:30'
-    GremlinUserPrincipal:
+    PrefsPatch:
       type: object
       properties:
-        key:
-          $ref: '#/components/schemas/Key'
-        provider:
-          type: string
-        email:
-          type: string
-        firstName:
-          type: string
-        lastName:
-          type: string
-    AuthMethodPrefs:
+        testRunRestrictionWindows:
+          maxItems: 7
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunRestrictionWindow'
+      description: Prefs on team level
+    SamlIdpPrefs:
       type: object
       properties:
-        allowSessionRenewal:
+        entityId:
+          type: string
+        url:
+          type: string
+        cert:
+          type: string
+        enabled:
+          type: string
+        forced:
+          type: string
+        claimsForced:
+          type: string
+    SamlAlias:
+      type: object
+      properties:
+        companyId:
+          type: string
+        aliasId:
+          type: string
+        companyRoles:
+          type: array
+          items:
+            type: string
+        teamRoles:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    CompanyInviteResponse:
+      type: object
+      properties:
+        link:
+          type: string
+          format: uri
+        message:
+          type: string
+    CompanyResponse:
+      type: object
+      properties:
+        entitlements:
+          $ref: '#/components/schemas/CompanyEntitlementsResponse'
+        identifier:
+          type: string
+        name:
+          type: string
+        prefs:
+          $ref: '#/components/schemas/Prefs'
+        samlIdpPrefs:
+          $ref: '#/components/schemas/SamlIdpPrefs'
+        authMethodPrefs:
+          $ref: '#/components/schemas/AuthMethodPrefs'
+        internal:
           type: boolean
-        passwordEnabled:
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        orgs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Info'
+        alias:
+          type: string
+        defaultCompanyRole:
+          type: string
+        defaultTeamRole:
+          type: string
+        haltAllCoolDownEnd:
+          type: string
+          format: date-time
+        oauthSettings:
+          $ref: '#/components/schemas/OAuthSettings'
+    OAuthSettings:
+      type: object
+      properties:
+        authorizationUri:
+          type: string
+        userInfoUri:
+          type: string
+        tokenUri:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        scope:
+          type: string
+        enabled:
           type: boolean
-        mfaRequired:
+    Prefs:
+      type: object
+      properties:
+        autoAddUsers:
           type: boolean
-        googleEnabled:
-          type: boolean
-        oauthEnabled:
-          type: boolean
-        samlEnabled:
-          type: boolean
-        claimsRequired:
-          type: boolean
-        apiKeysEnabled:
-          type: boolean
-        apiKeysMaxSecondsToExpireEnabled:
-          type: boolean
-        apiKeysMaxSecondsToExpire:
-          type: integer
-          format: int32
-        sessionDuration:
-          type: integer
-          format: int32
-        samlAliasesEnabled:
-          type: boolean
+        domain:
+          type: string
+        testRunRestrictionWindows:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunRestrictionWindow'
+      description: Prefs for team
+    CreateOrUpdateClaimAliasRequest:
+      type: object
+      properties:
+        aliasId:
+          type: string
+          description: The unique identifier for the alias
+        companyRoles:
+          type: array
+          description: The list of company-level roles for the alias
+          items:
+            type: string
+            description: The list of company-level roles for the alias
+        teamRoles:
+          type: object
+          additionalProperties:
+            type: array
+            description: A mapping of team IDs to the team-level roles for the alias
+            items:
+              type: string
+              description: A mapping of team IDs to the team-level roles for the alias
+          description: A mapping of team IDs to the team-level roles for the alias
+      description: Represents a request to create or update a SAML claims alias on behalf of a user
     CompanyEntitlementsResponse:
       type: object
       properties:
@@ -1407,133 +1595,6 @@ components:
           - Daily
           - Weekly
           - Monthly
-    UpdateOAuthSettingsRequest:
-      required:
-      - authorizationUri
-      - clientId
-      - clientSecret
-      - tokenUri
-      - userInfoUri
-      type: object
-      properties:
-        authorizationUri:
-          type: string
-          description: OAuth providers authorization endpoint
-          format: uri
-        tokenUri:
-          type: string
-          description: OAuth providers token endpoint
-          format: uri
-        userInfoUri:
-          type: string
-          description: OAuth providers user info endpoint
-          format: uri
-        clientId:
-          type: string
-          description: The clientId created when registering Gremlin with your OAuth provider
-        clientSecret:
-          type: string
-          description: The client secret created when registering Gremlin with your OAuth provider
-        scope:
-          type: string
-          description: The scope to be used for the OAuth authorization request. (default is 'email')
-      description: A request to update the OAuth settings for a company
-    SamlIdpPrefs:
-      type: object
-      properties:
-        entityId:
-          type: string
-        url:
-          type: string
-        cert:
-          type: string
-        enabled:
-          type: string
-        forced:
-          type: string
-        claimsForced:
-          type: string
-    CompanyInviteResponse:
-      type: object
-      properties:
-        link:
-          type: string
-          format: uri
-        message:
-          type: string
-    SamlAlias:
-      type: object
-      properties:
-        companyId:
-          type: string
-        aliasId:
-          type: string
-        companyRoles:
-          type: array
-          items:
-            type: string
-        teamRoles:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    TestRunRestrictionWindow:
-      required:
-      - dayOfWeek
-      - windowsForDay
-      type: object
-      properties:
-        dayOfWeek:
-          type: string
-          enum:
-          - M
-          - T
-          - W
-          - Th
-          - F
-          - S
-          - Su
-        windowsForDay:
-          maxItems: 3
-          minItems: 0
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleWindow'
-    InviteUserFromSelfSignupRequest:
-      required:
-      - companyName
-      - email
-      type: object
-      properties:
-        email:
-          type: string
-        firstName:
-          maxLength: 50
-          minLength: 1
-          type: string
-        lastName:
-          maxLength: 50
-          minLength: 1
-          type: string
-        companyName:
-          maxLength: 50
-          minLength: 1
-          type: string
-      description: Represents a request to create a new user from the self signup page
-    SamlAliasIDs:
-      type: object
-      properties:
-        aliasIds:
-          type: array
-          items:
-            type: string
     Info:
       type: object
       properties:
@@ -1582,6 +1643,32 @@ components:
           type: string
         anyCertificateExpirationImminent:
           type: boolean
+    GremlinUserPrincipal:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/Key'
+        provider:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+    OrderedSamlAlias:
+      type: object
+      properties:
+        aliasId:
+          type: string
+        companyRoles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssignedRole'
+        teamRoles:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamRoles'
     CreateCompanyRequest:
       required:
       - admin_email
@@ -1613,47 +1700,32 @@ components:
           type: string
           description: The password for the user (optional if using SSO)
       description: Represents a request to create a new Gremlin company
-    Prefs:
+    Key:
       type: object
       properties:
-        autoAddUsers:
-          type: boolean
-        domain:
-          type: string
-        testRunRestrictionWindows:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestRunRestrictionWindow'
-      description: Prefs for team
-    Zone:
+        hashKey:
+          type: object
+        sortKey:
+          type: object
+    CreateUserRequest:
       required:
-      - cidrs
-      - includeAllAgents
+      - code
+      - email
       type: object
       properties:
-        zoneId:
+        email:
           type: string
-          description: The name for the zone
-        cidrs:
-          type: array
-          description: Extra CIDRs to use when running zone-based network experiments
-          items:
-            type: string
-            description: Extra CIDRs to use when running zone-based network experiments
-        includeAllAgents:
+          description: The unique identifier for the user (user's email)
+        password:
+          type: string
+          description: The password for the user (optional if using SSO)
+        code:
+          type: string
+          description: The user's invite code they received in their email
+        allow_us_storage:
           type: boolean
-          description: Determine if Gremlin agents across company should be used
-      description: A zone setting for zonal tests
-    CompanyPatch:
-      title: CompanyPatch.Input
-      type: object
-      properties:
-        prefs:
-          $ref: '#/components/schemas/PrefsPatch'
-        defaultCompanyRole:
-          type: string
-        defaultTeamRole:
-          type: string
+          description: If the user's information is allowed to be stored in U.S. based servers
+      description: Represents a request to create a new user within the company
     AssignedRole:
       type: object
       properties:
@@ -1663,64 +1735,34 @@ components:
           type: string
         customRole:
           type: boolean
-    CreateOrUpdateClaimAliasRequest:
+    AuthMethodPrefs:
       type: object
       properties:
-        aliasId:
-          type: string
-          description: The unique identifier for the alias
-        companyRoles:
-          type: array
-          description: The list of company-level roles for the alias
-          items:
-            type: string
-            description: The list of company-level roles for the alias
-        teamRoles:
-          type: object
-          additionalProperties:
-            type: array
-            description: A mapping of team IDs to the team-level roles for the alias
-            items:
-              type: string
-              description: A mapping of team IDs to the team-level roles for the alias
-          description: A mapping of team IDs to the team-level roles for the alias
-      description: Represents a request to create or update a SAML claims alias on behalf of a user
-    OrderedSamlAlias:
-      type: object
-      properties:
-        aliasId:
-          type: string
-        companyRoles:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssignedRole'
-        teamRoles:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamRoles'
-    Key:
-      type: object
-      properties:
-        hashKey:
-          type: object
-        sortKey:
-          type: object
-    OAuthSettings:
-      type: object
-      properties:
-        authorizationUri:
-          type: string
-        userInfoUri:
-          type: string
-        tokenUri:
-          type: string
-        clientId:
-          type: string
-        clientSecret:
-          type: string
-        scope:
-          type: string
-        enabled:
+        allowSessionRenewal:
+          type: boolean
+        passwordEnabled:
+          type: boolean
+        mfaRequired:
+          type: boolean
+        googleEnabled:
+          type: boolean
+        oauthEnabled:
+          type: boolean
+        samlEnabled:
+          type: boolean
+        claimsRequired:
+          type: boolean
+        apiKeysEnabled:
+          type: boolean
+        apiKeysMaxSecondsToExpireEnabled:
+          type: boolean
+        apiKeysMaxSecondsToExpire:
+          type: integer
+          format: int32
+        sessionDuration:
+          type: integer
+          format: int32
+        samlAliasesEnabled:
           type: boolean
     SetRolesRequest:
       required:
@@ -1732,45 +1774,3 @@ components:
           type: array
           items:
             type: string
-    InviteUserRequest:
-      required:
-      - identifier
-      type: object
-      properties:
-        identifier:
-          type: string
-          description: The unique identifier for the user (user's email)
-        first_name:
-          type: string
-          description: The user's first name
-        last_name:
-          type: string
-          description: The user's last name
-        source_detail:
-          type: string
-          enum:
-          - Onboarding
-        user_principal:
-          $ref: '#/components/schemas/GremlinUserPrincipal'
-      description: Represents a request to invite a user to Gremlin.
-    PrefsPatch:
-      type: object
-      properties:
-        testRunRestrictionWindows:
-          maxItems: 7
-          minItems: 0
-          type: array
-          items:
-            $ref: '#/components/schemas/TestRunRestrictionWindow'
-      description: Prefs on team level
-    TeamRoles:
-      type: object
-      properties:
-        teamId:
-          type: string
-        teamName:
-          type: string
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssignedRole'

@@ -49,13 +49,6 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
 components:
   schemas:
-    Versioning:
-      type: object
-      properties:
-        version:
-          type: string
-        deprecated:
-          type: boolean
     InfraAttackArgObject:
       type: object
       properties:
@@ -185,3 +178,10 @@ components:
           type: array
           items:
             type: string
+    Versioning:
+      type: object
+      properties:
+        version:
+          type: string
+        deprecated:
+          type: boolean

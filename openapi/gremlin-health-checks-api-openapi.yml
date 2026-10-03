@@ -288,35 +288,6 @@ paths:
         - INTEGRATIONS_WRITE
 components:
   schemas:
-    EndpointConfiguration:
-      required:
-      - url
-      type: object
-      properties:
-        url:
-          type: string
-          description: The URL of the status check
-          format: url
-        method:
-          type: string
-          description: The method type of the status check
-          enum:
-          - GET
-          - POST
-          - PUT
-          - PATCH
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-            description: Optional request headers to be used when the status check is invoked
-          description: Optional request headers to be used when the status check is invoked
-        payload:
-          type: string
-          description: Payload for POST type of request
-        headersArn:
-          type: string
-          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
     EvaluationConfiguration:
       required:
       - okStatusCodes
@@ -335,6 +306,25 @@ components:
         responseBodyEvaluation:
           $ref: '#/components/schemas/ResponseBodyEvaluation'
       description: The configuration for evaluating the success/failure of a status check
+    TestEndpointConfigurationRequest:
+      required:
+      - endpointConfiguration
+      type: object
+      properties:
+        endpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+        webhookId:
+          type: string
+        integrationSpecificValues:
+          type: object
+          additionalProperties:
+            type: string
+            description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+          description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+    HasCompareFunctionObject:
+      type: object
     ResponseBodyEvaluation:
       required:
       - op
@@ -353,46 +343,6 @@ components:
           items:
             $ref: '#/components/schemas/PredicateObject'
       description: The configuration for evaluating the success of a response body
-    HasCompareFunctionObject:
-      type: object
-    TestEvaluationConfigurationRequest:
-      required:
-      - evaluationConfiguration
-      type: object
-      properties:
-        endpointConfiguration:
-          $ref: '#/components/schemas/EndpointConfiguration'
-        evaluationConfiguration:
-          $ref: '#/components/schemas/EvaluationConfiguration'
-        testEndpointResponse:
-          $ref: '#/components/schemas/EndpointResponse'
-        teamExternalIntegration:
-          $ref: '#/components/schemas/TeamExternalIntegrationReference'
-    PredicateObject:
-      required:
-      - jpQuery
-      - rValue
-      - type
-      type: object
-      properties:
-        comparator:
-          $ref: '#/components/schemas/HasCompareFunctionObject'
-        type:
-          type: string
-          description: The type of primitive this predicate operates on
-          enum:
-          - String
-          - Number
-          - Boolean
-        jpQuery:
-          type: string
-          description: The json path query to run to read from the response body
-        rValue:
-          type: object
-          description: The right hand value of the predicate
-      description: The list of predicates to evaluate against the status check response body
-      discriminator:
-        propertyName: type
     EndpointResponse:
       required:
       - httpStatusCode
@@ -475,23 +425,6 @@ components:
               type: string
               description: The tags associated with this status check
           description: The tags associated with this status check
-    TestEndpointConfigurationRequest:
-      required:
-      - endpointConfiguration
-      type: object
-      properties:
-        endpointConfiguration:
-          $ref: '#/components/schemas/EndpointConfiguration'
-        teamExternalIntegration:
-          $ref: '#/components/schemas/TeamExternalIntegrationReference'
-        webhookId:
-          type: string
-        integrationSpecificValues:
-          type: object
-          additionalProperties:
-            type: string
-            description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
-          description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
     TeamExternalIntegrationReference:
       title: StatusCheckRequest.TeamExternalIntegrationReference
       required:
@@ -540,6 +473,44 @@ components:
           type: string
           description: The name of the external integration for the health check to be created/updated
       description: Represents the configuration for referencing an external integration
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
+      type: object
+      properties:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
+    TestEvaluationConfigurationRequest:
+      required:
+      - evaluationConfiguration
+      type: object
+      properties:
+        endpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        evaluationConfiguration:
+          $ref: '#/components/schemas/EvaluationConfiguration'
+        testEndpointResponse:
+          $ref: '#/components/schemas/EndpointResponse'
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
     StatusCheckRequest:
       required:
       - endpointConfiguration
@@ -589,3 +560,32 @@ components:
               type: string
               description: The tags associated with this status check
           description: The tags associated with this status check
+    EndpointConfiguration:
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          type: string
+          description: The URL of the status check
+          format: url
+        method:
+          type: string
+          description: The method type of the status check
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Optional request headers to be used when the status check is invoked
+          description: Optional request headers to be used when the status check is invoked
+        payload:
+          type: string
+          description: Payload for POST type of request
+        headersArn:
+          type: string
+          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers

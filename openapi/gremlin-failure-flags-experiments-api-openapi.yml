@@ -454,6 +454,49 @@ paths:
         - EXPERIMENTS_WRITE
 components:
   schemas:
+    CompletedRunSummaryResponse:
+      type: object
+      properties:
+        teamId:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        stopTime:
+          type: string
+          format: date-time
+        deliveries:
+          type: integer
+          format: int32
+        impacts:
+          type: integer
+          format: int32
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        triggeredBy:
+          type: string
+        app:
+          $ref: '#/components/schemas/Selector'
+        flag:
+          $ref: '#/components/schemas/Selector'
+    TargetSampling:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
     Experiment:
       required:
       - app
@@ -505,36 +548,20 @@ components:
         protected:
           type: boolean
           readOnly: true
-    SeriesMinute:
+    ExperimentRun:
       type: object
       properties:
-        minute:
-          type: integer
-          format: int32
-        count:
-          type: integer
-          format: int32
-    CompletedRunSummaryResponse:
-      type: object
-      properties:
-        teamId:
-          type: string
-        id:
-          type: string
-        name:
-          type: string
         startTime:
           type: string
           format: date-time
-        stopTime:
-          type: string
-          format: date-time
-        deliveries:
-          type: integer
-          format: int32
-        impacts:
-          type: integer
-          format: int32
+        impactSeries:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeriesMinute'
+        deliverySeries:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeriesMinute'
         triggerSource:
           type: string
           enum:
@@ -544,10 +571,42 @@ components:
           - RECURRING_SCHEDULE
         triggeredBy:
           type: string
-        app:
-          $ref: '#/components/schemas/Selector'
-        flag:
-          $ref: '#/components/schemas/Selector'
+      readOnly: true
+    SeriesMinute:
+      type: object
+      properties:
+        minute:
+          type: integer
+          format: int32
+        count:
+          type: integer
+          format: int32
+    Selector:
+      required:
+      - labels
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: array
+            description: Label selectors for matching resources
+            example:
+              foo:
+              - bar
+              - baz
+            items:
+              type: string
+              description: Label selectors for matching resources
+              example: '{"foo":["bar","baz"]}'
+          description: Label selectors for matching resources
+          example:
+            foo:
+            - bar
+            - baz
     ExperimentPagedResponse:
       type: object
       properties:
@@ -587,65 +646,6 @@ components:
         deliveries:
           type: integer
           format: int32
-    Selector:
-      required:
-      - labels
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-        labels:
-          type: object
-          additionalProperties:
-            type: array
-            description: Label selectors for matching resources
-            example:
-              foo:
-              - bar
-              - baz
-            items:
-              type: string
-              description: Label selectors for matching resources
-              example: '{"foo":["bar","baz"]}'
-          description: Label selectors for matching resources
-          example:
-            foo:
-            - bar
-            - baz
-    TargetSampling:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    ExperimentRun:
-      type: object
-      properties:
-        startTime:
-          type: string
-          format: date-time
-        impactSeries:
-          type: array
-          items:
-            $ref: '#/components/schemas/SeriesMinute'
-        deliverySeries:
-          type: array
-          items:
-            $ref: '#/components/schemas/SeriesMinute'
-        triggerSource:
-          type: string
-          enum:
-          - MANUAL
-          - RUN_ALL
-          - SCHEDULED
-          - RECURRING_SCHEDULE
-        triggeredBy:
-          type: string
-      readOnly: true
     CompletedExperimentPagedResponse:
       type: object
       properties:
