@@ -49,63 +49,26 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
 components:
   schemas:
-    InfraAttackArgObject:
+    ArgGroup:
       type: object
       properties:
         name:
           type: string
-        key:
+        description:
           type: string
-        info:
-          type: string
-        multiple:
-          type: boolean
-        usage:
-          type: string
-        options:
-          type: object
-          additionalProperties:
+        args:
+          type: array
+          items:
             type: string
-        advanced:
+    Versioning:
+      type: object
+      properties:
+        version:
+          type: string
+        deprecated:
           type: boolean
-        required:
-          type: boolean
-        subinfo:
-          type: string
-        type:
-          type: string
-          enum:
-          - Boolean
-          - Enum
-          - Float
-          - Integer
-          - IP
-          - String
-          - URL
-        validatorDynamo:
-          $ref: '#/components/schemas/ValidatorObject'
-        display:
-          $ref: '#/components/schemas/DisplayConfig'
-        error:
-          type: object
-          additionalProperties:
-            type: string
-        versions:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Versioning'
-        long:
-          type: string
-        short:
-          type: string
-        infraCommandArgKey:
-          type: string
-        default:
-          type: object
-        validator:
-          type: object
-          additionalProperties:
-            type: object
+    ValidatorObject:
+      type: object
     DisplayConfig:
       type: object
       properties:
@@ -165,23 +128,60 @@ components:
           type: object
           additionalProperties:
             type: string
-    ValidatorObject:
-      type: object
-    ArgGroup:
+    InfraAttackArgObject:
       type: object
       properties:
         name:
           type: string
-        description:
+        key:
           type: string
-        args:
-          type: array
-          items:
-            type: string
-    Versioning:
-      type: object
-      properties:
-        version:
+        info:
           type: string
-        deprecated:
+        multiple:
           type: boolean
+        usage:
+          type: string
+        options:
+          type: object
+          additionalProperties:
+            type: string
+        advanced:
+          type: boolean
+        required:
+          type: boolean
+        subinfo:
+          type: string
+        type:
+          type: string
+          enum:
+          - Boolean
+          - Enum
+          - Float
+          - Integer
+          - IP
+          - String
+          - URL
+        validatorDynamo:
+          $ref: '#/components/schemas/ValidatorObject'
+        display:
+          $ref: '#/components/schemas/DisplayConfig'
+        error:
+          type: object
+          additionalProperties:
+            type: string
+        versions:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Versioning'
+        long:
+          type: string
+        short:
+          type: string
+        infraCommandArgKey:
+          type: string
+        default:
+          type: object
+        validator:
+          type: object
+          additionalProperties:
+            type: object

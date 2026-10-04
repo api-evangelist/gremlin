@@ -538,13 +538,6 @@ paths:
         - INTEGRATIONS_WRITE
 components:
   schemas:
-    TeamExternalIntegrationsResponse:
-      type: object
-      properties:
-        integrations:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamExternalIntegrationResponse'
     TeamExternalIntegrationResponse:
       type: object
       properties:
@@ -701,3 +694,10 @@ components:
               description: The tags associated with this integration
           description: The tags associated with this integration
       description: Represents the configuration for an external integration
+    TeamExternalIntegrationsResponse:
+      type: object
+      properties:
+        integrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamExternalIntegrationResponse'

@@ -106,14 +106,13 @@ components:
         end:
           type: integer
           format: int64
-    YAxisLine:
+    TaskMetrics:
       type: object
       properties:
-        value:
-          type: number
-          format: double
-        label:
+        taskId:
           type: string
+        metrics:
+          $ref: '#/components/schemas/AttackMetricsDisplayResponse'
     AttackMetricsDisplayResponse:
       type: object
       properties:
@@ -162,13 +161,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/YAxisLine'
-    TaskMetrics:
+    YAxisLine:
       type: object
       properties:
-        taskId:
+        value:
+          type: number
+          format: double
+        label:
           type: string
-        metrics:
-          $ref: '#/components/schemas/AttackMetricsDisplayResponse'
     MetricPoint:
       type: object
       properties:

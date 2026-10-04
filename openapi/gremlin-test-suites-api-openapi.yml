@@ -210,6 +210,60 @@ components:
           type: boolean
         isOfficial:
           type: boolean
+    RiskResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        mappingExpression:
+          type: string
+        evaluationExpression:
+          type: string
+        document:
+          type: string
+        queryType:
+          type: string
+          enum:
+          - KUBERNETES_OBJECT
+          - AGENT
+          - AWS_LOAD_BALANCER
+          - AWS_AUTO_SCALING_GROUP
+        disabled:
+          type: boolean
+    ScenarioToPromote:
+      required:
+      - scenarioId
+      - scenarioType
+      type: object
+      properties:
+        scenarioId:
+          type: string
+        scenarioType:
+          type: string
+          enum:
+          - RECOMMENDED
+          - SHARED
+          - GENERAL
+        teamId:
+          type: string
+    TestResponse:
+      type: object
+      properties:
+        testPolicy:
+          $ref: '#/components/schemas/TestPolicyResponse'
+        sourceScenarioId:
+          type: string
+        sourceScenarioType:
+          type: string
+          enum:
+          - RECOMMENDED
+          - SHARED
+          - GENERAL
+        sourceScenarioEditCounter:
+          type: integer
+          format: int32
     TestSuiteScenario:
       required:
       - description
@@ -233,124 +287,6 @@ components:
           - EXTRA_CREDIT
         scenarioToPromote:
           $ref: '#/components/schemas/ScenarioToPromote'
-    TestResponse:
-      type: object
-      properties:
-        testPolicy:
-          $ref: '#/components/schemas/TestPolicyResponse'
-        sourceScenarioId:
-          type: string
-        sourceScenarioType:
-          type: string
-          enum:
-          - RECOMMENDED
-          - SHARED
-          - GENERAL
-        sourceScenarioEditCounter:
-          type: integer
-          format: int32
-    CreateTestSuiteRequest:
-      title: CreateTestSuiteRequest.Input
-      required:
-      - name
-      - scenarios
-      type: object
-      properties:
-        name:
-          type: string
-        targetTeamIds:
-          type: array
-          items:
-            type: string
-        scenarios:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestSuiteScenario'
-        excludedRiskIds:
-          type: array
-          items:
-            type: string
-      description: Create a request to create a test suite for a team
-    RiskResponse:
-      type: object
-      properties:
-        name:
-          type: string
-        id:
-          type: string
-        mappingExpression:
-          type: string
-        evaluationExpression:
-          type: string
-        document:
-          type: string
-        queryType:
-          type: string
-          enum:
-          - KUBERNETES_OBJECT
-          - AGENT
-          - AWS_LOAD_BALANCER
-          - AWS_AUTO_SCALING_GROUP
-        disabled:
-          type: boolean
-    UpdateTestSuiteRequest:
-      title: UpdateTestSuiteRequest.Input
-      type: object
-      properties:
-        name:
-          type: string
-        targetTeamIds:
-          type: array
-          items:
-            type: string
-        scenarios:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScenarioInfo'
-        excludedRiskIds:
-          type: array
-          items:
-            type: string
-      description: Update a test suite for a team
-    TestPolicyResponse:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        policyCategory:
-          type: string
-          enum:
-          - OTHER
-          - REDUNDANCY
-          - SCALABILITY
-          - DEPENDENCIES
-          - RISKS
-          - EXTRA_CREDIT
-        policyTarget:
-          type: string
-          enum:
-          - SERVICE
-          - SERVICE_DEPENDENCY
-        reliabilityTestId:
-          type: string
-    ScenarioToPromote:
-      required:
-      - scenarioId
-      - scenarioType
-      type: object
-      properties:
-        scenarioId:
-          type: string
-        scenarioType:
-          type: string
-          enum:
-          - RECOMMENDED
-          - SHARED
-          - GENERAL
-        teamId:
-          type: string
     ScenarioInfo:
       required:
       - description
@@ -384,4 +320,68 @@ components:
         reliabilityTestId:
           type: string
         teamId:
+          type: string
+    UpdateTestSuiteRequest:
+      title: UpdateTestSuiteRequest.Input
+      type: object
+      properties:
+        name:
+          type: string
+        targetTeamIds:
+          type: array
+          items:
+            type: string
+        scenarios:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioInfo'
+        excludedRiskIds:
+          type: array
+          items:
+            type: string
+      description: Update a test suite for a team
+    CreateTestSuiteRequest:
+      title: CreateTestSuiteRequest.Input
+      required:
+      - name
+      - scenarios
+      type: object
+      properties:
+        name:
+          type: string
+        targetTeamIds:
+          type: array
+          items:
+            type: string
+        scenarios:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestSuiteScenario'
+        excludedRiskIds:
+          type: array
+          items:
+            type: string
+      description: Create a request to create a test suite for a team
+    TestPolicyResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        policyCategory:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        policyTarget:
+          type: string
+          enum:
+          - SERVICE
+          - SERVICE_DEPENDENCY
+        reliabilityTestId:
           type: string

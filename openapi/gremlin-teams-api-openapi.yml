@@ -340,6 +340,47 @@ paths:
         - TEAMS_READ
 components:
   schemas:
+    Field:
+      type: object
+      properties:
+        field:
+          type: string
+        presets:
+          type: array
+          items:
+            type: string
+        multiple:
+          type: boolean
+        answer:
+          type: array
+          items:
+            type: string
+        prompt:
+          $ref: '#/components/schemas/Prompt'
+    ScheduleWindow:
+      required:
+      - end
+      - start
+      type: object
+      properties:
+        start:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+        end:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+    ClientVersionRange:
+      type: object
+      properties:
+        minimum:
+          $ref: '#/components/schemas/SemanticVersion'
+        maximum:
+          $ref: '#/components/schemas/SemanticVersion'
+      description: A Map representing the minimum and maximum client versions authenticated with this Team.
     PagedResponseTeamResponse:
       type: object
       properties:
@@ -364,6 +405,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TeamResponse'
+    UpdateTeamRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name for the team
+        production:
+          type: boolean
+          description: Flag to determine if team is marked for production
+        defaultTeamRole:
+          type: string
+          description: The default team role
+        prefs:
+          $ref: '#/components/schemas/PrefsPatch'
+      description: A request to update an team
     TeamResponse:
       type: object
       properties:
@@ -413,45 +469,51 @@ components:
           type: string
           description: An ISO8601 timestamp representing the time at which this team was created
           format: date-time
-    TestRunRestrictionWindow:
-      required:
-      - dayOfWeek
-      - windowsForDay
+    TeamProfilePrompt:
       type: object
       properties:
-        dayOfWeek:
+        updated_by:
           type: string
-          enum:
-          - M
-          - T
-          - W
-          - Th
-          - F
-          - S
-          - Su
-        windowsForDay:
-          maxItems: 3
+        updated_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field'
+        completedByUsers:
+          type: array
+          items:
+            type: string
+        skippedByUsers:
+          type: array
+          items:
+            type: string
+    PrefsPatch:
+      type: object
+      properties:
+        testRunRestrictionWindows:
+          maxItems: 7
           minItems: 0
           type: array
           items:
-            $ref: '#/components/schemas/ScheduleWindow'
-    Field:
+            $ref: '#/components/schemas/TestRunRestrictionWindow'
+      description: Prefs on team level
+    Prefs:
       type: object
       properties:
-        field:
-          type: string
-        presets:
-          type: array
-          items:
-            type: string
-        multiple:
+        autoAddUsers:
           type: boolean
-        answer:
+        domain:
+          type: string
+        testRunRestrictionWindows:
           type: array
           items:
-            type: string
-        prompt:
-          $ref: '#/components/schemas/Prompt'
+            $ref: '#/components/schemas/TestRunRestrictionWindow'
+      description: Prefs for team
     SemanticVersion:
       type: object
       properties:
@@ -524,26 +586,28 @@ components:
         createdAt:
           type: string
           format: date-time
-    ClientVersionRange:
+    TestRunRestrictionWindow:
+      required:
+      - dayOfWeek
+      - windowsForDay
       type: object
       properties:
-        minimum:
-          $ref: '#/components/schemas/SemanticVersion'
-        maximum:
-          $ref: '#/components/schemas/SemanticVersion'
-      description: A Map representing the minimum and maximum client versions authenticated with this Team.
-    Prefs:
-      type: object
-      properties:
-        autoAddUsers:
-          type: boolean
-        domain:
+        dayOfWeek:
           type: string
-        testRunRestrictionWindows:
+          enum:
+          - M
+          - T
+          - W
+          - Th
+          - F
+          - S
+          - Su
+        windowsForDay:
+          maxItems: 3
+          minItems: 0
           type: array
           items:
-            $ref: '#/components/schemas/TestRunRestrictionWindow'
-      description: Prefs for team
+            $ref: '#/components/schemas/ScheduleWindow'
     Prompt:
       type: object
       properties:
@@ -551,67 +615,3 @@ components:
           type: string
         suffix:
           type: string
-    UpdateTeamRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name for the team
-        production:
-          type: boolean
-          description: Flag to determine if team is marked for production
-        defaultTeamRole:
-          type: string
-          description: The default team role
-        prefs:
-          $ref: '#/components/schemas/PrefsPatch'
-      description: A request to update an team
-    ScheduleWindow:
-      required:
-      - end
-      - start
-      type: object
-      properties:
-        start:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
-        end:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
-    PrefsPatch:
-      type: object
-      properties:
-        testRunRestrictionWindows:
-          maxItems: 7
-          minItems: 0
-          type: array
-          items:
-            $ref: '#/components/schemas/TestRunRestrictionWindow'
-      description: Prefs on team level
-    TeamProfilePrompt:
-      type: object
-      properties:
-        updated_by:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-        created_at:
-          type: string
-          format: date-time
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/Field'
-        completedByUsers:
-          type: array
-          items:
-            type: string
-        skippedByUsers:
-          type: array
-          items:
-            type: string

@@ -160,13 +160,23 @@ paths:
         - INTEGRATIONS_WRITE
 components:
   schemas:
-    TestPrivateNetworkEvaluationConfigurationRequest:
+    CreatePrivateNetworkInvocationRequest:
       required:
-      - evaluationConfiguration
+      - endpointConfiguration
       type: object
       properties:
-        evaluationConfiguration:
-          $ref: '#/components/schemas/EvaluationConfiguration'
+        endpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+        webhookId:
+          type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
     EvaluationConfiguration:
       required:
       - okStatusCodes
@@ -185,25 +195,28 @@ components:
         responseBodyEvaluation:
           $ref: '#/components/schemas/ResponseBodyEvaluation'
       description: The configuration for evaluating the success/failure of a status check
-    CreatePrivateNetworkInvocationRequest:
-      required:
-      - endpointConfiguration
-      type: object
-      properties:
-        endpointConfiguration:
-          $ref: '#/components/schemas/EndpointConfiguration'
-        teamExternalIntegration:
-          $ref: '#/components/schemas/TeamExternalIntegrationReference'
-        webhookId:
-          type: string
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
     HasCompareFunctionObject:
       type: object
+    PrivateNetworkRequestPropertiesModel:
+      type: object
+      properties:
+        uri:
+          type: string
+          format: url
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+        payload:
+          type: string
+        headersArn:
+          type: string
     ResponseBodyEvaluation:
       required:
       - op
@@ -222,6 +235,38 @@ components:
           items:
             $ref: '#/components/schemas/PredicateObject'
       description: The configuration for evaluating the success of a response body
+    TestPrivateNetworkEvaluationConfigurationRequest:
+      required:
+      - evaluationConfiguration
+      type: object
+      properties:
+        evaluationConfiguration:
+          $ref: '#/components/schemas/EvaluationConfiguration'
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
+      type: object
+      properties:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
     PrivateNetworkInvocationModel:
       type: object
       properties:
@@ -274,6 +319,13 @@ components:
             type: array
             items:
               type: string
+    PrivateNetworkInvocationModelResponse:
+      type: object
+      properties:
+        invocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkInvocationModel'
     TeamExternalIntegrationReference:
       title: StatusCheckRequest.TeamExternalIntegrationReference
       required:
@@ -322,71 +374,6 @@ components:
           type: string
           description: The name of the external integration for the health check to be created/updated
       description: Represents the configuration for referencing an external integration
-    PrivateNetworkRequestPropertiesModel:
-      type: object
-      properties:
-        uri:
-          type: string
-          format: url
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-        method:
-          type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-        payload:
-          type: string
-        headersArn:
-          type: string
-    PredicateObject:
-      required:
-      - jpQuery
-      - rValue
-      - type
-      type: object
-      properties:
-        comparator:
-          $ref: '#/components/schemas/HasCompareFunctionObject'
-        type:
-          type: string
-          description: The type of primitive this predicate operates on
-          enum:
-          - String
-          - Number
-          - Boolean
-        jpQuery:
-          type: string
-          description: The json path query to run to read from the response body
-        rValue:
-          type: object
-          description: The right hand value of the predicate
-      description: The list of predicates to evaluate against the status check response body
-      discriminator:
-        propertyName: type
-    PrivateNetworkResponsePropertiesModel:
-      type: object
-      properties:
-        invocationTime:
-          type: string
-          format: date-time
-        httpStatusCode:
-          type: integer
-          format: int32
-        requestLatencyMs:
-          type: integer
-          format: int32
-        responseBody:
-          type: string
-        contentType:
-          type: string
-        responseHeaders:
-          type: object
-          additionalProperties:
-            type: string
     EndpointConfiguration:
       required:
       - url
@@ -416,10 +403,23 @@ components:
         headersArn:
           type: string
           description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
-    PrivateNetworkInvocationModelResponse:
+    PrivateNetworkResponsePropertiesModel:
       type: object
       properties:
-        invocations:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrivateNetworkInvocationModel'
+        invocationTime:
+          type: string
+          format: date-time
+        httpStatusCode:
+          type: integer
+          format: int32
+        requestLatencyMs:
+          type: integer
+          format: int32
+        responseBody:
+          type: string
+        contentType:
+          type: string
+        responseHeaders:
+          type: object
+          additionalProperties:
+            type: string

@@ -227,6 +227,13 @@ paths:
           description: Response was sent via HTTP, please retry using HTTPS
 components:
   schemas:
+    MfaInfoResponse:
+      type: object
+      properties:
+        enabled:
+          type: string
+        provider:
+          type: string
     MfaEnableResponse:
       type: object
       properties:
@@ -235,10 +242,3 @@ components:
         qrUrl:
           type: string
           format: uri
-    MfaInfoResponse:
-      type: object
-      properties:
-        enabled:
-          type: string
-        provider:
-          type: string

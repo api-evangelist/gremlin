@@ -292,6 +292,96 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
 components:
   schemas:
+    CreateOrUpdateLargeScaleTestRequest:
+      title: CreateOrUpdateLargeScaleTestRequest.Input
+      required:
+      - name
+      - serviceKeys
+      - statusChecks
+      type: object
+      properties:
+        identifier:
+          type: string
+        companyId:
+          type: string
+        name:
+          type: string
+        scenario:
+          $ref: '#/components/schemas/TestSuiteScenario'
+        reliabilityTestId:
+          type: string
+        scenarioOverrides:
+          $ref: '#/components/schemas/ScenarioOverrides'
+        statusChecks:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusCheckInput'
+        serviceKeys:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamServiceKey'
+      description: Create a request to create or update a disaster recovery test for a company
+    ScenarioOverrides:
+      type: object
+      properties:
+        zones:
+          type: array
+          items:
+            type: string
+        dns:
+          type: string
+        failureFlag:
+          $ref: '#/components/schemas/Selector'
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
+      type: object
+      properties:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
+    State:
+      type: object
+      properties:
+        lifecycle:
+          type: string
+          enum:
+          - NotStarted
+          - Active
+          - HaltRequested
+          - Successful
+          - Halted
+          - Failed
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        failedReason:
+          type: string
+        nodeHaltedByGuid:
+          type: string
+        nodeHaltedById:
+          type: string
+      readOnly: true
     EvaluationConfiguration:
       required:
       - okStatusCodes
@@ -310,11 +400,20 @@ components:
         responseBodyEvaluation:
           $ref: '#/components/schemas/ResponseBodyEvaluation'
       description: The configuration for evaluating the success/failure of a status check
-    RunScenarioTestRequest:
+    ScenarioToPromote:
+      required:
+      - scenarioId
+      - scenarioType
       type: object
       properties:
-        serviceId:
+        scenarioId:
           type: string
+        scenarioType:
+          type: string
+          enum:
+          - RECOMMENDED
+          - SHARED
+          - GENERAL
         teamId:
           type: string
     LargeScaleTestResponse:
@@ -355,31 +454,95 @@ components:
             $ref: '#/components/schemas/StatusCheckNode'
         scenarioOverrides:
           $ref: '#/components/schemas/ScenarioOverrides'
-    State:
+    GraphNodeObject:
       type: object
       properties:
-        lifecycle:
+        type:
           type: string
           enum:
-          - NotStarted
-          - Active
-          - HaltRequested
-          - Successful
-          - Halted
-          - Failed
-        startTime:
+          - Concurrent
+          - ContinuousStatusCheck
+          - StatusCheckNode
+          - Delay
+          - InfraAttack
+          - SynchronousStatusCheck
+          - Continuous
+          - FailureFlag
+          - ExternalAction
+          - RollbackExternalAction
+        id:
           type: string
-          format: date-time
-        endTime:
+        state:
+          type: object
+          readOnly: true
+        guid:
           type: string
-          format: date-time
-        failedReason:
+        next:
           type: string
-        nodeHaltedByGuid:
+      discriminator:
+        propertyName: type
+    RunScenarioTestRequest:
+      type: object
+      properties:
+        serviceId:
           type: string
-        nodeHaltedById:
+        teamId:
           type: string
-      readOnly: true
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body
+    TeamServiceKey:
+      type: object
+      properties:
+        teamId:
+          type: string
+        serviceId:
+          type: string
+    GetLargeScaleTestsResponse:
+      type: object
+      properties:
+        disasterRecoveryTests:
+          type: array
+          items:
+            $ref: '#/components/schemas/LargeScaleTestResponse'
+    TestSuiteScenario:
+      required:
+      - description
+      - name
+      - policyCategory
+      - scenarioToPromote
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        policyCategory:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        scenarioToPromote:
+          $ref: '#/components/schemas/ScenarioToPromote'
     StatusCheckNode:
       type: object
       allOf:
@@ -435,31 +598,6 @@ components:
           additionalTimeInSecsToRunAfterCompletion:
             type: integer
             format: int32
-    ScenarioToPromote:
-      required:
-      - scenarioId
-      - scenarioType
-      type: object
-      properties:
-        scenarioId:
-          type: string
-        scenarioType:
-          type: string
-          enum:
-          - RECOMMENDED
-          - SHARED
-          - GENERAL
-        teamId:
-          type: string
-    StatusCheckNodeRequest:
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    HasCompareFunctionObject:
-      type: object
     StatusCheckInput:
       required:
       - statusCheck
@@ -469,73 +607,116 @@ components:
           type: string
         statusCheck:
           $ref: '#/components/schemas/StatusCheckNode'
-    GraphNodeObject:
+    Selector:
+      required:
+      - labels
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: array
+            description: Label selectors for matching resources
+            example:
+              foo:
+              - bar
+              - baz
+            items:
+              type: string
+              description: Label selectors for matching resources
+              example: '{"foo":["bar","baz"]}'
+          description: Label selectors for matching resources
+          example:
+            foo:
+            - bar
+            - baz
+    RunScenarioTestResponse:
+      type: object
+      properties:
+        runDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioRunDetails'
+        errorsPerService:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceScenarioRunError'
+    EndpointConfiguration:
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          type: string
+          description: The URL of the status check
+          format: url
+        method:
+          type: string
+          description: The method type of the status check
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Optional request headers to be used when the status check is invoked
+          description: Optional request headers to be used when the status check is invoked
+        payload:
+          type: string
+          description: Payload for POST type of request
+        headersArn:
+          type: string
+          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
+    HaltRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: The reason why this halt this requested.
+        reference:
+          type: string
+          description: A reference to why this halt was requested.
+    StatusCheckNodeRequest:
       type: object
       properties:
         type:
           type: string
-          enum:
-          - Concurrent
-          - ContinuousStatusCheck
-          - StatusCheckNode
-          - Delay
-          - InfraAttack
-          - SynchronousStatusCheck
-          - Continuous
-          - FailureFlag
-          - ExternalAction
-          - RollbackExternalAction
-        id:
-          type: string
-        state:
-          type: object
-          readOnly: true
-        guid:
-          type: string
-        next:
-          type: string
       discriminator:
         propertyName: type
-    ScenarioOverrides:
+    ScenarioRunDetails:
       type: object
       properties:
-        zones:
-          type: array
-          items:
-            type: string
-        dns:
+        teamId:
           type: string
-        failureFlag:
-          $ref: '#/components/schemas/Selector'
-    CreateOrUpdateLargeScaleTestRequest:
-      title: CreateOrUpdateLargeScaleTestRequest.Input
-      required:
-      - name
-      - serviceKeys
-      - statusChecks
+        serviceId:
+          type: string
+        runNumber:
+          type: integer
+          format: int64
+    HasCompareFunctionObject:
+      type: object
+    ServiceScenarioRunError:
       type: object
       properties:
-        identifier:
+        teamId:
           type: string
-        companyId:
+        serviceId:
           type: string
-        name:
+        errorType:
           type: string
-        scenario:
-          $ref: '#/components/schemas/TestSuiteScenario'
-        reliabilityTestId:
+          enum:
+          - HALT_IN_PROGRESS
+          - RUN_IN_PROGRESS
+          - INELIGIBLE_SERVICE
+          - HEALTH_CHECK_IN_ALARM
+        errorMessage:
           type: string
-        scenarioOverrides:
-          $ref: '#/components/schemas/ScenarioOverrides'
-        statusChecks:
-          type: array
-          items:
-            $ref: '#/components/schemas/StatusCheckInput'
-        serviceKeys:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamServiceKey'
-      description: Create a request to create or update a disaster recovery test for a company
     ServiceRunDetails:
       type: object
       properties:
@@ -573,184 +754,3 @@ components:
         scenarioRunEndTime:
           type: string
           format: date-time
-    PredicateObject:
-      required:
-      - jpQuery
-      - rValue
-      - type
-      type: object
-      properties:
-        comparator:
-          $ref: '#/components/schemas/HasCompareFunctionObject'
-        type:
-          type: string
-          description: The type of primitive this predicate operates on
-          enum:
-          - String
-          - Number
-          - Boolean
-        jpQuery:
-          type: string
-          description: The json path query to run to read from the response body
-        rValue:
-          type: object
-          description: The right hand value of the predicate
-      description: The list of predicates to evaluate against the status check response body
-      discriminator:
-        propertyName: type
-    EndpointConfiguration:
-      required:
-      - url
-      type: object
-      properties:
-        url:
-          type: string
-          description: The URL of the status check
-          format: url
-        method:
-          type: string
-          description: The method type of the status check
-          enum:
-          - GET
-          - POST
-          - PUT
-          - PATCH
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-            description: Optional request headers to be used when the status check is invoked
-          description: Optional request headers to be used when the status check is invoked
-        payload:
-          type: string
-          description: Payload for POST type of request
-        headersArn:
-          type: string
-          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
-    ServiceScenarioRunError:
-      type: object
-      properties:
-        teamId:
-          type: string
-        serviceId:
-          type: string
-        errorType:
-          type: string
-          enum:
-          - HALT_IN_PROGRESS
-          - RUN_IN_PROGRESS
-          - INELIGIBLE_SERVICE
-          - HEALTH_CHECK_IN_ALARM
-        errorMessage:
-          type: string
-    RunScenarioTestResponse:
-      type: object
-      properties:
-        runDetails:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScenarioRunDetails'
-        errorsPerService:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceScenarioRunError'
-    TeamServiceKey:
-      type: object
-      properties:
-        teamId:
-          type: string
-        serviceId:
-          type: string
-    TestSuiteScenario:
-      required:
-      - description
-      - name
-      - policyCategory
-      - scenarioToPromote
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        policyCategory:
-          type: string
-          enum:
-          - OTHER
-          - REDUNDANCY
-          - SCALABILITY
-          - DEPENDENCIES
-          - RISKS
-          - EXTRA_CREDIT
-        scenarioToPromote:
-          $ref: '#/components/schemas/ScenarioToPromote'
-    ResponseBodyEvaluation:
-      required:
-      - op
-      - predicates
-      type: object
-      properties:
-        op:
-          type: string
-          description: The operation to logically combine predicates into a success or failure
-          enum:
-          - AND
-          - OR
-        predicates:
-          type: array
-          description: The list of predicates to evaluate against the status check response body
-          items:
-            $ref: '#/components/schemas/PredicateObject'
-      description: The configuration for evaluating the success of a response body
-    GetLargeScaleTestsResponse:
-      type: object
-      properties:
-        disasterRecoveryTests:
-          type: array
-          items:
-            $ref: '#/components/schemas/LargeScaleTestResponse'
-    Selector:
-      required:
-      - labels
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-        labels:
-          type: object
-          additionalProperties:
-            type: array
-            description: Label selectors for matching resources
-            example:
-              foo:
-              - bar
-              - baz
-            items:
-              type: string
-              description: Label selectors for matching resources
-              example: '{"foo":["bar","baz"]}'
-          description: Label selectors for matching resources
-          example:
-            foo:
-            - bar
-            - baz
-    ScenarioRunDetails:
-      type: object
-      properties:
-        teamId:
-          type: string
-        serviceId:
-          type: string
-        runNumber:
-          type: integer
-          format: int64
-    HaltRequest:
-      type: object
-      properties:
-        reason:
-          type: string
-          description: The reason why this halt this requested.
-        reference:
-          type: string
-          description: A reference to why this halt was requested.

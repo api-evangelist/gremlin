@@ -140,46 +140,6 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
 components:
   schemas:
-    TargetingStrategy:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    AwsAutoscalingGroupsForAccount:
-      type: object
-      properties:
-        domain:
-          type: string
-        autoscalingGroups:
-          type: array
-          items:
-            $ref: '#/components/schemas/AwsAutoscalingGroupResponse'
-    AwsMetadataIamRoleResponse:
-      type: object
-      properties:
-        cfnTemplateLink:
-          type: string
-        permissionPolicy:
-          type: string
-        managedPolicies:
-          type: array
-          items:
-            type: string
-        trustPolicy:
-          type: string
-    AwsLoadBalancersForAccount:
-      type: object
-      properties:
-        domain:
-          type: string
-        loadBalancers:
-          type: array
-          items:
-            $ref: '#/components/schemas/AwsLoadBalancerResponse'
     AwsLoadBalancerResponse:
       type: object
       properties:
@@ -225,3 +185,43 @@ components:
         discoveredAt:
           type: string
           format: date-time
+    AwsMetadataIamRoleResponse:
+      type: object
+      properties:
+        cfnTemplateLink:
+          type: string
+        permissionPolicy:
+          type: string
+        managedPolicies:
+          type: array
+          items:
+            type: string
+        trustPolicy:
+          type: string
+    AwsAutoscalingGroupsForAccount:
+      type: object
+      properties:
+        domain:
+          type: string
+        autoscalingGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/AwsAutoscalingGroupResponse'
+    TargetingStrategy:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    AwsLoadBalancersForAccount:
+      type: object
+      properties:
+        domain:
+          type: string
+        loadBalancers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AwsLoadBalancerResponse'

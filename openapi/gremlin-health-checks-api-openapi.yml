@@ -306,23 +306,6 @@ components:
         responseBodyEvaluation:
           $ref: '#/components/schemas/ResponseBodyEvaluation'
       description: The configuration for evaluating the success/failure of a status check
-    TestEndpointConfigurationRequest:
-      required:
-      - endpointConfiguration
-      type: object
-      properties:
-        endpointConfiguration:
-          $ref: '#/components/schemas/EndpointConfiguration'
-        teamExternalIntegration:
-          $ref: '#/components/schemas/TeamExternalIntegrationReference'
-        webhookId:
-          type: string
-        integrationSpecificValues:
-          type: object
-          additionalProperties:
-            type: string
-            description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
-          description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
     HasCompareFunctionObject:
       type: object
     ResponseBodyEvaluation:
@@ -343,23 +326,93 @@ components:
           items:
             $ref: '#/components/schemas/PredicateObject'
       description: The configuration for evaluating the success of a response body
-    EndpointResponse:
+    TestEvaluationConfigurationRequest:
       required:
-      - httpStatusCode
-      - requestLatencyMs
-      - responseBody
+      - evaluationConfiguration
       type: object
       properties:
-        httpStatusCode:
-          type: integer
-          format: int32
-        requestLatencyMs:
-          type: integer
-          format: int32
-        contentType:
+        endpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        evaluationConfiguration:
+          $ref: '#/components/schemas/EvaluationConfiguration'
+        testEndpointResponse:
+          $ref: '#/components/schemas/EndpointResponse'
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
+      type: object
+      properties:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
           type: string
-        responseBody:
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
           type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
+    StatusCheckRequest:
+      required:
+      - endpointConfiguration
+      - evaluationConfiguration
+      - name
+      type: object
+      properties:
+        isContinuous:
+          type: boolean
+        isPrivateNetwork:
+          type: boolean
+        name:
+          type: string
+          description: The name of the status check to be created/updated
+        description:
+          type: string
+          description: The description of the status check to be created/updated
+        thirdPartyPresets:
+          type: string
+          readOnly: true
+        endpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        rawEndpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        evaluationConfiguration:
+          $ref: '#/components/schemas/EvaluationConfiguration'
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+        pollingIntervalSeconds:
+          type: integer
+          description: The frequency to poll in seconds, 15s to 60s inclusive
+          format: int32
+        category:
+          type: string
+          description: Status Check category can be one of ERRORS, LATENCY, REQUESTS OR UNKNOWN. The default category will be UNKNOWN.
+          enum:
+          - ERRORS
+          - LATENCY
+          - REQUESTS
+          - UNKNOWN
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            description: The tags associated with this status check
+            items:
+              type: string
+              description: The tags associated with this status check
+          description: The tags associated with this status check
     StatusCheck:
       type: object
       properties:
@@ -473,93 +526,23 @@ components:
           type: string
           description: The name of the external integration for the health check to be created/updated
       description: Represents the configuration for referencing an external integration
-    PredicateObject:
-      required:
-      - jpQuery
-      - rValue
-      - type
-      type: object
-      properties:
-        comparator:
-          $ref: '#/components/schemas/HasCompareFunctionObject'
-        type:
-          type: string
-          description: The type of primitive this predicate operates on
-          enum:
-          - String
-          - Number
-          - Boolean
-        jpQuery:
-          type: string
-          description: The json path query to run to read from the response body
-        rValue:
-          type: object
-          description: The right hand value of the predicate
-      description: The list of predicates to evaluate against the status check response body
-      discriminator:
-        propertyName: type
-    TestEvaluationConfigurationRequest:
-      required:
-      - evaluationConfiguration
-      type: object
-      properties:
-        endpointConfiguration:
-          $ref: '#/components/schemas/EndpointConfiguration'
-        evaluationConfiguration:
-          $ref: '#/components/schemas/EvaluationConfiguration'
-        testEndpointResponse:
-          $ref: '#/components/schemas/EndpointResponse'
-        teamExternalIntegration:
-          $ref: '#/components/schemas/TeamExternalIntegrationReference'
-    StatusCheckRequest:
+    TestEndpointConfigurationRequest:
       required:
       - endpointConfiguration
-      - evaluationConfiguration
-      - name
       type: object
       properties:
-        isContinuous:
-          type: boolean
-        isPrivateNetwork:
-          type: boolean
-        name:
-          type: string
-          description: The name of the status check to be created/updated
-        description:
-          type: string
-          description: The description of the status check to be created/updated
-        thirdPartyPresets:
-          type: string
-          readOnly: true
         endpointConfiguration:
           $ref: '#/components/schemas/EndpointConfiguration'
-        rawEndpointConfiguration:
-          $ref: '#/components/schemas/EndpointConfiguration'
-        evaluationConfiguration:
-          $ref: '#/components/schemas/EvaluationConfiguration'
         teamExternalIntegration:
           $ref: '#/components/schemas/TeamExternalIntegrationReference'
-        pollingIntervalSeconds:
-          type: integer
-          description: The frequency to poll in seconds, 15s to 60s inclusive
-          format: int32
-        category:
+        webhookId:
           type: string
-          description: Status Check category can be one of ERRORS, LATENCY, REQUESTS OR UNKNOWN. The default category will be UNKNOWN.
-          enum:
-          - ERRORS
-          - LATENCY
-          - REQUESTS
-          - UNKNOWN
-        multiSelectTags:
+        integrationSpecificValues:
           type: object
           additionalProperties:
-            type: array
-            description: The tags associated with this status check
-            items:
-              type: string
-              description: The tags associated with this status check
-          description: The tags associated with this status check
+            type: string
+            description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+          description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
     EndpointConfiguration:
       required:
       - url
@@ -589,3 +572,20 @@ components:
         headersArn:
           type: string
           description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
+    EndpointResponse:
+      required:
+      - httpStatusCode
+      - requestLatencyMs
+      - responseBody
+      type: object
+      properties:
+        httpStatusCode:
+          type: integer
+          format: int32
+        requestLatencyMs:
+          type: integer
+          format: int32
+        contentType:
+          type: string
+        responseBody:
+          type: string

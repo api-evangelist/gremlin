@@ -61,60 +61,6 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
 components:
   schemas:
-    ScoreSummaryResponse:
-      type: object
-      properties:
-        category:
-          type: string
-          enum:
-          - OTHER
-          - REDUNDANCY
-          - SCALABILITY
-          - DEPENDENCIES
-          - RISKS
-          - EXTRA_CREDIT
-        maxScore:
-          type: number
-          format: double
-        score:
-          type: number
-          format: double
-        previousIntervalScore:
-          type: number
-          format: double
-        rank:
-          type: integer
-          format: int32
-    ReliabilityCategorySummary:
-      type: object
-      properties:
-        category:
-          type: string
-          enum:
-          - OTHER
-          - REDUNDANCY
-          - SCALABILITY
-          - DEPENDENCIES
-          - RISKS
-          - EXTRA_CREDIT
-        policyTarget:
-          type: string
-          enum:
-          - SERVICE
-          - SERVICE_DEPENDENCY
-        policyStates:
-          type: array
-          items:
-            $ref: '#/components/schemas/PolicyEvaluation'
-        rank:
-          type: integer
-          format: int32
-        score:
-          type: number
-          format: double
-        maxScore:
-          type: number
-          format: double
     ReliabilityReportResponse:
       type: object
       properties:
@@ -196,3 +142,57 @@ components:
           - RECURRING_SCHEDULE
         triggeredBy:
           type: string
+    ScoreSummaryResponse:
+      type: object
+      properties:
+        category:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        maxScore:
+          type: number
+          format: double
+        score:
+          type: number
+          format: double
+        previousIntervalScore:
+          type: number
+          format: double
+        rank:
+          type: integer
+          format: int32
+    ReliabilityCategorySummary:
+      type: object
+      properties:
+        category:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        policyTarget:
+          type: string
+          enum:
+          - SERVICE
+          - SERVICE_DEPENDENCY
+        policyStates:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyEvaluation'
+        rank:
+          type: integer
+          format: int32
+        score:
+          type: number
+          format: double
+        maxScore:
+          type: number
+          format: double
