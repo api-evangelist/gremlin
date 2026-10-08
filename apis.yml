@@ -987,6 +987,10 @@ apis:
   - type: JSONSchema
     url: json-schema/gremlin-schema-index.yml
 common:
+  - type: RateLimits
+    url: rate-limits/gremlin-rate-limits.yml
+  - type: FinOps
+    url: finops/gremlin-finops.yml
   - type: Plans
     url: plans/gremlin-plans-pricing.yml
   - type: Website
