@@ -186,23 +186,30 @@ paths:
         - CLIENTS_WRITE
 components:
   schemas:
-    NetworkInterface:
+    Container:
       required:
-      - ip_addresses
+      - id
       type: object
       properties:
+        id:
+          type: string
         name:
           type: string
-        ip_addresses:
+        image:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        dns_servers:
+          type: array
+          writeOnly: true
+          items:
+            type: string
+        dnsServers:
           type: array
           items:
-            $ref: '#/components/schemas/IPAddress'
-        is_default:
-          type: boolean
-        is_physical:
-          type: boolean
-        is_virtual:
-          type: boolean
+            type: string
     NetworkInterfaceData:
       type: object
       properties:
@@ -210,6 +217,35 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/NetworkInterface'
+    SemanticVersion:
+      type: object
+      properties:
+        major:
+          type: integer
+          format: int32
+        minor:
+          type: integer
+          format: int32
+        patch:
+          type: integer
+          format: int32
+    VersionInfo:
+      type: object
+      properties:
+        gremlind:
+          $ref: '#/components/schemas/SemanticVersion'
+        gremlin:
+          $ref: '#/components/schemas/SemanticVersion'
+    GpuInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        driver:
+          type: string
+        memory_size:
+          type: integer
+          format: int64
     Client:
       type: object
       properties:
@@ -322,108 +358,6 @@ components:
           enum:
           - Linux
           - Windows
-    HardwareInfo:
-      type: object
-      properties:
-        cpu_data:
-          type: array
-          items:
-            $ref: '#/components/schemas/CpuInfo'
-        memory_size:
-          type: integer
-          format: int64
-        gpu_data:
-          type: array
-          items:
-            $ref: '#/components/schemas/GpuInfo'
-    VersionInfo:
-      type: object
-      properties:
-        gremlind:
-          $ref: '#/components/schemas/SemanticVersion'
-        gremlin:
-          $ref: '#/components/schemas/SemanticVersion'
-    GpuInfo:
-      type: object
-      properties:
-        name:
-          type: string
-        driver:
-          type: string
-        memory_size:
-          type: integer
-          format: int64
-    IPAddress:
-      type: object
-      properties:
-        ip:
-          type: string
-        protocolFamily:
-          type: string
-          enum:
-          - INET
-          - INET6
-          - UNIX
-    SemanticVersion:
-      type: object
-      properties:
-        major:
-          type: integer
-          format: int32
-        minor:
-          type: integer
-          format: int32
-        patch:
-          type: integer
-          format: int32
-    ValidationAttackResult:
-      type: object
-      properties:
-        attackType:
-          type: string
-        status:
-          type: string
-          enum:
-          - SUCCESS
-          - ERROR
-        rawErrors:
-          type: array
-          items:
-            type: string
-        targeting:
-          type: string
-          enum:
-          - CONTAINER
-          - HOST
-    CpuInfo:
-      type: object
-      properties:
-        name:
-          type: string
-    Container:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        image:
-          type: string
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        dns_servers:
-          type: array
-          writeOnly: true
-          items:
-            type: string
-        dnsServers:
-          type: array
-          items:
-            type: string
     ValidationAttack:
       type: object
       properties:
@@ -457,3 +391,69 @@ components:
           type: string
         summary:
           type: string
+    IPAddress:
+      type: object
+      properties:
+        ip:
+          type: string
+        protocolFamily:
+          type: string
+          enum:
+          - INET
+          - INET6
+          - UNIX
+    ValidationAttackResult:
+      type: object
+      properties:
+        attackType:
+          type: string
+        status:
+          type: string
+          enum:
+          - SUCCESS
+          - ERROR
+        rawErrors:
+          type: array
+          items:
+            type: string
+        targeting:
+          type: string
+          enum:
+          - CONTAINER
+          - HOST
+    NetworkInterface:
+      required:
+      - ip_addresses
+      type: object
+      properties:
+        name:
+          type: string
+        ip_addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPAddress'
+        is_default:
+          type: boolean
+        is_physical:
+          type: boolean
+        is_virtual:
+          type: boolean
+    CpuInfo:
+      type: object
+      properties:
+        name:
+          type: string
+    HardwareInfo:
+      type: object
+      properties:
+        cpu_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CpuInfo'
+        memory_size:
+          type: integer
+          format: int64
+        gpu_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GpuInfo'

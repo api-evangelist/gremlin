@@ -152,14 +152,6 @@ paths:
         - EXPERIMENTS_WRITE
 components:
   schemas:
-    ApplicationLabel:
-      type: object
-      properties:
-        value:
-          type: string
-        cardinality:
-          type: integer
-          format: int32
     Application:
       type: object
       properties:
@@ -190,3 +182,11 @@ components:
           type: array
           items:
             type: string
+    ApplicationLabel:
+      type: object
+      properties:
+        value:
+          type: string
+        cardinality:
+          type: integer
+          format: int32

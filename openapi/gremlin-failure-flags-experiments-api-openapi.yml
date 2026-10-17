@@ -454,87 +454,6 @@ paths:
         - EXPERIMENTS_WRITE
 components:
   schemas:
-    ExperimentRun:
-      type: object
-      properties:
-        startTime:
-          type: string
-          format: date-time
-        impactSeries:
-          type: array
-          items:
-            $ref: '#/components/schemas/SeriesMinute'
-        deliverySeries:
-          type: array
-          items:
-            $ref: '#/components/schemas/SeriesMinute'
-        triggerSource:
-          type: string
-          enum:
-          - MANUAL
-          - RUN_ALL
-          - SCHEDULED
-          - RECURRING_SCHEDULE
-        triggeredBy:
-          type: string
-      readOnly: true
-    TargetSampling:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    CompletedExperimentPagedResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompletedRunSummaryResponse'
-    ExperimentPagedResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Experiment'
     SeriesMinute:
       type: object
       properties:
@@ -619,6 +538,78 @@ components:
             foo:
             - bar
             - baz
+    ExperimentPagedResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Experiment'
+    ExperimentRun:
+      type: object
+      properties:
+        startTime:
+          type: string
+          format: date-time
+        impactSeries:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeriesMinute'
+        deliverySeries:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeriesMinute'
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        triggeredBy:
+          type: string
+      readOnly: true
+    CompletedExperimentPagedResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompletedRunSummaryResponse'
     Experiment:
       required:
       - app
@@ -670,3 +661,12 @@ components:
         protected:
           type: boolean
           readOnly: true
+    TargetSampling:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type

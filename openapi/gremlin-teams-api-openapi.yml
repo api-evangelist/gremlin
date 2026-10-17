@@ -340,39 +340,6 @@ paths:
         - TEAMS_READ
 components:
   schemas:
-    Field:
-      type: object
-      properties:
-        field:
-          type: string
-        presets:
-          type: array
-          items:
-            type: string
-        multiple:
-          type: boolean
-        answer:
-          type: array
-          items:
-            type: string
-        prompt:
-          $ref: '#/components/schemas/Prompt'
-    ScheduleWindow:
-      required:
-      - end
-      - start
-      type: object
-      properties:
-        start:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
-        end:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
     ClientVersionRange:
       type: object
       properties:
@@ -381,151 +348,6 @@ components:
         maximum:
           $ref: '#/components/schemas/SemanticVersion'
       description: A Map representing the minimum and maximum client versions authenticated with this Team.
-    PagedResponseTeamResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamResponse'
-    UpdateTeamRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name for the team
-        production:
-          type: boolean
-          description: Flag to determine if team is marked for production
-        defaultTeamRole:
-          type: string
-          description: The default team role
-        prefs:
-          $ref: '#/components/schemas/PrefsPatch'
-      description: A request to update an team
-    TeamResponse:
-      type: object
-      properties:
-        identifier:
-          type: string
-          description: The identifier of this Team.
-        companyId:
-          type: string
-          description: The identifier of the company to which this Team belongs.
-        name:
-          type: string
-          description: The name of this Team.
-        state:
-          type: string
-          description: The state of this Team.
-        clientVersions:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ClientVersionRange'
-          description: A Map representing the minimum and maximum client versions authenticated with this Team.
-        certificate:
-          type: string
-          description: The PEM encoded certificate associated with this Team.
-        certificateSetAt:
-          type: string
-          description: The time of creation for the certificate credentials associated with this Team.
-          format: date-time
-        certificateSetBy:
-          type: string
-          description: The account that set the certificate credentials associated with this Team.
-        secretSetAt:
-          type: string
-          description: The time of creation of the secret associated with this Team.
-          format: date-time
-        secretSetBy:
-          type: string
-          description: The account that set the secret associated with this Team.
-        production:
-          type: boolean
-          description: Flag to determine if team is marked for production
-        prefs:
-          $ref: '#/components/schemas/Prefs'
-        defaultTeamRole:
-          type: string
-          description: The default team role
-        createdAt:
-          type: string
-          description: An ISO8601 timestamp representing the time at which this team was created
-          format: date-time
-    TeamProfilePrompt:
-      type: object
-      properties:
-        updated_by:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-        created_at:
-          type: string
-          format: date-time
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/Field'
-        completedByUsers:
-          type: array
-          items:
-            type: string
-        skippedByUsers:
-          type: array
-          items:
-            type: string
-    PrefsPatch:
-      type: object
-      properties:
-        testRunRestrictionWindows:
-          maxItems: 7
-          minItems: 0
-          type: array
-          items:
-            $ref: '#/components/schemas/TestRunRestrictionWindow'
-      description: Prefs on team level
-    Prefs:
-      type: object
-      properties:
-        autoAddUsers:
-          type: boolean
-        domain:
-          type: string
-        testRunRestrictionWindows:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestRunRestrictionWindow'
-      description: Prefs for team
-    SemanticVersion:
-      type: object
-      properties:
-        major:
-          type: integer
-          format: int32
-        minor:
-          type: integer
-          format: int32
-        patch:
-          type: integer
-          format: int32
     TeamProfile:
       type: object
       properties:
@@ -586,6 +408,191 @@ components:
         createdAt:
           type: string
           format: date-time
+    PagedResponseTeamResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamResponse'
+    SemanticVersion:
+      type: object
+      properties:
+        major:
+          type: integer
+          format: int32
+        minor:
+          type: integer
+          format: int32
+        patch:
+          type: integer
+          format: int32
+    TeamProfilePrompt:
+      type: object
+      properties:
+        updated_by:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field'
+        completedByUsers:
+          type: array
+          items:
+            type: string
+        skippedByUsers:
+          type: array
+          items:
+            type: string
+    PrefsPatch:
+      type: object
+      properties:
+        testRunRestrictionWindows:
+          maxItems: 7
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunRestrictionWindow'
+      description: Prefs on team level
+    ScheduleWindow:
+      required:
+      - end
+      - start
+      type: object
+      properties:
+        start:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+        end:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+    Prompt:
+      type: object
+      properties:
+        prefix:
+          type: string
+        suffix:
+          type: string
+    UpdateTeamRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name for the team
+        production:
+          type: boolean
+          description: Flag to determine if team is marked for production
+        defaultTeamRole:
+          type: string
+          description: The default team role
+        prefs:
+          $ref: '#/components/schemas/PrefsPatch'
+      description: A request to update an team
+    Field:
+      type: object
+      properties:
+        field:
+          type: string
+        presets:
+          type: array
+          items:
+            type: string
+        multiple:
+          type: boolean
+        answer:
+          type: array
+          items:
+            type: string
+        prompt:
+          $ref: '#/components/schemas/Prompt'
+    TeamResponse:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The identifier of this Team.
+        companyId:
+          type: string
+          description: The identifier of the company to which this Team belongs.
+        name:
+          type: string
+          description: The name of this Team.
+        state:
+          type: string
+          description: The state of this Team.
+        clientVersions:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ClientVersionRange'
+          description: A Map representing the minimum and maximum client versions authenticated with this Team.
+        certificate:
+          type: string
+          description: The PEM encoded certificate associated with this Team.
+        certificateSetAt:
+          type: string
+          description: The time of creation for the certificate credentials associated with this Team.
+          format: date-time
+        certificateSetBy:
+          type: string
+          description: The account that set the certificate credentials associated with this Team.
+        secretSetAt:
+          type: string
+          description: The time of creation of the secret associated with this Team.
+          format: date-time
+        secretSetBy:
+          type: string
+          description: The account that set the secret associated with this Team.
+        production:
+          type: boolean
+          description: Flag to determine if team is marked for production
+        prefs:
+          $ref: '#/components/schemas/Prefs'
+        defaultTeamRole:
+          type: string
+          description: The default team role
+        createdAt:
+          type: string
+          description: An ISO8601 timestamp representing the time at which this team was created
+          format: date-time
+    Prefs:
+      type: object
+      properties:
+        autoAddUsers:
+          type: boolean
+        domain:
+          type: string
+        testRunRestrictionWindows:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunRestrictionWindow'
+      description: Prefs for team
     TestRunRestrictionWindow:
       required:
       - dayOfWeek
@@ -608,10 +615,3 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ScheduleWindow'
-    Prompt:
-      type: object
-      properties:
-        prefix:
-          type: string
-        suffix:
-          type: string

@@ -386,6 +386,13 @@ components:
           - SCENARIO
         serviceEntityType:
           type: boolean
+    JiraId:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
     CreateJiraIssueFields:
       required:
       - issuetype
@@ -409,17 +416,6 @@ components:
           type: array
           items:
             type: string
-    JiraPriority:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        iconUrl:
-          type: string
     CreateJiraIssueRequest:
       required:
       - entity
@@ -430,10 +426,14 @@ components:
           $ref: '#/components/schemas/GremlinEntityReference'
         fields:
           $ref: '#/components/schemas/CreateJiraIssueFields'
-    JiraId:
+    JiraPriority:
       required:
       - id
       type: object
       properties:
         id:
+          type: string
+        name:
+          type: string
+        iconUrl:
           type: string

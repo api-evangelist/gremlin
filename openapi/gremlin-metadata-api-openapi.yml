@@ -49,17 +49,6 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
 components:
   schemas:
-    ArgGroup:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        args:
-          type: array
-          items:
-            type: string
     Versioning:
       type: object
       properties:
@@ -67,8 +56,6 @@ components:
           type: string
         deprecated:
           type: boolean
-    ValidatorObject:
-      type: object
     DisplayConfig:
       type: object
       properties:
@@ -83,6 +70,17 @@ components:
           items:
             $ref: '#/components/schemas/ArgGroup'
         values:
+          type: array
+          items:
+            type: string
+    ArgGroup:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        args:
           type: array
           items:
             type: string
@@ -128,6 +126,8 @@ components:
           type: object
           additionalProperties:
             type: string
+    ValidatorObject:
+      type: object
     InfraAttackArgObject:
       type: object
       properties:

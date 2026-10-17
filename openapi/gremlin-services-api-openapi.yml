@@ -940,13 +940,67 @@ paths:
         - SERVICES_RUN
 components:
   schemas:
-    ApplicationSelector:
-      required:
-      - applicationName
+    ScheduleSettings:
       type: object
       properties:
-        applicationName:
+        enabled:
+          type: boolean
+        scheduleType:
           type: string
+          enum:
+          - OnlyOnce
+          - Random
+        triggerType:
+          type: string
+          enum:
+          - Passed
+          - RunOnce
+          - Always
+        triggers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Trigger'
+    DependencyResponse:
+      type: object
+      properties:
+        serviceId:
+          type: string
+        guid:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        ignored:
+          type: boolean
+        characteristics:
+          type: object
+          additionalProperties:
+            type: string
+        teamId:
+          type: string
+        discoveredPorts:
+          type: array
+          items:
+            type: integer
+            format: int32
+        spofAudit:
+          $ref: '#/components/schemas/SpofAudit'
+        createdBy:
+          type: string
+        updatedBy:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        lastSeenAt:
+          type: string
+          format: date-time
+        isSpof:
+          type: boolean
     Trigger:
       required:
       - dayOfWeek
@@ -969,6 +1023,131 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ScheduleWindow'
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
+      type: object
+      properties:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
+    ServiceReadinessAgentsFromPodUIDsRequest:
+      type: object
+      properties:
+        owningTeamId:
+          type: string
+        podUIDs:
+          maxItems: 2147483647
+          minItems: 1
+          type: array
+          items:
+            type: string
+    TestSeriesRunResponse:
+      type: object
+      properties:
+        teamId:
+          type: string
+        serviceId:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        pauseUntil:
+          type: string
+          format: date-time
+        pauseReason:
+          type: string
+        tests:
+          type: array
+          items:
+            type: string
+        currentTestIndex:
+          type: integer
+          format: int64
+        createdBy:
+          type: string
+        state:
+          type: string
+          enum:
+          - PENDING
+          - ACTIVE
+          - FINISHED
+          - HALTED
+          - FAILED
+    DetailedServiceRiskSummaryResponse:
+      type: object
+      properties:
+        serviceId:
+          type: string
+        evaluations:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskEvaluationResponse'
+        lastEvaluatedAt:
+          type: string
+          format: date-time
+    ScheduleWindow:
+      required:
+      - end
+      - start
+      type: object
+      properties:
+        start:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+        end:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+    ServiceFromLoadBalancerRequest:
+      required:
+      - arn
+      - name
+      - targetingStrategy
+      type: object
+      properties:
+        arn:
+          type: string
+        name:
+          type: string
+        targetingStrategy:
+          $ref: '#/components/schemas/TargetingStrategy'
+    SpofAudit:
+      type: object
+      properties:
+        markedAsSpofOn:
+          type: string
+          format: date-time
+        markedAsSpofBy:
+          type: string
+    CategoryAudit:
+      type: object
+      properties:
+        categorySetOn:
+          type: string
+          format: date-time
+        categorySetBy:
+          type: string
     UserDefinedServiceRequest:
       required:
       - name
@@ -1014,71 +1193,54 @@ components:
           type: boolean
         originatingScenarioId:
           type: string
-    Graph:
+    ServiceStatusCheckResponse:
       type: object
       properties:
-        start:
-          type: string
-          format: date-time
-        end:
-          type: string
-          format: date-time
-        numOfDataPoints:
-          type: integer
-          format: int32
-        statsByDate:
+        serviceStatusChecks:
           type: array
           items:
-            $ref: '#/components/schemas/StatsByDateTime'
-    DefaultJiraIssueFields:
+            $ref: '#/components/schemas/ServiceStatusCheck'
+        autoGremlinAwsStatusChecks:
+          type: array
+          items:
+            $ref: '#/components/schemas/GremlinAwsStatusCheckMetadata'
+        loadBalancerStates:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoadBalancerState'
+    BulkUpdateRequest:
       required:
-      - assignee
-      - issuetype
-      - priority
-      - project
+      - serviceIds
+      - statusCheckIdsToAttach
       type: object
       properties:
-        summary:
-          type: string
-        description:
-          type: string
-        issuetype:
-          type: string
-        assignee:
-          type: string
-        priority:
-          type: string
-        project:
-          type: string
-        labels:
+        serviceIds:
+          maxItems: 2147483647
+          minItems: 1
           type: array
           items:
             type: string
-    PredicateObject:
-      required:
-      - jpQuery
-      - rValue
-      - type
+        statusCheckIdsToAttach:
+          maxItems: 2147483647
+          minItems: 1
+          type: array
+          items:
+            type: string
+    TestEligibleToRun:
       type: object
       properties:
-        comparator:
-          $ref: '#/components/schemas/HasCompareFunctionObject'
-        type:
+        reliabilityTestId:
           type: string
-          description: The type of primitive this predicate operates on
+        dependencyId:
+          type: string
+        failureFlagName:
+          type: string
+        status:
+          type: string
           enum:
-          - String
-          - Number
-          - Boolean
-        jpQuery:
-          type: string
-          description: The json path query to run to read from the response body
-        rValue:
-          type: object
-          description: The right hand value of the predicate
-      description: The list of predicates to evaluate against the status check response body
-      discriminator:
-        propertyName: type
+          - Passed
+          - RunOnce
+          - Always
     TargetingStrategy:
       required:
       - type
@@ -1088,6 +1250,63 @@ components:
           type: string
       discriminator:
         propertyName: type
+    EvaluationConfiguration:
+      required:
+      - okStatusCodes
+      type: object
+      properties:
+        okLatencyMaxMs:
+          type: integer
+          description: The maximum latency in milliseconds for a successful status check
+          format: int32
+        okStatusCodes:
+          type: array
+          description: The list of successful response status codes for a successful status check
+          items:
+            type: string
+            description: The list of successful response status codes for a successful status check
+        responseBodyEvaluation:
+          $ref: '#/components/schemas/ResponseBodyEvaluation'
+      description: The configuration for evaluating the success/failure of a status check
+    StatsByDateTime:
+      type: object
+      properties:
+        trackingDate:
+          type: string
+          format: date-time
+        value:
+          type: number
+          format: double
+    RiskSummaryStats:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+        atRisk:
+          type: integer
+          format: int32
+        previousIntervalAtRisk:
+          type: integer
+          format: int32
+        evaluationState:
+          type: string
+          enum:
+          - RISKS_NOT_SUPPORTED
+          - NO_DEPLOYMENT_FOUND
+          - EVALUATED
+          - RISKS_NOT_INCLUDED
+    BulkDeleteRequest:
+      required:
+      - serviceIds
+      type: object
+      properties:
+        serviceIds:
+          maxItems: 2147483647
+          minItems: 1
+          type: array
+          items:
+            type: string
     ServiceUpdateRequest:
       type: object
       properties:
@@ -1135,235 +1354,56 @@ components:
             type: string
         enabledGremlinAwsStatusCheck:
           type: boolean
-    DefineDependencyRequest:
+    MetricDataQuery:
+      type: object
+    TeamExternalIntegrationReference:
+      title: StatusCheckRequest.TeamExternalIntegrationReference
       required:
-      - endpoints
       - name
       type: object
       properties:
-        endpoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/DependencyEndpoint'
+        type:
+          type: string
+          description: The type of the external integration for the health check to be created/updated
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+        observabilityToolType:
+          type: string
+          description: The observability tool type of the external integration for the health check to be created/updated
+          enum:
+          - DATADOG
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - AWS
+          - AZURE
+        domain:
+          type: string
+          description: The domain of the observability tool type of the external integration for the health check to be created/updated
         name:
-          maxLength: 253
-          minLength: 1
           type: string
-        discoveredDependencyId:
-          type: string
-        isSpof:
-          type: boolean
-          description: Boolean to denote if a dependency is a single point of failure
-    MetricDataQuery:
-      type: object
-    RiskSummaryStats:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int32
-        atRisk:
-          type: integer
-          format: int32
-        previousIntervalAtRisk:
-          type: integer
-          format: int32
-        evaluationState:
-          type: string
-          enum:
-          - RISKS_NOT_SUPPORTED
-          - NO_DEPLOYMENT_FOUND
-          - EVALUATED
-          - RISKS_NOT_INCLUDED
-    ServiceCreationReadinessResponse:
-      type: object
-      properties:
-        hasProcesses:
-          type: boolean
-        processCollectionOn:
-          type: boolean
-    ServiceReadinessClientsResponse:
-      type: object
-      properties:
-        clientIds:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-    UpdateDependencyRequest:
-      type: object
-      properties:
-        name:
-          maxLength: 253
-          minLength: 1
-          type: string
-          description: Updated name of dependency
-        isSpof:
-          type: boolean
-          description: Boolean to denote if a dependency is a single point of failure
-    ScheduleWindow:
-      required:
-      - end
-      - start
-      type: object
-      properties:
-        start:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
-        end:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
-    CategoryAudit:
-      type: object
-      properties:
-        categorySetOn:
-          type: string
-          format: date-time
-        categorySetBy:
-          type: string
-    EvaluationConfiguration:
-      required:
-      - okStatusCodes
-      type: object
-      properties:
-        okLatencyMaxMs:
-          type: integer
-          description: The maximum latency in milliseconds for a successful status check
-          format: int32
-        okStatusCodes:
-          type: array
-          description: The list of successful response status codes for a successful status check
-          items:
-            type: string
-            description: The list of successful response status codes for a successful status check
-        responseBodyEvaluation:
-          $ref: '#/components/schemas/ResponseBodyEvaluation'
-      description: The configuration for evaluating the success/failure of a status check
-    DetailedServiceRiskSummaryResponse:
-      type: object
-      properties:
-        serviceId:
-          type: string
-        evaluations:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskEvaluationResponse'
-        lastEvaluatedAt:
-          type: string
-          format: date-time
-    PagedResponseUserDefinedServiceResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserDefinedServiceResponse'
-    BulkDeleteRequest:
-      required:
-      - serviceIds
-      type: object
-      properties:
-        serviceIds:
-          maxItems: 2147483647
-          minItems: 1
-          type: array
-          items:
-            type: string
-    BulkUpdateRequest:
-      required:
-      - serviceIds
-      - statusCheckIdsToAttach
-      type: object
-      properties:
-        serviceIds:
-          maxItems: 2147483647
-          minItems: 1
-          type: array
-          items:
-            type: string
-        statusCheckIdsToAttach:
-          maxItems: 2147483647
-          minItems: 1
-          type: array
-          items:
-            type: string
-    TestSeriesRunResponse:
-      type: object
-      properties:
-        teamId:
-          type: string
-        serviceId:
-          type: string
-        startTime:
-          type: string
-          format: date-time
-        pauseUntil:
-          type: string
-          format: date-time
-        pauseReason:
-          type: string
-        tests:
-          type: array
-          items:
-            type: string
-        currentTestIndex:
-          type: integer
-          format: int64
-        createdBy:
-          type: string
-        state:
-          type: string
-          enum:
-          - PENDING
-          - ACTIVE
-          - FINISHED
-          - HALTED
-          - FAILED
-    TestEligibleToRun:
-      type: object
-      properties:
-        reliabilityTestId:
-          type: string
-        dependencyId:
-          type: string
-        failureFlagName:
-          type: string
-        status:
-          type: string
-          enum:
-          - Passed
-          - RunOnce
-          - Always
-    BulkCreateServicesFromLoadBalancersRequest:
-      type: object
-      properties:
-        serviceFromLoadBalancerRequests:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceFromLoadBalancerRequest'
-        accountId:
-          type: string
+          description: The name of the external integration for the health check to be created/updated
+      description: Represents the configuration for referencing an external integration
     PagedResponseDependencyResponse:
       type: object
       properties:
@@ -1388,122 +1428,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DependencyResponse'
-    MetricResponse:
-      type: object
-      properties:
-        awsResource:
-          type: string
-        graphs:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Graph'
-    ResponseBodyEvaluation:
-      required:
-      - op
-      - predicates
-      type: object
-      properties:
-        op:
-          type: string
-          description: The operation to logically combine predicates into a success or failure
-          enum:
-          - AND
-          - OR
-        predicates:
-          type: array
-          description: The list of predicates to evaluate against the status check response body
-          items:
-            $ref: '#/components/schemas/PredicateObject'
-      description: The configuration for evaluating the success of a response body
-    DependencyResponse:
-      type: object
-      properties:
-        serviceId:
-          type: string
-        guid:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        ignored:
-          type: boolean
-        characteristics:
-          type: object
-          additionalProperties:
-            type: string
-        teamId:
-          type: string
-        discoveredPorts:
-          type: array
-          items:
-            type: integer
-            format: int32
-        spofAudit:
-          $ref: '#/components/schemas/SpofAudit'
-        createdBy:
-          type: string
-        updatedBy:
-          type: string
-        updatedAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        lastSeenAt:
-          type: string
-          format: date-time
-        isSpof:
-          type: boolean
-    LoadGenerator:
-      type: object
-      properties:
-        identifier:
-          type: string
-        name:
-          type: string
-        webhookStartLoadTriggerId:
-          type: string
-        webhookStatusCheckId:
-          type: string
-        webhookStopLoadTriggerId:
-          type: string
-        active:
-          type: boolean
-        loadGeneratorWebhooks:
-          type: array
-          items:
-            type: string
-    ThresholdStrategy:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    ServiceOwner:
-      type: object
-      properties:
-        identifier:
-          type: string
-    LoadBalancerState:
-      type: object
-      properties:
-        accountId:
-          type: string
-        name:
-          type: string
-        arn:
-          type: string
-        state:
-          type: string
-          enum:
-          - ACTIVE
-          - IDLE
-          - DISAPPEARED
     StartBaselineRequest:
       title: StartBaselineRequest
       type: object
@@ -1513,102 +1437,49 @@ components:
           items:
             type: string
       description: Represents a request to run all tests
-    ScheduleSettings:
+    PagedResponseUserDefinedServiceResponse:
       type: object
       properties:
-        enabled:
-          type: boolean
-        scheduleType:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
           type: string
-          enum:
-          - OnlyOnce
-          - Random
-        triggerType:
-          type: string
-          enum:
-          - Passed
-          - RunOnce
-          - Always
-        triggers:
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/Trigger'
-    ServiceFromLoadBalancerRequest:
+            $ref: '#/components/schemas/UserDefinedServiceResponse'
+    DefineDependencyRequest:
       required:
-      - arn
+      - endpoints
       - name
-      - targetingStrategy
       type: object
       properties:
-        arn:
-          type: string
+        endpoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/DependencyEndpoint'
         name:
+          maxLength: 253
+          minLength: 1
           type: string
-        targetingStrategy:
-          $ref: '#/components/schemas/TargetingStrategy'
-    RiskEvaluationResponse:
-      type: object
-      properties:
-        name:
+        discoveredDependencyId:
           type: string
-        id:
-          type: string
-        evaluatedAt:
-          type: string
-          format: date-time
-        notes:
-          type: string
-        document:
-          type: string
-        isAtRisk:
+        isSpof:
           type: boolean
-    StatsByDateTime:
-      type: object
-      properties:
-        trackingDate:
-          type: string
-          format: date-time
-        value:
-          type: number
-          format: double
-    GremlinAwsStatusCheckMetadata:
-      type: object
-      properties:
-        identifier:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        definition:
-          $ref: '#/components/schemas/AwsHealthCheckDefinition'
-        enabled:
-          type: boolean
-        category:
-          type: string
-          enum:
-          - ERRORS
-          - LATENCY
-          - REQUESTS
-          - UNKNOWN
-    ServiceCreationReadinessForOwnedAndSharedAssetsResponse:
-      type: object
-      properties:
-        hasProcesses:
-          type: boolean
-        processCollectionOn:
-          type: boolean
-        sharedAssetsReadiness:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ServiceCreationReadinessResponse'
-    DependencyEndpoint:
-      type: object
-      properties:
-        address:
-          type: string
-        port:
-          type: string
+          description: Boolean to denote if a dependency is a single point of failure
     ServiceStatusCheck:
       type: object
       properties:
@@ -1637,8 +1508,22 @@ components:
           - UNKNOWN
         categoryAudit:
           $ref: '#/components/schemas/CategoryAudit'
-    HasCompareFunctionObject:
+    Graph:
       type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        numOfDataPoints:
+          type: integer
+          format: int32
+        statsByDate:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatsByDateTime'
     UserDefinedServiceResponse:
       type: object
       properties:
@@ -1728,111 +1613,144 @@ components:
           type: boolean
         createdFromOnboarding:
           type: boolean
-    AwsTarget:
+    ServiceCreationReadinessResponse:
       type: object
       properties:
-        arn:
+        hasProcesses:
+          type: boolean
+        processCollectionOn:
+          type: boolean
+    ServiceReadinessClientsResponse:
+      type: object
+      properties:
+        clientIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+    BulkCreateServicesFromLoadBalancersRequest:
+      type: object
+      properties:
+        serviceFromLoadBalancerRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceFromLoadBalancerRequest'
+        accountId:
           type: string
+    DefaultJiraIssueFields:
+      required:
+      - assignee
+      - issuetype
+      - priority
+      - project
+      type: object
+      properties:
+        summary:
+          type: string
+        description:
+          type: string
+        issuetype:
+          type: string
+        assignee:
+          type: string
+        priority:
+          type: string
+        project:
+          type: string
+        labels:
+          type: array
+          items:
+            type: string
+    UpdateDependencyRequest:
+      type: object
+      properties:
         name:
+          maxLength: 253
+          minLength: 1
           type: string
-        resourceType:
+          description: Updated name of dependency
+        isSpof:
+          type: boolean
+          description: Boolean to denote if a dependency is a single point of failure
+    MetricResponse:
+      type: object
+      properties:
+        awsResource:
           type: string
-          enum:
-          - LOAD_BALANCER
-          - TARGET_GROUP
-          - AUTO_SCALING_GROUP
-        tags:
+        graphs:
           type: object
           additionalProperties:
-            type: string
-        dnsName:
-          type: string
-        region:
-          type: string
-        suggested:
+            $ref: '#/components/schemas/Graph'
+    ServiceCreationReadinessForOwnedAndSharedAssetsResponse:
+      type: object
+      properties:
+        hasProcesses:
           type: boolean
-    ServiceReadinessAgentsFromPodUIDsRequest:
+        processCollectionOn:
+          type: boolean
+        sharedAssetsReadiness:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ServiceCreationReadinessResponse'
+    RiskEvaluationResponse:
       type: object
       properties:
-        owningTeamId:
+        name:
           type: string
-        podUIDs:
-          maxItems: 2147483647
-          minItems: 1
-          type: array
-          items:
-            type: string
-    SpofAudit:
-      type: object
-      properties:
-        markedAsSpofOn:
+        id:
+          type: string
+        evaluatedAt:
           type: string
           format: date-time
-        markedAsSpofBy:
+        notes:
           type: string
-    ServiceStatusCheckResponse:
-      type: object
-      properties:
-        serviceStatusChecks:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceStatusCheck'
-        autoGremlinAwsStatusChecks:
-          type: array
-          items:
-            $ref: '#/components/schemas/GremlinAwsStatusCheckMetadata'
-        loadBalancerStates:
-          type: array
-          items:
-            $ref: '#/components/schemas/LoadBalancerState'
-    TeamExternalIntegrationReference:
-      title: StatusCheckRequest.TeamExternalIntegrationReference
+        document:
+          type: string
+        isAtRisk:
+          type: boolean
+    ThresholdStrategy:
       required:
-      - name
+      - type
       type: object
       properties:
         type:
           type: string
-          description: The type of the external integration for the health check to be created/updated
-          enum:
-          - JIRA
-          - DATADOG
-          - DATADOG_EU
-          - DATADOG_US3
-          - DATADOG_US5
-          - DATADOG_US1_FED
-          - PAGERDUTY
-          - NEWRELIC
-          - GRAFANA
-          - DYNATRACE
-          - APPDYNAMICS
-          - PROMETHEUS
-          - CUSTOM
-          - K6
-          - LOAD_GENERATOR_CUSTOM
-          - AWS
-          - AZURE
-        observabilityToolType:
+      discriminator:
+        propertyName: type
+    LoadBalancerState:
+      type: object
+      properties:
+        accountId:
           type: string
-          description: The observability tool type of the external integration for the health check to be created/updated
-          enum:
-          - DATADOG
-          - PAGERDUTY
-          - NEWRELIC
-          - GRAFANA
-          - DYNATRACE
-          - APPDYNAMICS
-          - PROMETHEUS
-          - CUSTOM
-          - AWS
-          - AZURE
-        domain:
-          type: string
-          description: The domain of the observability tool type of the external integration for the health check to be created/updated
         name:
           type: string
-          description: The name of the external integration for the health check to be created/updated
-      description: Represents the configuration for referencing an external integration
+        arn:
+          type: string
+        state:
+          type: string
+          enum:
+          - ACTIVE
+          - IDLE
+          - DISAPPEARED
+    LoadGenerator:
+      type: object
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        webhookStartLoadTriggerId:
+          type: string
+        webhookStatusCheckId:
+          type: string
+        webhookStopLoadTriggerId:
+          type: string
+        active:
+          type: boolean
+        loadGeneratorWebhooks:
+          type: array
+          items:
+            type: string
     AwsHealthCheckDefinition:
       type: object
       properties:
@@ -1861,3 +1779,85 @@ components:
             $ref: '#/components/schemas/MetricDataQuery'
         thresholdStrategy:
           $ref: '#/components/schemas/ThresholdStrategy'
+    ApplicationSelector:
+      required:
+      - applicationName
+      type: object
+      properties:
+        applicationName:
+          type: string
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body
+    GremlinAwsStatusCheckMetadata:
+      type: object
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        definition:
+          $ref: '#/components/schemas/AwsHealthCheckDefinition'
+        enabled:
+          type: boolean
+        category:
+          type: string
+          enum:
+          - ERRORS
+          - LATENCY
+          - REQUESTS
+          - UNKNOWN
+    AwsTarget:
+      type: object
+      properties:
+        arn:
+          type: string
+        name:
+          type: string
+        resourceType:
+          type: string
+          enum:
+          - LOAD_BALANCER
+          - TARGET_GROUP
+          - AUTO_SCALING_GROUP
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        dnsName:
+          type: string
+        region:
+          type: string
+        suggested:
+          type: boolean
+    HasCompareFunctionObject:
+      type: object
+    DependencyEndpoint:
+      type: object
+      properties:
+        address:
+          type: string
+        port:
+          type: string
+    ServiceOwner:
+      type: object
+      properties:
+        identifier:
+          type: string

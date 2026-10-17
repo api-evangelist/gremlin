@@ -110,15 +110,6 @@ paths:
         - MINIMUM_COMPANY_PRIVILEGES
 components:
   schemas:
-    ServiceListResponse:
-      type: object
-      properties:
-        supportedServices:
-          type: array
-          items:
-            type: string
-        providerName:
-          type: string
     ProvidersResponse:
       type: object
       properties:
@@ -128,3 +119,12 @@ components:
             type: array
             items:
               type: string
+    ServiceListResponse:
+      type: object
+      properties:
+        supportedServices:
+          type: array
+          items:
+            type: string
+        providerName:
+          type: string

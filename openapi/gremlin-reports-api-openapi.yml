@@ -937,6 +937,136 @@ paths:
         - REPORTS_READ
 components:
   schemas:
+    ScoreRiskTrend:
+      type: object
+      properties:
+        reliabilityScoreTrend:
+          $ref: '#/components/schemas/ReportTrend'
+        detectedRisksTrend:
+          $ref: '#/components/schemas/ReportTrend'
+        reliabilityTestsRunTrend:
+          $ref: '#/components/schemas/ReportTrend'
+        runSummaryStats:
+          $ref: '#/components/schemas/RunSummaryStats'
+    TeamOwnerDetails:
+      type: object
+      properties:
+        teamId:
+          type: string
+        teamName:
+          type: string
+        teamOwnerEmail:
+          type: string
+        teamOwnerName:
+          type: string
+    ServiceReliabilityReportTrend:
+      type: object
+      properties:
+        serviceId:
+          type: string
+        reliabilityReportTrend:
+          $ref: '#/components/schemas/ReportTrend'
+    TeamUsageReport:
+      type: object
+      properties:
+        companyId:
+          type: string
+        teamId:
+          type: string
+        teamName:
+          type: string
+        startDate:
+          type: string
+        endDate:
+          type: string
+        gremlinMetrics:
+          $ref: '#/components/schemas/GremlinMetrics'
+    TargetingStrategy:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    RiskSummaryStats:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+        atRisk:
+          type: integer
+          format: int32
+        previousIntervalAtRisk:
+          type: integer
+          format: int32
+        evaluationState:
+          type: string
+          enum:
+          - RISKS_NOT_SUPPORTED
+          - NO_DEPLOYMENT_FOUND
+          - EVALUATED
+          - RISKS_NOT_INCLUDED
+    ServicesSummary:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date
+        end:
+          type: string
+          format: date
+        topN:
+          type: integer
+          format: int32
+        biggestChangers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceReportResponse'
+    PricingReport:
+      type: object
+      properties:
+        companyId:
+          type: string
+          description: CompanyId for which the pricing report is generated
+        startDate:
+          type: string
+          description: Start date for the pricing report
+        endDate:
+          type: string
+          description: End date for the pricing report
+        trackingPeriod:
+          type: string
+          description: Tracking period of targets for the pricing report which could be Daily, Weekly or Monthly
+          enum:
+          - Daily
+          - Weekly
+          - Monthly
+        usageByTrackingPeriod:
+          type: array
+          description: Pricing usage over the duration requested which is tracked over days, weeks or months
+          items:
+            $ref: '#/components/schemas/PricingUsage'
+    GroupDetails:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        ownerDetails:
+          $ref: '#/components/schemas/ServiceOwner'
+    RunSummaryServiceStats:
+      type: object
+      properties:
+        runs:
+          type: integer
+          format: int32
+        previousIntervalRuns:
+          type: integer
+          format: int32
     ServiceReportResponse:
       type: object
       properties:
@@ -985,145 +1115,6 @@ components:
         numOfSpofs:
           type: integer
           format: int32
-    TeamReliabilityCategorySummary:
-      type: object
-      properties:
-        category:
-          type: string
-          enum:
-          - OTHER
-          - REDUNDANCY
-          - SCALABILITY
-          - DEPENDENCIES
-          - RISKS
-          - EXTRA_CREDIT
-        rmTestScore:
-          type: number
-          format: double
-        maxRMTestScore:
-          type: number
-          format: double
-        score:
-          type: number
-          format: double
-        previousIntervalScore:
-          type: number
-          format: double
-        maxScore:
-          type: number
-          format: double
-        rank:
-          type: integer
-          format: int32
-    TargetingStrategy:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    TeamReliabilityScoreReportResponse:
-      type: object
-      properties:
-        teamId:
-          type: string
-        teamName:
-          type: string
-        teamScoreReports:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamScoreReport'
-        aggregatedReliabilityReport:
-          $ref: '#/components/schemas/TeamReliabilityReportResponse'
-        lastUpdatedAt:
-          type: string
-          format: date-time
-    RiskSummaryStats:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int32
-        atRisk:
-          type: integer
-          format: int32
-        previousIntervalAtRisk:
-          type: integer
-          format: int32
-        evaluationState:
-          type: string
-          enum:
-          - RISKS_NOT_SUPPORTED
-          - NO_DEPLOYMENT_FOUND
-          - EVALUATED
-          - RISKS_NOT_INCLUDED
-    ServicesSummary:
-      type: object
-      properties:
-        start:
-          type: string
-          format: date
-        end:
-          type: string
-          format: date
-        topN:
-          type: integer
-          format: int32
-        biggestChangers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceReportResponse'
-    RunSummaryServiceStats:
-      type: object
-      properties:
-        runs:
-          type: integer
-          format: int32
-        previousIntervalRuns:
-          type: integer
-          format: int32
-    TeamRiskReportResponse:
-      type: object
-      properties:
-        teamId:
-          type: string
-        teamName:
-          type: string
-        teamRiskReports:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamRiskReport'
-    ScoreRiskTrend:
-      type: object
-      properties:
-        reliabilityScoreTrend:
-          $ref: '#/components/schemas/ReportTrend'
-        detectedRisksTrend:
-          $ref: '#/components/schemas/ReportTrend'
-        reliabilityTestsRunTrend:
-          $ref: '#/components/schemas/ReportTrend'
-        runSummaryStats:
-          $ref: '#/components/schemas/RunSummaryStats'
-    ServiceReliabilityReportTrend:
-      type: object
-      properties:
-        serviceId:
-          type: string
-        reliabilityReportTrend:
-          $ref: '#/components/schemas/ReportTrend'
-    CompanyReliabilityReportGroupedResponse:
-      type: object
-      properties:
-        groupBy:
-          type: string
-          enum:
-          - TEAM
-        groupedServices:
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupedServiceResponse'
     CompanyReliabilityReportServiceListResponse:
       type: object
       properties:
@@ -1140,57 +1131,48 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceReportResponse'
-    GroupedServiceResponse:
+    TeamRiskReportResponse:
       type: object
       properties:
-        groupDetails:
-          $ref: '#/components/schemas/GroupDetails'
-        avgScore:
-          type: number
-          format: double
-        previousIntervalAvgScore:
+        teamId:
+          type: string
+        teamName:
+          type: string
+        teamRiskReports:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamRiskReport'
+    ReportTrend:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date
+        end:
+          type: string
+          format: date
+        numOfDataPoints:
+          type: integer
+          format: int32
+        statsByDate:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatsByDate'
+    StatsByDate:
+      type: object
+      properties:
+        trackingDate:
+          type: string
+          format: date
+        value:
           type: number
           format: double
         numOfServices:
           type: integer
           format: int32
-        atRiskTotal:
-          type: integer
-          format: int32
-        previousIntervalAtRiskTotal:
-          type: integer
-          format: int32
-        numOfSpofs:
-          type: integer
-          format: int32
-        reliabilityReportTrend:
-          $ref: '#/components/schemas/ReportTrend'
-        numOfRuns:
-          type: integer
-          format: int32
-        previousIntervalNumOfRuns:
-          type: integer
-          format: int32
-    TeamUsageReport:
-      type: object
-      properties:
-        companyId:
-          type: string
-        teamId:
-          type: string
-        teamName:
-          type: string
-        startDate:
-          type: string
-        endDate:
-          type: string
-        gremlinMetrics:
-          $ref: '#/components/schemas/GremlinMetrics'
-    ServiceOwner:
-      type: object
-      properties:
-        identifier:
-          type: string
+        score:
+          type: number
+          format: double
     PricingUsage:
       type: object
       properties:
@@ -1221,17 +1203,69 @@ components:
           description: Maximum number of active agents installed at the same time over the tracking period
           format: int32
       description: Pricing usage over the duration requested which is tracked over days, weeks or months
-    TeamOwnerDetails:
+    GremlinMetrics:
+      type: object
+      properties:
+        uniqueUsers:
+          type: integer
+          format: int32
+        uniqueActiveUsers:
+          type: integer
+          format: int32
+        attacksRun:
+          type: integer
+          format: int32
+        uniqueHostsAttacked:
+          type: integer
+          format: int32
+        uniqueTargetsHost:
+          type: integer
+          format: int32
+        uniqueTargetsContainer:
+          type: integer
+          format: int32
+        uniqueTargetsApplication:
+          type: integer
+          format: int32
+        reliabilityTestsRun:
+          type: integer
+          format: int32
+        failureFlagExperimentsRun:
+          type: integer
+          format: int32
+        infrastructureAgents:
+          type: integer
+          format: int32
+        failureFlagAgents:
+          type: integer
+          format: int32
+    TeamReliabilityScoreReportResponse:
       type: object
       properties:
         teamId:
           type: string
         teamName:
           type: string
-        teamOwnerEmail:
+        teamScoreReports:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamScoreReport'
+        aggregatedReliabilityReport:
+          $ref: '#/components/schemas/TeamReliabilityReportResponse'
+        lastUpdatedAt:
           type: string
-        teamOwnerName:
+          format: date-time
+    CompanyReliabilityReportGroupedResponse:
+      type: object
+      properties:
+        groupBy:
           type: string
+          enum:
+          - TEAM
+        groupedServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupedServiceResponse'
     RiskEvaluationResponse:
       type: object
       properties:
@@ -1248,75 +1282,6 @@ components:
           type: string
         isAtRisk:
           type: boolean
-    TeamRiskReport:
-      type: object
-      properties:
-        serviceName:
-          type: string
-        serviceId:
-          type: string
-        riskSummaryStats:
-          $ref: '#/components/schemas/RiskSummaryStats'
-        riskEvaluations:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskEvaluationResponse'
-    GroupDetails:
-      type: object
-      properties:
-        name:
-          type: string
-        id:
-          type: string
-        ownerDetails:
-          $ref: '#/components/schemas/ServiceOwner'
-    StatsByDate:
-      type: object
-      properties:
-        trackingDate:
-          type: string
-          format: date
-        value:
-          type: number
-          format: double
-        numOfServices:
-          type: integer
-          format: int32
-        score:
-          type: number
-          format: double
-    CompanyReliabilityReportResponse:
-      type: object
-      properties:
-        summary:
-          $ref: '#/components/schemas/ServicesSummary'
-        start:
-          type: string
-          format: date
-        end:
-          type: string
-          format: date
-        services:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceReportResponse'
-    TeamScoreReport:
-      type: object
-      properties:
-        serviceName:
-          type: string
-        serviceId:
-          type: string
-        reliabilityScore:
-          type: number
-          format: double
-        previousIntervalScore:
-          type: number
-          format: double
-        policyEvaluations:
-          type: array
-          items:
-            $ref: '#/components/schemas/PolicyEvaluation'
     RunSummaryStats:
       type: object
       properties:
@@ -1350,6 +1315,23 @@ components:
         previousIntervalGameDays:
           type: integer
           format: int32
+    TeamScoreReport:
+      type: object
+      properties:
+        serviceName:
+          type: string
+        serviceId:
+          type: string
+        reliabilityScore:
+          type: number
+          format: double
+        previousIntervalScore:
+          type: number
+          format: double
+        policyEvaluations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyEvaluation'
     PagedResponseTeamUsageReport:
       type: object
       properties:
@@ -1374,30 +1356,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TeamUsageReport'
-    PricingReport:
+    CompanyReliabilityReportResponse:
       type: object
       properties:
-        companyId:
+        summary:
+          $ref: '#/components/schemas/ServicesSummary'
+        start:
           type: string
-          description: CompanyId for which the pricing report is generated
-        startDate:
+          format: date
+        end:
           type: string
-          description: Start date for the pricing report
-        endDate:
-          type: string
-          description: End date for the pricing report
-        trackingPeriod:
-          type: string
-          description: Tracking period of targets for the pricing report which could be Daily, Weekly or Monthly
-          enum:
-          - Daily
-          - Weekly
-          - Monthly
-        usageByTrackingPeriod:
+          format: date
+        services:
           type: array
-          description: Pricing usage over the duration requested which is tracked over days, weeks or months
           items:
-            $ref: '#/components/schemas/PricingUsage'
+            $ref: '#/components/schemas/ServiceReportResponse'
     TeamReliabilityReportResponse:
       type: object
       properties:
@@ -1417,6 +1390,67 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/TeamReliabilityCategorySummary'
+    GroupedServiceResponse:
+      type: object
+      properties:
+        groupDetails:
+          $ref: '#/components/schemas/GroupDetails'
+        avgScore:
+          type: number
+          format: double
+        previousIntervalAvgScore:
+          type: number
+          format: double
+        numOfServices:
+          type: integer
+          format: int32
+        atRiskTotal:
+          type: integer
+          format: int32
+        previousIntervalAtRiskTotal:
+          type: integer
+          format: int32
+        numOfSpofs:
+          type: integer
+          format: int32
+        reliabilityReportTrend:
+          $ref: '#/components/schemas/ReportTrend'
+        numOfRuns:
+          type: integer
+          format: int32
+        previousIntervalNumOfRuns:
+          type: integer
+          format: int32
+    TeamReliabilityCategorySummary:
+      type: object
+      properties:
+        category:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        rmTestScore:
+          type: number
+          format: double
+        maxRMTestScore:
+          type: number
+          format: double
+        score:
+          type: number
+          format: double
+        previousIntervalScore:
+          type: number
+          format: double
+        maxScore:
+          type: number
+          format: double
+        rank:
+          type: integer
+          format: int32
     PolicyEvaluation:
       type: object
       properties:
@@ -1479,55 +1513,21 @@ components:
           - RECURRING_SCHEDULE
         triggeredBy:
           type: string
-    ReportTrend:
+    TeamRiskReport:
       type: object
       properties:
-        start:
+        serviceName:
           type: string
-          format: date
-        end:
+        serviceId:
           type: string
-          format: date
-        numOfDataPoints:
-          type: integer
-          format: int32
-        statsByDate:
+        riskSummaryStats:
+          $ref: '#/components/schemas/RiskSummaryStats'
+        riskEvaluations:
           type: array
           items:
-            $ref: '#/components/schemas/StatsByDate'
-    GremlinMetrics:
+            $ref: '#/components/schemas/RiskEvaluationResponse'
+    ServiceOwner:
       type: object
       properties:
-        uniqueUsers:
-          type: integer
-          format: int32
-        uniqueActiveUsers:
-          type: integer
-          format: int32
-        attacksRun:
-          type: integer
-          format: int32
-        uniqueHostsAttacked:
-          type: integer
-          format: int32
-        uniqueTargetsHost:
-          type: integer
-          format: int32
-        uniqueTargetsContainer:
-          type: integer
-          format: int32
-        uniqueTargetsApplication:
-          type: integer
-          format: int32
-        reliabilityTestsRun:
-          type: integer
-          format: int32
-        failureFlagExperimentsRun:
-          type: integer
-          format: int32
-        infrastructureAgents:
-          type: integer
-          format: int32
-        failureFlagAgents:
-          type: integer
-          format: int32
+        identifier:
+          type: string

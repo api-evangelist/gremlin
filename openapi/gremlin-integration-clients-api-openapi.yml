@@ -184,13 +184,21 @@ paths:
         - CLIENTS_WRITE
 components:
   schemas:
-    PrivateNetworkClientTagMatchResponse:
+    IdentitiesPrivateNetworkClient:
       type: object
       properties:
-        matchingAgents:
+        active:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/PrivateNetworkClient'
+        idle:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkClient'
+        inactive:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkClient'
     PrivateNetworkClient:
       type: object
       properties:
@@ -248,18 +256,10 @@ components:
           type: boolean
         gremlinClientVersion:
           type: string
-    IdentitiesPrivateNetworkClient:
+    PrivateNetworkClientTagMatchResponse:
       type: object
       properties:
-        active:
+        matchingAgents:
           type: array
           items:
-            $ref: '#/components/schemas/PrivateNetworkClient'
-        idle:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrivateNetworkClient'
-        inactive:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrivateNetworkClient'
+            type: string

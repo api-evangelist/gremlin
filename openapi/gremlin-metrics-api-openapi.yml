@@ -97,6 +97,14 @@ paths:
         - EXPERIMENTS_READ
 components:
   schemas:
+    YAxisLine:
+      type: object
+      properties:
+        value:
+          type: number
+          format: double
+        label:
+          type: string
     TimeRange:
       type: object
       properties:
@@ -106,6 +114,15 @@ components:
         end:
           type: integer
           format: int64
+    MetricPoint:
+      type: object
+      properties:
+        timestamp:
+          type: integer
+          format: int64
+        value:
+          type: number
+          format: double
     TaskMetrics:
       type: object
       properties:
@@ -161,20 +178,3 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/YAxisLine'
-    YAxisLine:
-      type: object
-      properties:
-        value:
-          type: number
-          format: double
-        label:
-          type: string
-    MetricPoint:
-      type: object
-      properties:
-        timestamp:
-          type: integer
-          format: int64
-        value:
-          type: number
-          format: double

@@ -123,20 +123,6 @@ paths:
         - COMPANY_INTEGRATIONS_READ
 components:
   schemas:
-    TeamData:
-      type: object
-      properties:
-        team_id:
-          type: string
-        executable_events:
-          type: array
-          items:
-            type: string
-            enum:
-            - START
-            - END
-            - STAGE_TRANSITION
-            - ERROR
     NotificationIntegrationResponse:
       type: object
       properties:
@@ -167,6 +153,20 @@ components:
             $ref: '#/components/schemas/TeamData'
         api_key:
           type: string
+    TeamData:
+      type: object
+      properties:
+        team_id:
+          type: string
+        executable_events:
+          type: array
+          items:
+            type: string
+            enum:
+            - START
+            - END
+            - STAGE_TRANSITION
+            - ERROR
     CreateIntegrationRequest:
       required:
       - teams
