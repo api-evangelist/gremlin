@@ -36,6 +36,11 @@ specificationVersion: '0.23'
 type: Index
 tags:
   - Chaos Engineering
+  - Infrastructure Testing
+  - Reliability
+  - Site Reliability Engineering
+tags_raw:
+  - Chaos Engineering
   - Fault Injection
   - Infrastructure Testing
   - Reliability
@@ -960,6 +965,8 @@ apis:
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
+  - APIKeys
+  tags_raw:
   - API Keys
   properties:
   - type: OpenAPI
