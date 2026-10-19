@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Metadata
   description: Get metadata about the Gremlin commands.
@@ -49,6 +48,8 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
 components:
   schemas:
+    ValidatorObject:
+      type: object
     Versioning:
       type: object
       properties:
@@ -56,34 +57,6 @@ components:
           type: string
         deprecated:
           type: boolean
-    DisplayConfig:
-      type: object
-      properties:
-        grouped_args:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-        arg_groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/ArgGroup'
-        values:
-          type: array
-          items:
-            type: string
-    ArgGroup:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        args:
-          type: array
-          items:
-            type: string
     InfraAttackMetadata:
       type: object
       properties:
@@ -126,8 +99,34 @@ components:
           type: object
           additionalProperties:
             type: string
-    ValidatorObject:
+    ArgGroup:
       type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        args:
+          type: array
+          items:
+            type: string
+    DisplayConfig:
+      type: object
+      properties:
+        grouped_args:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+        arg_groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArgGroup'
+        values:
+          type: array
+          items:
+            type: string
     InfraAttackArgObject:
       type: object
       properties:

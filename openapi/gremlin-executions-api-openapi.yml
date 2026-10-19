@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Executions
 paths:
@@ -52,18 +51,44 @@ paths:
         - EXPERIMENTS_READ
 components:
   schemas:
-    EventCode:
+    ServiceStateStage:
       type: object
       properties:
+        stage:
+          type: string
+          enum:
+          - InvalidArgument
+          - TargetNotFound
+          - Successful
+          - UserHalted
+          - ClientAborted
+          - LostCommunication
+          - InitializationFailed
+          - TeardownFailed
+          - HaltFailed
+          - Failed
+          - Pending
+          - Distributed
+          - Initializing
+          - HaltDistributed
+          - InterruptTriggered
+          - RollbackTriggered
+          - RollbackStarted
+          - Running
+          - TearingDown
+          - Halt
         timestamp:
           type: string
           format: date-time
-        code:
+      description: A collection of states
+    ScopeDetail:
+      type: object
+      properties:
+        key:
           type: string
-        message:
+        value:
           type: string
-        link:
-          type: string
+      description: Detailed information about the scope of this experiment. This contains information such as which containerId or Linux namespace is targeted.
     ExecutionResponse:
       title: Execution
       type: object
@@ -246,44 +271,18 @@ components:
           items:
             $ref: '#/components/schemas/ScopeDetail'
       description: An execution represents a portion of an experiment, run against a specific target. There is one target associated with every target of an experiment.
-    ScopeDetail:
+    EventCode:
       type: object
       properties:
-        key:
-          type: string
-        value:
-          type: string
-      description: Detailed information about the scope of this experiment. This contains information such as which containerId or Linux namespace is targeted.
-    ServiceStateStage:
-      type: object
-      properties:
-        stage:
-          type: string
-          enum:
-          - InvalidArgument
-          - TargetNotFound
-          - Successful
-          - UserHalted
-          - ClientAborted
-          - LostCommunication
-          - InitializationFailed
-          - TeardownFailed
-          - HaltFailed
-          - Failed
-          - Pending
-          - Distributed
-          - Initializing
-          - HaltDistributed
-          - InterruptTriggered
-          - RollbackTriggered
-          - RollbackStarted
-          - Running
-          - TearingDown
-          - Halt
         timestamp:
           type: string
           format: date-time
-      description: A collection of states
+        code:
+          type: string
+        message:
+          type: string
+        link:
+          type: string
     ClientState:
       type: object
       properties:

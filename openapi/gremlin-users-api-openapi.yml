@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Users
   description: Get users (all or active) and activate, deactivate, update, and invite users.
@@ -139,6 +138,8 @@ paths:
           description: One or more users were not found or were revoked, no users added
         '409':
           description: One or more users already belong on team, no users added
+        '429':
+          description: Too many calls to this endpoint, please wait and try again
         '403':
           description: 'User requires privilege for target team: USERS_WRITE'
         '401':
@@ -364,10 +365,14 @@ paths:
         schema:
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
+        '200':
+          description: User successfully deactivated
+        '404':
+          description: User not found
+        '409':
+          description: Multiple concurrent attempts to deactivate the user
+        '429':
+          description: Too many calls to this endpoint, please wait and try again
         '403':
           description: 'User requires privilege for target team: USERS_WRITE'
         '401':
@@ -399,6 +404,44 @@ paths:
       security:
       - privilege:
         - MINIMUM_COMPANY_PRIVILEGES
+  /users/{email}/teams/remove:
+    post:
+      tags:
+      - Users
+      summary: Remove a user from multiple teams in a single request
+      description: Requires the privilege `USERS_BATCH_WRITE`
+      operationId: removeFromTeams
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - teamIds
+              type: object
+              properties:
+                teamIds:
+                  uniqueItems: true
+                  type: array
+                  items:
+                    type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: USERS_BATCH_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - USERS_BATCH_WRITE
   /users/invite/{email}:
     delete:
       tags:
@@ -426,6 +469,13 @@ paths:
         - COMPANY_USERS_WRITE
 components:
   schemas:
+    UpdateUserInfoRequest:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
     AddUserRequest:
       required:
       - identifier
@@ -435,10 +485,3 @@ components:
           type: string
           description: The unique identifier for the user (user's email)
       description: represents a request to add an existing user to a team
-    UpdateUserInfoRequest:
-      type: object
-      properties:
-        first_name:
-          type: string
-        last_name:
-          type: string

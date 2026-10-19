@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: JIRA
   description: Create, read Jira tickets
@@ -368,6 +367,17 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
 components:
   schemas:
+    JiraPriority:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        iconUrl:
+          type: string
     GremlinEntityReference:
       required:
       - id
@@ -386,13 +396,16 @@ components:
           - SCENARIO
         serviceEntityType:
           type: boolean
-    JiraId:
+    CreateJiraIssueRequest:
       required:
-      - id
+      - entity
+      - fields
       type: object
       properties:
-        id:
-          type: string
+        entity:
+          $ref: '#/components/schemas/GremlinEntityReference'
+        fields:
+          $ref: '#/components/schemas/CreateJiraIssueFields'
     CreateJiraIssueFields:
       required:
       - issuetype
@@ -416,24 +429,10 @@ components:
           type: array
           items:
             type: string
-    CreateJiraIssueRequest:
-      required:
-      - entity
-      - fields
-      type: object
-      properties:
-        entity:
-          $ref: '#/components/schemas/GremlinEntityReference'
-        fields:
-          $ref: '#/components/schemas/CreateJiraIssueFields'
-    JiraPriority:
+    JiraId:
       required:
       - id
       type: object
       properties:
         id:
-          type: string
-        name:
-          type: string
-        iconUrl:
           type: string

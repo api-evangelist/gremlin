@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: failure-flags.apps
   description: Get, list, and protect applications
@@ -79,8 +78,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Application'
-        '404':
-          description: Not found
+        '400':
+          description: Bad Request
         '403':
           description: 'User requires privilege for target team: EXPERIMENTS_READ'
         '401':
@@ -139,8 +138,8 @@ paths:
         schema:
           type: string
       responses:
-        '201':
-          description: Protect an Application by name and team
+        '200':
+          description: Unprotect an Application by name and team
         '404':
           description: Not found
         '403':

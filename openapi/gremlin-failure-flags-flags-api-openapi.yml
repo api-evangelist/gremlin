@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: failure-flags.flags
   description: Get, list, and protect failure flags
@@ -75,8 +74,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/FailureFlag'
-        '404':
-          description: Not found
+        '400':
+          description: Bad Request
         '403':
           description: 'User requires privilege for target team: EXPERIMENTS_READ'
         '401':
@@ -156,6 +155,10 @@ components:
         name:
           type: string
         labelKeys:
+          type: array
+          items:
+            type: string
+        behaviors:
           type: array
           items:
             type: string

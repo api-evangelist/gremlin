@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: External Integrations
   description: Used for managing authentication for Status Checks and Load Generators
@@ -85,7 +84,9 @@ paths:
       tags:
       - External Integrations
       summary: Get team integrations that are compatible with Load Generators
-      description: Requires the privilege `INTEGRATIONS_READ`
+      description: 'Lists the team''s load generator integrations. An external load generator references one of these by its `type` and `name`.
+
+        Requires the privilege `INTEGRATIONS_READ`'
       operationId: getLoadGeneratorIntegrations
       parameters:
       - name: teamId
@@ -138,6 +139,8 @@ paths:
           - LOAD_GENERATOR_CUSTOM
           - AWS
           - AZURE
+          - GCP
+          - BLAZEMETER
       - name: name
         in: query
         required: true
@@ -173,7 +176,9 @@ paths:
       tags:
       - External Integrations
       summary: Create new team integration that is compatible with Load Generators
-      description: Requires the privilege `INTEGRATIONS_WRITE`
+      description: 'Creates a team integration that an external load generator can reference. A load generator then refers to it by this `type` and the integration `name`. Only one integration per type is allowed per team, except for CUSTOM, LOAD_GENERATOR_CUSTOM and AWS. `headersArn` can only be used for a private network integration and not together with `headers`.
+
+        Requires the privilege `INTEGRATIONS_WRITE`'
       operationId: createLoadGeneratorIntegration
       parameters:
       - name: type
@@ -199,6 +204,8 @@ paths:
           - LOAD_GENERATOR_CUSTOM
           - AWS
           - AZURE
+          - GCP
+          - BLAZEMETER
       - name: teamId
         in: query
         description: Required when using company session token.
@@ -229,7 +236,9 @@ paths:
       tags:
       - External Integrations
       summary: Remove a team integration that is compatible with Load Generators
-      description: Requires the privilege `INTEGRATIONS_WRITE`
+      description: 'Deletes the integration identified by `type` and `name`. Fails with 400 if a load generator on any of the team''s services still references it, so delete or update those load generators first.
+
+        Requires the privilege `INTEGRATIONS_WRITE`'
       operationId: removeLoadGeneratorIntegration
       parameters:
       - name: type
@@ -255,6 +264,8 @@ paths:
           - LOAD_GENERATOR_CUSTOM
           - AWS
           - AZURE
+          - GCP
+          - BLAZEMETER
       - name: name
         in: query
         required: true
@@ -271,6 +282,155 @@ paths:
           description: default response
           content:
             application/json: {}
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+  /external-integrations/load-generator/delegate:
+    get:
+      tags:
+      - External Integrations
+      summary: Get team integrations that are compatible with Load Generators, with…
+      description: Requires the privilege `INTEGRATIONS_READ`
+      operationId: getLoadGeneratorIntegrationsDelegate
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamExternalIntegrationsResponse'
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_READ
+    put:
+      tags:
+      - External Integrations
+      summary: Update a team integration that is compatible with Load Generators, refusing to…
+      description: Requires the privilege `INTEGRATIONS_WRITE`
+      operationId: updateLoadGeneratorIntegrationDelegate
+      parameters:
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+          - GCP
+          - BLAZEMETER
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamExternalIntegrationRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamExternalIntegrationResponse'
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+    post:
+      tags:
+      - External Integrations
+      summary: Create new team integration that is compatible with Load Generators, refusing a…
+      description: Requires the privilege `INTEGRATIONS_WRITE`
+      operationId: createLoadGeneratorIntegrationDelegate
+      parameters:
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+          - GCP
+          - BLAZEMETER
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamExternalIntegrationRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamExternalIntegrationResponse'
         '403':
           description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
         '401':
@@ -335,6 +495,8 @@ paths:
           - LOAD_GENERATOR_CUSTOM
           - AWS
           - AZURE
+          - GCP
+          - BLAZEMETER
       - name: observabilityToolType
         in: query
         schema:
@@ -396,6 +558,8 @@ paths:
       parameters:
       - name: type
         in: query
+        description: 'Deprecated: use observabilityToolType (plus domain where needed) instead.'
+        deprecated: true
         schema:
           type: string
           enum:
@@ -416,6 +580,8 @@ paths:
           - LOAD_GENERATOR_CUSTOM
           - AWS
           - AZURE
+          - GCP
+          - BLAZEMETER
       - name: observabilityToolType
         in: query
         schema:
@@ -467,7 +633,9 @@ paths:
       tags:
       - External Integrations
       summary: Remove a team integration that is compatible with Health Checks
-      description: Requires the privilege `INTEGRATIONS_WRITE`
+      description: 'Deletes the integration. Fails with 400 if health checks, services (through AWS load balancers or Intelligent Health Checks) or load generators still reference it.
+
+        Requires the privilege `INTEGRATIONS_WRITE`'
       operationId: removeStatusCheckIntegration
       parameters:
       - name: type
@@ -492,6 +660,8 @@ paths:
           - LOAD_GENERATOR_CUSTOM
           - AWS
           - AZURE
+          - GCP
+          - BLAZEMETER
       - name: observabilityToolType
         in: query
         schema:
@@ -536,70 +706,44 @@ paths:
       security:
       - privilege:
         - INTEGRATIONS_WRITE
-components:
-  schemas:
-    TeamExternalIntegrationsResponse:
-      type: object
-      properties:
-        integrations:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamExternalIntegrationResponse'
-    CreateTeamExternalIntegrationRequest:
-      required:
-      - lastAuthenticationStatus
-      - name
-      - privateNetwork
-      type: object
-      properties:
-        url:
+  /external-integrations/status-check/delegate:
+    get:
+      tags:
+      - External Integrations
+      summary: Get team integrations that are compatible with Health Checks, with credentials…
+      description: Requires the privilege `INTEGRATIONS_READ`
+      operationId: getStatusCheckIntegrationsDelegate
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
           type: string
-          description: Uri of the configuration
-          format: url
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-            description: Headers of configuration
-          description: Headers of configuration
-        headersArn:
-          type: string
-          description: Arn of remote header configuration
-        name:
-          type: string
-          description: Name of configuration
-        privateNetwork:
-          type: boolean
-          description: Is private network
-        lastAuthenticationStatus:
-          type: string
-          description: Last authentication status
-          enum:
-          - AUTHENTICATED
-          - UNAUTHENTICATED
-          - UNTESTED
-        integrationSpecificValues:
-          type: object
-          additionalProperties:
-            type: string
-            description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
-          description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            description: The tags associated with this integration
-            items:
-              type: string
-              description: The tags associated with this integration
-          description: The tags associated with this integration
-      description: Represents the configuration for an external integration
-    ExternalIntegrationResponse:
-      type: object
-      properties:
-        userId:
-          type: string
-        type:
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamExternalIntegrationsResponse'
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_READ
+    put:
+      tags:
+      - External Integrations
+      summary: Update a team integration that is compatible with Health Checks, refusing to…
+      description: Requires the privilege `INTEGRATIONS_WRITE`
+      operationId: updateStatusCheckIntegrationDelegate
+      parameters:
+      - name: type
+        in: query
+        schema:
           type: string
           enum:
           - JIRA
@@ -619,10 +763,142 @@ components:
           - LOAD_GENERATOR_CUSTOM
           - AWS
           - AZURE
-        accountId:
+          - GCP
+          - BLAZEMETER
+      - name: observabilityToolType
+        in: query
+        schema:
           type: string
-        url:
+          enum:
+          - DATADOG
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - AWS
+          - AZURE
+      - name: domain
+        in: query
+        schema:
+          maxLength: 255
+          minLength: 0
           type: string
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamExternalIntegrationRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamExternalIntegrationResponse'
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+    post:
+      tags:
+      - External Integrations
+      summary: Create new team integration that is compatible with Health Checks, refusing a…
+      description: Requires the privilege `INTEGRATIONS_WRITE`
+      operationId: createStatusCheckIntegrationDelegate
+      parameters:
+      - name: type
+        in: query
+        description: 'Deprecated: use observabilityToolType (plus domain where needed) instead.'
+        deprecated: true
+        schema:
+          type: string
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+          - GCP
+          - BLAZEMETER
+      - name: observabilityToolType
+        in: query
+        schema:
+          type: string
+          enum:
+          - DATADOG
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - AWS
+          - AZURE
+      - name: domain
+        in: query
+        schema:
+          maxLength: 255
+          minLength: 0
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamExternalIntegrationRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamExternalIntegrationResponse'
+        '403':
+          description: 'User requires privilege for target team: INTEGRATIONS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - INTEGRATIONS_WRITE
+components:
+  schemas:
     TeamExternalIntegrationResponse:
       type: object
       properties:
@@ -650,6 +926,8 @@ components:
           - LOAD_GENERATOR_CUSTOM
           - AWS
           - AZURE
+          - GCP
+          - BLAZEMETER
         observabilityToolType:
           type: string
           enum:
@@ -701,3 +979,90 @@ components:
             type: array
             items:
               type: string
+    TeamExternalIntegrationsResponse:
+      type: object
+      properties:
+        integrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamExternalIntegrationResponse'
+    ExternalIntegrationResponse:
+      type: object
+      properties:
+        userId:
+          type: string
+        type:
+          type: string
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+          - GCP
+          - BLAZEMETER
+        accountId:
+          type: string
+        url:
+          type: string
+    CreateTeamExternalIntegrationRequest:
+      required:
+      - lastAuthenticationStatus
+      - name
+      - privateNetwork
+      type: object
+      properties:
+        url:
+          type: string
+          description: Uri of the configuration
+          format: url
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Headers of configuration
+          description: Headers of configuration
+        headersArn:
+          type: string
+          description: Arn of remote header configuration
+        name:
+          type: string
+          description: Name of configuration
+        privateNetwork:
+          type: boolean
+          description: Is private network
+        lastAuthenticationStatus:
+          type: string
+          description: Last authentication status
+          enum:
+          - AUTHENTICATED
+          - UNAUTHENTICATED
+          - UNTESTED
+        integrationSpecificValues:
+          type: object
+          additionalProperties:
+            type: string
+            description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+          description: Map of values required for a specific integration, for example AWS credentials AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            description: The tags associated with this integration
+            items:
+              type: string
+              description: The tags associated with this integration
+          description: The tags associated with this integration
+      description: Represents the configuration for an external integration

@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: failure-flags.experiments
   description: Get, list, and protect experiments
@@ -340,7 +339,7 @@ paths:
         schema:
           type: string
       responses:
-        '200':
+        '204':
           description: Halt an Experiment by team and ID
         '404':
           description: Not found
@@ -371,7 +370,7 @@ paths:
         schema:
           type: string
       responses:
-        '200':
+        '204':
           description: Protect an Experiment by team and ID
         '404':
           description: Not found
@@ -441,7 +440,7 @@ paths:
         schema:
           type: string
       responses:
-        '200':
+        '204':
           description: Unprotect an Experiment by team and ID
         '404':
           description: Not found
@@ -478,27 +477,91 @@ components:
         deliveries:
           type: integer
           format: int32
-    CompletedRunSummaryResponse:
+    Experiment:
+      required:
+      - app
+      - duration
+      - flag
+      - name
       type: object
       properties:
-        teamId:
-          type: string
         id:
           type: string
-        name:
+        teamId:
           type: string
+        name:
+          pattern: ^[-a-zA-Z0-9_. ]{1,128}$
+          type: string
+        staticTargeting:
+          type: boolean
+        app:
+          $ref: '#/components/schemas/Selector'
+        flag:
+          $ref: '#/components/schemas/Selector'
+        appInstanceSampling:
+          $ref: '#/components/schemas/TargetSampling'
+        duration:
+          pattern: ^[1-9]\d*[mhd]$
+          type: string
+          description: "The duration expressed as a variant of ISO 8601 with the following simplifications:\n 1. no leading 'PT' (eg. 5m or 10h)\n 2. valid time units are exclusively: m, h, d, s\n"
+          example: 30m
+        rate:
+          type: number
+          format: float
+        effect:
+          type: object
+        recentHistory:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/ExperimentRunSummary'
+        state:
+          type: string
+          readOnly: true
+          enum:
+          - IN_PROGRESS
+          - COMPLETED
+          - HALTED
+          - FAILED
+        stateReason:
+          type: string
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
         startTime:
           type: string
           format: date-time
-        stopTime:
+          readOnly: true
+        currentRun:
+          $ref: '#/components/schemas/ExperimentRun'
+        protected:
+          type: boolean
+          readOnly: true
+    TargetSampling:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    ExperimentRun:
+      type: object
+      properties:
+        startTime:
           type: string
           format: date-time
-        deliveries:
-          type: integer
-          format: int32
-        impacts:
-          type: integer
-          format: int32
+        impactSeries:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeriesMinute'
+        deliverySeries:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeriesMinute'
         triggerSource:
           type: string
           enum:
@@ -508,10 +571,7 @@ components:
           - RECURRING_SCHEDULE
         triggeredBy:
           type: string
-        app:
-          $ref: '#/components/schemas/Selector'
-        flag:
-          $ref: '#/components/schemas/Selector'
+      readOnly: true
     Selector:
       required:
       - labels
@@ -538,44 +598,54 @@ components:
             foo:
             - bar
             - baz
-    ExperimentPagedResponse:
+        runtimeLabels:
+          type: object
+          additionalProperties:
+            type: array
+            description: Labels for matching resources resolved at runtime (e.g., "zones" are resolved and added to the label "ips")
+            example:
+              zones:
+              - us-west-1a
+              - us-west-1b
+            items:
+              type: string
+              description: Labels for matching resources resolved at runtime (e.g., "zones" are resolved and added to the label "ips")
+              example: '{"zones":["us-west-1a","us-west-1b"]}'
+          description: Labels for matching resources resolved at runtime (e.g., "zones" are resolved and added to the label "ips")
+          example:
+            zones:
+            - us-west-1a
+            - us-west-1b
+    CompletedRunSummaryResponse:
       type: object
       properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
+        teamId:
           type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Experiment'
-    ExperimentRun:
-      type: object
-      properties:
+        id:
+          type: string
+        name:
+          type: string
         startTime:
           type: string
           format: date-time
-        impactSeries:
-          type: array
-          items:
-            $ref: '#/components/schemas/SeriesMinute'
-        deliverySeries:
-          type: array
-          items:
-            $ref: '#/components/schemas/SeriesMinute'
+        stopTime:
+          type: string
+          format: date-time
+        state:
+          type: string
+          enum:
+          - IN_PROGRESS
+          - COMPLETED
+          - HALTED
+          - FAILED
+        stateReason:
+          type: string
+        deliveries:
+          type: integer
+          format: int32
+        impacts:
+          type: integer
+          format: int32
         triggerSource:
           type: string
           enum:
@@ -585,7 +655,10 @@ components:
           - RECURRING_SCHEDULE
         triggeredBy:
           type: string
-      readOnly: true
+        app:
+          $ref: '#/components/schemas/Selector'
+        flag:
+          $ref: '#/components/schemas/Selector'
     CompletedExperimentPagedResponse:
       type: object
       properties:
@@ -610,63 +683,27 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CompletedRunSummaryResponse'
-    Experiment:
-      required:
-      - app
-      - duration
-      - flag
-      - name
+    ExperimentPagedResponse:
       type: object
       properties:
-        id:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
           type: string
-        teamId:
-          type: string
-        name:
-          pattern: ^[-a-zA-Z0-9_. ]{1,64}$
-          type: string
-        staticTargeting:
-          type: boolean
-        app:
-          $ref: '#/components/schemas/Selector'
-        flag:
-          $ref: '#/components/schemas/Selector'
-        appInstanceSampling:
-          $ref: '#/components/schemas/TargetSampling'
-        duration:
-          pattern: ^[1-9]\d*[mhd]$
-          type: string
-          description: "The duration expressed as a variant of ISO 8601 with the following simplifications:\n 1. no leading 'PT' (eg. 5m or 10h)\n 2. valid time units are exclusively: m, h, d, s\n"
-          example: 30m
-        rate:
-          type: number
-          format: float
-        effect:
-          type: object
-        recentHistory:
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
           type: array
-          readOnly: true
           items:
-            $ref: '#/components/schemas/ExperimentRunSummary'
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        startTime:
-          type: string
-          format: date-time
-          readOnly: true
-        currentRun:
-          $ref: '#/components/schemas/ExperimentRun'
-        protected:
-          type: boolean
-          readOnly: true
-    TargetSampling:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
+            $ref: '#/components/schemas/Experiment'

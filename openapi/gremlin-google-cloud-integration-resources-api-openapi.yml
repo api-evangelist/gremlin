@@ -11,16 +11,16 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: google-cloud.integration.resources
-  description: List resources Gremlin has discovered through a configured integration.
+  description: 'List resources Gremlin has discovered through a configured integration. Note: Paging is currently not supported for Private Edition.'
 paths:
   /gcp/integrations/{integrationId}/resources/all:
     get:
       tags:
       - google-cloud.integration.resources
+      summary: Lists resources discovered through the integration
       description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
       operationId: all_1
       parameters:
@@ -29,12 +29,6 @@ paths:
         required: true
         schema:
           type: string
-      - name: cloudRunRegion
-        in: query
-        schema:
-          type: array
-          items:
-            type: string
       - name: pageToken
         in: query
         schema:
@@ -54,12 +48,10 @@ paths:
         schema:
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/PagedResponseResourceItem'
+        '200':
+          description: Resources discovered through the integration
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
         '401':
@@ -67,206 +59,13 @@ paths:
       security:
       - privilege:
         - MINIMUM_TEAM_PRIVILEGES
-      x-gremlin-feature-flag: gcp-ihc
-      summary: All 1
-      x-summary-source: derived
-  /gcp/integrations/{integrationId}/resources/cloud-run:
-    get:
-      tags:
-      - google-cloud.integration.resources
-      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
-      operationId: listCloudRunResources
-      parameters:
-      - name: integrationId
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: region
-        in: query
-        schema:
-          type: array
-          items:
-            type: string
-      - name: pageToken
-        in: query
-        schema:
-          $ref: '#/components/schemas/CloudRunPageToken'
-      - name: pageSize
-        in: query
-        description: This value determines how many results will be returned per call.
-        schema:
-          maximum: 100
-          minimum: 1
-          type: integer
-          format: int32
-      - name: teamId
-        in: query
-        description: Required when using company session token.
-        required: true
-        schema:
-          type: string
-      responses:
-        default:
-          description: default response
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/PagedResponseResourceItem'
-        '403':
-          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - MINIMUM_TEAM_PRIVILEGES
-      x-gremlin-feature-flag: gcp-ihc
-      summary: List cloud run resources
-      x-summary-source: derived
-  /gcp/integrations/{integrationId}/resources/compute:
-    get:
-      tags:
-      - google-cloud.integration.resources
-      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
-      operationId: listComputeResources
-      parameters:
-      - name: integrationId
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: resourceType
-        in: query
-        schema:
-          type: array
-          items:
-            type: string
-            enum:
-            - ForwardingRule
-            - UrlMap
-            - BackendService
-            - CloudRunService
-      - name: pageToken
-        in: query
-        schema:
-          $ref: '#/components/schemas/ComputePageToken'
-      - name: pageSize
-        in: query
-        description: This value determines how many results will be returned per call.
-        schema:
-          maximum: 100
-          minimum: 1
-          type: integer
-          format: int32
-      - name: teamId
-        in: query
-        description: Required when using company session token.
-        required: true
-        schema:
-          type: string
-      responses:
-        default:
-          description: default response
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/PagedResponseResourceItem'
-        '403':
-          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - MINIMUM_TEAM_PRIVILEGES
-      x-gremlin-feature-flag: gcp-ihc
-      summary: List compute resources
-      x-summary-source: derived
 components:
   schemas:
-    ComputePageToken:
-      required:
-      - types
-      type: object
-      properties:
-        types:
-          type: array
-          items:
-            type: string
-            enum:
-            - ForwardingRule
-            - UrlMap
-            - BackendService
-            - CloudRunService
-        typeIndex:
-          type: integer
-          format: int32
-        inner:
-          type: string
-    PagedResponseResourceItem:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceItem'
-    CloudRunPageToken:
-      required:
-      - cloudRunRegions
-      type: object
-      properties:
-        cloudRunRegions:
-          type: array
-          items:
-            type: string
-        regionIndex:
-          type: integer
-          format: int32
-        inner:
-          type: string
     AllPageToken:
       type: object
       properties:
         typeIndex:
           type: integer
           format: int32
-        cloudRunRegionIndex:
-          type: integer
-          format: int32
-        cloudRunRegions:
-          type: array
-          items:
-            type: string
         inner:
           type: string
-    ResourceItem:
-      type: object
-      properties:
-        name:
-          type: string
-        resourceId:
-          type: string
-        resourceType:
-          type: string
-        region:
-          type: string
-        tags:
-          type: object
-          additionalProperties:
-            type: string

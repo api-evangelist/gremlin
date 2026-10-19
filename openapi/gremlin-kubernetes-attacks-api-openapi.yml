@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: kubernetes.attacks
   description: Create, halt, and list Kubernetes attacks
@@ -104,7 +103,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Attack'
       responses:
-        HttpStatus.SC_CREATED:
+        '201':
           description: Attack created, attackId returned
         '403':
           description: 'User requires privilege for target team: EXPERIMENTS_WRITE'
@@ -139,7 +138,7 @@ paths:
             schema:
               $ref: '#/components/schemas/HaltRequest'
       responses:
-        HttpStatus.SC_ACCEPTED:
+        '202':
           description: Halt successfully triggered
         '403':
           description: 'User requires privilege for target team: HALT_WRITE'
@@ -174,69 +173,51 @@ components:
       properties:
         strategy:
           $ref: '#/components/schemas/StrategyObject'
-    K8sObjectOnAttack:
+    ContainerSelection:
       type: object
       properties:
-        clusterId:
-          type: string
-        uid:
-          type: string
-        namespace:
-          type: string
-        name:
-          type: string
-        kind:
+        selectionType:
           type: string
           enum:
-          - DEPLOYMENT
-          - REPLICASET
-          - POD
-          - DAEMONSET
-          - STATEFULSET
-          - SERVICE
-          - INGRESS
-          - DEPLOYMENTCONFIG
-          - REPLICATIONCONTROLLER
-          - ROLLOUT
-          - HORIZONTALPODAUTOSCALER
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        annotations:
-          type: object
-          additionalProperties:
-            type: string
-        ownerReferences:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        resolvedContainers:
+          - EXACT
+          - ALL
+          - ANY
+        containerNames:
           type: array
           items:
             type: string
-        data:
-          type: string
-        clientId:
-          type: string
-        teamId:
-          type: string
-        resolved:
-          type: boolean
-        attackUid:
-          type: string
-    Attack:
+    TaskTrafficImpactMappingInput:
       type: object
       properties:
-        impactDefinition:
-          $ref: '#/components/schemas/Command'
-        targetDefinition:
-          $ref: '#/components/schemas/TargetObject'
-        includeNewTargets:
-          type: boolean
-        continueOnEmptyTargets:
-          type: boolean
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        dependencyIds:
+          type: array
+          items:
+            type: string
+    StrategyObject:
+      type: object
+      properties:
+        k8sObjects:
+          type: array
+          items:
+            type: object
+        containerSelection:
+          $ref: '#/components/schemas/ContainerSelection'
+        k8sObjectsInternal:
+          type: array
+          items:
+            $ref: '#/components/schemas/K8sObjectOnAttack'
+        count:
+          type: integer
+          format: int32
+        percentage:
+          type: integer
+          format: int32
     HaltRequest:
       type: object
       properties:
@@ -273,56 +254,75 @@ components:
             type: string
         type:
           type: string
-        templateId:
-          type: string
         optionalTemplateId:
+          type: string
+        templateId:
           type: string
         empty:
           type: boolean
       additionalProperties:
         type: object
-    TaskTrafficImpactMappingInput:
+    Attack:
       type: object
       properties:
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        dependencyIds:
-          type: array
-          items:
-            type: string
-    StrategyObject:
+        impactDefinition:
+          $ref: '#/components/schemas/Command'
+        targetDefinition:
+          $ref: '#/components/schemas/TargetObject'
+        includeNewTargets:
+          type: boolean
+        continueOnEmptyTargets:
+          type: boolean
+    K8sObjectOnAttack:
       type: object
       properties:
-        k8sObjects:
-          type: array
-          items:
-            type: object
-        containerSelection:
-          $ref: '#/components/schemas/ContainerSelection'
-        k8sObjectsInternal:
-          type: array
-          items:
-            $ref: '#/components/schemas/K8sObjectOnAttack'
-        count:
-          type: integer
-          format: int32
-        percentage:
-          type: integer
-          format: int32
-    ContainerSelection:
-      type: object
-      properties:
-        selectionType:
+        clusterId:
+          type: string
+        uid:
+          type: string
+        namespace:
+          type: string
+        name:
+          type: string
+        kind:
           type: string
           enum:
-          - EXACT
-          - ALL
-          - ANY
-        containerNames:
+          - DEPLOYMENT
+          - REPLICASET
+          - POD
+          - DAEMONSET
+          - STATEFULSET
+          - SERVICE
+          - INGRESS
+          - DEPLOYMENTCONFIG
+          - REPLICATIONCONTROLLER
+          - ROLLOUT
+          - HORIZONTALPODAUTOSCALER
+          - PODDISRUPTIONBUDGET
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        ownerReferences:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        resolvedContainers:
           type: array
           items:
             type: string
+        data:
+          type: string
+        clientId:
+          type: string
+        teamId:
+          type: string
+        resolved:
+          type: boolean
+        attackUid:
+          type: string

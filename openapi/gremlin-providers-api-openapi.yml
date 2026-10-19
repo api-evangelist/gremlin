@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Providers
   description: Get a list of supported infrastructure providers and supported services by provider
@@ -110,15 +109,6 @@ paths:
         - MINIMUM_COMPANY_PRIVILEGES
 components:
   schemas:
-    ProvidersResponse:
-      type: object
-      properties:
-        providersToServices:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
     ServiceListResponse:
       type: object
       properties:
@@ -128,3 +118,12 @@ components:
             type: string
         providerName:
           type: string
+    ProvidersResponse:
+      type: object
+      properties:
+        providersToServices:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string

@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: integration-invocations
   description: Used for interacting with the Private Network Integration
@@ -68,8 +67,76 @@ paths:
               $ref: '#/components/schemas/CreatePrivateNetworkInvocationRequest'
         required: true
       responses:
+        '200':
+          description: The created invocation
         '400':
           description: Bad Request
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /integration-invocations/delegate:
+    get:
+      tags:
+      - integration-invocations
+      summary: Returns recent private network invocations, with request headers redacted
+      description: 'This operation will return a list of matching invocations
+
+        Requires the privilege `MINIMUM_TEAM_PRIVILEGES`'
+      operationId: listDelegate_1
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateNetworkInvocationModelResponse'
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+    post:
+      tags:
+      - integration-invocations
+      summary: Creates a webhook invocation based on the endpoint configuration, refusing to…
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
+      operationId: createInvocationDelegate
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: JSON request to create a private network integration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePrivateNetworkInvocationRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePrivateNetworkInvocationResponse'
         '403':
           description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
         '401':
@@ -160,102 +227,28 @@ paths:
         - INTEGRATIONS_WRITE
 components:
   schemas:
-    EvaluationConfiguration:
-      required:
-      - okStatusCodes
+    HasCompareFunctionObject:
+      type: object
+    PrivateNetworkResponsePropertiesModel:
       type: object
       properties:
-        okLatencyMaxMs:
+        invocationTime:
+          type: string
+          format: date-time
+        httpStatusCode:
           type: integer
-          description: The maximum latency in milliseconds for a successful status check
           format: int32
-        okStatusCodes:
-          type: array
-          description: The list of successful response status codes for a successful status check
-          items:
-            type: string
-            description: The list of successful response status codes for a successful status check
-        responseBodyEvaluation:
-          $ref: '#/components/schemas/ResponseBodyEvaluation'
-      description: The configuration for evaluating the success/failure of a status check
-    EndpointConfiguration:
-      required:
-      - url
-      type: object
-      properties:
-        url:
+        requestLatencyMs:
+          type: integer
+          format: int32
+        responseBody:
           type: string
-          description: The URL of the status check
-          format: url
-        method:
+        contentType:
           type: string
-          description: The method type of the status check
-          enum:
-          - GET
-          - POST
-          - PUT
-          - PATCH
-        headers:
+        responseHeaders:
           type: object
           additionalProperties:
             type: string
-            description: Optional request headers to be used when the status check is invoked
-          description: Optional request headers to be used when the status check is invoked
-        payload:
-          type: string
-          description: Payload for POST type of request
-        headersArn:
-          type: string
-          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
-    PrivateNetworkInvocationModelResponse:
-      type: object
-      properties:
-        invocations:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrivateNetworkInvocationModel'
-    PredicateObject:
-      required:
-      - jpQuery
-      - rValue
-      - type
-      type: object
-      properties:
-        comparator:
-          $ref: '#/components/schemas/HasCompareFunctionObject'
-        type:
-          type: string
-          description: The type of primitive this predicate operates on
-          enum:
-          - String
-          - Number
-          - Boolean
-        jpQuery:
-          type: string
-          description: The json path query to run to read from the response body
-        rValue:
-          type: object
-          description: The right hand value of the predicate
-      description: The list of predicates to evaluate against the status check response body
-      discriminator:
-        propertyName: type
-    CreatePrivateNetworkInvocationRequest:
-      required:
-      - endpointConfiguration
-      type: object
-      properties:
-        endpointConfiguration:
-          $ref: '#/components/schemas/EndpointConfiguration'
-        teamExternalIntegration:
-          $ref: '#/components/schemas/TeamExternalIntegrationReference'
-        webhookId:
-          type: string
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
     ResponseBodyEvaluation:
       required:
       - op
@@ -274,6 +267,13 @@ components:
           items:
             $ref: '#/components/schemas/PredicateObject'
       description: The configuration for evaluating the success of a response body
+    TestPrivateNetworkEvaluationConfigurationRequest:
+      required:
+      - evaluationConfiguration
+      type: object
+      properties:
+        evaluationConfiguration:
+          $ref: '#/components/schemas/EvaluationConfiguration'
     PrivateNetworkRequestPropertiesModel:
       type: object
       properties:
@@ -294,6 +294,29 @@ components:
           type: string
         headersArn:
           type: string
+    CreatePrivateNetworkInvocationResponse:
+      type: object
+      properties:
+        invocationId:
+          type: string
+    EvaluationConfiguration:
+      required:
+      - okStatusCodes
+      type: object
+      properties:
+        okLatencyMaxMs:
+          type: integer
+          description: The maximum latency in milliseconds for a successful status check
+          format: int32
+        okStatusCodes:
+          type: array
+          description: The list of successful response status codes for a successful status check
+          items:
+            type: string
+            description: The list of successful response status codes for a successful status check
+        responseBodyEvaluation:
+          $ref: '#/components/schemas/ResponseBodyEvaluation'
+      description: The configuration for evaluating the success/failure of a status check
     PrivateNetworkInvocationModel:
       type: object
       properties:
@@ -346,6 +369,59 @@ components:
             type: array
             items:
               type: string
+    CreatePrivateNetworkInvocationRequest:
+      required:
+      - endpointConfiguration
+      type: object
+      properties:
+        endpointConfiguration:
+          $ref: '#/components/schemas/EndpointConfiguration'
+        teamExternalIntegration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
+        webhookId:
+          type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    EndpointConfiguration:
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          type: string
+          description: The URL of the status check
+          format: url
+        method:
+          type: string
+          description: The method type of the status check
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Optional request headers to be used when the status check is invoked
+          description: Optional request headers to be used when the status check is invoked
+        payload:
+          type: string
+          description: Payload for POST type of request
+        headersArn:
+          type: string
+          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
+    PrivateNetworkInvocationModelResponse:
+      type: object
+      properties:
+        invocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkInvocationModel'
     TeamExternalIntegrationReference:
       title: StatusCheckRequest.TeamExternalIntegrationReference
       required:
@@ -373,6 +449,8 @@ components:
           - LOAD_GENERATOR_CUSTOM
           - AWS
           - AZURE
+          - GCP
+          - BLAZEMETER
         observabilityToolType:
           type: string
           description: The observability tool type of the external integration for the health check to be created/updated
@@ -394,32 +472,28 @@ components:
           type: string
           description: The name of the external integration for the health check to be created/updated
       description: Represents the configuration for referencing an external integration
-    HasCompareFunctionObject:
-      type: object
-    PrivateNetworkResponsePropertiesModel:
-      type: object
-      properties:
-        invocationTime:
-          type: string
-          format: date-time
-        httpStatusCode:
-          type: integer
-          format: int32
-        requestLatencyMs:
-          type: integer
-          format: int32
-        responseBody:
-          type: string
-        contentType:
-          type: string
-        responseHeaders:
-          type: object
-          additionalProperties:
-            type: string
-    TestPrivateNetworkEvaluationConfigurationRequest:
+    PredicateObject:
       required:
-      - evaluationConfiguration
+      - jpQuery
+      - rValue
+      - type
       type: object
       properties:
-        evaluationConfiguration:
-          $ref: '#/components/schemas/EvaluationConfiguration'
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type

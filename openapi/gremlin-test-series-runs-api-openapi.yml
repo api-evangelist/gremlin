@@ -1,0 +1,347 @@
+openapi: 3.2.0
+info:
+  title: Gremlin Test Series Runs API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: /v1
+tags:
+- name: test-series-runs
+  description: API to access a service's test series runs (the playlist of RM tests run against a service, e.g. baseline runs)
+paths:
+  /services/{serviceId}/test-series-runs/active:
+    get:
+      tags:
+      - test-series-runs
+      summary: Get the current active test series run for a given service
+      description: 'A service can have at most one active test series run at a time.
+
+        Requires the privilege `SERVICES_READ`'
+      operationId: getActiveTestSeriesRun
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The current active test series run
+        '404':
+          description: No test series run is currently active for this service
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
+  /services/{serviceId}/test-series-runs/{testSeriesRunId}:
+    get:
+      tags:
+      - test-series-runs
+      summary: Get a single test series run for a given service
+      description: Requires the privilege `SERVICES_READ`
+      operationId: getTestSeriesRun
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: testSeriesRunId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestSeriesRunResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
+    delete:
+      tags:
+      - test-series-runs
+      summary: Halt a test series run for a given service
+      description: Requires the privilege `SERVICES_RUN`
+      operationId: haltTestSeriesRun
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: testSeriesRunId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The halted test series run
+        '400':
+          description: The test series run is not active
+        '404':
+          description: Not found
+        '403':
+          description: 'User requires privilege for target team: SERVICES_RUN'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_RUN
+  /services/{serviceId}/test-series-runs:
+    get:
+      tags:
+      - test-series-runs
+      summary: Paginated endpoint for listing test series runs for a given service
+      description: Requires the privilege `SERVICES_READ`
+      operationId: getTestSeriesRuns
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+        example: None (unlimited)
+      - name: pageToken
+        in: query
+        description: Pass the pageToken to get the next page of test series runs
+        schema:
+          type: string
+        example: None (returns first page)
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponseTestSeriesRunResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
+    post:
+      tags:
+      - test-series-runs
+      summary: Start a test series run from an explicit list of (test, dependency) pairings
+      description: 'Unlike the default endpoint, a test does not have to be categorized as a dependency test in the suite: it may run against any dependency (including SPOFs) as long as its graph has a DEPENDENCY_ID sentinel in it. Every test must still belong to the team''s active Test Suite.
+
+        Requires the privilege `SERVICES_RUN`'
+      operationId: startCustomTestSeriesRun
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomTestRunRequest'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestSeriesRunResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_RUN'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_RUN
+  /services/{serviceId}/test-series-runs/baseline:
+    post:
+      tags:
+      - test-series-runs
+      summary: Start a new test series run for a given service
+      description: 'By default this starts all RM Tests in your Test Suite for this service and every one of its dependencies. You may also supply a list of RM tests in the body if you wish to constrain to a subset of all tests, but they *must* be in the active Test Suite for your team
+
+        Requires the privilege `SERVICES_RUN`'
+      operationId: startTestSeriesRun
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartBaselineRequest'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestSeriesRunResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_RUN'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_RUN
+components:
+  schemas:
+    CustomTestEntry:
+      required:
+      - reliabilityTestId
+      type: object
+      properties:
+        reliabilityTestId:
+          type: string
+        dependencyIds:
+          type: array
+          items:
+            type: string
+        failureFlagName:
+          type: string
+        againstService:
+          type: boolean
+    PagedResponseTestSeriesRunResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestSeriesRunResponse'
+    TestSeriesRunResponse:
+      type: object
+      properties:
+        identifier:
+          type: string
+        teamId:
+          type: string
+        serviceId:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        pauseUntil:
+          type: string
+          format: date-time
+        pauseReason:
+          type: string
+        tests:
+          type: array
+          items:
+            type: string
+        currentTestIndex:
+          type: integer
+          format: int64
+        createdBy:
+          type: string
+        consecutiveHealthCheckFailures:
+          type: integer
+          format: int32
+        state:
+          type: string
+          enum:
+          - PENDING
+          - ACTIVE
+          - FINISHED
+          - HALTED
+          - FAILED
+    StartBaselineRequest:
+      title: StartBaselineRequest
+      type: object
+      properties:
+        tests:
+          type: array
+          items:
+            type: string
+      description: Represents a request to run all tests
+    CustomTestRunRequest:
+      required:
+      - tests
+      type: object
+      properties:
+        tests:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomTestEntry'

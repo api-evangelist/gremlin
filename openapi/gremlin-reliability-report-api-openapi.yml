@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: reliability-report
   description: Retrieve reliability report for a given service
@@ -38,7 +37,7 @@ paths:
         schema:
           type: string
           format: date
-        example: '2026-05-01'
+        example: '2026-10-19'
       - name: teamId
         in: query
         description: Required when using company session token.
@@ -61,6 +60,79 @@ paths:
         - MINIMUM_TEAM_PRIVILEGES
 components:
   schemas:
+    ScoreSummaryResponse:
+      type: object
+      properties:
+        category:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        maxScore:
+          type: number
+          format: double
+        score:
+          type: number
+          format: double
+        previousIntervalScore:
+          type: number
+          format: double
+        rank:
+          type: integer
+          format: int32
+    ReliabilityCategorySummary:
+      type: object
+      properties:
+        category:
+          type: string
+          enum:
+          - OTHER
+          - REDUNDANCY
+          - SCALABILITY
+          - DEPENDENCIES
+          - RISKS
+          - EXTRA_CREDIT
+        policyTarget:
+          type: string
+          enum:
+          - SERVICE
+          - SERVICE_DEPENDENCY
+        policyStates:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyEvaluation'
+        rank:
+          type: integer
+          format: int32
+        score:
+          type: number
+          format: double
+        maxScore:
+          type: number
+          format: double
+    ReliabilityReportResponse:
+      type: object
+      properties:
+        reliability:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ReliabilityCategorySummary'
+        testSuiteId:
+          type: string
+        score:
+          type: number
+          format: double
+        previousIntervalScore:
+          type: number
+          format: double
+        categoryScores:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ScoreSummaryResponse'
     PolicyEvaluation:
       type: object
       properties:
@@ -123,76 +195,3 @@ components:
           - RECURRING_SCHEDULE
         triggeredBy:
           type: string
-    ReliabilityCategorySummary:
-      type: object
-      properties:
-        category:
-          type: string
-          enum:
-          - OTHER
-          - REDUNDANCY
-          - SCALABILITY
-          - DEPENDENCIES
-          - RISKS
-          - EXTRA_CREDIT
-        policyTarget:
-          type: string
-          enum:
-          - SERVICE
-          - SERVICE_DEPENDENCY
-        policyStates:
-          type: array
-          items:
-            $ref: '#/components/schemas/PolicyEvaluation'
-        rank:
-          type: integer
-          format: int32
-        score:
-          type: number
-          format: double
-        maxScore:
-          type: number
-          format: double
-    ScoreSummaryResponse:
-      type: object
-      properties:
-        category:
-          type: string
-          enum:
-          - OTHER
-          - REDUNDANCY
-          - SCALABILITY
-          - DEPENDENCIES
-          - RISKS
-          - EXTRA_CREDIT
-        maxScore:
-          type: number
-          format: double
-        score:
-          type: number
-          format: double
-        previousIntervalScore:
-          type: number
-          format: double
-        rank:
-          type: integer
-          format: int32
-    ReliabilityReportResponse:
-      type: object
-      properties:
-        reliability:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ReliabilityCategorySummary'
-        testSuiteId:
-          type: string
-        score:
-          type: number
-          format: double
-        previousIntervalScore:
-          type: number
-          format: double
-        categoryScores:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ScoreSummaryResponse'

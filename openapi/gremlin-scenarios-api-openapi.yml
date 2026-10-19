@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Scenarios
   description: Create, update, run, halt, and list scenarios
@@ -184,6 +183,68 @@ paths:
 
         Requires the privilege `SCENARIOS_WRITE`'
       operationId: createNewScenario
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateScenarioRequest'
+      responses:
+        '200':
+          description: The id for the created scenario
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Bad Request
+        '402':
+          description: Payment Required
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_WRITE
+  /scenarios/delegate:
+    get:
+      tags:
+      - Scenarios
+      summary: List all runnable scenarios, with status-check credentials masked
+      description: Requires the privilege `SCENARIOS_READ`
+      operationId: getRunnableDelegate
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+    post:
+      tags:
+      - Scenarios
+      summary: Create a new scenario, refusing inline health checks that send an integration's…
+      description: Requires the privilege `SCENARIOS_WRITE`
+      operationId: createNewScenarioDelegate
       parameters:
       - name: teamId
         in: query
@@ -413,6 +474,32 @@ paths:
       security:
       - privilege:
         - SCENARIOS_READ
+  /scenarios/active/delegate:
+    get:
+      tags:
+      - Scenarios
+      summary: List all active scenarios, with status-check credentials masked
+      description: Requires the privilege `SCENARIOS_READ`
+      operationId: getActiveDelegate
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
   /scenarios/active-runs:
     get:
       tags:
@@ -420,6 +507,34 @@ paths:
       summary: List all active scenarios
       description: Requires the privilege `SCENARIOS_READ`
       operationId: getActiveRuns
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponseScenarioRunResponse'
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+  /scenarios/active-runs/delegate:
+    get:
+      tags:
+      - Scenarios
+      summary: List active scenario runs, with status-check credentials masked
+      description: Requires the privilege `SCENARIOS_READ`
+      operationId: getActiveRunsDelegate
       parameters:
       - name: teamId
         in: query
@@ -486,6 +601,48 @@ paths:
       security:
       - privilege:
         - SCENARIOS_READ
+  /scenarios/runs/delegate:
+    get:
+      tags:
+      - Scenarios
+      summary: List all scenario runs for your team, with status-check credentials masked
+      description: Requires the privilege `SCENARIOS_READ`
+      operationId: getAllRunsForTeamDelegate
+      parameters:
+      - name: state
+        in: query
+        schema:
+          type: string
+      - name: includeArchived
+        in: query
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
   /scenarios/archived:
     get:
       tags:
@@ -508,6 +665,32 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ScenarioResponse'
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+  /scenarios/archived/delegate:
+    get:
+      tags:
+      - Scenarios
+      summary: List all archived scenarios, with status-check credentials masked
+      description: Requires the privilege `SCENARIOS_READ`
+      operationId: getArchivedDelegate
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
         '403':
           description: 'User requires privilege for target team: SCENARIOS_READ'
         '401':
@@ -544,6 +727,32 @@ paths:
       security:
       - privilege:
         - SCENARIOS_READ
+  /scenarios/drafts/delegate:
+    get:
+      tags:
+      - Scenarios
+      summary: List all draft scenarios, with status-check credentials masked
+      description: Requires the privilege `SCENARIOS_READ`
+      operationId: getDraftsDelegate
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
   /scenarios/active/paged:
     get:
       tags:
@@ -551,6 +760,48 @@ paths:
       summary: Get a team's active FI scenario runs ordered by start time desc
       description: Requires the privilege `SCENARIOS_READ`
       operationId: getPaginatedActiveRuns
+      parameters:
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+          default: 1000
+        example: None (defaults to 1000)
+      - name: pageToken
+        in: query
+        description: Pass the pageToken to get the next page of active FI scenario runs
+        schema:
+          type: string
+        example: None (returns first page)
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponseScenarioRunResponse'
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+  /scenarios/active/paged/delegate:
+    get:
+      tags:
+      - Scenarios
+      summary: List active scenario runs by page, with status-check credentials masked
+      description: Requires the privilege `SCENARIOS_READ`
+      operationId: getPaginatedActiveRunsDelegate
       parameters:
       - name: pageSize
         in: query
@@ -720,6 +971,46 @@ paths:
       security:
       - privilege:
         - SCENARIOS_RUN
+  /scenarios/{guid}/runs/delegate:
+    get:
+      tags:
+      - Scenarios
+      summary: List a scenario's runs, with status-check credentials masked
+      description: Requires the privilege `SCENARIOS_READ`
+      operationId: getRunsDelegate
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
   /scenarios/{guid}/runs/paged:
     get:
       tags:
@@ -768,6 +1059,128 @@ paths:
       security:
       - privilege:
         - SCENARIOS_READ
+  /scenarios/{guid}/runs/paged/delegate:
+    get:
+      tags:
+      - Scenarios
+      summary: List a scenario's runs by page, with status-check credentials masked
+      description: Requires the privilege `SCENARIOS_READ`
+      operationId: getRunsPagedDelegate
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: runNumber
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 1000
+      - name: forward
+        in: query
+        description: Used to indicate querying forward or backwards from the supplied runNumber (defaults to forward)
+        schema:
+          type: boolean
+          default: true
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponseScenarioRunResponse'
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+  /scenarios/{guid}/delegate:
+    get:
+      tags:
+      - Scenarios
+      summary: Get details about a scenario, with status-check credentials masked
+      description: Requires the privilege `SCENARIOS_READ`
+      operationId: getScenarioDelegate
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+    put:
+      tags:
+      - Scenarios
+      summary: Update a scenario, refusing inline health checks that send an integration's…
+      description: Requires the privilege `SCENARIOS_WRITE`
+      operationId: updateScenarioDelegate
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateScenarioRequest'
+      responses:
+        '200':
+          description: Indicates the scenario updated in place. Call GET v1/scenario/{guid} to retrieve the latest state
+        '400':
+          description: Bad Request
+        '402':
+          description: Payment Required
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_WRITE
   /scenarios/{guid}/runs/{runNumber}:
     get:
       tags:
@@ -815,6 +1228,44 @@ paths:
       security:
       - privilege:
         - SCENARIOS_READ
+  /scenarios/{guid}/runs/{runNumber}/delegate:
+    get:
+      tags:
+      - Scenarios
+      summary: Get a scenario run, with status-check credentials masked
+      description: Requires the privilege `SCENARIOS_READ`
+      operationId: getScenarioRunDelegate
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: runNumber
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
   /scenarios/{guid}/schedules:
     get:
       tags:
@@ -843,6 +1294,32 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ScenarioScheduleResponse'
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
+  /scenarios/shared/delegate:
+    get:
+      tags:
+      - Scenarios
+      summary: List scenarios shared with your team, with status-check credentials masked
+      description: Requires the privilege `SCENARIOS_READ`
+      operationId: getScenariosSharedWithTeamDelegate
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
         '403':
           description: 'User requires privilege for target team: SCENARIOS_READ'
         '401':
@@ -921,6 +1398,38 @@ paths:
       security:
       - privilege:
         - SCENARIO_SHARE_WRITE
+  /scenarios/shared/{guid}/delegate:
+    get:
+      tags:
+      - Scenarios
+      summary: Get a shared scenario, with status-check credentials masked
+      description: Requires the privilege `SCENARIOS_READ`
+      operationId: getSharedScenarioDelegate
+      parameters:
+      - name: guid
+        in: path
+        description: This value represents the globally unique identifier of the record to fetch.
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: SCENARIOS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SCENARIOS_READ
   /scenarios/halt:
     post:
       tags:
@@ -1157,6 +1666,15 @@ paths:
         - SCENARIOS_WRITE
 components:
   schemas:
+    TargetingStrategy:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
     ScenarioRunResponse:
       type: object
       properties:
@@ -1229,304 +1747,6 @@ components:
           - AT_LEAST_ONE_FAILED
         largeScaleTestId:
           type: string
-    ScenarioResponse:
-      type: object
-      properties:
-        orgId:
-          type: string
-        guid:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        hypothesis:
-          type: string
-        steps:
-          type: array
-          items:
-            type: object
-            additionalProperties:
-              type: object
-        graph:
-          $ref: '#/components/schemas/ScenarioGraph'
-        state:
-          type: string
-        createSource:
-          type: string
-        createdBy:
-          type: string
-        updatedBy:
-          type: string
-        createdAt:
-          type: string
-        updatedAt:
-          type: string
-        lastRunAt:
-          type: string
-        recommendedScenarioId:
-          type: string
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        createdFromType:
-          type: string
-          enum:
-          - Recommended
-          - Shared
-        createdFromId:
-          type: string
-        editCounter:
-          type: integer
-          format: int32
-        version:
-          type: integer
-          format: int64
-        passCriteria:
-          type: string
-          enum:
-          - ALL_PASS
-          - AT_LEAST_ONE_FAILED
-        eligibleForServiceCreation:
-          type: boolean
-    PredicateObject:
-      required:
-      - jpQuery
-      - rValue
-      - type
-      type: object
-      properties:
-        comparator:
-          $ref: '#/components/schemas/HasCompareFunctionObject'
-        type:
-          type: string
-          description: The type of primitive this predicate operates on
-          enum:
-          - String
-          - Number
-          - Boolean
-        jpQuery:
-          type: string
-          description: The json path query to run to read from the response body
-        rValue:
-          type: object
-          description: The right hand value of the predicate
-      description: The list of predicates to evaluate against the status check response body
-      discriminator:
-        propertyName: type
-    GameDayInfo:
-      type: object
-      properties:
-        guid:
-          type: string
-        name:
-          type: string
-    TargetingStrategy:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    EvaluationConfiguration:
-      required:
-      - okStatusCodes
-      type: object
-      properties:
-        okLatencyMaxMs:
-          type: integer
-          description: The maximum latency in milliseconds for a successful status check
-          format: int32
-        okStatusCodes:
-          type: array
-          description: The list of successful response status codes for a successful status check
-          items:
-            type: string
-            description: The list of successful response status codes for a successful status check
-        responseBodyEvaluation:
-          $ref: '#/components/schemas/ResponseBodyEvaluation'
-      description: The configuration for evaluating the success/failure of a status check
-    ExternalActionNode:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/GraphNodeObject'
-      - type: object
-        properties:
-          externalActionRequest:
-            $ref: '#/components/schemas/ExternalActionRequest'
-          state:
-            $ref: '#/components/schemas/State'
-          stateDetails:
-            $ref: '#/components/schemas/ExternalCallFailedException'
-    GraphNodeObject:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Concurrent
-          - ContinuousStatusCheck
-          - StatusCheckNode
-          - Delay
-          - InfraAttack
-          - SynchronousStatusCheck
-          - Continuous
-          - FailureFlag
-          - ExternalAction
-          - RollbackExternalAction
-        id:
-          type: string
-        state:
-          type: object
-          readOnly: true
-        guid:
-          type: string
-        next:
-          type: string
-      discriminator:
-        propertyName: type
-    State:
-      type: object
-      properties:
-        lifecycle:
-          type: string
-          enum:
-          - NotStarted
-          - Active
-          - HaltRequested
-          - Successful
-          - Halted
-          - Failed
-        startTime:
-          type: string
-          format: date-time
-        endTime:
-          type: string
-          format: date-time
-        failedReason:
-          type: string
-        nodeHaltedByGuid:
-          type: string
-        nodeHaltedById:
-          type: string
-      readOnly: true
-    ServiceTarget:
-      required:
-      - targetingStrategy
-      type: object
-      properties:
-        serviceId:
-          type: string
-        targetingStrategy:
-          $ref: '#/components/schemas/TargetingStrategy'
-    PagedResponseScenarioRunResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScenarioRunResponse'
-    PagedResponseCompletedScenarioRunResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompletedScenarioRunResponse'
-    StatusCheckNode:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/GraphNodeObject'
-      - type: object
-        properties:
-          state:
-            $ref: '#/components/schemas/State'
-          name:
-            type: string
-          description:
-            type: string
-          thirdPartyPresets:
-            type: string
-          category:
-            type: string
-            enum:
-            - ERRORS
-            - LATENCY
-            - REQUESTS
-            - UNKNOWN
-          requestConfiguration:
-            $ref: '#/components/schemas/StatusCheckNodeRequest'
-          endpointConfiguration:
-            $ref: '#/components/schemas/EndpointConfiguration'
-          rawEndpointConfiguration:
-            $ref: '#/components/schemas/EndpointConfiguration'
-          evaluationConfiguration:
-            $ref: '#/components/schemas/EvaluationConfiguration'
-          statusCheckId:
-            type: string
-          externalIntegrationId:
-            type: string
-          statusCheckReferenceId:
-            type: string
-          isPrivateNetwork:
-            type: boolean
-          isHaltable:
-            type: boolean
-          payload:
-            type: string
-          isAutoGenerated:
-            type: boolean
-          autoGeneratedStatusCheckId:
-            type: string
-          resourceIdentifier:
-            type: string
-          statusCheckRequest:
-            $ref: '#/components/schemas/StatusCheckNodeRequest'
-          intervalSeconds:
-            type: integer
-            format: int32
-          additionalTimeInSecsToRunAfterCompletion:
-            type: integer
-            format: int32
     ExternalCallFailedException:
       type: object
       properties:
@@ -1623,6 +1843,189 @@ components:
                 type: string
         localizedMessage:
           type: string
+    StatusCheckNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          state:
+            $ref: '#/components/schemas/State'
+          name:
+            type: string
+          description:
+            type: string
+          thirdPartyPresets:
+            type: string
+          category:
+            type: string
+            enum:
+            - ERRORS
+            - LATENCY
+            - REQUESTS
+            - UNKNOWN
+          requestConfiguration:
+            $ref: '#/components/schemas/StatusCheckNodeRequest'
+          endpointConfiguration:
+            $ref: '#/components/schemas/EndpointConfiguration'
+          rawEndpointConfiguration:
+            $ref: '#/components/schemas/EndpointConfiguration'
+          evaluationConfiguration:
+            $ref: '#/components/schemas/EvaluationConfiguration'
+          statusCheckId:
+            type: string
+          externalIntegrationId:
+            type: string
+          statusCheckReferenceId:
+            type: string
+          isPrivateNetwork:
+            type: boolean
+          isHaltable:
+            type: boolean
+          payload:
+            type: string
+          isAutoGenerated:
+            type: boolean
+          autoGeneratedStatusCheckId:
+            type: string
+          resourceIdentifier:
+            type: string
+          statusCheckRequest:
+            $ref: '#/components/schemas/StatusCheckNodeRequest'
+          intervalSeconds:
+            type: integer
+            format: int32
+          additionalTimeInSecsToRunAfterCompletion:
+            type: integer
+            format: int32
+    FormDataContentDisposition:
+      type: object
+      properties:
+        type:
+          type: string
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+        fileName:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        readDate:
+          type: string
+          format: date-time
+        size:
+          type: integer
+          format: int64
+        name:
+          type: string
+    PagedResponseScenarioRunResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioRunResponse'
+    EndpointConfiguration:
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          type: string
+          description: The URL of the status check
+          format: url
+        method:
+          type: string
+          description: The method type of the status check
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+            description: Optional request headers to be used when the status check is invoked
+          description: Optional request headers to be used when the status check is invoked
+        payload:
+          type: string
+          description: Payload for POST type of request
+        headersArn:
+          type: string
+          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
+    RunScenarioRequest:
+      title: ScenarioRun.Input
+      type: object
+      properties:
+        hypothesis:
+          type: string
+    State:
+      type: object
+      properties:
+        lifecycle:
+          type: string
+          enum:
+          - NotStarted
+          - Active
+          - HaltRequested
+          - Successful
+          - Halted
+          - Failed
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        failedReason:
+          type: string
+        nodeHaltedByGuid:
+          type: string
+        nodeHaltedById:
+          type: string
+      readOnly: true
+    FailureFlagTarget:
+      type: object
+      properties:
+        app:
+          $ref: '#/components/schemas/Selector'
+        flag:
+          $ref: '#/components/schemas/Selector'
+        appInstanceSampling:
+          $ref: '#/components/schemas/TargetSampling'
+        resolvedAppInstanceIds:
+          type: array
+          items:
+            type: string
+        resolvedRuntimeLabels:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
     ScenarioScheduleResponse:
       type: object
       properties:
@@ -1635,23 +2038,7 @@ components:
         scenarioName:
           type: string
         trigger:
-          type: object
-          properties:
-            windowType:
-              type: string
-              enum:
-              - Once
-              - Random
-            type:
-              type: string
-            templateId:
-              type: string
-            optionalTemplateId:
-              type: string
-            empty:
-              type: boolean
-          additionalProperties:
-            type: object
+          $ref: '#/components/schemas/ScheduleTrigger'
         createdBy:
           type: string
         createSource:
@@ -1698,8 +2085,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FailureFlagTarget'
-    UpdateScenarioRequest:
-      title: UpdateScenario.Input
+    GameDayInfo:
+      type: object
+      properties:
+        guid:
+          type: string
+        name:
+          type: string
+    CreateScenarioRequest:
+      title: Scenario.Input
       type: object
       properties:
         name:
@@ -1715,50 +2109,168 @@ components:
           - AT_LEAST_ONE_FAILED
         graph:
           $ref: '#/components/schemas/ScenarioGraph'
-    CompletedScenarioRunResponse:
+        recommendedScenarioId:
+          type: string
+        createdFromType:
+          type: string
+          enum:
+          - Recommended
+          - Shared
+        createdFromId:
+          type: string
+    EvaluationConfiguration:
+      required:
+      - okStatusCodes
       type: object
       properties:
-        scenarioId:
-          type: string
-        scenarioName:
-          type: string
-        runNumber:
+        okLatencyMaxMs:
           type: integer
-          format: int64
-        targets:
+          description: The maximum latency in milliseconds for a successful status check
+          format: int32
+        okStatusCodes:
+          type: array
+          description: The list of successful response status codes for a successful status check
+          items:
+            type: string
+            description: The list of successful response status codes for a successful status check
+        responseBodyEvaluation:
+          $ref: '#/components/schemas/ResponseBodyEvaluation'
+      description: The configuration for evaluating the success/failure of a status check
+    ScenarioResponse:
+      type: object
+      properties:
+        orgId:
+          type: string
+        guid:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        hypothesis:
+          type: string
+        steps:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceTarget'
-        triggerSource:
+            type: object
+            additionalProperties:
+              type: object
+        graph:
+          $ref: '#/components/schemas/ScenarioGraph'
+        state:
           type: string
-          enum:
-          - MANUAL
-          - RUN_ALL
-          - SCHEDULED
-          - RECURRING_SCHEDULE
-        triggeredBy:
+        createSource:
           type: string
-        status:
+        createdBy:
           type: string
-          enum:
-          - Passed
-          - Failed
-          - Unsure
+        updatedBy:
+          type: string
         createdAt:
           type: string
-          format: date-time
-        endTime:
+        updatedAt:
           type: string
-          format: date-time
-        failureFlagTargets:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailureFlagTarget'
+        lastRunAt:
+          type: string
+        recommendedScenarioId:
+          type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        createdFromType:
+          type: string
+          enum:
+          - Recommended
+          - Shared
+        createdFromId:
+          type: string
+        editCounter:
+          type: integer
+          format: int32
+        version:
+          type: integer
+          format: int64
         passCriteria:
           type: string
           enum:
           - ALL_PASS
           - AT_LEAST_ONE_FAILED
+        eligibleForServiceCreation:
+          type: boolean
+    HaltRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: The reason why this halt this requested.
+        reference:
+          type: string
+          description: A reference to why this halt was requested.
+    ScheduleTrigger:
+      discriminator:
+        propertyName: type
+        mapping:
+          Once: '#/components/schemas/OnceTrigger'
+          Random: '#/components/schemas/RandomTrigger'
+      oneOf:
+      - $ref: '#/components/schemas/OnceTrigger'
+      - $ref: '#/components/schemas/RandomTrigger'
+    TargetSampling:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body
+    GraphNodeObject:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Concurrent
+          - ContinuousStatusCheck
+          - StatusCheckNode
+          - Delay
+          - InfraAttack
+          - SynchronousStatusCheck
+          - Continuous
+          - FailureFlag
+          - ExternalAction
+          - RollbackExternalAction
+        id:
+          type: string
+        state:
+          type: object
+          readOnly: true
+        guid:
+          type: string
+        next:
+          type: string
+      discriminator:
+        propertyName: type
     ScenarioRunGraph:
       type: object
       properties:
@@ -1804,20 +2316,6 @@ components:
           $ref: '#/components/schemas/GraphNodeObject'
         nextId:
           type: string
-        nodesRecursive:
-          type: array
-          items:
-            $ref: '#/components/schemas/GraphNodeObject'
-        expectedLengthWithDelays:
-          type: integer
-          format: int32
-          readOnly: true
-        eligibleForServiceCreation:
-          type: boolean
-        expectedLength:
-          type: integer
-          format: int32
-          readOnly: true
         attackTypeQuantity:
           type: object
           additionalProperties:
@@ -1832,28 +2330,6 @@ components:
             format: int32
             readOnly: true
           readOnly: true
-    ScenarioGraph:
-      type: object
-      properties:
-        nodes:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/GraphNodeObject'
-        startId:
-          type: string
-        observers:
-          type: array
-          items:
-            $ref: '#/components/schemas/StatusCheckNode'
-        externalActions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalActionNode'
-        externalRollbacks:
-          type: array
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/RollbackExternalActionNode'
         nodesRecursive:
           type: array
           items:
@@ -1868,62 +2344,6 @@ components:
           type: integer
           format: int32
           readOnly: true
-        attackTypeQuantity:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-            readOnly: true
-          readOnly: true
-        providersCountForNodes:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int32
-            readOnly: true
-          readOnly: true
-    FailureFlagTarget:
-      type: object
-      properties:
-        app:
-          $ref: '#/components/schemas/Selector'
-        flag:
-          $ref: '#/components/schemas/Selector'
-        appInstanceSampling:
-          $ref: '#/components/schemas/TargetSampling'
-        resolvedAppInstanceIds:
-          type: array
-          items:
-            type: string
-    EndpointConfiguration:
-      required:
-      - url
-      type: object
-      properties:
-        url:
-          type: string
-          description: The URL of the status check
-          format: url
-        method:
-          type: string
-          description: The method type of the status check
-          enum:
-          - GET
-          - POST
-          - PUT
-          - PATCH
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-            description: Optional request headers to be used when the status check is invoked
-          description: Optional request headers to be used when the status check is invoked
-        payload:
-          type: string
-          description: Payload for POST type of request
-        headersArn:
-          type: string
-          description: Optional request headers pulled from a remote AWS resource holding JSON-encoded key-values that make up the headers
     Selector:
       required:
       - labels
@@ -1950,31 +2370,41 @@ components:
             foo:
             - bar
             - baz
-    StatusCheckNodeRequest:
+        runtimeLabels:
+          type: object
+          additionalProperties:
+            type: array
+            description: Labels for matching resources resolved at runtime (e.g., "zones" are resolved and added to the label "ips")
+            example:
+              zones:
+              - us-west-1a
+              - us-west-1b
+            items:
+              type: string
+              description: Labels for matching resources resolved at runtime (e.g., "zones" are resolved and added to the label "ips")
+              example: '{"zones":["us-west-1a","us-west-1b"]}'
+          description: Labels for matching resources resolved at runtime (e.g., "zones" are resolved and added to the label "ips")
+          example:
+            zones:
+            - us-west-1a
+            - us-west-1b
+    UpdateScenarioRequest:
+      title: UpdateScenario.Input
       type: object
       properties:
-        type:
+        name:
           type: string
-      discriminator:
-        propertyName: type
-    ResponseBodyEvaluation:
-      required:
-      - op
-      - predicates
-      type: object
-      properties:
-        op:
+        description:
           type: string
-          description: The operation to logically combine predicates into a success or failure
+        hypothesis:
+          type: string
+        passCriteria:
+          type: string
           enum:
-          - AND
-          - OR
-        predicates:
-          type: array
-          description: The list of predicates to evaluate against the status check response body
-          items:
-            $ref: '#/components/schemas/PredicateObject'
-      description: The configuration for evaluating the success of a response body
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
+        graph:
+          $ref: '#/components/schemas/ScenarioGraph'
     SharedScenarioResponse:
       type: object
       properties:
@@ -2016,6 +2446,37 @@ components:
           enum:
           - ALL_PASS
           - AT_LEAST_ONE_FAILED
+    ScenarioRunResults:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - Passed
+          - Failed
+          - Unsure
+        incidentDetected:
+          type: boolean
+        incidentMitigated:
+          type: boolean
+    ServiceTarget:
+      required:
+      - targetingStrategy
+      type: object
+      properties:
+        serviceId:
+          type: string
+        targetingStrategy:
+          $ref: '#/components/schemas/TargetingStrategy'
+    StatusCheckNodeRequest:
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    HasCompareFunctionObject:
+      type: object
     RollbackExternalActionNode:
       type: object
       allOf:
@@ -2041,96 +2502,50 @@ components:
             - Failed
           didExternalActionNoOp:
             type: boolean
-    HasCompareFunctionObject:
-      type: object
-    HaltRequest:
+    CompletedScenarioRunResponse:
       type: object
       properties:
-        reason:
+        scenarioId:
           type: string
-          description: The reason why this halt this requested.
-        reference:
+        scenarioName:
           type: string
-          description: A reference to why this halt was requested.
-    CreateScenarioRequest:
-      title: Scenario.Input
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        hypothesis:
-          type: string
-        passCriteria:
-          type: string
-          enum:
-          - ALL_PASS
-          - AT_LEAST_ONE_FAILED
-        graph:
-          $ref: '#/components/schemas/ScenarioGraph'
-        recommendedScenarioId:
-          type: string
-        createdFromType:
-          type: string
-          enum:
-          - Recommended
-          - Shared
-        createdFromId:
-          type: string
-    TargetSampling:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    FormDataContentDisposition:
-      type: object
-      properties:
-        type:
-          type: string
-        parameters:
-          type: object
-          additionalProperties:
-            type: string
-        fileName:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        modificationDate:
-          type: string
-          format: date-time
-        readDate:
-          type: string
-          format: date-time
-        size:
+        runNumber:
           type: integer
           format: int64
-        name:
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTarget'
+        triggerSource:
           type: string
-    ScenarioRunResults:
-      type: object
-      properties:
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        triggeredBy:
+          type: string
         status:
           type: string
           enum:
           - Passed
           - Failed
           - Unsure
-        incidentDetected:
-          type: boolean
-        incidentMitigated:
-          type: boolean
-    RunScenarioRequest:
-      title: ScenarioRun.Input
-      type: object
-      properties:
-        hypothesis:
+        createdAt:
           type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        failureFlagTargets:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailureFlagTarget'
+        passCriteria:
+          type: string
+          enum:
+          - ALL_PASS
+          - AT_LEAST_ONE_FAILED
     ExternalActionRequest:
       required:
       - type
@@ -2142,3 +2557,169 @@ components:
           type: string
       discriminator:
         propertyName: type
+    OnceTrigger:
+      required:
+      - exact
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          example: Once
+          enum:
+          - Once
+        exact:
+          type: string
+          description: Future ISO-8601 timestamp; milliseconds are required.
+          example: '2030-01-01T16:00:00.000Z'
+      description: Runs once at an exact time.
+    RandomTrigger:
+      required:
+      - activeDays
+      - end
+      - maxRuns
+      - start
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          example: Random
+          enum:
+          - Random
+        activeDays:
+          type: array
+          items:
+            type: string
+        start:
+          pattern: ^\d{2}:\d{2}$
+          type: string
+          description: Window start, 24h HH:mm in timeZone.
+          example: 09:00
+        end:
+          pattern: ^\d{2}:\d{2}$
+          type: string
+          description: Window end, 24h HH:mm in timeZone. May be earlier than start to span midnight.
+          example: '17:00'
+        maxRuns:
+          minimum: 1
+          type: integer
+          description: Max runs per window. When greater than 1 the window must fit maxRuns times the run's expected duration.
+          format: int32
+          example: 1
+        timeZone:
+          type: string
+          description: IANA time zone for start and end. Defaults to UTC.
+          example: America/Los_Angeles
+      description: Runs at random times within a recurring window.
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
+      type: object
+      properties:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
+    ExternalActionNode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GraphNodeObject'
+      - type: object
+        properties:
+          externalActionRequest:
+            $ref: '#/components/schemas/ExternalActionRequest'
+          state:
+            $ref: '#/components/schemas/State'
+          stateDetails:
+            $ref: '#/components/schemas/ExternalCallFailedException'
+    PagedResponseCompletedScenarioRunResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompletedScenarioRunResponse'
+    ScenarioGraph:
+      type: object
+      properties:
+        nodes:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/GraphNodeObject'
+        startId:
+          type: string
+        observers:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusCheckNode'
+        externalActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalActionNode'
+        externalRollbacks:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/RollbackExternalActionNode'
+        attackTypeQuantity:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+            readOnly: true
+          readOnly: true
+        providersCountForNodes:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+            readOnly: true
+          readOnly: true
+        nodesRecursive:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphNodeObject'
+        expectedLengthWithDelays:
+          type: integer
+          format: int32
+          readOnly: true
+        eligibleForServiceCreation:
+          type: boolean
+        expectedLength:
+          type: integer
+          format: int32
+          readOnly: true

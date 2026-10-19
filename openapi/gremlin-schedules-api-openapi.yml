@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Schedules
   description: Get, create, and delete schedules
@@ -160,11 +159,18 @@ paths:
             schema:
               $ref: '#/components/schemas/CreateScenarioScheduleRequest'
       responses:
-        default:
+        '201':
+          description: Guid of the created scenario schedule
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/ScenarioSchedule'
+                type: string
+        '400':
+          description: Bad Request
+        '404':
+          description: Scenario not found
+        '409':
+          description: A schedule already exists for this scenario
         '403':
           description: 'User requires privilege for target team: SCENARIOS_RUN'
         '401':
@@ -193,11 +199,13 @@ paths:
         schema:
           type: string
       responses:
-        default:
+        '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ScheduleResponse'
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege for target team: EXPERIMENTS_READ'
         '401':
@@ -225,10 +233,10 @@ paths:
         schema:
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
+        '200':
+          description: Attack schedule deleted
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege for target team: HALT_WRITE'
         '401':
@@ -257,11 +265,13 @@ paths:
         schema:
           type: string
       responses:
-        default:
+        '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ScheduleResponse'
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege for target team: EXPERIMENTS_READ'
         '401':
@@ -290,10 +300,10 @@ paths:
         schema:
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
+        '200':
+          description: Attack schedule deleted
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege for target team: HALT_WRITE'
         '401':
@@ -323,11 +333,13 @@ paths:
         schema:
           type: string
       responses:
-        default:
+        '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ScenarioScheduleResponse'
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege for target team: SCENARIOS_READ'
         '401':
@@ -360,11 +372,15 @@ paths:
             schema:
               $ref: '#/components/schemas/UpdateScenarioScheduleRequest'
       responses:
-        default:
+        '200':
           content:
             '*/*':
               schema:
                 type: string
+        '400':
+          description: Bad Request
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege for target team: SCENARIOS_WRITE'
         '401':
@@ -392,10 +408,10 @@ paths:
         schema:
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
+        '200':
+          description: Scenario schedule deleted
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege for target team: SCENARIOS_WRITE'
         '401':
@@ -424,10 +440,12 @@ paths:
         schema:
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
+        '200':
+          description: Scenario schedule enabled
+        '400':
+          description: Bad Request
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege for target team: SCENARIOS_WRITE'
         '401':
@@ -455,10 +473,10 @@ paths:
         schema:
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
+        '200':
+          description: Scenario schedule disabled
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege for target team: SCENARIOS_WRITE'
         '401':
@@ -621,145 +639,15 @@ paths:
         - SERVICES_READ
 components:
   schemas:
-    ScenarioSchedule:
-      type: object
-      properties:
-        orgId:
-          type: string
-        guid:
-          type: string
-        scenarioId:
-          type: string
-        scenarioName:
-          type: string
-        targets:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceTarget'
-        failureFlagTargets:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailureFlagTarget'
-        trigger:
-          type: object
-          properties:
-            windowType:
-              type: string
-              enum:
-              - Once
-              - Random
-            type:
-              type: string
-            templateId:
-              type: string
-            optionalTemplateId:
-              type: string
-            empty:
-              type: boolean
-          additionalProperties:
-            type: object
-        createSource:
-          type: string
-          enum:
-          - WebApp
-          - Api
-          - Scheduled
-          - Manual
-          - Spinnaker
-          - Concord
-          - GremlinFeeder
-          - GremlinSdkPython
-          - Scenario
-          - Chao
-          - K8sBackend
-          - Website
-          - Neotys
-          - IntegrationClient
-          - Validation
-        createdBy:
-          type: string
-        enabled:
-          type: boolean
-        nextWindowTriggerTimes:
-          type: object
-          additionalProperties:
-            type: string
-        nextTriggerTime:
-          type: string
-          format: date-time
-        lastScenarioRun:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        companyId:
-          type: string
-        triggerSource:
-          type: string
-          enum:
-          - MANUAL
-          - RUN_ALL
-          - SCHEDULED
-          - RECURRING_SCHEDULE
-        serviceIds:
-          type: array
-          items:
-            type: string
-        window:
-          $ref: '#/components/schemas/Window'
-        nextWindowTriggerTimesAfterConverting:
-          type: object
-          additionalProperties:
-            type: string
-          writeOnly: true
-        triggerTimesLeft:
-          type: array
-          writeOnly: true
-          items:
-            type: integer
-            format: int32
-    TargetStrategy:
+    TargetingStrategy:
+      required:
+      - type
       type: object
       properties:
         type:
           type: string
-          enum:
-          - Exact
-          - Regex
-          - Random
-        strategy:
-          $ref: '#/components/schemas/Strategy'
-        containerLabels:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        hostTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        allContainers:
-          type: boolean
-        allHosts:
-          type: boolean
-        hostIds:
-          type: array
-          items:
-            type: string
-        containerIds:
-          type: array
-          items:
-            type: string
-        hostsInput:
-          type: object
-        containersInput:
-          type: object
+      discriminator:
+        propertyName: type
     TaskTrafficImpactMappingInput:
       type: object
       properties:
@@ -773,82 +661,7 @@ components:
           type: array
           items:
             type: string
-    TargetingStrategy:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    CreateScenarioScheduleRequest:
-      title: ScenarioSchedule.Input
-      type: object
-      properties:
-        trigger:
-          type: object
-          properties:
-            windowType:
-              type: string
-              enum:
-              - Once
-              - Random
-            type:
-              type: string
-            templateId:
-              type: string
-            optionalTemplateId:
-              type: string
-            empty:
-              type: boolean
-          additionalProperties:
-            type: object
-        enabled:
-          type: boolean
-        scenarioId:
-          type: string
-    Interval:
-      type: object
-      properties:
-        chronology:
-          $ref: '#/components/schemas/Chronology'
-        end:
-          type: string
-          format: date-time
-        start:
-          type: string
-          format: date-time
-        startMillis:
-          type: integer
-          format: int64
-        endMillis:
-          type: integer
-          format: int64
-        afterNow:
-          type: boolean
-        beforeNow:
-          type: boolean
-    Chronology:
-      type: object
-      properties:
-        zone:
-          $ref: '#/components/schemas/DateTimeZone'
-    AttackConfiguration:
-      required:
-      - command
-      - targets
-      type: object
-      properties:
-        command:
-          $ref: '#/components/schemas/ServiceCommand'
-        targets:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceTarget'
-        sampling:
-          $ref: '#/components/schemas/TargetSampling'
-    PagedResponseServiceScheduleResponse:
+    PagedResponseScenarioScheduleResponse:
       type: object
       properties:
         pageNumber:
@@ -871,205 +684,49 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceScheduleResponse'
-    ScheduleResponse:
-      type: object
-      properties:
-        orgId:
-          type: string
-        guid:
-          type: string
-        trigger:
-          type: object
-          properties:
-            windowType:
-              type: string
-              enum:
-              - Once
-              - Random
-            type:
-              type: string
-            templateId:
-              type: string
-            optionalTemplateId:
-              type: string
-            empty:
-              type: boolean
-          additionalProperties:
-            type: object
-        target:
-          type: object
-          properties:
-            multiSelectTags:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: string
-            strategyInput:
-              $ref: '#/components/schemas/TargetStrategy'
-            multiSelectLabels:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: string
-            type:
-              type: string
-            templateId:
-              type: string
-            optionalTemplateId:
-              type: string
-            empty:
-              type: boolean
-            tags:
-              type: object
-              additionalProperties:
-                type: string
-              writeOnly: true
-          additionalProperties:
-            type: object
-        command:
-          type: object
-          properties:
-            providers:
-              type: array
-              items:
-                type: string
-            args:
-              type: array
-              items:
-                type: string
-            trafficImpactMapping:
-              $ref: '#/components/schemas/TaskTrafficImpactMappingInput'
-            trafficImpactFromWithSelectTags:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: string
-              writeOnly: true
-            trafficImpactWithDependencyIds:
-              type: array
-              writeOnly: true
-              items:
-                type: string
-            type:
-              type: string
-            templateId:
-              type: string
-            optionalTemplateId:
-              type: string
-            empty:
-              type: boolean
-          additionalProperties:
-            type: object
-        createdBy:
-          type: string
-        taskIds:
-          type: array
-          items:
-            type: string
-        createSource:
-          type: string
-          enum:
-          - WebApp
-          - Api
-          - Scheduled
-          - Manual
-          - Spinnaker
-          - Concord
-          - GremlinFeeder
-          - GremlinSdkPython
-          - Scenario
-          - Chao
-          - K8sBackend
-          - Website
-          - Neotys
-          - IntegrationClient
-          - Validation
-        triggerSource:
-          type: string
-          enum:
-          - MANUAL
-          - RUN_ALL
-          - SCHEDULED
-          - RECURRING_SCHEDULE
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        attackConfiguration:
-          $ref: '#/components/schemas/AttackConfiguration'
-        nextTriggerTime:
-          type: string
-          format: date-time
-    ServiceTarget:
-      required:
-      - targetingStrategy
-      type: object
-      properties:
-        serviceId:
-          type: string
-        targetingStrategy:
-          $ref: '#/components/schemas/TargetingStrategy'
+            $ref: '#/components/schemas/ScenarioScheduleResponse'
     ServiceCommand:
       type: object
       properties:
         infraCommandType:
           type: string
           enum:
-          - CPU
-          - IO
-          - Memory
-          - Disk
-          - Thread_Bomb
-          - Blackhole
-          - DNS
-          - Latency
-          - Packet_Loss
-          - Collect_Certs
-          - Shutdown
-          - Time_Travel
-          - Process_Killer
-          - Process_Exhaustion
-          - GPU
-          - Unknown
+          - cpu
+          - io
+          - memory
+          - disk
+          - thread_bomb
+          - blackhole
+          - dns
+          - latency
+          - packet_loss
+          - collect_certs
+          - shutdown
+          - time_travel
+          - process_killer
+          - process_exhaustion
+          - gpu
         infraCommandArgs:
           $ref: '#/components/schemas/InfraCommandArgs'
-    ServiceScheduleResponse:
+    FailureFlagTarget:
       type: object
       properties:
-        teamId:
-          type: string
-        serviceId:
-          type: string
-        serviceName:
-          type: string
-        nextReliabilityTestId:
-          type: string
-        nextReliabilityTestName:
-          type: string
-        nextReliabilityDependencyId:
-          type: string
-        nextReliabilityDependencyName:
-          type: string
-        nextFailureFlagName:
-          type: string
-        nextTestTriggerSource:
-          type: string
-          enum:
-          - MANUAL
-          - RUN_ALL
-          - SCHEDULED
-          - RECURRING_SCHEDULE
-        nextTestTriggeredBy:
-          type: string
-        nextTriggerTime:
-          type: string
-          format: date-time
+        app:
+          $ref: '#/components/schemas/Selector'
+        flag:
+          $ref: '#/components/schemas/Selector'
+        appInstanceSampling:
+          $ref: '#/components/schemas/TargetSampling'
+        resolvedAppInstanceIds:
+          type: array
+          items:
+            type: string
+        resolvedRuntimeLabels:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
     ScenarioScheduleResponse:
       type: object
       properties:
@@ -1082,23 +739,7 @@ components:
         scenarioName:
           type: string
         trigger:
-          type: object
-          properties:
-            windowType:
-              type: string
-              enum:
-              - Once
-              - Random
-            type:
-              type: string
-            templateId:
-              type: string
-            optionalTemplateId:
-              type: string
-            empty:
-              type: boolean
-          additionalProperties:
-            type: object
+          $ref: '#/components/schemas/ScheduleTrigger'
         createdBy:
           type: string
         createSource:
@@ -1175,9 +816,9 @@ components:
                 type: string
             type:
               type: string
-            templateId:
-              type: string
             optionalTemplateId:
+              type: string
+            templateId:
               type: string
             empty:
               type: boolean
@@ -1202,9 +843,9 @@ components:
                   type: string
             type:
               type: string
-            templateId:
-              type: string
             optionalTemplateId:
+              type: string
+            templateId:
               type: string
             empty:
               type: boolean
@@ -1216,25 +857,444 @@ components:
           additionalProperties:
             type: object
         trigger:
+          $ref: '#/components/schemas/ScheduleTrigger'
+        attackConfiguration:
+          $ref: '#/components/schemas/AttackConfiguration'
+    UpdateScenarioScheduleRequest:
+      required:
+      - trigger
+      type: object
+      properties:
+        trigger:
+          $ref: '#/components/schemas/RandomTrigger'
+        enabled:
+          type: boolean
+          description: Enable or disable the schedule. Omitting it keeps the current value, which blocks edits to an enabled schedule during its active window.
+    ScheduleTrigger:
+      discriminator:
+        propertyName: type
+        mapping:
+          Once: '#/components/schemas/OnceTrigger'
+          Random: '#/components/schemas/RandomTrigger'
+      oneOf:
+      - $ref: '#/components/schemas/OnceTrigger'
+      - $ref: '#/components/schemas/RandomTrigger'
+    AttackConfiguration:
+      required:
+      - command
+      - targets
+      type: object
+      properties:
+        command:
+          $ref: '#/components/schemas/ServiceCommand'
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTarget'
+        sampling:
+          $ref: '#/components/schemas/TargetSampling'
+    TargetSampling:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    CreateScenarioScheduleRequest:
+      title: ScenarioSchedule.Input
+      required:
+      - scenarioId
+      - trigger
+      type: object
+      properties:
+        trigger:
+          $ref: '#/components/schemas/RandomTrigger'
+        enabled:
+          type: boolean
+          description: Whether the schedule is active. Defaults to true.
+        scenarioId:
+          type: string
+          description: Guid of a scenario that has been run at least once.
+    Selector:
+      required:
+      - labels
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: array
+            description: Label selectors for matching resources
+            example:
+              foo:
+              - bar
+              - baz
+            items:
+              type: string
+              description: Label selectors for matching resources
+              example: '{"foo":["bar","baz"]}'
+          description: Label selectors for matching resources
+          example:
+            foo:
+            - bar
+            - baz
+        runtimeLabels:
+          type: object
+          additionalProperties:
+            type: array
+            description: Labels for matching resources resolved at runtime (e.g., "zones" are resolved and added to the label "ips")
+            example:
+              zones:
+              - us-west-1a
+              - us-west-1b
+            items:
+              type: string
+              description: Labels for matching resources resolved at runtime (e.g., "zones" are resolved and added to the label "ips")
+              example: '{"zones":["us-west-1a","us-west-1b"]}'
+          description: Labels for matching resources resolved at runtime (e.g., "zones" are resolved and added to the label "ips")
+          example:
+            zones:
+            - us-west-1a
+            - us-west-1b
+    PagedResponseScheduleResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleResponse'
+    TargetStrategy:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Exact
+          - Regex
+          - Random
+        strategy:
+          $ref: '#/components/schemas/Strategy'
+        containerLabels:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        hostTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        allContainers:
+          type: boolean
+        allHosts:
+          type: boolean
+        hostIds:
+          type: array
+          items:
+            type: string
+        containerIds:
+          type: array
+          items:
+            type: string
+        hostsInput:
+          type: object
+        containersInput:
+          type: object
+    ScheduleResponse:
+      type: object
+      properties:
+        orgId:
+          type: string
+        guid:
+          type: string
+        trigger:
+          $ref: '#/components/schemas/ScheduleTrigger'
+        target:
           type: object
           properties:
-            windowType:
-              type: string
-              enum:
-              - Once
-              - Random
+            multiSelectTags:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+            strategyInput:
+              $ref: '#/components/schemas/TargetStrategy'
+            multiSelectLabels:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
             type:
+              type: string
+            optionalTemplateId:
               type: string
             templateId:
               type: string
+            empty:
+              type: boolean
+            tags:
+              type: object
+              additionalProperties:
+                type: string
+              writeOnly: true
+          additionalProperties:
+            type: object
+        command:
+          type: object
+          properties:
+            providers:
+              type: array
+              items:
+                type: string
+            args:
+              type: array
+              items:
+                type: string
+            trafficImpactMapping:
+              $ref: '#/components/schemas/TaskTrafficImpactMappingInput'
+            trafficImpactFromWithSelectTags:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+              writeOnly: true
+            trafficImpactWithDependencyIds:
+              type: array
+              writeOnly: true
+              items:
+                type: string
+            type:
+              type: string
             optionalTemplateId:
+              type: string
+            templateId:
               type: string
             empty:
               type: boolean
           additionalProperties:
             type: object
+        createdBy:
+          type: string
+        taskIds:
+          type: array
+          items:
+            type: string
+        createSource:
+          type: string
+          enum:
+          - WebApp
+          - Api
+          - Scheduled
+          - Manual
+          - Spinnaker
+          - Concord
+          - GremlinFeeder
+          - GremlinSdkPython
+          - Scenario
+          - Chao
+          - K8sBackend
+          - Website
+          - Neotys
+          - IntegrationClient
+          - Validation
+        triggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
         attackConfiguration:
           $ref: '#/components/schemas/AttackConfiguration'
+        nextTriggerTime:
+          type: string
+          format: date-time
+    ServiceTarget:
+      required:
+      - targetingStrategy
+      type: object
+      properties:
+        serviceId:
+          type: string
+        targetingStrategy:
+          $ref: '#/components/schemas/TargetingStrategy'
+    InfraCommandArgs:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - cpu
+          - io
+          - memory
+          - disk
+          - thread_bomb
+          - blackhole
+          - dns
+          - latency
+          - packet_loss
+          - collect_certs
+          - shutdown
+          - time_travel
+          - process_killer
+          - process_exhaustion
+          - gpu
+        cliArgs:
+          type: array
+          description: 'CLI arguments for the command. The first element must be the command name and match infraCommandType. This field is not required. It is recommended to specify arguments as JSON fields instead (e.g. fields: `length`, `percent`, `reboot`, etc.).'
+          example:
+          - blackhole
+          - -l
+          - '60'
+          - -p
+          - '5432'
+          items:
+            type: string
+            description: 'CLI arguments for the command. The first element must be the command name and match infraCommandType. This field is not required. It is recommended to specify arguments as JSON fields instead (e.g. fields: `length`, `percent`, `reboot`, etc.).'
+            example: '["blackhole","-l","60","-p","5432"]'
+    ServiceScheduleResponse:
+      type: object
+      properties:
+        teamId:
+          type: string
+        serviceId:
+          type: string
+        serviceName:
+          type: string
+        nextReliabilityTestId:
+          type: string
+        nextReliabilityTestName:
+          type: string
+        nextReliabilityDependencyId:
+          type: string
+        nextReliabilityDependencyName:
+          type: string
+        nextFailureFlagName:
+          type: string
+        nextTestTriggerSource:
+          type: string
+          enum:
+          - MANUAL
+          - RUN_ALL
+          - SCHEDULED
+          - RECURRING_SCHEDULE
+        nextTestTriggeredBy:
+          type: string
+        nextTriggerTime:
+          type: string
+          format: date-time
+    PagedResponseServiceScheduleResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceScheduleResponse'
+    OnceTrigger:
+      required:
+      - exact
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          example: Once
+          enum:
+          - Once
+        exact:
+          type: string
+          description: Future ISO-8601 timestamp; milliseconds are required.
+          example: '2030-01-01T16:00:00.000Z'
+      description: Runs once at an exact time.
+    RandomTrigger:
+      required:
+      - activeDays
+      - end
+      - maxRuns
+      - start
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          example: Random
+          enum:
+          - Random
+        activeDays:
+          type: array
+          items:
+            type: string
+        start:
+          pattern: ^\d{2}:\d{2}$
+          type: string
+          description: Window start, 24h HH:mm in timeZone.
+          example: 09:00
+        end:
+          pattern: ^\d{2}:\d{2}$
+          type: string
+          description: Window end, 24h HH:mm in timeZone. May be earlier than start to span midnight.
+          example: '17:00'
+        maxRuns:
+          minimum: 1
+          type: integer
+          description: Max runs per window. When greater than 1 the window must fit maxRuns times the run's expected duration.
+          format: int32
+          example: 1
+        timeZone:
+          type: string
+          description: IANA time zone for start and end. Defaults to UTC.
+          example: America/Los_Angeles
+      description: Runs at random times within a recurring window.
     Strategy:
       type: object
       properties:
@@ -1276,192 +1336,3 @@ components:
             type: array
             items:
               type: string
-    PagedResponseScenarioScheduleResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScenarioScheduleResponse'
-    Window:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Once
-          - Random
-        triggerTimesLeft:
-          type: array
-          items:
-            type: integer
-            format: int32
-        end:
-          type: string
-          format: date-time
-        start:
-          type: string
-          format: date-time
-        interval:
-          $ref: '#/components/schemas/Interval'
-        maxRunsPerWindow:
-          type: integer
-          format: int32
-    FailureFlagTarget:
-      type: object
-      properties:
-        app:
-          $ref: '#/components/schemas/Selector'
-        flag:
-          $ref: '#/components/schemas/Selector'
-        appInstanceSampling:
-          $ref: '#/components/schemas/TargetSampling'
-        resolvedAppInstanceIds:
-          type: array
-          items:
-            type: string
-    Selector:
-      required:
-      - labels
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-        labels:
-          type: object
-          additionalProperties:
-            type: array
-            description: Label selectors for matching resources
-            example:
-              foo:
-              - bar
-              - baz
-            items:
-              type: string
-              description: Label selectors for matching resources
-              example: '{"foo":["bar","baz"]}'
-          description: Label selectors for matching resources
-          example:
-            foo:
-            - bar
-            - baz
-    DateTimeZone:
-      type: object
-      properties:
-        id:
-          type: string
-        fixed:
-          type: boolean
-    PagedResponseScheduleResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleResponse'
-    InfraCommandArgs:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - CPU
-          - IO
-          - Memory
-          - Disk
-          - Thread_Bomb
-          - Blackhole
-          - DNS
-          - Latency
-          - Packet_Loss
-          - Collect_Certs
-          - Shutdown
-          - Time_Travel
-          - Process_Killer
-          - Process_Exhaustion
-          - GPU
-          - Unknown
-        unknownArgs:
-          type: object
-          additionalProperties:
-            type: string
-        duplicateArgs:
-          type: array
-          items:
-            type: object
-            additionalProperties:
-              type: string
-        cliArgs:
-          type: array
-          items:
-            type: string
-        lengthOrZero:
-          type: integer
-          format: int32
-    UpdateScenarioScheduleRequest:
-      type: object
-      properties:
-        trigger:
-          type: object
-          properties:
-            windowType:
-              type: string
-              enum:
-              - Once
-              - Random
-            type:
-              type: string
-            templateId:
-              type: string
-            optionalTemplateId:
-              type: string
-            empty:
-              type: boolean
-          additionalProperties:
-            type: object
-        enabled:
-          type: boolean
-    TargetSampling:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type

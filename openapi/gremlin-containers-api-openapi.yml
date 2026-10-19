@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Containers
   description: Get all active containers
@@ -43,3 +42,86 @@ paths:
       security:
       - privilege:
         - CLIENTS_READ
+  /containers/{containerId}:
+    get:
+      tags:
+      - Containers
+      summary: Get a single container by ID
+      description: Requires the privilege `CLIENTS_READ`
+      operationId: getContainer
+      parameters:
+      - name: containerId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerSummary'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_READ
+  /containers/labels:
+    get:
+      tags:
+      - Containers
+      summary: List distinct label keys observed across the team's containers
+      description: Requires the privilege `CLIENTS_READ`
+      operationId: getLabelKeys
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabelKeysResponse'
+        '403':
+          description: 'User requires privilege for target team: CLIENTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - CLIENTS_READ
+components:
+  schemas:
+    LabelKeysResponse:
+      type: object
+      properties:
+        labelKeys:
+          type: array
+          items:
+            type: string
+    ContainerSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        clientId:
+          type: string
+        name:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string

@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Companies
   description: Update company preferences, get all users or clients for a company, and get company details
@@ -28,10 +27,11 @@ paths:
       operationId: getZones
       parameters: []
       responses:
-        default:
-          description: default response
+        '200':
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZonesResponse'
         '403':
           description: 'User requires privilege: TEST_SUITES_READ'
         '401':
@@ -54,10 +54,10 @@ paths:
             schema:
               $ref: '#/components/schemas/Zone'
       responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
+        '200':
+          description: Zone created
+        '400':
+          description: No zone ID was given, the zone key or a CIDR is invalid, or a zone with that ID already exists
         '403':
           description: 'User requires privilege: TEST_SUITES_WRITE'
         '401':
@@ -80,12 +80,19 @@ paths:
               $ref: '#/components/schemas/CreateCompanyRequest'
         required: true
       responses:
-        default:
-          description: default response
+        '200':
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCompanyResponse'
+        '400':
+          description: No invitation found for the admin email, US storage was not agreed to, or the invite code does not match
         '403':
           description: Response was sent via HTTP, please retry using HTTPS
+        '409':
+          description: The requested company name is already in use
+        '429':
+          description: Too many company creation attempts for this invite; try again shortly
   /companies/{identifier}/saml/claim-aliases:
     get:
       tags:
@@ -98,16 +105,18 @@ paths:
       parameters:
       - name: identifier
         in: path
+        description: The identifier of the Company
         required: true
         schema:
           type: string
       responses:
-        default:
-          description: default response
+        '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SamlAliasIDs'
+        '404':
+          description: Company not found
         '403':
           description: 'User requires privilege: COMPANY_SAMLCLAIM_ALIAS_READ'
         '401':
@@ -126,6 +135,7 @@ paths:
       parameters:
       - name: identifier
         in: path
+        description: The identifier of the Company
         required: true
         schema:
           type: string
@@ -135,12 +145,15 @@ paths:
             schema:
               $ref: '#/components/schemas/CreateOrUpdateClaimAliasRequest'
       responses:
-        default:
-          description: default response
+        '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SamlAlias'
+        '400':
+          description: No alias ID was given, no roles were given, or a given role/team ID is invalid
+        '404':
+          description: Company not found
         '403':
           description: 'User requires privilege: COMPANY_SAMLCLAIM_ALIAS_WRITE'
         '401':
@@ -158,14 +171,20 @@ paths:
       parameters:
       - name: identifier
         in: path
+        description: The identifier of the Company
         required: true
         schema:
           type: string
       responses:
-        default:
-          description: default response
+        '200':
           content:
-            application/json: {}
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompanyUserInfo'
+        '404':
+          description: Company not found
         '403':
           description: 'User requires privilege: COMPANY_USERS_READ'
         '401':
@@ -182,6 +201,7 @@ paths:
       parameters:
       - name: identifier
         in: path
+        description: The identifier of the Company the invite belongs to
         required: true
         schema:
           type: string
@@ -192,12 +212,18 @@ paths:
               $ref: '#/components/schemas/CreateUserRequest'
         required: true
       responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
+        '200':
+          description: User created and session established
+        '400':
+          description: Caller has not agreed to allow US based storage
+        '401':
+          description: Company policy disallows password based login
+        '402':
+          description: Company has reached its user limit
         '403':
           description: Response was sent via HTTP, please retry using HTTPS
+        '404':
+          description: No invite found for the supplied email
   /companies/{identifier}/saml/claim-aliases/{aliasId}:
     get:
       tags:
@@ -210,21 +236,24 @@ paths:
       parameters:
       - name: identifier
         in: path
+        description: The identifier of the Company
         required: true
         schema:
           type: string
       - name: aliasId
         in: path
+        description: The identifier of the claim alias
         required: true
         schema:
           type: string
       responses:
-        default:
-          description: default response
+        '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/OrderedSamlAlias'
+        '404':
+          description: Company not found, or no alias found with the given aliasId
         '403':
           description: 'User requires privilege: COMPANY_SAMLCLAIM_ALIAS_READ'
         '401':
@@ -243,11 +272,13 @@ paths:
       parameters:
       - name: identifier
         in: path
+        description: The identifier of the Company
         required: true
         schema:
           type: string
       - name: aliasId
         in: path
+        description: The identifier of the claim alias
         required: true
         schema:
           type: string
@@ -257,12 +288,15 @@ paths:
             schema:
               $ref: '#/components/schemas/CreateOrUpdateClaimAliasRequest'
       responses:
-        default:
-          description: default response
+        '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SamlAlias'
+        '400':
+          description: No roles were given, or a given role/team ID is invalid
+        '404':
+          description: Company not found
         '403':
           description: 'User requires privilege: COMPANY_SAMLCLAIM_ALIAS_WRITE'
         '401':
@@ -281,19 +315,21 @@ paths:
       parameters:
       - name: identifier
         in: path
+        description: The identifier of the Company
         required: true
         schema:
           type: string
       - name: aliasId
         in: path
+        description: The identifier of the claim alias
         required: true
         schema:
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
+        '204':
+          description: Alias deleted
+        '404':
+          description: Company not found
         '403':
           description: 'User requires privilege: COMPANY_SAMLCLAIM_ALIAS_WRITE'
         '401':
@@ -301,704 +337,45 @@ paths:
       security:
       - privilege:
         - COMPANY_SAMLCLAIM_ALIAS_WRITE
-  /companies/zones/{zoneId}:
-    get:
+  /companies/{identifier}/saml/cert:
+    delete:
       tags:
       - Companies
-      summary: Get a zone setting
-      description: 'Get the zone setting
-
-        Requires the privilege `TEST_SUITES_READ`'
-      operationId: getZoneSetting
+      summary: Removes the primary IDP certificate, promoting the secondary to primary if…
+      description: Requires the privilege `COMPANY_SECURITY_WRITE`
+      operationId: deleteSamlPrimaryCert
       parameters:
-      - name: zoneId
+      - name: identifier
         in: path
+        description: The identifier of the Company
         required: true
         schema:
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
+        '200':
+          description: Primary certificate removed (secondary promoted, if present)
+        '400':
+          description: SAML is enabled and no secondary certificate is configured to take over
         '403':
-          description: 'User requires privilege: TEST_SUITES_READ'
+          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
+        '404':
+          description: Company not found
         '401':
           description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
       security:
       - privilege:
-        - TEST_SUITES_READ
+        - COMPANY_SECURITY_WRITE
+  /companies/{identifier}/saml/cert-secondary:
     put:
       tags:
       - Companies
-      summary: Update a zone
-      description: 'Update a zone setting of the company
-
-        Requires the privilege `TEST_SUITES_WRITE`'
-      operationId: editZoneSetting
-      parameters:
-      - name: zoneId
-        in: path
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Zone'
-      responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
-        '403':
-          description: 'User requires privilege: TEST_SUITES_WRITE'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - TEST_SUITES_WRITE
-    delete:
-      tags:
-      - Companies
-      summary: Delete zone setting
-      description: 'Deletes the zone setting from the company
-
-        Requires the privilege `TEST_SUITES_WRITE`'
-      operationId: deleteZoneSetting
-      parameters:
-      - name: zoneId
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
-        '403':
-          description: 'User requires privilege: TEST_SUITES_WRITE'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - TEST_SUITES_WRITE
-  /companies/{identifier}/users/active/paged:
-    get:
-      tags:
-      - Companies
-      summary: Returns paginated active users for the supplied company
-      description: Requires the privilege `COMPANY_USERS_READ`
-      operationId: getActiveUsersForCompanyPaginated
-      parameters:
-      - name: identifier
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: pageSize
-        in: query
-        description: This value determines how many results will be returned per call.
-        schema:
-          type: integer
-          format: int32
-          default: 10
-        example: None (unlimited)
-      - name: pageToken
-        in: query
-        description: Token corresponding to the last page of active company users retrieved. Pass the pageToken to get the next page of active company users
-        schema:
-          type: string
-        example: None (returns first page)
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
-        '403':
-          description: 'User requires privilege: COMPANY_USERS_READ'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - COMPANY_USERS_READ
-  /companies/{identifier}/clients:
-    get:
-      tags:
-      - Companies
-      summary: Returns all clients for the supplied company
-      description: 'SUPER users only
-
-        Requires the privilege `COMPANIES_READ`'
-      operationId: getClientsForCompany
-      parameters:
-      - name: identifier
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
-        '403':
-          description: 'User requires privilege: COMPANIES_READ'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - COMPANIES_READ
-  /companies/{identifier}:
-    get:
-      tags:
-      - Companies
-      summary: Gets a Company by its supplied guid
-      description: Requires the privilege `COMPANIES_READ`
-      operationId: getCompany
-      parameters:
-      - name: identifier
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: skipTeams
-        in: query
-        schema:
-          type: boolean
-      responses:
-        default:
-          description: default response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CompanyResponse'
-        '403':
-          description: 'User requires privilege: COMPANIES_READ'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - COMPANIES_READ
-    patch:
-      tags:
-      - Companies
-      summary: Update the prefs for company
-      description: 'This endpoint will allow you to update the prefs for a company based on its identifier.
-
-        Requires the privilege `COMPANY_PREFERENCES_WRITE`'
-      operationId: updateCompanyPrefs
-      parameters:
-      - name: identifier
-        in: path
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CompanyPatch'
-      responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
-        '403':
-          description: 'User requires privilege: COMPANY_PREFERENCES_WRITE'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - COMPANY_PREFERENCES_WRITE
-  /companies/{identifier}/users/invited/paged:
-    get:
-      tags:
-      - Companies
-      summary: Returns paginated invited users for the supplied company
-      description: Requires the privilege `COMPANY_USERS_READ`
-      operationId: getInvitedUsersForCompanyPaginated
-      parameters:
-      - name: identifier
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: pageSize
-        in: query
-        description: This value determines how many results will be returned per call.
-        schema:
-          type: integer
-          format: int32
-          default: 10
-        example: None (unlimited)
-      - name: pageToken
-        in: query
-        description: Token corresponding to the last page of invited company users retrieved. Pass the pageToken to get the next page of invited company users
-        schema:
-          type: string
-        example: None (returns first page)
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
-        '403':
-          description: 'User requires privilege: COMPANY_USERS_READ'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - COMPANY_USERS_READ
-  /companies/{identifier}/users/revoked/paged:
-    get:
-      tags:
-      - Companies
-      summary: Returns paginated revoked users for the supplied company
-      description: Requires the privilege `COMPANY_USERS_READ`
-      operationId: getRevokedUsersForCompanyPaginated
-      parameters:
-      - name: identifier
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: pageSize
-        in: query
-        description: This value determines how many results will be returned per call.
-        schema:
-          type: integer
-          format: int32
-          default: 10
-        example: None (unlimited)
-      - name: pageToken
-        in: query
-        description: Token corresponding to the last page of revoked company users retrieved. Pass the pageToken to get the next page of revoked company users
-        schema:
-          type: string
-        example: None (returns first page)
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
-        '403':
-          description: 'User requires privilege: COMPANY_USERS_READ'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - COMPANY_USERS_READ
-  /companies/{identifier}/users/paged:
-    get:
-      tags:
-      - Companies
-      summary: Returns paginated users for the supplied company
-      description: Requires the privilege `COMPANY_USERS_READ`
-      operationId: getUsersForCompanyPaginated
-      parameters:
-      - name: identifier
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: pageSize
-        in: query
-        description: This value determines how many results will be returned per call.
-        schema:
-          type: integer
-          format: int32
-          default: 10
-        example: None (unlimited)
-      - name: pageToken
-        in: query
-        description: Token corresponding to the last page of company users retrieved. Pass the pageToken to get the next page of company users
-        schema:
-          type: string
-        example: None (returns first page)
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
-        '403':
-          description: 'User requires privilege: COMPANY_USERS_READ'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - COMPANY_USERS_READ
-  /companies/invite:
-    post:
-      tags:
-      - Companies
-      summary: Invites the specified email to create a new Company
-      operationId: invite
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/InviteUserFromSelfSignupRequest'
-        required: true
-      responses:
-        default:
-          description: default response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CompanyInviteResponse'
-        '403':
-          description: Response was sent via HTTP, please retry using HTTPS
-  /companies/{identifier}/invites:
-    post:
-      tags:
-      - Companies
-      summary: Invite one or more users to join your Gremlin company
-      description: Requires the privilege `COMPANY_USERS_WRITE`
-      operationId: inviteUsersToCompany
-      parameters:
-      - name: identifier
-        in: path
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/InviteUserRequest'
-        required: true
-      responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
-        '403':
-          description: 'User requires privilege: COMPANY_USERS_WRITE'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - COMPANY_USERS_WRITE
-  /companies/{identifier}/users/{email}/active:
-    post:
-      tags:
-      - Companies
-      summary: User must exist. This is primarily used to reactivate a deactivated user
-      description: 'Activates a user.
-
-        Requires the privilege `COMPANY_USERS_WRITE`'
-      operationId: rbacUnrevoke
-      parameters:
-      - name: identifier
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: email
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
-        '403':
-          description: 'User requires privilege: COMPANY_USERS_WRITE'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - COMPANY_USERS_WRITE
-    delete:
-      tags:
-      - Companies
-      summary: Deactivates a user
-      description: 'Once deactivated, user will not be able to do anything on company
-
-        Requires the privilege `COMPANY_USERS_WRITE`'
-      operationId: rbacRevoke
-      parameters:
-      - name: identifier
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: email
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
-        '403':
-          description: 'User requires privilege: COMPANY_USERS_WRITE'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - COMPANY_USERS_WRITE
-  /companies/{identifier}/invites/{email}:
-    delete:
-      tags:
-      - Companies
-      summary: Revoke a pending user invite
-      description: Requires the privilege `COMPANY_USERS_WRITE`
-      operationId: rbacRevokeInvite
-      parameters:
-      - name: identifier
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: email
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
-        '403':
-          description: 'User requires privilege: COMPANY_USERS_WRITE'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - COMPANY_USERS_WRITE
-  /companies/{identifier}/users/{email}:
-    put:
-      tags:
-      - Companies
-      summary: Update roles of existing user
-      description: 'User must exist.
-
-        Requires the privilege `COMPANY_USERS_WRITE`'
-      operationId: rbacUpdate
-      parameters:
-      - name: identifier
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: email
-        in: path
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SetRolesRequest'
-        required: true
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
-        '403':
-          description: 'User requires privilege: COMPANY_USERS_WRITE'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - COMPANY_USERS_WRITE
-  /companies/trial:
-    post:
-      tags:
-      - Companies
-      summary: Allows an invited user to create a new Company for a trial
-      description: User must have been previously invited
-      operationId: trial
-      parameters: []
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              required:
-              - adminEmail
-              - code
-              - name
-              type: object
-              properties:
-                name:
-                  maxLength: 50
-                  minLength: 3
-                  type: string
-                code:
-                  type: string
-                adminEmail:
-                  type: string
-                adminPassword:
-                  type: string
-                allowUsStorage:
-                  type: boolean
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
-        '403':
-          description: Response was sent via HTTP, please retry using HTTPS
-      deprecated: true
-  /companies/{identifier}/auth/prefs:
-    post:
-      tags:
-      - Companies
-      summary: Updates the authentication preferences associated with this Company
+      summary: Sets the secondary IDP certificate for SAML authentication
       description: Requires the privilege `COMPANY_SECURITY_WRITE`
-      operationId: updateAuthMethodPrefs
+      operationId: setSamlSecondaryCert
       parameters:
       - name: identifier
         in: path
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateCompanyAuthMethodPrefsRequest'
-        required: true
-      responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
-        '403':
-          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - COMPANY_SECURITY_WRITE
-  /companies/{identifier}/mfaPrefs:
-    post:
-      tags:
-      - Companies
-      summary: Updates the MFA preferences associated with this Company
-      description: Requires the privilege `COMPANY_SECURITY_WRITE`
-      operationId: updateMfaPrefs
-      parameters:
-      - name: identifier
-        in: path
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                forceMfa:
-                  type: boolean
-                  default: false
-      responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
-        '403':
-          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - COMPANY_SECURITY_WRITE
-  /companies/{identifier}/oauth/settings:
-    post:
-      tags:
-      - Companies
-      summary: Updates the OAuth settings for this Company
-      description: Requires the privilege `COMPANY_SECURITY_WRITE`
-      operationId: updateOAuthSettings
-      parameters:
-      - name: identifier
-        in: path
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateOAuthSettingsRequest'
-        required: true
-      responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
-        '403':
-          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      security:
-      - privilege:
-        - COMPANY_SECURITY_WRITE
-  /companies/{identifier}/prefs:
-    post:
-      tags:
-      - Companies
-      summary: Updates the preferences associated with this Company
-      description: 'SUPER users only
-
-        Requires the privilege `COMPANY_SECURITY_WRITE`'
-      operationId: updatePrefs
-      parameters:
-      - name: identifier
-        in: path
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                domain:
-                  type: string
-                  default: ''
-      responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
-        '403':
-          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
-        '401':
-          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-      deprecated: true
-      security:
-      - privilege:
-        - COMPANY_SECURITY_WRITE
-  /companies/{identifier}/saml/props:
-    post:
-      tags:
-      - Companies
-      summary: Updates the preferences associated with this Company
-      description: 'SUPER users only
-
-        Requires the privilege `COMPANY_SECURITY_WRITE`'
-      operationId: updateSamlProperties
-      parameters:
-      - name: identifier
-        in: path
+        description: The identifier of the Company
         required: true
         schema:
           type: string
@@ -1008,18 +385,8 @@ paths:
             schema:
               required:
               - certificate
-              - enabled
-              - entityId
-              - idpUrl
               type: object
               properties:
-                enabled:
-                  type: string
-                entityId:
-                  type: string
-                idpUrl:
-                  type: string
-                  format: uri
                 certificate:
                   type: object
                   properties:
@@ -1034,6 +401,37 @@ paths:
                     version:
                       type: integer
                       format: int32
+                    issuerX500Principal:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        encoded:
+                          type: array
+                          items:
+                            type: string
+                            format: byte
+                    subjectX500Principal:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        encoded:
+                          type: array
+                          items:
+                            type: string
+                            format: byte
+                    subjectAlternativeNames:
+                      type: array
+                      items:
+                        type: array
+                        items:
+                          type: object
+                    subjectDN:
+                      type: object
+                      properties:
+                        name:
+                          type: string
                     extendedKeyUsage:
                       type: array
                       items:
@@ -1083,6 +481,977 @@ paths:
                     notAfter:
                       type: string
                       format: date-time
+                    criticalExtensionOIDs:
+                      uniqueItems: true
+                      type: array
+                      items:
+                        type: string
+                    nonCriticalExtensionOIDs:
+                      uniqueItems: true
+                      type: array
+                      items:
+                        type: string
+                    type:
+                      type: string
+                    encoded:
+                      type: array
+                      items:
+                        type: string
+                        format: byte
+                    publicKey:
+                      type: object
+                      properties:
+                        params:
+                          type: object
+                        encoded:
+                          type: array
+                          items:
+                            type: string
+                            format: byte
+                        format:
+                          type: string
+                        algorithm:
+                          type: string
+      responses:
+        '200':
+          description: Secondary certificate set
+        '403':
+          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
+        '404':
+          description: Company not found
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_SECURITY_WRITE
+    delete:
+      tags:
+      - Companies
+      summary: Removes the secondary IDP certificate for SAML authentication
+      description: Requires the privilege `COMPANY_SECURITY_WRITE`
+      operationId: deleteSamlSecondaryCert
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Secondary certificate removed
+        '403':
+          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
+        '404':
+          description: Company not found
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_SECURITY_WRITE
+  /companies/zones/{zoneId}:
+    get:
+      tags:
+      - Companies
+      summary: Get a zone setting
+      description: 'Get the zone setting
+
+        Requires the privilege `TEST_SUITES_READ`'
+      operationId: getZoneSetting
+      parameters:
+      - name: zoneId
+        in: path
+        description: The name of the zone
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Zone'
+        '404':
+          description: Zone not found
+        '403':
+          description: 'User requires privilege: TEST_SUITES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEST_SUITES_READ
+    put:
+      tags:
+      - Companies
+      summary: Update a zone
+      description: 'Update a zone setting of the company
+
+        Requires the privilege `TEST_SUITES_WRITE`'
+      operationId: editZoneSetting
+      parameters:
+      - name: zoneId
+        in: path
+        description: The name of the zone
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zone'
+      responses:
+        '200':
+          description: Zone updated
+        '400':
+          description: No zone ID was given, the zone ID does not match the path parameter, or a CIDR is invalid
+        '404':
+          description: Zone not found
+        '403':
+          description: 'User requires privilege: TEST_SUITES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEST_SUITES_WRITE
+    delete:
+      tags:
+      - Companies
+      summary: Delete zone setting
+      description: 'Deletes the zone setting from the company
+
+        Requires the privilege `TEST_SUITES_WRITE`'
+      operationId: deleteZoneSetting
+      parameters:
+      - name: zoneId
+        in: path
+        description: The name of the zone
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Zone deleted (idempotent if not found)
+        '403':
+          description: 'User requires privilege: TEST_SUITES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TEST_SUITES_WRITE
+  /companies/{identifier}/users/active/paged:
+    get:
+      tags:
+      - Companies
+      summary: Returns paginated active users for the supplied company
+      description: Requires the privilege `COMPANY_USERS_READ`
+      operationId: getActiveUsersForCompanyPaginated
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+          default: 10
+        example: None (unlimited)
+      - name: pageToken
+        in: query
+        description: Token corresponding to the last page of active company users retrieved. Pass the pageToken to get the next page of active company users
+        schema:
+          type: string
+        example: None (returns first page)
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponse'
+        '404':
+          description: Company not found
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_READ
+  /companies/{identifier}/clients:
+    get:
+      tags:
+      - Companies
+      summary: Returns all clients for the supplied company
+      description: Requires the privilege `COMPANIES_READ`
+      operationId: getClientsForCompany
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client'
+        '404':
+          description: Company not found
+        '403':
+          description: 'User requires privilege: COMPANIES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANIES_READ
+  /companies/{identifier}:
+    get:
+      tags:
+      - Companies
+      summary: Gets a Company by its supplied guid
+      description: Requires the privilege `COMPANIES_READ`
+      operationId: getCompany
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      - name: skipTeams
+        in: query
+        description: If true, omits the team list from the response (a faster, lighter-weight read)
+        schema:
+          type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResponse'
+        '400':
+          description: identifier does not match the caller's authenticated company
+        '404':
+          description: Company not found
+        '403':
+          description: 'User requires privilege: COMPANIES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANIES_READ
+    patch:
+      tags:
+      - Companies
+      summary: Update the prefs for company
+      description: 'This endpoint will allow you to update the prefs for a company based on its identifier.
+
+        Requires the privilege `COMPANY_PREFERENCES_WRITE`'
+      operationId: updateCompanyPrefs
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: The company preference fields to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyPatch'
+      responses:
+        '200':
+          description: Prefs updated (or unchanged)
+        '400':
+          description: A referenced role does not exist, or a duration/prefs value is out of range
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+        '404':
+          description: Company not found
+        '403':
+          description: 'User requires privilege: COMPANY_PREFERENCES_WRITE'
+      security:
+      - privilege:
+        - COMPANY_PREFERENCES_WRITE
+  /companies/{identifier}/delegate:
+    get:
+      tags:
+      - Companies
+      summary: Gets a Company by its supplied guid, with its SSO client secret masked
+      description: Requires the privilege `COMPANIES_READ`
+      operationId: getCompanyDelegate
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      - name: skipTeams
+        in: query
+        description: If true, omits the team list from the response (a faster, lighter-weight read)
+        schema:
+          type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResponse'
+        '400':
+          description: identifier does not match the caller's authenticated company
+        '404':
+          description: Company not found
+        '403':
+          description: 'User requires privilege: COMPANIES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANIES_READ
+  /companies/{identifier}/users/invited/paged:
+    get:
+      tags:
+      - Companies
+      summary: Returns paginated invited users for the supplied company
+      description: Requires the privilege `COMPANY_USERS_READ`
+      operationId: getInvitedUsersForCompanyPaginated
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+          default: 10
+        example: None (unlimited)
+      - name: pageToken
+        in: query
+        description: Token corresponding to the last page of invited company users retrieved. Pass the pageToken to get the next page of invited company users
+        schema:
+          type: string
+        example: None (returns first page)
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponse'
+        '404':
+          description: Company not found
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_READ
+  /companies/{identifier}/users/revoked/paged:
+    get:
+      tags:
+      - Companies
+      summary: Returns paginated revoked users for the supplied company
+      description: Requires the privilege `COMPANY_USERS_READ`
+      operationId: getRevokedUsersForCompanyPaginated
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+          default: 10
+        example: None (unlimited)
+      - name: pageToken
+        in: query
+        description: Token corresponding to the last page of revoked company users retrieved. Pass the pageToken to get the next page of revoked company users
+        schema:
+          type: string
+        example: None (returns first page)
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponse'
+        '404':
+          description: Company not found
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_READ
+  /companies/{identifier}/users/{email}:
+    get:
+      tags:
+      - Companies
+      summary: Returns a single user for the supplied company
+      description: Requires the privilege `COMPANY_USERS_READ`
+      operationId: getUserForCompany
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        description: The email of the target user
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyUserInfo'
+        '404':
+          description: Company not found, or no user found for the supplied email
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_READ
+    put:
+      tags:
+      - Companies
+      summary: Update roles of existing user
+      description: 'User must exist.
+
+        Requires the privilege `COMPANY_USERS_WRITE`'
+      operationId: rbacUpdate
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        description: The email of the target user
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetRolesRequest'
+        required: true
+      responses:
+        '200':
+          description: Roles updated
+        '400':
+          description: One or more requested roles are invalid
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_WRITE'
+        '404':
+          description: No membership found for the target user in this company
+      security:
+      - privilege:
+        - COMPANY_USERS_WRITE
+  /companies/{identifier}/users/paged:
+    get:
+      tags:
+      - Companies
+      summary: Returns paginated users for the supplied company
+      description: Requires the privilege `COMPANY_USERS_READ`
+      operationId: getUsersForCompanyPaginated
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          type: integer
+          format: int32
+          default: 10
+        example: None (unlimited)
+      - name: pageToken
+        in: query
+        description: Token corresponding to the last page of company users retrieved. Pass the pageToken to get the next page of company users
+        schema:
+          type: string
+        example: None (returns first page)
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResponse'
+        '404':
+          description: Company not found
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_READ
+  /companies/invite:
+    post:
+      tags:
+      - Companies
+      summary: Invites the specified email to create a new Company
+      operationId: invite
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InviteUserFromSelfSignupRequest'
+        required: true
+      responses:
+        '200':
+          description: Invite processed (a company invite, conflict, or notify email was sent)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyInviteResponse'
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS
+  /companies/{identifier}/invites:
+    post:
+      tags:
+      - Companies
+      summary: Invite one or more users to join your Gremlin company
+      description: Requires the privilege `COMPANY_USERS_WRITE`
+      operationId: inviteUsersToCompany
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/InviteUserRequest'
+        required: true
+      responses:
+        '200':
+          description: Invites sent; body lists any emails that are already members, if any
+        '400':
+          description: The list of users to invite is empty
+        '404':
+          description: Company not found
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_WRITE
+  /companies/{identifier}/users/{email}/active:
+    post:
+      tags:
+      - Companies
+      summary: User must exist. This is primarily used to reactivate a deactivated user
+      description: 'Activates a user.
+
+        Requires the privilege `COMPANY_USERS_WRITE`'
+      operationId: rbacUnrevoke
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        description: The email of the target user
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: User activated
+        '402':
+          description: Company has reached its user limit
+        '404':
+          description: Company not found
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_WRITE
+    delete:
+      tags:
+      - Companies
+      summary: Deactivates a user
+      description: 'Once deactivated, user will not be able to do anything on company
+
+        Requires the privilege `COMPANY_USERS_WRITE`'
+      operationId: rbacRevoke
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        description: The email of the target user
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: User deactivated
+        '400':
+          description: Caller attempted to deactivate themself
+        '404':
+          description: Company not found
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_WRITE
+  /companies/{identifier}/invites/{email}:
+    delete:
+      tags:
+      - Companies
+      summary: Revoke a pending user invite
+      description: Requires the privilege `COMPANY_USERS_WRITE`
+      operationId: rbacRevokeInvite
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        description: The email address the invite was sent to
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Invitation revoked
+        '400':
+          description: The target user already belongs to the company (not just invited)
+        '404':
+          description: No invite or membership found for the target email
+        '403':
+          description: 'User requires privilege: COMPANY_USERS_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_USERS_WRITE
+  /companies/trial:
+    post:
+      tags:
+      - Companies
+      summary: Allows an invited user to create a new Company for a trial
+      description: User must have been previously invited
+      operationId: trial
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - adminEmail
+              - code
+              - name
+              type: object
+              properties:
+                name:
+                  maxLength: 50
+                  minLength: 3
+                  type: string
+                code:
+                  type: string
+                adminEmail:
+                  type: string
+                adminPassword:
+                  type: string
+                allowUsStorage:
+                  type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCompanyResponse'
+        '400':
+          description: A form field failed validation, no invitation was found for the admin email, US storage was not agreed to, or the invite code does not match
+        '403':
+          description: Response was sent via HTTP, please retry using HTTPS
+        '409':
+          description: The requested company name is already in use
+        '429':
+          description: Too many company creation attempts for this invite; try again shortly
+      deprecated: true
+  /companies/{identifier}/auth/prefs:
+    post:
+      tags:
+      - Companies
+      summary: Updates the authentication preferences associated with this Company
+      description: Requires the privilege `COMPANY_SECURITY_WRITE`
+      operationId: updateAuthMethodPrefs
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyAuthMethodPrefsRequest'
+        required: true
+      responses:
+        '200':
+          description: Authentication preferences updated
+        '400':
+          description: The requested combination of preferences would lock the caller out of the company, or session duration/API key expiry is out of range
+        '403':
+          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
+        '404':
+          description: Company not found
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_SECURITY_WRITE
+  /companies/{identifier}/auth/cidr-blocks:
+    put:
+      tags:
+      - Companies
+      summary: Sets the IP CIDR allowlist for this Company
+      description: 'Replaces the company''s IP allowlist; an empty list removes all restrictions. The update is rejected with a 400 if more than 5% of the company''s currently-active agents would be blocked by the new list, or if the new list would block the caller; use the validate endpoint to preview the impact before applying. IP allowlisting is not supported for companies connected via AWS PrivateLink; leave the allowlist empty for those companies.
+
+        Requires the privilege `COMPANY_SECURITY_WRITE`'
+      operationId: updateCidrBlocks
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyCidrBlocksRequest'
+        required: true
+      responses:
+        '200':
+          description: CIDR allowlist updated
+        '400':
+          description: A CIDR block is invalid, the caller's own IP is not covered, or the update would block more than 5% of active agents
+        '403':
+          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
+        '404':
+          description: Company not found
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_SECURITY_WRITE
+  /companies/{identifier}/mfaPrefs:
+    post:
+      tags:
+      - Companies
+      summary: Updates the MFA preferences associated with this Company
+      description: Requires the privilege `COMPANY_SECURITY_WRITE`
+      operationId: updateMfaPrefs
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                forceMfa:
+                  type: boolean
+                  default: false
+      responses:
+        '200':
+          description: MFA preference updated
+        '403':
+          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
+        '404':
+          description: Company not found
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_SECURITY_WRITE
+  /companies/{identifier}/oauth/settings:
+    post:
+      tags:
+      - Companies
+      summary: Updates the OAuth settings for this Company
+      description: Requires the privilege `COMPANY_SECURITY_WRITE`
+      operationId: updateOAuthSettings
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOAuthSettingsRequest'
+        required: true
+      responses:
+        '200':
+          description: OAuth settings updated
+        '403':
+          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
+        '404':
+          description: Company not found
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_SECURITY_WRITE
+  /companies/{identifier}/prefs:
+    post:
+      tags:
+      - Companies
+      summary: Updates the preferences associated with this Company
+      description: Requires the privilege `COMPANY_SECURITY_WRITE`
+      operationId: updatePrefs
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                domain:
+                  type: string
+                  default: ''
+      responses:
+        '200':
+          description: Domain preference updated
+        '403':
+          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
+        '404':
+          description: Company not found
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      deprecated: true
+      security:
+      - privilege:
+        - COMPANY_SECURITY_WRITE
+  /companies/{identifier}/saml/props:
+    post:
+      tags:
+      - Companies
+      summary: Updates the preferences associated with this Company
+      description: Requires the privilege `COMPANY_SECURITY_WRITE`
+      operationId: updateSamlProperties
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - certificate
+              - enabled
+              - entityId
+              - idpUrl
+              type: object
+              properties:
+                enabled:
+                  type: string
+                entityId:
+                  type: string
+                idpUrl:
+                  type: string
+                  format: uri
+                certificate:
+                  type: object
+                  properties:
+                    signature:
+                      type: array
+                      items:
+                        type: string
+                        format: byte
+                    basicConstraints:
+                      type: integer
+                      format: int32
+                    version:
+                      type: integer
+                      format: int32
                     issuerX500Principal:
                       type: object
                       properties:
@@ -1114,6 +1483,55 @@ paths:
                       properties:
                         name:
                           type: string
+                    extendedKeyUsage:
+                      type: array
+                      items:
+                        type: string
+                    issuerAlternativeNames:
+                      type: array
+                      items:
+                        type: array
+                        items:
+                          type: object
+                    sigAlgParams:
+                      type: array
+                      items:
+                        type: string
+                        format: byte
+                    tbscertificate:
+                      type: array
+                      items:
+                        type: string
+                        format: byte
+                    issuerDN:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                    sigAlgOID:
+                      type: string
+                    issuerUniqueID:
+                      type: array
+                      items:
+                        type: boolean
+                    subjectUniqueID:
+                      type: array
+                      items:
+                        type: boolean
+                    keyUsage:
+                      type: array
+                      items:
+                        type: boolean
+                    sigAlgName:
+                      type: string
+                    serialNumber:
+                      type: integer
+                    notBefore:
+                      type: string
+                      format: date-time
+                    notAfter:
+                      type: string
+                      format: date-time
                     criticalExtensionOIDs:
                       uniqueItems: true
                       type: array
@@ -1150,12 +1568,14 @@ paths:
                 claimsForced:
                   type: string
       responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
+        '200':
+          description: SAML properties updated
+        '400':
+          description: SAML is being disabled while Force SAML is still enabled, or the resulting configuration would disable every authentication method
         '403':
           description: 'User requires privilege: COMPANY_SECURITY_WRITE'
+        '404':
+          description: Company not found
         '401':
           description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
       security:
@@ -1165,21 +1585,25 @@ paths:
     delete:
       tags:
       - Companies
+      summary: Revokes a user's API key
       description: Requires the privilege `COMPANY_USERS_WRITE`
       operationId: userApiKeyRevoke
       parameters:
       - name: identifier
         in: path
+        description: The identifier of the Company
         required: true
         schema:
           type: string
       - name: email
         in: path
+        description: The email of the target user
         required: true
         schema:
           type: string
       - name: api-key-id
         in: path
+        description: The identifier of the API key to revoke
         required: true
         schema:
           maxLength: 100
@@ -1187,10 +1611,10 @@ paths:
           pattern: ^[a-zA-Z0-9 -]*$
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            text/plain: {}
+        '204':
+          description: API key revoked (or already revoked; idempotent)
+        '404':
+          description: Company not found, or no API key found with the given identifier for the user
         '403':
           description: 'User requires privilege: COMPANY_USERS_WRITE'
         '401':
@@ -1198,23 +1622,821 @@ paths:
       security:
       - privilege:
         - COMPANY_USERS_WRITE
-      summary: User api key revoke
-      x-summary-source: derived
+  /companies/{identifier}/auth/cidr-blocks/validate:
+    post:
+      tags:
+      - Companies
+      summary: Previews which active agent instances a CIDR allowlist would block
+      description: Requires the privilege `COMPANY_SECURITY_WRITE`
+      operationId: validateCidrBlocks
+      parameters:
+      - name: identifier
+        in: path
+        description: The identifier of the Company
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateCidrBlocksRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateCidrBlocksResponse'
+        '400':
+          description: A CIDR block is invalid
+        '403':
+          description: 'User requires privilege: COMPANY_SECURITY_WRITE'
+        '404':
+          description: Company not found
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_SECURITY_WRITE
 components:
   schemas:
-    OrderedSamlAlias:
+    IPAddress:
       type: object
       properties:
+        ip:
+          type: string
+        protocolFamily:
+          type: string
+          enum:
+          - INET
+          - INET6
+          - UNIX
+    SamlAlias:
+      type: object
+      properties:
+        companyId:
+          type: string
         aliasId:
           type: string
         companyRoles:
           type: array
           items:
-            $ref: '#/components/schemas/AssignedRole'
+            type: string
         teamRoles:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    GpuInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        driver:
+          type: string
+        memory_size:
+          type: integer
+          format: int64
+    SetRolesRequest:
+      required:
+      - roles
+      type: object
+      properties:
+        roles:
+          uniqueItems: true
           type: array
           items:
-            $ref: '#/components/schemas/TeamRoles'
+            type: string
+    CreateCompanyRequest:
+      required:
+      - admin_email
+      - code
+      - company_name
+      - team_name
+      type: object
+      properties:
+        admin_email:
+          type: string
+          description: The email of the user creating the company
+        code:
+          type: string
+          description: The invite code the user received in their email
+        company_name:
+          maxLength: 50
+          minLength: 1
+          type: string
+          description: The name of the company to be created
+        team_name:
+          maxLength: 64
+          minLength: 1
+          type: string
+          description: The name of the team to be created under the company
+        allow_us_storage:
+          type: boolean
+          description: If the user's information is allowed to be stored in U.S. based servers
+        admin_password:
+          type: string
+          description: The password for the user (optional if using SSO)
+      description: Represents a request to create a new Gremlin company
+    CpuInfo:
+      type: object
+      properties:
+        name:
+          type: string
+    CreateCompanyResponse:
+      type: object
+      properties:
+        companyName:
+          type: string
+        session:
+          type: object
+    SamlAliasIDs:
+      type: object
+      properties:
+        aliasIds:
+          type: array
+          items:
+            type: string
+    CompanyUserInfo:
+      type: object
+      properties:
+        state:
+          type: string
+          enum:
+          - ACTIVE
+          - IDLE
+          - REVOKED
+          - INVITED
+        roles:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        lastLogin:
+          type: string
+          format: date-time
+        currentLogin:
+          type: string
+          format: date-time
+        teams:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Info'
+        active:
+          type: boolean
+    ValidationAttackResult:
+      type: object
+      properties:
+        attackType:
+          type: string
+        status:
+          type: string
+          enum:
+          - SUCCESS
+          - ERROR
+        rawErrors:
+          type: array
+          items:
+            type: string
+        targeting:
+          type: string
+          enum:
+          - CONTAINER
+          - HOST
+    CreateUserRequest:
+      required:
+      - code
+      - email
+      type: object
+      properties:
+        email:
+          type: string
+          description: The unique identifier for the user (user's email)
+        password:
+          type: string
+          description: The password for the user (optional if using SSO)
+        code:
+          type: string
+          description: The user's invite code they received in their email
+        allow_us_storage:
+          type: boolean
+          description: If the user's information is allowed to be stored in U.S. based servers
+      description: Represents a request to create a new user within the company
+    GremlinUserPrincipal:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/Key'
+        provider:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+    InviteUserFromSelfSignupRequest:
+      required:
+      - companyName
+      - email
+      type: object
+      properties:
+        email:
+          type: string
+        firstName:
+          maxLength: 50
+          minLength: 1
+          type: string
+        lastName:
+          maxLength: 50
+          minLength: 1
+          type: string
+        companyName:
+          maxLength: 50
+          minLength: 1
+          type: string
+      description: Represents a request to create a new user from the self signup page
+    SamlIdpPrefs:
+      type: object
+      properties:
+        entityId:
+          type: string
+        url:
+          type: string
+        cert:
+          type: string
+        certSecondary:
+          type: string
+        enabled:
+          type: string
+        forced:
+          type: string
+        claimsForced:
+          type: string
+    PagedResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            type: object
+    Warning:
+      type: object
+      properties:
+        key:
+          type: string
+          enum:
+          - W000
+          - W001
+          - W002
+          - W003
+          - W004
+          - Unknown
+        link:
+          type: string
+        summary:
+          type: string
+    ValidateCidrBlocksResponse:
+      type: object
+      properties:
+        totalInstances:
+          type: integer
+          description: Total active application instances (seen within last 5 minutes).
+          format: int32
+        blockedInstances:
+          type: integer
+          description: Instances that would be blocked by the supplied CIDR list.
+          format: int32
+        blockedPercent:
+          type: number
+          description: Percentage of active instances that would be blocked.
+          format: double
+        instancesWithUnknownXff:
+          type: integer
+          description: Instances whose last-seen IP is unknown (registered before XFF capture was added); excluded from blocked count.
+          format: int32
+        blockedAgentSample:
+          type: array
+          description: Up to 50 blocked instances for debugging.
+          items:
+            $ref: '#/components/schemas/BlockedInstanceSample'
+        callerIp:
+          type: string
+          description: Source IP of the API caller (from X-Forwarded-For); null if not detectable.
+        callerBlocked:
+          type: boolean
+          description: Whether the caller's own IP would be blocked by the supplied CIDR list.
+      description: Preview of which currently-active agent instances would be blocked.
+    Client:
+      type: object
+      properties:
+        orgId:
+          type: string
+        identifier:
+          type: string
+        lastSeen:
+          type: string
+          format: date-time
+        lastSeenXff:
+          type: string
+        state:
+          type: string
+          enum:
+          - ACTIVE
+          - IDLE
+          - REVOKED
+          - INVITED
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        revokedBy:
+          type: string
+        authType:
+          type: string
+          enum:
+          - SECRET
+          - CERTIFICATE
+        containerHash:
+          type: integer
+          format: int32
+        networkInterfaceDataHash:
+          type: integer
+          format: int32
+        networkInterfaceData:
+          $ref: '#/components/schemas/NetworkInterfaceData'
+        osName:
+          type: string
+        osVersion:
+          type: string
+        dockerVersion:
+          type: string
+        containerDriver:
+          type: string
+        containerRuntime:
+          type: string
+        containerRuntimeVersion:
+          type: string
+        containerRuntimeApiVersion:
+          type: string
+        containers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Container'
+        kubernetesVersion:
+          type: string
+        metricsEnabled:
+          type: boolean
+        processCollectionEnabled:
+          type: boolean
+        collectDnsEnabled:
+          type: boolean
+        usedProxy:
+          type: boolean
+        hardwareInfo:
+          $ref: '#/components/schemas/HardwareInfo'
+        instanceStartTime:
+          type: string
+        offsetInMinutesAfterBucketStart:
+          type: integer
+          format: int32
+        validationResults:
+          $ref: '#/components/schemas/ValidationAttack'
+        targetType:
+          type: string
+          enum:
+          - Host
+          - Container
+          - Docker
+          - Kubernetes
+        lastActiveEmitted:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        companyId:
+          type: string
+        versionInfo:
+          $ref: '#/components/schemas/VersionInfo'
+        dnsServers:
+          type: array
+          items:
+            type: string
+        proxyUrl:
+          type: string
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Warning'
+        pushPodCidrTags:
+          type: boolean
+        pushZoneCidrTags:
+          type: boolean
+        osType:
+          type: string
+          enum:
+          - Linux
+          - Windows
+    ZonesResponse:
+      type: object
+      properties:
+        configured:
+          type: array
+          items:
+            type: string
+        detected:
+          type: array
+          items:
+            type: string
+    ValidateCidrBlocksRequest:
+      required:
+      - cidrBlocks
+      type: object
+      properties:
+        cidrBlocks:
+          type: array
+          description: IPv4 or IPv6 CIDR blocks to test.
+          items:
+            type: string
+            description: IPv4 or IPv6 CIDR blocks to test.
+      description: Prospective CIDR blocks to validate against currently active agents.
+    ValidationAttack:
+      type: object
+      properties:
+        agentTimestamp:
+          type: integer
+          format: int64
+        clientVersion:
+          type: string
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationAttackResult'
+        clientStatus:
+          type: string
+          enum:
+          - HEALTHY
+          - IMPAIRED
+          - UNHEALTHY
+    MonitoringPrefsPatch:
+      type: object
+      properties:
+        optIn:
+          type: boolean
+    CompanyPatch:
+      title: CompanyPatch.Input
+      type: object
+      properties:
+        prefs:
+          $ref: '#/components/schemas/CompanyPrefsPatch'
+        defaultCompanyRole:
+          type: string
+        defaultTeamRole:
+          type: string
+    BlockedInstanceSample:
+      type: object
+      properties:
+        name:
+          type: string
+        instanceId:
+          type: string
+        lastSeenXff:
+          type: string
+        lastSeen:
+          type: string
+      description: Sample entry for an agent instance that would be blocked.
+    OAuthSettings:
+      type: object
+      properties:
+        authorizationUri:
+          type: string
+        userInfoUri:
+          type: string
+        tokenUri:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        scope:
+          type: string
+        enabled:
+          type: boolean
+    AuthMethodPrefs:
+      type: object
+      properties:
+        allowSessionRenewal:
+          type: boolean
+        passwordEnabled:
+          type: boolean
+        mfaRequired:
+          type: boolean
+        googleEnabled:
+          type: boolean
+        oauthEnabled:
+          type: boolean
+        samlEnabled:
+          type: boolean
+        claimsRequired:
+          type: boolean
+        apiKeysEnabled:
+          type: boolean
+        apiKeysMaxSecondsToExpireEnabled:
+          type: boolean
+        apiKeysMaxSecondsToExpire:
+          type: integer
+          format: int32
+        sessionDuration:
+          type: integer
+          format: int32
+        sessionPolicyChangedAt:
+          type: integer
+          format: int64
+        samlAliasesEnabled:
+          type: boolean
+        allowedCidrBlocks:
+          type: array
+          items:
+            type: string
+    Zone:
+      required:
+      - cidrs
+      - includeAllAgents
+      type: object
+      properties:
+        zoneId:
+          type: string
+          description: The name for the zone
+        cidrs:
+          type: array
+          description: Extra CIDRs to use when running zone-based network experiments
+          items:
+            type: string
+            description: Extra CIDRs to use when running zone-based network experiments
+        includeAllAgents:
+          type: boolean
+          description: Determine if Gremlin agents across company should be used
+      description: A zone setting for zonal tests
+    Container:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        image:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        dns_servers:
+          type: array
+          writeOnly: true
+          items:
+            type: string
+        dnsServers:
+          type: array
+          items:
+            type: string
+    CompanyInviteResponse:
+      type: object
+      properties:
+        link:
+          type: string
+          format: uri
+        message:
+          type: string
+    CompanyResponse:
+      type: object
+      properties:
+        entitlements:
+          $ref: '#/components/schemas/CompanyEntitlementsResponse'
+        identifier:
+          type: string
+        name:
+          type: string
+        prefs:
+          $ref: '#/components/schemas/Prefs'
+        samlIdpPrefs:
+          $ref: '#/components/schemas/SamlIdpPrefs'
+        authMethodPrefs:
+          $ref: '#/components/schemas/AuthMethodPrefs'
+        internal:
+          type: boolean
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        orgs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Info'
+        alias:
+          type: string
+        defaultCompanyRole:
+          type: string
+        defaultTeamRole:
+          type: string
+        haltAllCoolDownEnd:
+          type: string
+          format: date-time
+        oauthSettings:
+          $ref: '#/components/schemas/OAuthSettings'
+    UpdateCompanyCidrBlocksRequest:
+      required:
+      - cidrBlocks
+      type: object
+      properties:
+        cidrBlocks:
+          type: array
+          description: IPv4 or IPv6 CIDR blocks allowed to access the API. An empty list removes IP restrictions.
+          items:
+            type: string
+            description: IPv4 or IPv6 CIDR blocks allowed to access the API. An empty list removes IP restrictions.
+      description: Sets the CIDR allowlist for this company. Pass an empty list to remove all IP restrictions. IP allowlisting is not supported for companies connected via AWS PrivateLink; leave the allowlist empty for those companies.
+    ScheduleWindow:
+      required:
+      - end
+      - start
+      type: object
+      properties:
+        start:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+        end:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+    CompanyEntitlementsResponse:
+      type: object
+      properties:
+        companyId:
+          type: string
+        companyName:
+          type: string
+        end:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+        internal:
+          type: boolean
+        strict:
+          type: boolean
+        hasAgentBilling:
+          type: boolean
+        hasTrialBanners:
+          type: boolean
+        expired:
+          type: boolean
+        productFlags:
+          type: object
+          additionalProperties:
+            type: boolean
+        limits:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        targetsTrackingPeriod:
+          type: string
+          enum:
+          - Daily
+          - Weekly
+          - Monthly
+    UpdateOAuthSettingsRequest:
+      required:
+      - authorizationUri
+      - clientId
+      - clientSecret
+      - tokenUri
+      - userInfoUri
+      type: object
+      properties:
+        authorizationUri:
+          type: string
+          description: OAuth providers authorization endpoint
+          format: uri
+        tokenUri:
+          type: string
+          description: OAuth providers token endpoint
+          format: uri
+        userInfoUri:
+          type: string
+          description: OAuth providers user info endpoint
+          format: uri
+        clientId:
+          type: string
+          description: The clientId created when registering Gremlin with your OAuth provider
+        clientSecret:
+          type: string
+          description: The client secret created when registering Gremlin with your OAuth provider
+        scope:
+          type: string
+          description: The scope to be used for the OAuth authorization request. (default is 'email')
+      description: A request to update the OAuth settings for a company
+    CreateOrUpdateClaimAliasRequest:
+      type: object
+      properties:
+        aliasId:
+          type: string
+          description: The unique identifier for the alias
+        companyRoles:
+          type: array
+          description: The list of company-level roles for the alias
+          items:
+            type: string
+            description: The list of company-level roles for the alias
+        teamRoles:
+          type: object
+          additionalProperties:
+            type: array
+            description: A mapping of team IDs to the team-level roles for the alias
+            items:
+              type: string
+              description: A mapping of team IDs to the team-level roles for the alias
+          description: A mapping of team IDs to the team-level roles for the alias
+      description: Represents a request to create or update a SAML claims alias on behalf of a user
+    TestRunRestrictionWindow:
+      required:
+      - dayOfWeek
+      - windowsForDay
+      type: object
+      properties:
+        dayOfWeek:
+          type: string
+          enum:
+          - M
+          - T
+          - W
+          - Th
+          - F
+          - S
+          - Su
+        windowsForDay:
+          maxItems: 3
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleWindow'
+    Prefs:
+      type: object
+      properties:
+        autoAddUsers:
+          type: boolean
+        domain:
+          type: string
+        testRunRestrictionWindows:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunRestrictionWindow'
+      description: Prefs for team
     Info:
       type: object
       properties:
@@ -1272,110 +2494,63 @@ components:
           type: string
         customRole:
           type: boolean
-    ScheduleWindow:
-      required:
-      - end
-      - start
+    SemanticVersion:
       type: object
       properties:
-        start:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
-        end:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
-    AuthMethodPrefs:
-      type: object
-      properties:
-        allowSessionRenewal:
-          type: boolean
-        passwordEnabled:
-          type: boolean
-        mfaRequired:
-          type: boolean
-        googleEnabled:
-          type: boolean
-        oauthEnabled:
-          type: boolean
-        samlEnabled:
-          type: boolean
-        claimsRequired:
-          type: boolean
-        apiKeysEnabled:
-          type: boolean
-        apiKeysMaxSecondsToExpireEnabled:
-          type: boolean
-        apiKeysMaxSecondsToExpire:
+        major:
           type: integer
           format: int32
-        sessionDuration:
+        minor:
           type: integer
           format: int32
-        samlAliasesEnabled:
-          type: boolean
-    CompanyResponse:
+        patch:
+          type: integer
+          format: int32
+    NetworkInterfaceData:
       type: object
       properties:
-        entitlements:
-          $ref: '#/components/schemas/CompanyEntitlementsResponse'
-        identifier:
-          type: string
-        name:
-          type: string
-        prefs:
-          $ref: '#/components/schemas/Prefs'
-        samlIdpPrefs:
-          $ref: '#/components/schemas/SamlIdpPrefs'
-        authMethodPrefs:
-          $ref: '#/components/schemas/AuthMethodPrefs'
-        internal:
-          type: boolean
-        createdBy:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        orgs:
+        interfaces:
           type: array
           items:
-            $ref: '#/components/schemas/Info'
-        alias:
-          type: string
-        defaultCompanyRole:
-          type: string
-        defaultTeamRole:
-          type: string
-        haltAllCoolDownEnd:
-          type: string
-          format: date-time
-        oauthSettings:
-          $ref: '#/components/schemas/OAuthSettings'
-    CreateUserRequest:
-      required:
-      - code
-      - email
+            $ref: '#/components/schemas/NetworkInterface'
+    VersionInfo:
       type: object
       properties:
-        email:
+        gremlind:
+          $ref: '#/components/schemas/SemanticVersion'
+        gremlin:
+          $ref: '#/components/schemas/SemanticVersion'
+    NetworkInterface:
+      required:
+      - ip_addresses
+      type: object
+      properties:
+        name:
           type: string
-          description: The unique identifier for the user (user's email)
-        password:
-          type: string
-          description: The password for the user (optional if using SSO)
-        code:
-          type: string
-          description: The user's invite code they received in their email
-        allow_us_storage:
+        ip_addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPAddress'
+        is_default:
           type: boolean
-          description: If the user's information is allowed to be stored in U.S. based servers
-      description: Represents a request to create a new user within the company
+        is_physical:
+          type: boolean
+        is_virtual:
+          type: boolean
+    HardwareInfo:
+      type: object
+      properties:
+        cpu_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CpuInfo'
+        memory_size:
+          type: integer
+          format: int64
+        gpu_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GpuInfo'
     TeamRoles:
       type: object
       properties:
@@ -1387,250 +2562,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AssignedRole'
-    CompanyEntitlementsResponse:
+    OrderedSamlAlias:
       type: object
       properties:
-        companyId:
-          type: string
-        companyName:
-          type: string
-        end:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        createdBy:
-          type: string
-        internal:
-          type: boolean
-        strict:
-          type: boolean
-        hasAgentBilling:
-          type: boolean
-        hasTrialBanners:
-          type: boolean
-        expired:
-          type: boolean
-        productFlags:
-          type: object
-          additionalProperties:
-            type: boolean
-        limits:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int32
-        targetsTrackingPeriod:
-          type: string
-          enum:
-          - Daily
-          - Weekly
-          - Monthly
-    CreateCompanyRequest:
-      required:
-      - admin_email
-      - code
-      - company_name
-      - team_name
-      type: object
-      properties:
-        admin_email:
-          type: string
-          description: The email of the user creating the company
-        code:
-          type: string
-          description: The invite code the user received in their email
-        company_name:
-          maxLength: 50
-          minLength: 1
-          type: string
-          description: The name of the company to be created
-        team_name:
-          maxLength: 50
-          minLength: 1
-          type: string
-          description: The name of the team to be created under the company
-        allow_us_storage:
-          type: boolean
-          description: If the user's information is allowed to be stored in U.S. based servers
-        admin_password:
-          type: string
-          description: The password for the user (optional if using SSO)
-      description: Represents a request to create a new Gremlin company
-    SamlIdpPrefs:
-      type: object
-      properties:
-        entityId:
-          type: string
-        url:
-          type: string
-        cert:
-          type: string
-        enabled:
-          type: string
-        forced:
-          type: string
-        claimsForced:
-          type: string
-    PrefsPatch:
-      type: object
-      properties:
-        testRunRestrictionWindows:
-          maxItems: 7
-          minItems: 0
-          type: array
-          items:
-            $ref: '#/components/schemas/TestRunRestrictionWindow'
-      description: Prefs on team level
-    Zone:
-      required:
-      - cidrs
-      - includeAllAgents
-      type: object
-      properties:
-        zoneId:
-          type: string
-          description: The name for the zone
-        cidrs:
-          type: array
-          description: Extra CIDRs to use when running zone-based network experiments
-          items:
-            type: string
-            description: Extra CIDRs to use when running zone-based network experiments
-        includeAllAgents:
-          type: boolean
-          description: Determine if Gremlin agents across company should be used
-      description: A zone setting for zonal tests
-    SamlAlias:
-      type: object
-      properties:
-        companyId:
-          type: string
         aliasId:
           type: string
         companyRoles:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/AssignedRole'
         teamRoles:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    InviteUserRequest:
-      required:
-      - identifier
-      type: object
-      properties:
-        identifier:
-          type: string
-          description: The unique identifier for the user (user's email)
-        first_name:
-          type: string
-          description: The user's first name
-        last_name:
-          type: string
-          description: The user's last name
-        source_detail:
-          type: string
-          enum:
-          - Onboarding
-        user_principal:
-          $ref: '#/components/schemas/GremlinUserPrincipal'
-      description: Represents a request to invite a user to Gremlin.
-    CreateOrUpdateClaimAliasRequest:
-      type: object
-      properties:
-        aliasId:
-          type: string
-          description: The unique identifier for the alias
-        companyRoles:
-          type: array
-          description: The list of company-level roles for the alias
-          items:
-            type: string
-            description: The list of company-level roles for the alias
-        teamRoles:
-          type: object
-          additionalProperties:
-            type: array
-            description: A mapping of team IDs to the team-level roles for the alias
-            items:
-              type: string
-              description: A mapping of team IDs to the team-level roles for the alias
-          description: A mapping of team IDs to the team-level roles for the alias
-      description: Represents a request to create or update a SAML claims alias on behalf of a user
-    SetRolesRequest:
-      required:
-      - roles
-      type: object
-      properties:
-        roles:
-          uniqueItems: true
           type: array
           items:
-            type: string
-    SamlAliasIDs:
-      type: object
-      properties:
-        aliasIds:
-          type: array
-          items:
-            type: string
-    TestRunRestrictionWindow:
-      required:
-      - dayOfWeek
-      - windowsForDay
-      type: object
-      properties:
-        dayOfWeek:
-          type: string
-          enum:
-          - M
-          - T
-          - W
-          - Th
-          - F
-          - S
-          - Su
-        windowsForDay:
-          maxItems: 3
-          minItems: 0
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleWindow'
-    InviteUserFromSelfSignupRequest:
-      required:
-      - companyName
-      - email
-      type: object
-      properties:
-        email:
-          type: string
-        firstName:
-          maxLength: 50
-          minLength: 1
-          type: string
-        lastName:
-          maxLength: 50
-          minLength: 1
-          type: string
-        companyName:
-          maxLength: 50
-          minLength: 1
-          type: string
-      description: Represents a request to create a new user from the self signup page
+            $ref: '#/components/schemas/TeamRoles'
     Key:
       type: object
       properties:
@@ -1683,94 +2627,129 @@ components:
           type: boolean
           description: If logins via SAML should be required
       description: Represents a request to update the authentication method preferences for a company. When not passed, value of the pref is set to the Gremlin decided default value
-    UpdateOAuthSettingsRequest:
+    CompanyPrefsPatch:
+      type: object
+      properties:
+        monitoring:
+          $ref: '#/components/schemas/MonitoringPrefsPatch'
+        production:
+          type: boolean
+        targetAllAdhoc:
+          type: boolean
+        pniScope:
+          type: string
+          enum:
+          - Company
+          - Team
+        jitProvisioning:
+          type: boolean
+        llmAccess:
+          type: boolean
+        haltAllMoratorium:
+          type: boolean
+        haltAllMoratoriumDuration:
+          type: object
+          properties:
+            seconds:
+              type: integer
+              format: int64
+            zero:
+              type: boolean
+            nano:
+              type: integer
+              format: int32
+            negative:
+              type: boolean
+            positive:
+              type: boolean
+            units:
+              type: array
+              items:
+                type: object
+                properties:
+                  durationEstimated:
+                    type: boolean
+                  duration:
+                    type: object
+                    properties:
+                      seconds:
+                        type: integer
+                        format: int64
+                      zero:
+                        type: boolean
+                      nano:
+                        type: integer
+                        format: int32
+                      negative:
+                        type: boolean
+                      positive:
+                        type: boolean
+                  timeBased:
+                    type: boolean
+                  dateBased:
+                    type: boolean
+          description: 'The duration of the halt all moratorium. Expects a number followed by a suffix of d, h or m. Example: 3d/3h/3m'
+        testCooldownDuration:
+          type: object
+          properties:
+            seconds:
+              type: integer
+              format: int64
+            zero:
+              type: boolean
+            nano:
+              type: integer
+              format: int32
+            negative:
+              type: boolean
+            positive:
+              type: boolean
+            units:
+              type: array
+              items:
+                type: object
+                properties:
+                  durationEstimated:
+                    type: boolean
+                  duration:
+                    type: object
+                    properties:
+                      seconds:
+                        type: integer
+                        format: int64
+                      zero:
+                        type: boolean
+                      nano:
+                        type: integer
+                        format: int32
+                      negative:
+                        type: boolean
+                      positive:
+                        type: boolean
+                  timeBased:
+                    type: boolean
+                  dateBased:
+                    type: boolean
+          description: 'Delay between tests in a test series run. Expects a number followed by a suffix of d, h or m. Example: 5m/1h. Min: 2m, Max: 12h'
+        extraCredit:
+          type: boolean
+    InviteUserRequest:
       required:
-      - authorizationUri
-      - clientId
-      - clientSecret
-      - tokenUri
-      - userInfoUri
+      - identifier
       type: object
       properties:
-        authorizationUri:
+        identifier:
           type: string
-          description: OAuth providers authorization endpoint
-          format: uri
-        tokenUri:
+          description: The unique identifier for the user (user's email)
+        first_name:
           type: string
-          description: OAuth providers token endpoint
-          format: uri
-        userInfoUri:
+          description: The user's first name
+        last_name:
           type: string
-          description: OAuth providers user info endpoint
-          format: uri
-        clientId:
+          description: The user's last name
+        source_detail:
           type: string
-          description: The clientId created when registering Gremlin with your OAuth provider
-        clientSecret:
-          type: string
-          description: The client secret created when registering Gremlin with your OAuth provider
-        scope:
-          type: string
-          description: The scope to be used for the OAuth authorization request. (default is 'email')
-      description: A request to update the OAuth settings for a company
-    OAuthSettings:
-      type: object
-      properties:
-        authorizationUri:
-          type: string
-        userInfoUri:
-          type: string
-        tokenUri:
-          type: string
-        clientId:
-          type: string
-        clientSecret:
-          type: string
-        scope:
-          type: string
-        enabled:
-          type: boolean
-    CompanyPatch:
-      title: CompanyPatch.Input
-      type: object
-      properties:
-        prefs:
-          $ref: '#/components/schemas/PrefsPatch'
-        defaultCompanyRole:
-          type: string
-        defaultTeamRole:
-          type: string
-    CompanyInviteResponse:
-      type: object
-      properties:
-        link:
-          type: string
-          format: uri
-        message:
-          type: string
-    GremlinUserPrincipal:
-      type: object
-      properties:
-        key:
-          $ref: '#/components/schemas/Key'
-        provider:
-          type: string
-        email:
-          type: string
-        firstName:
-          type: string
-        lastName:
-          type: string
-    Prefs:
-      type: object
-      properties:
-        autoAddUsers:
-          type: boolean
-        domain:
-          type: string
-        testRunRestrictionWindows:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestRunRestrictionWindow'
-      description: Prefs for team
+          enum:
+          - Onboarding
+        user_principal:
+          $ref: '#/components/schemas/GremlinUserPrincipal'

@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Teams
   description: Create, Retrieve, Update, and Delete endpoints for Teams
@@ -21,6 +20,7 @@ paths:
     get:
       tags:
       - Teams
+      summary: Gets the team's profile
       description: Requires the privilege `MINIMUM_COMPANY_PRIVILEGES`
       operationId: getProfile
       parameters:
@@ -30,12 +30,10 @@ paths:
         schema:
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TeamProfile'
+        '200':
+          description: The team's profile
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege: MINIMUM_COMPANY_PRIVILEGES'
         '401':
@@ -43,11 +41,10 @@ paths:
       security:
       - privilege:
         - MINIMUM_COMPANY_PRIVILEGES
-      summary: Get profile
-      x-summary-source: derived
     put:
       tags:
       - Teams
+      summary: Updates the team's profile
       description: Requires the privilege `MINIMUM_COMPANY_PRIVILEGES`
       operationId: putProfile
       parameters:
@@ -63,10 +60,10 @@ paths:
               $ref: '#/components/schemas/TeamProfile'
         required: true
       responses:
-        default:
-          description: default response
-          content:
-            '*/*': {}
+        '204':
+          description: Team profile updated
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege: MINIMUM_COMPANY_PRIVILEGES'
         '401':
@@ -74,12 +71,11 @@ paths:
       security:
       - privilege:
         - MINIMUM_COMPANY_PRIVILEGES
-      summary: Put profile
-      x-summary-source: derived
   /teams/{teamId}/profile/prompt:
     get:
       tags:
       - Teams
+      summary: Gets the team's profile prompt
       description: Requires the privilege `MINIMUM_COMPANY_PRIVILEGES`
       operationId: getProfilePrompt
       parameters:
@@ -89,12 +85,10 @@ paths:
         schema:
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TeamProfilePrompt'
+        '200':
+          description: The team's profile prompt
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege: MINIMUM_COMPANY_PRIVILEGES'
         '401':
@@ -102,8 +96,6 @@ paths:
       security:
       - privilege:
         - MINIMUM_COMPANY_PRIVILEGES
-      summary: Get profile prompt
-      x-summary-source: derived
   /teams/kubernetes/install:
     get:
       tags:
@@ -277,6 +269,7 @@ paths:
     get:
       tags:
       - Teams
+      summary: Gets a team by its identifier or name
       description: Requires the privilege `TEAMS_READ`
       operationId: getByIdOrName
       parameters:
@@ -301,8 +294,6 @@ paths:
       security:
       - privilege:
         - TEAMS_READ
-      summary: Get by id or name
-      x-summary-source: derived
   /teams/paged:
     get:
       tags:
@@ -340,6 +331,122 @@ paths:
         - TEAMS_READ
 components:
   schemas:
+    ScheduleWindow:
+      required:
+      - end
+      - start
+      type: object
+      properties:
+        start:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+        end:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+    PagedResponseTeamResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamResponse'
+    TeamResponse:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The identifier of this Team.
+        companyId:
+          type: string
+          description: The identifier of the company to which this Team belongs.
+        name:
+          type: string
+          description: The name of this Team.
+        state:
+          type: string
+          description: The state of this Team.
+        clientVersions:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ClientVersionRange'
+          description: A Map representing the minimum and maximum client versions authenticated with this Team.
+        certificate:
+          type: string
+          description: The PEM encoded certificate associated with this Team.
+        certificateSetAt:
+          type: string
+          description: The time of creation for the certificate credentials associated with this Team.
+          format: date-time
+        certificateSetBy:
+          type: string
+          description: The account that set the certificate credentials associated with this Team.
+        secretSetAt:
+          type: string
+          description: The time of creation of the secret associated with this Team.
+          format: date-time
+        secretSetBy:
+          type: string
+          description: The account that set the secret associated with this Team.
+        production:
+          type: boolean
+          description: Flag to determine if team is marked for production
+        prefs:
+          $ref: '#/components/schemas/Prefs'
+        defaultTeamRole:
+          type: string
+          description: The default team role
+        createdAt:
+          type: string
+          description: An ISO8601 timestamp representing the time at which this team was created
+          format: date-time
+    TeamPrefsPatch:
+      type: object
+      properties:
+        testRunRestrictionWindows:
+          maxItems: 7
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunRestrictionWindow'
+      description: Prefs on team level
+    UpdateTeamRequest:
+      type: object
+      properties:
+        name:
+          maxLength: 64
+          minLength: 0
+          type: string
+          description: The name for the team
+        production:
+          type: boolean
+          description: Flag to determine if team is marked for production
+        defaultTeamRole:
+          type: string
+          description: The default team role
+        prefs:
+          $ref: '#/components/schemas/TeamPrefsPatch'
+      description: A request to update an team
     ClientVersionRange:
       type: object
       properties:
@@ -348,6 +455,28 @@ components:
         maximum:
           $ref: '#/components/schemas/SemanticVersion'
       description: A Map representing the minimum and maximum client versions authenticated with this Team.
+    TestRunRestrictionWindow:
+      required:
+      - dayOfWeek
+      - windowsForDay
+      type: object
+      properties:
+        dayOfWeek:
+          type: string
+          enum:
+          - M
+          - T
+          - W
+          - Th
+          - F
+          - S
+          - Su
+        windowsForDay:
+          maxItems: 3
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleWindow'
     TeamProfile:
       type: object
       properties:
@@ -408,179 +537,6 @@ components:
         createdAt:
           type: string
           format: date-time
-    PagedResponseTeamResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamResponse'
-    SemanticVersion:
-      type: object
-      properties:
-        major:
-          type: integer
-          format: int32
-        minor:
-          type: integer
-          format: int32
-        patch:
-          type: integer
-          format: int32
-    TeamProfilePrompt:
-      type: object
-      properties:
-        updated_by:
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-        created_at:
-          type: string
-          format: date-time
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/Field'
-        completedByUsers:
-          type: array
-          items:
-            type: string
-        skippedByUsers:
-          type: array
-          items:
-            type: string
-    PrefsPatch:
-      type: object
-      properties:
-        testRunRestrictionWindows:
-          maxItems: 7
-          minItems: 0
-          type: array
-          items:
-            $ref: '#/components/schemas/TestRunRestrictionWindow'
-      description: Prefs on team level
-    ScheduleWindow:
-      required:
-      - end
-      - start
-      type: object
-      properties:
-        start:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
-        end:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
-    Prompt:
-      type: object
-      properties:
-        prefix:
-          type: string
-        suffix:
-          type: string
-    UpdateTeamRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name for the team
-        production:
-          type: boolean
-          description: Flag to determine if team is marked for production
-        defaultTeamRole:
-          type: string
-          description: The default team role
-        prefs:
-          $ref: '#/components/schemas/PrefsPatch'
-      description: A request to update an team
-    Field:
-      type: object
-      properties:
-        field:
-          type: string
-        presets:
-          type: array
-          items:
-            type: string
-        multiple:
-          type: boolean
-        answer:
-          type: array
-          items:
-            type: string
-        prompt:
-          $ref: '#/components/schemas/Prompt'
-    TeamResponse:
-      type: object
-      properties:
-        identifier:
-          type: string
-          description: The identifier of this Team.
-        companyId:
-          type: string
-          description: The identifier of the company to which this Team belongs.
-        name:
-          type: string
-          description: The name of this Team.
-        state:
-          type: string
-          description: The state of this Team.
-        clientVersions:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ClientVersionRange'
-          description: A Map representing the minimum and maximum client versions authenticated with this Team.
-        certificate:
-          type: string
-          description: The PEM encoded certificate associated with this Team.
-        certificateSetAt:
-          type: string
-          description: The time of creation for the certificate credentials associated with this Team.
-          format: date-time
-        certificateSetBy:
-          type: string
-          description: The account that set the certificate credentials associated with this Team.
-        secretSetAt:
-          type: string
-          description: The time of creation of the secret associated with this Team.
-          format: date-time
-        secretSetBy:
-          type: string
-          description: The account that set the secret associated with this Team.
-        production:
-          type: boolean
-          description: Flag to determine if team is marked for production
-        prefs:
-          $ref: '#/components/schemas/Prefs'
-        defaultTeamRole:
-          type: string
-          description: The default team role
-        createdAt:
-          type: string
-          description: An ISO8601 timestamp representing the time at which this team was created
-          format: date-time
     Prefs:
       type: object
       properties:
@@ -593,25 +549,15 @@ components:
           items:
             $ref: '#/components/schemas/TestRunRestrictionWindow'
       description: Prefs for team
-    TestRunRestrictionWindow:
-      required:
-      - dayOfWeek
-      - windowsForDay
+    SemanticVersion:
       type: object
       properties:
-        dayOfWeek:
-          type: string
-          enum:
-          - M
-          - T
-          - W
-          - Th
-          - F
-          - S
-          - Su
-        windowsForDay:
-          maxItems: 3
-          minItems: 0
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleWindow'
+        major:
+          type: integer
+          format: int32
+        minor:
+          type: integer
+          format: int32
+        patch:
+          type: integer
+          format: int32

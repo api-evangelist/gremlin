@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: kubernetes.targets
   description: Get information on attackable kubernetes targets
@@ -52,6 +51,7 @@ paths:
                   - REPLICATIONCONTROLLER
                   - ROLLOUT
                   - HORIZONTALPODAUTOSCALER
+                  - PODDISRUPTIONBUDGET
         '403':
           description: 'User requires privilege for target team: CLIENTS_READ'
         '401':
@@ -69,10 +69,12 @@ paths:
       parameters:
       - name: clientId
         in: query
+        description: Filter targets to this client
         schema:
           type: string
       - name: serviceId
         in: query
+        description: Filter targets to this service
         schema:
           type: string
           default: ''
@@ -83,10 +85,10 @@ paths:
         schema:
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
+        '200':
+          description: The attackable targets
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege for target team: CLIENTS_READ'
         '401':

@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Notification Settings
   description: View and modify a team's notification settings
@@ -77,13 +76,6 @@ paths:
         - TEAMS_WRITE
 components:
   schemas:
-    ScopeSettings:
-      type: object
-      properties:
-        channels:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ChannelSettings'
     SubjectSettings:
       type: object
       properties:
@@ -91,15 +83,6 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/ScopeSettings'
-    TeamNotificationSettings:
-      required:
-      - subjects
-      type: object
-      properties:
-        subjects:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/SubjectSettings'
     ChannelSettings:
       type: object
       properties:
@@ -109,3 +92,19 @@ components:
           type: string
         updatedAt:
           type: string
+    TeamNotificationSettings:
+      required:
+      - subjects
+      type: object
+      properties:
+        subjects:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SubjectSettings'
+    ScopeSettings:
+      type: object
+      properties:
+        channels:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ChannelSettings'

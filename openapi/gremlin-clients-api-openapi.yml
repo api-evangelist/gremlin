@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Clients
   description: List and modify all clients
@@ -94,7 +93,7 @@ paths:
       parameters:
       - name: teamId
         in: query
-        description: The identifier of the team for which to retrieve clients
+        description: Required when using company session token.
         required: true
         schema:
           type: string
@@ -167,12 +166,7 @@ paths:
           type: string
       responses:
         '200':
-          content:
-            text/plain:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Client'
+          description: Client successfully revoked
         '400':
           description: Bad Request
         '404':
@@ -186,66 +180,6 @@ paths:
         - CLIENTS_WRITE
 components:
   schemas:
-    Container:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        image:
-          type: string
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        dns_servers:
-          type: array
-          writeOnly: true
-          items:
-            type: string
-        dnsServers:
-          type: array
-          items:
-            type: string
-    NetworkInterfaceData:
-      type: object
-      properties:
-        interfaces:
-          type: array
-          items:
-            $ref: '#/components/schemas/NetworkInterface'
-    SemanticVersion:
-      type: object
-      properties:
-        major:
-          type: integer
-          format: int32
-        minor:
-          type: integer
-          format: int32
-        patch:
-          type: integer
-          format: int32
-    VersionInfo:
-      type: object
-      properties:
-        gremlind:
-          $ref: '#/components/schemas/SemanticVersion'
-        gremlin:
-          $ref: '#/components/schemas/SemanticVersion'
-    GpuInfo:
-      type: object
-      properties:
-        name:
-          type: string
-        driver:
-          type: string
-        memory_size:
-          type: integer
-          format: int64
     Client:
       type: object
       properties:
@@ -256,6 +190,8 @@ components:
         lastSeen:
           type: string
           format: date-time
+        lastSeenXff:
+          type: string
         state:
           type: string
           enum:
@@ -358,6 +294,41 @@ components:
           enum:
           - Linux
           - Windows
+    NetworkInterfaceData:
+      type: object
+      properties:
+        interfaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/NetworkInterface'
+    IPAddress:
+      type: object
+      properties:
+        ip:
+          type: string
+        protocolFamily:
+          type: string
+          enum:
+          - INET
+          - INET6
+          - UNIX
+    VersionInfo:
+      type: object
+      properties:
+        gremlind:
+          $ref: '#/components/schemas/SemanticVersion'
+        gremlin:
+          $ref: '#/components/schemas/SemanticVersion'
+    GpuInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        driver:
+          type: string
+        memory_size:
+          type: integer
+          format: int64
     ValidationAttack:
       type: object
       properties:
@@ -376,32 +347,52 @@ components:
           - HEALTHY
           - IMPAIRED
           - UNHEALTHY
-    Warning:
+    CpuInfo:
       type: object
       properties:
-        key:
+        name:
           type: string
-          enum:
-          - W000
-          - W001
-          - W002
-          - W003
-          - Unknown
-        link:
-          type: string
-        summary:
-          type: string
-    IPAddress:
+    NetworkInterface:
+      required:
+      - ip_addresses
       type: object
       properties:
-        ip:
+        name:
           type: string
-        protocolFamily:
+        ip_addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPAddress'
+        is_default:
+          type: boolean
+        is_physical:
+          type: boolean
+        is_virtual:
+          type: boolean
+    Container:
+      required:
+      - id
+      type: object
+      properties:
+        id:
           type: string
-          enum:
-          - INET
-          - INET6
-          - UNIX
+        name:
+          type: string
+        image:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        dns_servers:
+          type: array
+          writeOnly: true
+          items:
+            type: string
+        dnsServers:
+          type: array
+          items:
+            type: string
     ValidationAttackResult:
       type: object
       properties:
@@ -421,28 +412,6 @@ components:
           enum:
           - CONTAINER
           - HOST
-    NetworkInterface:
-      required:
-      - ip_addresses
-      type: object
-      properties:
-        name:
-          type: string
-        ip_addresses:
-          type: array
-          items:
-            $ref: '#/components/schemas/IPAddress'
-        is_default:
-          type: boolean
-        is_physical:
-          type: boolean
-        is_virtual:
-          type: boolean
-    CpuInfo:
-      type: object
-      properties:
-        name:
-          type: string
     HardwareInfo:
       type: object
       properties:
@@ -457,3 +426,31 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GpuInfo'
+    Warning:
+      type: object
+      properties:
+        key:
+          type: string
+          enum:
+          - W000
+          - W001
+          - W002
+          - W003
+          - W004
+          - Unknown
+        link:
+          type: string
+        summary:
+          type: string
+    SemanticVersion:
+      type: object
+      properties:
+        major:
+          type: integer
+          format: int32
+        minor:
+          type: integer
+          format: int32
+        patch:
+          type: integer
+          format: int32

@@ -1,0 +1,470 @@
+openapi: 3.2.0
+info:
+  title: Gremlin Tpm API
+  description: The API for interacting with the Gremlin Failure-as-a-Service platform
+  termsOfService: https://www.gremlin.com/terms_of_service_2017_03_24
+  contact:
+    name: Gremlin Support
+    email: support@gremlin.com
+  license:
+    name: Gremlin License
+    url: https://www.gremlin.com/license_2017_03_24
+  version: '1.0'
+servers:
+- url: /v1
+tags:
+- name: tpm
+  description: Configure the Technical Program Manager for the caller's team
+paths:
+  /tpm/commitments:
+    get:
+      tags:
+      - tpm
+      summary: Get the TPM commitments for the caller's team
+      description: Requires the privilege `SERVICES_READ`
+      operationId: getCommitments
+      parameters:
+      - name: pageToken
+        in: query
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        description: This value determines how many results will be returned per call.
+        schema:
+          maximum: 50
+          type: integer
+          format: int32
+      - name: status
+        in: query
+        description: Filter on overdue|incomplete|completed|suggested|dismissed (overdue subset of incomplete)
+        schema:
+          type: string
+          enum:
+          - completed
+          - dismissed
+          - incomplete
+          - overdue
+          - suggested
+        example: overdue
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The TPM commitments for the team
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
+      x-gremlin-feature-flag: tpm-api
+    post:
+      tags:
+      - tpm
+      summary: Create a new TPM commitment for the caller's team
+      description: Requires the privilege `TPM_WRITE`
+      operationId: createCommitment
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTpmCommitmentRequest'
+      responses:
+        '200':
+          description: TPM commitment created successfully
+        '400':
+          description: Invalid request document
+        '409':
+          description: Commitment ID allocation conflict, please retry
+        '403':
+          description: 'User requires privilege for target team: TPM_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TPM_WRITE
+      x-gremlin-feature-flag: tpm-api
+  /tpm/config:
+    get:
+      tags:
+      - tpm
+      summary: Get the TPM config for the caller's team
+      description: Requires the privilege `SERVICES_READ`
+      operationId: getConfig
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The team's TPM config
+        '404':
+          description: No TPM config exists for the team
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
+      x-gremlin-feature-flag: tpm-api
+    put:
+      tags:
+      - tpm
+      summary: Update the TPM config for the caller's team
+      description: Requires the privilege `TPM_WRITE`
+      operationId: updateConfig
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutTpmConfigRequest'
+      responses:
+        '200':
+          description: The updated TPM config
+        '404':
+          description: No TPM config exists for the team
+        '409':
+          description: Config has been concurrently edited
+        '403':
+          description: 'User requires privilege for target team: TPM_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TPM_WRITE
+      x-gremlin-feature-flag: tpm-api
+    post:
+      tags:
+      - tpm
+      summary: Create the TPM config for the caller's team
+      description: Requires the privilege `TPM_WRITE`
+      operationId: createConfig
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutTpmConfigRequest'
+      responses:
+        '200':
+          description: The created TPM config
+        '409':
+          description: A TPM config already exists for the team
+        '403':
+          description: 'User requires privilege for target team: TPM_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TPM_WRITE
+      x-gremlin-feature-flag: tpm-api
+  /tpm/commitments/{id}:
+    delete:
+      tags:
+      - tpm
+      summary: Dismiss a TPM commitment for the caller's team
+      description: Requires the privilege `TPM_WRITE`
+      operationId: dismissCommitment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: TPM commitment dismissed successfully
+        '404':
+          description: The TPM commitment with the given ID cannot be found
+        '409':
+          description: Commitment update conflict, please reload and try again
+        '403':
+          description: 'User requires privilege for target team: TPM_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TPM_WRITE
+      x-gremlin-feature-flag: tpm-api
+    patch:
+      tags:
+      - tpm
+      summary: Update a TPM commitment for the caller's team
+      description: Requires the privilege `TPM_WRITE`
+      operationId: updateCommitment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTpmCommitmentRequest'
+      responses:
+        '200':
+          description: TPM commitment updated successfully
+        '400':
+          description: Invalid request document
+        '404':
+          description: The TPM commitment with the given ID cannot be found
+        '409':
+          description: Commitment update conflict, please reload and try again
+        '403':
+          description: 'User requires privilege for target team: TPM_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TPM_WRITE
+      x-gremlin-feature-flag: tpm-api
+  /tpm/generate:
+    post:
+      tags:
+      - tpm
+      summary: Generate a new TPM report for the caller's team
+      description: Requires the privilege `TPM_WRITE`
+      operationId: generate
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: An NDJSON stream of run events
+        '409':
+          description: A TPM run is already in progress
+        '429':
+          description: Rate-limited; retry later
+        '403':
+          description: 'User requires privilege for target team: TPM_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - TPM_WRITE
+      x-gremlin-feature-flag: tpm-api
+  /tpm/services/{id}/generate-description:
+    post:
+      tags:
+      - tpm
+      summary: Generate a description for the given service
+      description: Requires the privilege `SERVICES_WRITE`
+      operationId: generateServiceDescription
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A suggested description
+        '404':
+          description: Service not found
+        '429':
+          description: Rate-limited; retry later
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_WRITE
+      x-gremlin-feature-flag: tpm-api
+  /tpm/default-config:
+    get:
+      tags:
+      - tpm
+      summary: Get a suggested default TPM config for the caller's team without persisting it
+      description: Requires the privilege `SERVICES_READ`
+      operationId: getDefaultConfig
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TpmConfigResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
+      x-gremlin-feature-flag: tpm-api
+  /tpm/latest:
+    get:
+      tags:
+      - tpm
+      summary: Get the latest TPM status and report for the caller's team
+      description: Requires the privilege `SERVICES_READ`
+      operationId: latest
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The latest TPM run for the team
+        '404':
+          description: The TPM has not run yet for the team
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
+      x-gremlin-feature-flag: tpm-api
+components:
+  schemas:
+    UpdateTpmCommitmentRequest:
+      type: object
+      properties:
+        state:
+          type: string
+          enum:
+          - SUGGESTED
+          - INCOMPLETE
+          - COMPLETED
+          - DISMISSED
+        text:
+          type: string
+        deadline:
+          type: string
+          format: date-time
+    CreateTpmCommitmentRequest:
+      required:
+      - text
+      type: object
+      properties:
+        text:
+          type: string
+        deadline:
+          type: string
+          format: date-time
+    PutTpmConfigRequest:
+      required:
+      - programName
+      type: object
+      properties:
+        programName:
+          type: string
+        goals:
+          maxItems: 10
+          minItems: 1
+          type: array
+          items:
+            type: string
+        slackWebhookUrl:
+          type: string
+        nagDays:
+          maxItems: 4
+          minItems: 0
+          type: array
+          items:
+            type: integer
+            format: int32
+        reportPeriodDays:
+          type: integer
+          format: int32
+        reportDayOfWeek:
+          type: integer
+          format: int32
+        timeZone:
+          type: string
+    TpmConfigResponse:
+      type: object
+      properties:
+        teamId:
+          type: string
+        programName:
+          type: string
+        goals:
+          type: array
+          items:
+            type: string
+        slackWebhookUrl:
+          type: string
+        nagDays:
+          type: array
+          items:
+            type: integer
+            format: int32
+        reportPeriodDays:
+          type: integer
+          format: int32
+        reportDayOfWeek:
+          type: integer
+          format: int32
+        timeZone:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string

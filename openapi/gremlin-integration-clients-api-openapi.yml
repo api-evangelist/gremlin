@@ -11,17 +11,16 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: integration-clients
-  description: Handle client integrations
+  description: Handle client Private Network Integration (PNI)
 paths:
   /integration-clients/{identifier}/activate:
     put:
       tags:
       - integration-clients
-      summary: Activates an integration client
+      summary: Activates an private network integration client
       description: Requires the privilege `CLIENTS_WRITE`
       operationId: activate_1
       parameters:
@@ -38,10 +37,8 @@ paths:
         schema:
           type: string
       responses:
-        '400':
-          description: Bad Request
-        '402':
-          description: Payment Required
+        '200':
+          description: Client successfully activated
         '404':
           description: Not Found
         '403':
@@ -55,7 +52,7 @@ paths:
     get:
       tags:
       - integration-clients
-      summary: Get all active integration clients
+      summary: Get all active private network integration clients
       description: Requires the privilege `INTEGRATIONS_READ`
       operationId: active_3
       parameters:
@@ -86,7 +83,7 @@ paths:
       tags:
       - integration-clients
       summary: Returns all integration clients within a company or team
-      description: 'This operation will return all active, idle, and recently inactive integration clients.
+      description: 'This operation will return all active, idle, and recently inactive private network integration clients.
 
         Requires the privilege `INTEGRATIONS_READ`'
       operationId: all_3
@@ -115,7 +112,7 @@ paths:
     post:
       tags:
       - integration-clients
-      summary: Returns list of clients which match the given tags
+      summary: Returns list of PNIs which match the given tags
       description: Requires the privilege `INTEGRATIONS_READ`
       operationId: matchesTags
       parameters:
@@ -153,7 +150,7 @@ paths:
       tags:
       - integration-clients
       summary: Deactivates an integration client
-      description: 'This operation will deactivate the specified integration client. The specified client will no longer be able to be used as a target.
+      description: 'This operation will deactivate the specified private network integration client. The specified client will no longer be able to be used as a target.
 
         Requires the privilege `CLIENTS_WRITE`'
       operationId: revoke_2
@@ -171,8 +168,8 @@ paths:
         schema:
           type: string
       responses:
-        '400':
-          description: Bad Request
+        '200':
+          description: Client successfully deactivated
         '404':
           description: Not Found
         '403':
@@ -184,21 +181,6 @@ paths:
         - CLIENTS_WRITE
 components:
   schemas:
-    IdentitiesPrivateNetworkClient:
-      type: object
-      properties:
-        active:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrivateNetworkClient'
-        idle:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrivateNetworkClient'
-        inactive:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrivateNetworkClient'
     PrivateNetworkClient:
       type: object
       properties:
@@ -209,6 +191,8 @@ components:
         lastSeen:
           type: string
           format: date-time
+        lastSeenXff:
+          type: string
         orgId:
           type: string
         state:
@@ -263,3 +247,18 @@ components:
           type: array
           items:
             type: string
+    IdentitiesPrivateNetworkClient:
+      type: object
+      properties:
+        active:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkClient'
+        idle:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkClient'
+        inactive:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivateNetworkClient'

@@ -593,24 +593,6 @@ apis:
     url: rules/gremlin-rules.yml
   - type: JSONSchema
     url: json-schema/gremlin-schema-index.yml
-- aid: gremlin:gremlin-orgs-api
-  name: Gremlin Orgs API
-  description: Get and update org preferences. Generate new and delete old client certificates
-  humanURL: https://www.gremlin.com/docs
-  baseURL: https://api.gremlin.com/v1
-  tags:
-  - Organization
-  tags_raw:
-  - orgs
-  properties:
-  - type: OpenAPI
-    url: openapi/gremlin-orgs-api-openapi.yml
-  - type: Documentation
-    url: https://www.gremlin.com/docs
-  - type: Rules
-    url: rules/gremlin-rules.yml
-  - type: JSONSchema
-    url: json-schema/gremlin-schema-index.yml
 - aid: gremlin:gremlin-pagerduty-api
   name: Gremlin Pagerduty API
   description: Get Pagerduty services and incidents
@@ -959,14 +941,62 @@ apis:
     url: rules/gremlin-rules.yml
   - type: JSONSchema
     url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-teams-legacy-api
+  name: Gremlin Teams Legacy API
+  description: Get and update team preferences. Generate new and delete old client certificates
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - teams-legacy
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-teams-legacy-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-test-series-runs-api
+  name: Gremlin Test Series Runs API
+  description: >-
+    API to access a service's test series runs (the playlist of RM tests run against a service, e.g. baseline
+    runs)
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - test-series-runs
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-test-series-runs-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
+- aid: gremlin:gremlin-tpm-api
+  name: Gremlin Tpm API
+  description: Configure the Technical Program Manager for the caller's team
+  humanURL: https://www.gremlin.com/docs
+  baseURL: https://api.gremlin.com/v1
+  tags:
+  - tpm
+  properties:
+  - type: OpenAPI
+    url: openapi/gremlin-tpm-api-openapi.yml
+  - type: Documentation
+    url: https://www.gremlin.com/docs
+  - type: Rules
+    url: rules/gremlin-rules.yml
+  - type: JSONSchema
+    url: json-schema/gremlin-schema-index.yml
 - aid: gremlin:gremlin-api-keys-api
   name: Gremlin API Keys API
   description: Create, delete, activate, deactivate and list apikeys
   humanURL: https://www.gremlin.com/docs
   baseURL: https://api.gremlin.com/v1
   tags:
-  - APIKeys
-  tags_raw:
   - API Keys
   properties:
   - type: OpenAPI

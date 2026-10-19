@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Attacks
   description: Create, halt, and list attacks
@@ -576,100 +575,15 @@ paths:
         - HALT_WRITE
 components:
   schemas:
-    ExecutionSummary:
-      type: object
-      properties:
-        startTime:
-          type: string
-          format: date-time
-        endTime:
-          type: string
-          format: date-time
-        stage:
-          type: string
-          enum:
-          - InvalidArgument
-          - TargetNotFound
-          - Successful
-          - UserHalted
-          - ClientAborted
-          - LostCommunication
-          - InitializationFailed
-          - TeardownFailed
-          - HaltFailed
-          - Failed
-          - Pending
-          - Distributed
-          - Initializing
-          - HaltDistributed
-          - InterruptTriggered
-          - RollbackTriggered
-          - RollbackStarted
-          - Running
-          - TearingDown
-          - Halt
-        version:
-          type: integer
-          format: int64
-    ExecutionFailureReasons:
-      type: object
-      properties:
-        executionIdToReason:
-          type: object
-          additionalProperties:
-            type: string
-    TargetStrategy:
+    TargetingStrategy:
+      required:
+      - type
       type: object
       properties:
         type:
           type: string
-          enum:
-          - Exact
-          - Regex
-          - Random
-        strategy:
-          $ref: '#/components/schemas/Strategy'
-        containerLabels:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        hostTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        allContainers:
-          type: boolean
-        allHosts:
-          type: boolean
-        hostIds:
-          type: array
-          items:
-            type: string
-        containerIds:
-          type: array
-          items:
-            type: string
-        hostsInput:
-          type: object
-        containersInput:
-          type: object
-    TrafficImpactMapping:
-      type: object
-      properties:
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        dependencyIds:
-          type: array
-          items:
-            type: string
+      discriminator:
+        propertyName: type
     K8sContainerResponse:
       type: object
       properties:
@@ -699,140 +613,21 @@ components:
           type: array
           items:
             type: string
-    TargetK8sObjectResponse:
+    AttackAnnotationsInputRequest:
+      title: Represents a request to add annotations to an attack
       type: object
       properties:
-        strategy:
-          $ref: '#/components/schemas/StrategyK8sObjectResponse'
-    AttackK8sObjectResponse:
-      type: object
-      properties:
-        impactDefinition:
-          $ref: '#/components/schemas/Command'
-        targetDefinition:
-          $ref: '#/components/schemas/TargetK8sObjectResponse'
-        includeNewTargets:
-          type: boolean
-        continueOnEmptyTargets:
-          type: boolean
-    TargetingStrategy:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    CreateAttackInput:
-      title: Task.Input
-      type: object
-      properties:
-        includeNewTargets:
-          type: boolean
-        continueOnEmptyTargets:
-          type: boolean
-        command:
-          type: object
-          properties:
-            providers:
-              type: array
-              items:
-                type: string
-            args:
-              type: array
-              items:
-                type: string
-            trafficImpactMapping:
-              $ref: '#/components/schemas/TaskTrafficImpactMappingInput'
-            trafficImpactFromWithSelectTags:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: string
-              writeOnly: true
-            trafficImpactWithDependencyIds:
-              type: array
-              writeOnly: true
-              items:
-                type: string
-            type:
-              type: string
-            templateId:
-              type: string
-            optionalTemplateId:
-              type: string
-            empty:
-              type: boolean
-          additionalProperties:
-            type: object
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        multiSelectLabels:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        target:
-          type: object
-          properties:
-            multiSelectTags:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: string
-            strategyInput:
-              $ref: '#/components/schemas/TargetStrategy'
-            multiSelectLabels:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: string
-            type:
-              type: string
-            templateId:
-              type: string
-            optionalTemplateId:
-              type: string
-            empty:
-              type: boolean
-            tags:
-              type: object
-              additionalProperties:
-                type: string
-              writeOnly: true
-          additionalProperties:
-            type: object
-        annotations:
+        otherAnnotations:
           type: object
           additionalProperties:
             type: string
-        source:
+          writeOnly: true
+        notes:
           type: string
-          enum:
-          - WebApp
-          - Api
-          - Scheduled
-          - Manual
-          - Spinnaker
-          - Concord
-          - GremlinFeeder
-          - GremlinSdkPython
-          - Scenario
-          - Chao
-          - K8sBackend
-          - Website
-          - Neotys
-          - IntegrationClient
-          - Validation
+          description: Notes about the attack
+        metrics:
+          type: string
+          description: Link to metrics about the impact of the attack
     TaskResponse:
       type: object
       properties:
@@ -1042,6 +837,238 @@ components:
         updatedAt:
           type: string
           format: date-time
+    ServiceCommand:
+      type: object
+      properties:
+        infraCommandType:
+          type: string
+          enum:
+          - cpu
+          - io
+          - memory
+          - disk
+          - thread_bomb
+          - blackhole
+          - dns
+          - latency
+          - packet_loss
+          - collect_certs
+          - shutdown
+          - time_travel
+          - process_killer
+          - process_exhaustion
+          - gpu
+        infraCommandArgs:
+          $ref: '#/components/schemas/InfraCommandArgs'
+    ContainerSelection:
+      type: object
+      properties:
+        selectionType:
+          type: string
+          enum:
+          - EXACT
+          - ALL
+          - ANY
+        containerNames:
+          type: array
+          items:
+            type: string
+    HaltRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: The reason why this halt this requested.
+        reference:
+          type: string
+          description: A reference to why this halt was requested.
+    TrafficImpactMapping:
+      type: object
+      properties:
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        dependencyIds:
+          type: array
+          items:
+            type: string
+    AttackForServiceResponse:
+      type: object
+      properties:
+        serviceId:
+          type: string
+        type:
+          type: string
+          enum:
+          - Host
+          - Container
+          - Kubernetes
+        attackId:
+          type: string
+        k8sAttackId:
+          type: string
+    StrategyK8sObjectResponse:
+      type: object
+      properties:
+        k8sObjects:
+          type: array
+          items:
+            $ref: '#/components/schemas/K8sObjectResponse'
+        containerSelection:
+          $ref: '#/components/schemas/ContainerSelection'
+        k8sObjectsInternal:
+          type: array
+          items:
+            $ref: '#/components/schemas/K8sObjectOnAttack'
+        count:
+          type: integer
+          format: int32
+        percentage:
+          type: integer
+          format: int32
+    AttackConfiguration:
+      required:
+      - command
+      - targets
+      type: object
+      properties:
+        command:
+          $ref: '#/components/schemas/ServiceCommand'
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTarget'
+        sampling:
+          $ref: '#/components/schemas/TargetSampling'
+    TargetSampling:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    TargetK8sObjectResponse:
+      type: object
+      properties:
+        strategy:
+          $ref: '#/components/schemas/StrategyK8sObjectResponse'
+    K8sObjectResponse:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        ownerReferences:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        resolvedContainers:
+          type: array
+          items:
+            type: string
+        uid:
+          type: string
+        namespace:
+          type: string
+        name:
+          type: string
+        kind:
+          type: string
+          enum:
+          - DEPLOYMENT
+          - REPLICASET
+          - POD
+          - DAEMONSET
+          - STATEFULSET
+          - SERVICE
+          - INGRESS
+          - DEPLOYMENTCONFIG
+          - REPLICATIONCONTROLLER
+          - ROLLOUT
+          - HORIZONTALPODAUTOSCALER
+          - PODDISRUPTIONBUDGET
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        podPhase:
+          type: string
+          enum:
+          - Pending
+          - Running
+          - Succeeded
+          - Failed
+          - Unknown
+        hostId:
+          type: string
+        availableContainers:
+          type: array
+          items:
+            $ref: '#/components/schemas/K8sContainerResponse'
+        targetType:
+          type: string
+          enum:
+          - Host
+          - Container
+          - Docker
+          - Kubernetes
+    TargetStrategy:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Exact
+          - Regex
+          - Random
+        strategy:
+          $ref: '#/components/schemas/Strategy'
+        containerLabels:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        hostTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        allContainers:
+          type: boolean
+        allHosts:
+          type: boolean
+        hostIds:
+          type: array
+          items:
+            type: string
+        containerIds:
+          type: array
+          items:
+            type: string
+        hostsInput:
+          type: object
+        containersInput:
+          type: object
+    ServiceTarget:
+      required:
+      - targetingStrategy
+      type: object
+      properties:
+        serviceId:
+          type: string
+        targetingStrategy:
+          $ref: '#/components/schemas/TargetingStrategy'
     ExperimentsResponse:
       type: object
       properties:
@@ -1266,6 +1293,303 @@ components:
         updatedAt:
           type: string
           format: date-time
+    K8sObjectOnAttack:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        uid:
+          type: string
+        namespace:
+          type: string
+        name:
+          type: string
+        kind:
+          type: string
+          enum:
+          - DEPLOYMENT
+          - REPLICASET
+          - POD
+          - DAEMONSET
+          - STATEFULSET
+          - SERVICE
+          - INGRESS
+          - DEPLOYMENTCONFIG
+          - REPLICATIONCONTROLLER
+          - ROLLOUT
+          - HORIZONTALPODAUTOSCALER
+          - PODDISRUPTIONBUDGET
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        ownerReferences:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        resolvedContainers:
+          type: array
+          items:
+            type: string
+        data:
+          type: string
+        clientId:
+          type: string
+        teamId:
+          type: string
+        resolved:
+          type: boolean
+        attackUid:
+          type: string
+    InfraCommandArgs:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - cpu
+          - io
+          - memory
+          - disk
+          - thread_bomb
+          - blackhole
+          - dns
+          - latency
+          - packet_loss
+          - collect_certs
+          - shutdown
+          - time_travel
+          - process_killer
+          - process_exhaustion
+          - gpu
+        cliArgs:
+          type: array
+          description: 'CLI arguments for the command. The first element must be the command name and match infraCommandType. This field is not required. It is recommended to specify arguments as JSON fields instead (e.g. fields: `length`, `percent`, `reboot`, etc.).'
+          example:
+          - blackhole
+          - -l
+          - '60'
+          - -p
+          - '5432'
+          items:
+            type: string
+            description: 'CLI arguments for the command. The first element must be the command name and match infraCommandType. This field is not required. It is recommended to specify arguments as JSON fields instead (e.g. fields: `length`, `percent`, `reboot`, etc.).'
+            example: '["blackhole","-l","60","-p","5432"]'
+    ExecutionFailureReasons:
+      type: object
+      properties:
+        executionIdToReason:
+          type: object
+          additionalProperties:
+            type: string
+    CreateAttackInput:
+      title: Task.Input
+      type: object
+      properties:
+        includeNewTargets:
+          type: boolean
+        continueOnEmptyTargets:
+          type: boolean
+        command:
+          type: object
+          properties:
+            providers:
+              type: array
+              items:
+                type: string
+            args:
+              type: array
+              items:
+                type: string
+            trafficImpactMapping:
+              $ref: '#/components/schemas/TaskTrafficImpactMappingInput'
+            trafficImpactFromWithSelectTags:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+              writeOnly: true
+            trafficImpactWithDependencyIds:
+              type: array
+              writeOnly: true
+              items:
+                type: string
+            type:
+              type: string
+            optionalTemplateId:
+              type: string
+            templateId:
+              type: string
+            empty:
+              type: boolean
+          additionalProperties:
+            type: object
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        multiSelectLabels:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        target:
+          type: object
+          properties:
+            multiSelectTags:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+            strategyInput:
+              $ref: '#/components/schemas/TargetStrategy'
+            multiSelectLabels:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+            type:
+              type: string
+            optionalTemplateId:
+              type: string
+            templateId:
+              type: string
+            empty:
+              type: boolean
+            tags:
+              type: object
+              additionalProperties:
+                type: string
+              writeOnly: true
+          additionalProperties:
+            type: object
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        source:
+          type: string
+          enum:
+          - WebApp
+          - Api
+          - Scheduled
+          - Manual
+          - Spinnaker
+          - Concord
+          - GremlinFeeder
+          - GremlinSdkPython
+          - Scenario
+          - Chao
+          - K8sBackend
+          - Website
+          - Neotys
+          - IntegrationClient
+          - Validation
+    PagedResponseTaskResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskResponse'
+    CreateAttackRequest:
+      required:
+      - attackConfiguration
+      type: object
+      properties:
+        attackConfiguration:
+          $ref: '#/components/schemas/AttackConfiguration'
+        includeNewTargets:
+          type: boolean
+        continueOnEmptyTargets:
+          type: boolean
+    PagedResponseExperimentsResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExperimentsResponse'
+    ExecutionSummary:
+      type: object
+      properties:
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        stage:
+          type: string
+          enum:
+          - InvalidArgument
+          - TargetNotFound
+          - Successful
+          - UserHalted
+          - ClientAborted
+          - LostCommunication
+          - InitializationFailed
+          - TeardownFailed
+          - HaltFailed
+          - Failed
+          - Pending
+          - Distributed
+          - Initializing
+          - HaltDistributed
+          - InterruptTriggered
+          - RollbackTriggered
+          - RollbackStarted
+          - Running
+          - TearingDown
+          - Halt
+        version:
+          type: integer
+          format: int64
     Command:
       type: object
       properties:
@@ -1293,213 +1617,25 @@ components:
             type: string
         type:
           type: string
-        templateId:
-          type: string
         optionalTemplateId:
+          type: string
+        templateId:
           type: string
         empty:
           type: boolean
       additionalProperties:
         type: object
-    AttackAnnotationsInputRequest:
-      title: Represents a request to add annotations to an attack
+    AttackK8sObjectResponse:
       type: object
       properties:
-        otherAnnotations:
-          type: object
-          additionalProperties:
-            type: string
-          writeOnly: true
-        notes:
-          type: string
-          description: Notes about the attack
-        metrics:
-          type: string
-          description: Link to metrics about the impact of the attack
-    AttackConfiguration:
-      required:
-      - command
-      - targets
-      type: object
-      properties:
-        command:
-          $ref: '#/components/schemas/ServiceCommand'
-        targets:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceTarget'
-        sampling:
-          $ref: '#/components/schemas/TargetSampling'
-    AttackForServiceResponse:
-      type: object
-      properties:
-        serviceId:
-          type: string
-        type:
-          type: string
-          enum:
-          - Host
-          - Container
-          - Kubernetes
-        attackId:
-          type: string
-        k8sAttackId:
-          type: string
-    ServiceTarget:
-      required:
-      - targetingStrategy
-      type: object
-      properties:
-        serviceId:
-          type: string
-        targetingStrategy:
-          $ref: '#/components/schemas/TargetingStrategy'
-    PagedResponseExperimentsResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExperimentsResponse'
-    K8sObjectResponse:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        ownerReferences:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        resolvedContainers:
-          type: array
-          items:
-            type: string
-        uid:
-          type: string
-        namespace:
-          type: string
-        name:
-          type: string
-        kind:
-          type: string
-          enum:
-          - DEPLOYMENT
-          - REPLICASET
-          - POD
-          - DAEMONSET
-          - STATEFULSET
-          - SERVICE
-          - INGRESS
-          - DEPLOYMENTCONFIG
-          - REPLICATIONCONTROLLER
-          - ROLLOUT
-          - HORIZONTALPODAUTOSCALER
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        annotations:
-          type: object
-          additionalProperties:
-            type: string
-        podPhase:
-          type: string
-          enum:
-          - Pending
-          - Running
-          - Succeeded
-          - Failed
-          - Unknown
-        hostId:
-          type: string
-        availableContainers:
-          type: array
-          items:
-            $ref: '#/components/schemas/K8sContainerResponse'
-        targetType:
-          type: string
-          enum:
-          - Host
-          - Container
-          - Docker
-          - Kubernetes
-    ServiceCommand:
-      type: object
-      properties:
-        infraCommandType:
-          type: string
-          enum:
-          - CPU
-          - IO
-          - Memory
-          - Disk
-          - Thread_Bomb
-          - Blackhole
-          - DNS
-          - Latency
-          - Packet_Loss
-          - Collect_Certs
-          - Shutdown
-          - Time_Travel
-          - Process_Killer
-          - Process_Exhaustion
-          - GPU
-          - Unknown
-        infraCommandArgs:
-          $ref: '#/components/schemas/InfraCommandArgs'
-    CreateAttackRequest:
-      required:
-      - attackConfiguration
-      type: object
-      properties:
-        attackConfiguration:
-          $ref: '#/components/schemas/AttackConfiguration'
+        impactDefinition:
+          $ref: '#/components/schemas/Command'
+        targetDefinition:
+          $ref: '#/components/schemas/TargetK8sObjectResponse'
         includeNewTargets:
           type: boolean
         continueOnEmptyTargets:
           type: boolean
-    PagedResponseTaskResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/TaskResponse'
     Strategy:
       type: object
       properties:
@@ -1541,144 +1677,3 @@ components:
             type: array
             items:
               type: string
-    ContainerSelection:
-      type: object
-      properties:
-        selectionType:
-          type: string
-          enum:
-          - EXACT
-          - ALL
-          - ANY
-        containerNames:
-          type: array
-          items:
-            type: string
-    K8sObjectOnAttack:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        uid:
-          type: string
-        namespace:
-          type: string
-        name:
-          type: string
-        kind:
-          type: string
-          enum:
-          - DEPLOYMENT
-          - REPLICASET
-          - POD
-          - DAEMONSET
-          - STATEFULSET
-          - SERVICE
-          - INGRESS
-          - DEPLOYMENTCONFIG
-          - REPLICATIONCONTROLLER
-          - ROLLOUT
-          - HORIZONTALPODAUTOSCALER
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        annotations:
-          type: object
-          additionalProperties:
-            type: string
-        ownerReferences:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        resolvedContainers:
-          type: array
-          items:
-            type: string
-        data:
-          type: string
-        clientId:
-          type: string
-        teamId:
-          type: string
-        resolved:
-          type: boolean
-        attackUid:
-          type: string
-    HaltRequest:
-      type: object
-      properties:
-        reason:
-          type: string
-          description: The reason why this halt this requested.
-        reference:
-          type: string
-          description: A reference to why this halt was requested.
-    InfraCommandArgs:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - CPU
-          - IO
-          - Memory
-          - Disk
-          - Thread_Bomb
-          - Blackhole
-          - DNS
-          - Latency
-          - Packet_Loss
-          - Collect_Certs
-          - Shutdown
-          - Time_Travel
-          - Process_Killer
-          - Process_Exhaustion
-          - GPU
-          - Unknown
-        unknownArgs:
-          type: object
-          additionalProperties:
-            type: string
-        duplicateArgs:
-          type: array
-          items:
-            type: object
-            additionalProperties:
-              type: string
-        cliArgs:
-          type: array
-          items:
-            type: string
-        lengthOrZero:
-          type: integer
-          format: int32
-    StrategyK8sObjectResponse:
-      type: object
-      properties:
-        k8sObjects:
-          type: array
-          items:
-            $ref: '#/components/schemas/K8sObjectResponse'
-        containerSelection:
-          $ref: '#/components/schemas/ContainerSelection'
-        k8sObjectsInternal:
-          type: array
-          items:
-            $ref: '#/components/schemas/K8sObjectOnAttack'
-        count:
-          type: integer
-          format: int32
-        percentage:
-          type: integer
-          format: int32
-    TargetSampling:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type

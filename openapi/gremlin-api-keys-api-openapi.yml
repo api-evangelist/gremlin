@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: API Keys
   description: Create, delete, activate, deactivate and list apikeys
@@ -27,6 +26,7 @@ paths:
       parameters:
       - name: identifier
         in: path
+        description: The identifier of the API Key to un-revoke (activate).
         required: true
         schema:
           type: string
@@ -101,11 +101,13 @@ paths:
       parameters:
       - name: identifier
         in: path
+        description: The identifier of the API Key to update the expiration for.
         required: true
         schema:
           type: string
       - name: expiresAt
         in: query
+        description: The new expiration timestamp for the API Key. Omit to clear the expiration so the key never expires.
         schema:
           type: string
           format: date-time
@@ -179,6 +181,7 @@ paths:
       parameters:
       - name: identifier
         in: path
+        description: The identifier of the API Key to revoke.
         required: true
         schema:
           type: string

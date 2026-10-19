@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Metrics
   description: Metrics for charting purposes
@@ -97,14 +96,13 @@ paths:
         - EXPERIMENTS_READ
 components:
   schemas:
-    YAxisLine:
+    TaskMetrics:
       type: object
       properties:
-        value:
-          type: number
-          format: double
-        label:
+        taskId:
           type: string
+        metrics:
+          $ref: '#/components/schemas/AttackMetricsDisplayResponse'
     TimeRange:
       type: object
       properties:
@@ -114,22 +112,6 @@ components:
         end:
           type: integer
           format: int64
-    MetricPoint:
-      type: object
-      properties:
-        timestamp:
-          type: integer
-          format: int64
-        value:
-          type: number
-          format: double
-    TaskMetrics:
-      type: object
-      properties:
-        taskId:
-          type: string
-        metrics:
-          $ref: '#/components/schemas/AttackMetricsDisplayResponse'
     AttackMetricsDisplayResponse:
       type: object
       properties:
@@ -156,25 +138,41 @@ components:
         infraCommandType:
           type: string
           enum:
-          - CPU
-          - IO
-          - Memory
-          - Disk
-          - Thread_Bomb
-          - Blackhole
-          - DNS
-          - Latency
-          - Packet_Loss
-          - Collect_Certs
-          - Shutdown
-          - Time_Travel
-          - Process_Killer
-          - Process_Exhaustion
-          - GPU
-          - Unknown
+          - cpu
+          - io
+          - memory
+          - disk
+          - thread_bomb
+          - blackhole
+          - dns
+          - latency
+          - packet_loss
+          - collect_certs
+          - shutdown
+          - time_travel
+          - process_killer
+          - process_exhaustion
+          - gpu
         chartTitle:
           type: string
         lines:
           type: array
           items:
             $ref: '#/components/schemas/YAxisLine'
+    MetricPoint:
+      type: object
+      properties:
+        timestamp:
+          type: integer
+          format: int64
+        value:
+          type: number
+          format: double
+    YAxisLine:
+      type: object
+      properties:
+        value:
+          type: number
+          format: double
+        label:
+          type: string

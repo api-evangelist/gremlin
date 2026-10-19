@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: grafana
   description: Get Grafana alerts
@@ -46,6 +45,46 @@ paths:
           description: Returns all alerts
         '404':
           description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /grafana/alerts/delegate:
+    get:
+      tags:
+      - grafana
+      summary: Get all alerts, refusing to send the saved Grafana token to a different…
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
+      operationId: alertsDelegate
+      parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+      - name: grafanaUri
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uri
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GrafanaAlert'
         '403':
           description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
         '401':
@@ -89,6 +128,46 @@ paths:
       security:
       - privilege:
         - MINIMUM_TEAM_PRIVILEGES
+  /grafana/dashboards/delegate:
+    get:
+      tags:
+      - grafana
+      summary: Get all dashboards, refusing to send the saved Grafana token to a different…
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
+      operationId: dashboardsDelegate
+      parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+      - name: grafanaUri
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uri
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GrafanaDashboard'
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
   /grafana/rules:
     get:
       tags:
@@ -118,6 +197,48 @@ paths:
           description: Returns all rules
         '404':
           description: Not found
+        '403':
+          description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - MINIMUM_TEAM_PRIVILEGES
+  /grafana/rules/delegate:
+    get:
+      tags:
+      - grafana
+      summary: Get all rules, refusing to send the saved Grafana token to a different…
+      description: Requires the privilege `MINIMUM_TEAM_PRIVILEGES`
+      operationId: rulesDelegate
+      parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+      - name: grafanaUri
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uri
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: object
         '403':
           description: 'User requires privilege for target team: MINIMUM_TEAM_PRIVILEGES'
         '401':
@@ -160,3 +281,43 @@ paths:
       security:
       - privilege:
         - MINIMUM_TEAM_PRIVILEGES
+components:
+  schemas:
+    Labels:
+      type: object
+      properties:
+        __alert_rule_uid__:
+          type: string
+        alertname:
+          type: string
+    Status:
+      type: object
+      properties:
+        state:
+          type: string
+    GrafanaDashboard:
+      type: object
+      properties:
+        id:
+          type: string
+        uid:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+        folderTitle:
+          type: string
+        folderUid:
+          type: string
+    GrafanaAlert:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        labels:
+          $ref: '#/components/schemas/Labels'

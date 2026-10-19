@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Shared assets
   description: Used for sharing agent assets (eg. K8s Namespaces) between teams
@@ -456,6 +455,17 @@ paths:
         - CLIENTS_READ
 components:
   schemas:
+    SharableAssetsWithRequestsResponse:
+      type: object
+      properties:
+        availableClusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableClusterResponse'
+        myClusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/MyClusterResponse'
     SharedAsset:
       type: object
       properties:
@@ -491,98 +501,26 @@ components:
           type: string
         requestId:
           type: string
-    SharableAssetsWithRequestsResponse:
+    NewRequestRequest:
+      required:
+      - newRequests
       type: object
       properties:
-        availableClusters:
+        newRequests:
           type: array
           items:
-            $ref: '#/components/schemas/AvailableClusterResponse'
-        myClusters:
-          type: array
-          items:
-            $ref: '#/components/schemas/MyClusterResponse'
-    MyClusterResponse:
+            $ref: '#/components/schemas/AccessRequest'
+    AccessRequest:
       type: object
       properties:
-        assetId:
-          type: string
-        clusterName:
-          type: string
         owningTeamId:
           type: string
-        availableNamespaces:
-          type: array
-          items:
-            type: string
-        currentlySharedNamespaces:
-          type: array
-          items:
-            type: string
-        semanticVersion:
-          $ref: '#/components/schemas/SemanticVersion'
-        isOutdated:
-          type: boolean
-        lastAttacked:
-          type: string
-          format: date-time
-        requests:
-          type: array
-          items:
-            $ref: '#/components/schemas/TheirRequest'
-    SemanticVersion:
-      type: object
-      properties:
-        major:
-          type: integer
-          format: int32
-        minor:
-          type: integer
-          format: int32
-        patch:
-          type: integer
-          format: int32
-    UpdateAllRequests:
-      required:
-      - requestIds
-      type: object
-      properties:
-        requestIds:
-          type: array
-          items:
-            type: string
-    MyRequest:
-      type: object
-      properties:
-        requestId:
+        assetId:
           type: string
         namespace:
           type: string
-        currentStatus:
+        teamToShareWith:
           type: string
-          enum:
-          - REQUESTED
-          - APPROVED
-          - DENIED
-          - REVOKED
-          - DELETED
-        requester:
-          type: string
-        approver:
-          type: string
-    OutstandingRequests:
-      type: object
-      properties:
-        assetToRequestMap:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/SharedAsset'
-        idToTeamMapping:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/SharedTeam'
     SharedAssetUpdate:
       type: object
       properties:
@@ -622,26 +560,34 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MyRequest'
-    NewRequestRequest:
-      required:
-      - newRequests
+    MyClusterResponse:
       type: object
       properties:
-        newRequests:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccessRequest'
-    AccessRequest:
-      type: object
-      properties:
-        owningTeamId:
-          type: string
         assetId:
           type: string
-        namespace:
+        clusterName:
           type: string
-        teamToShareWith:
+        owningTeamId:
           type: string
+        availableNamespaces:
+          type: array
+          items:
+            type: string
+        currentlySharedNamespaces:
+          type: array
+          items:
+            type: string
+        semanticVersion:
+          $ref: '#/components/schemas/SemanticVersion'
+        isOutdated:
+          type: boolean
+        lastAttacked:
+          type: string
+          format: date-time
+        requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/TheirRequest'
     SharedTeam:
       type: object
       properties:
@@ -675,3 +621,56 @@ components:
           type: string
         approver:
           type: string
+    UpdateAllRequests:
+      required:
+      - requestIds
+      type: object
+      properties:
+        requestIds:
+          type: array
+          items:
+            type: string
+    OutstandingRequests:
+      type: object
+      properties:
+        assetToRequestMap:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/SharedAsset'
+        idToTeamMapping:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SharedTeam'
+    MyRequest:
+      type: object
+      properties:
+        requestId:
+          type: string
+        namespace:
+          type: string
+        currentStatus:
+          type: string
+          enum:
+          - REQUESTED
+          - APPROVED
+          - DENIED
+          - REVOKED
+          - DELETED
+        requester:
+          type: string
+        approver:
+          type: string
+    SemanticVersion:
+      type: object
+      properties:
+        major:
+          type: integer
+          format: int32
+        minor:
+          type: integer
+          format: int32
+        patch:
+          type: integer
+          format: int32

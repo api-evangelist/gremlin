@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Images
   description: Manage images for different entities
@@ -37,10 +36,10 @@ paths:
         schema:
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            application/octet-stream: {}
+        '200':
+          description: The requested image
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege for target team: IMAGES_READ'
         '401':
@@ -67,10 +66,8 @@ paths:
         schema:
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            '*/*': {}
+        '204':
+          description: Image deleted
         '403':
           description: 'User requires privilege for target team: IMAGES_WRITE'
         '401':
@@ -103,10 +100,10 @@ paths:
         schema:
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            application/octet-stream: {}
+        '200':
+          description: The requested image
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege for target team: IMAGES_READ'
         '401':

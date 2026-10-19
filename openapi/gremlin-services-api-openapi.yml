@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Services
   description: Get metrics about intelligent health check target for a service
@@ -21,6 +20,7 @@ paths:
     get:
       tags:
       - Services
+      summary: Gets intelligent health check metrics for an AWS resource on a service
       description: Requires the privilege `SERVICES_READ`
       operationId: getMetrics
       parameters:
@@ -55,12 +55,12 @@ paths:
         schema:
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/MetricResponse'
+        '200':
+          description: The metrics for the resource
+        '400':
+          description: Bad Request
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege for target team: SERVICES_READ'
         '401':
@@ -68,8 +68,6 @@ paths:
       security:
       - privilege:
         - SERVICES_READ
-      summary: Get metrics
-      x-summary-source: derived
   /services/{serviceId}/dependencies:
     get:
       tags:
@@ -381,10 +379,58 @@ paths:
       security:
       - privilege:
         - SERVICES_WRITE
+  /services/{serviceId}/dependencies/{dependencyId}/reliability-test/{reliabilityTestId}/run/{runNumber}.md:
+    get:
+      tags:
+      - Services
+      summary: Get a dependency reliability test run rendered as markdown
+      description: Requires the privilege `SERVICES_READ`
+      operationId: getDependencyReliabilityTestRunMarkdown
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: dependencyId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: reliabilityTestId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: runNumber
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/markdown: {}
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
   /services/{serviceId}/dependencies/{dependencyId}/name:
     put:
       tags:
       - Services
+      summary: Renames a dependency
       description: Requires the privilege `SERVICES_WRITE`
       operationId: renameDependency
       parameters:
@@ -413,10 +459,10 @@ paths:
               type: string
         required: true
       responses:
-        default:
-          description: default response
-          content:
-            '*/*': {}
+        '204':
+          description: Dependency renamed
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege for target team: SERVICES_WRITE'
         '401':
@@ -425,8 +471,133 @@ paths:
       security:
       - privilege:
         - SERVICES_WRITE
-      summary: Rename dependency
-      x-summary-source: derived
+  /services/{serviceId}/dependencies/ignored/{dependencyId}/restore:
+    post:
+      tags:
+      - Services
+      summary: Restore a dependency that is marked as ignored, returning it to the list of…
+      description: Requires the privilege `SERVICES_WRITE`
+      operationId: restoreIgnoredDependency
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: dependencyId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DependencyResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_WRITE
+  /services/{serviceId}/failure-flags/{failureFlagName}/reliability-test/{reliabilityTestId}/run/{runNumber}.md:
+    get:
+      tags:
+      - Services
+      summary: Get a failure flag reliability test run rendered as markdown
+      description: Requires the privilege `SERVICES_READ`
+      operationId: getFailureFlagRunMarkdown
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: failureFlagName
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: reliabilityTestId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: runNumber
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/markdown: {}
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
+  /services/{serviceId}/reliability-test/{reliabilityTestId}/run/{runNumber}.md:
+    get:
+      tags:
+      - Services
+      summary: Get a reliability test run rendered as markdown
+      description: Requires the privilege `SERVICES_READ`
+      operationId: getServiceRunMarkdown
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: reliabilityTestId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: runNumber
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            text/markdown: {}
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
   /services:
     get:
       tags:
@@ -491,7 +662,7 @@ paths:
         default:
           description: default response
           content:
-            application/json:
+            text/plain:
               schema:
                 type: string
         '403':
@@ -527,8 +698,6 @@ paths:
           description: Bad Request
         '401':
           description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
-        '404':
-          description: Not found
         '403':
           description: 'User requires privilege for target team: SERVICES_WRITE'
       security:
@@ -628,6 +797,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServiceReadinessClientsResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_WRITE'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_WRITE
+  /services/batch:
+    post:
+      tags:
+      - Services
+      summary: Batch create up to 25 services; the whole batch is validated before any service…
+      description: Requires the privilege `SERVICES_WRITE`
+      operationId: createServicesBatch
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchCreateServicesRequest'
+        required: true
+      responses:
+        '200':
+          description: Validation passed and creation was attempted for every service. Inspect each result for success or error
+        '400':
+          description: At least one item failed validation; nothing in the batch was created. See /services/batch/validate for a structured, per-item error report.
         '403':
           description: 'User requires privilege for target team: SERVICES_WRITE'
         '401':
@@ -803,6 +1004,7 @@ paths:
     get:
       tags:
       - Services
+      summary: Computes service creation readiness for owned and shared assets
       description: Requires the privilege `SERVICES_WRITE`
       operationId: getServiceCreationReadiness
       parameters:
@@ -818,12 +1020,12 @@ paths:
         schema:
           type: string
       responses:
-        default:
-          description: default response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceCreationReadinessForOwnedAndSharedAssetsResponse'
+        '200':
+          description: Service creation readiness computed
+        '400':
+          description: Bad Request
+        '404':
+          description: Not found
         '403':
           description: 'User requires privilege for target team: SERVICES_WRITE'
         '401':
@@ -832,8 +1034,6 @@ paths:
       security:
       - privilege:
         - SERVICES_WRITE
-      summary: Get service creation readiness
-      x-summary-source: derived
   /services/{serviceId}/score:
     get:
       tags:
@@ -896,6 +1096,39 @@ paths:
       security:
       - privilege:
         - SERVICES_READ
+  /services/{serviceId}/baseline/halt:
+    post:
+      tags:
+      - Services
+      summary: Halt an active test series run for a given service
+      description: 'Halts any active test series run for the specified service.
+
+        Requires the privilege `SERVICES_RUN`'
+      operationId: haltTestSeriesRun_1
+      parameters:
+      - name: serviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+        '403':
+          description: 'User requires privilege for target team: SERVICES_RUN'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_RUN
   /services/{serviceId}/baseline:
     post:
       tags:
@@ -938,28 +1171,175 @@ paths:
       security:
       - privilege:
         - SERVICES_RUN
+  /services/batch/validate:
+    post:
+      tags:
+      - Services
+      summary: Dry-run validation of a batch create request
+      description: 'Runs the same validation as POST /services/batch without persisting anything. Useful for checking a batch request before creation. Note: target-resolution results reflect live agent state at validation time and are not guaranteed to hold if infrastructure changes before the actual create call.
+
+        Requires the privilege `SERVICES_READ`'
+      operationId: validateServicesBatch
+      parameters:
+      - name: teamId
+        in: query
+        description: Required when using company session token.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchValidateServicesRequest'
+        required: true
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchValidateServicesResponse'
+        '403':
+          description: 'User requires privilege for target team: SERVICES_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SERVICES_READ
 components:
   schemas:
-    ScheduleSettings:
+    TargetingStrategy:
+      required:
+      - type
       type: object
       properties:
-        enabled:
-          type: boolean
-        scheduleType:
+        type:
           type: string
-          enum:
-          - OnlyOnce
-          - Random
-        triggerType:
-          type: string
-          enum:
-          - Passed
-          - RunOnce
-          - Always
-        triggers:
+      discriminator:
+        propertyName: type
+    BulkUpdateRequest:
+      required:
+      - serviceIds
+      - statusCheckIdsToAttach
+      type: object
+      properties:
+        serviceIds:
+          maxItems: 2147483647
+          minItems: 1
           type: array
           items:
-            $ref: '#/components/schemas/Trigger'
+            type: string
+        statusCheckIdsToAttach:
+          maxItems: 2147483647
+          minItems: 1
+          type: array
+          items:
+            type: string
+    DetailedServiceRiskSummaryResponse:
+      type: object
+      properties:
+        serviceId:
+          type: string
+        evaluations:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskEvaluationResponse'
+        lastEvaluatedAt:
+          type: string
+          format: date-time
+    DependencyEndpoint:
+      type: object
+      properties:
+        address:
+          type: string
+        port:
+          type: string
+    TestSeriesRunResponse:
+      type: object
+      properties:
+        identifier:
+          type: string
+        teamId:
+          type: string
+        serviceId:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        pauseUntil:
+          type: string
+          format: date-time
+        pauseReason:
+          type: string
+        tests:
+          type: array
+          items:
+            type: string
+        currentTestIndex:
+          type: integer
+          format: int64
+        createdBy:
+          type: string
+        consecutiveHealthCheckFailures:
+          type: integer
+          format: int32
+        state:
+          type: string
+          enum:
+          - PENDING
+          - ACTIVE
+          - FINISHED
+          - HALTED
+          - FAILED
+    ApplicationSelector:
+      required:
+      - applicationName
+      type: object
+      properties:
+        applicationName:
+          type: string
+    ServiceStatusCheckResponse:
+      type: object
+      properties:
+        serviceStatusChecks:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceStatusCheck'
+        intelligentHealthCheckError:
+          type: string
+    PagedResponseUserDefinedServiceResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
+
+            If the length of items is less than this number that means there are _no_ more pages to request.
+
+
+            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
+
+            '
+          format: int32
+        pageToken:
+          type: string
+          description: Supply this token on successive requests to retrieve the next page if there is one
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDefinedServiceResponse'
+    SpofAudit:
+      type: object
+      properties:
+        markedAsSpofOn:
+          type: string
+          format: date-time
+        markedAsSpofBy:
+          type: string
     DependencyResponse:
       type: object
       properties:
@@ -1001,53 +1381,6 @@ components:
           format: date-time
         isSpof:
           type: boolean
-    Trigger:
-      required:
-      - dayOfWeek
-      - scheduleWindows
-      type: object
-      properties:
-        dayOfWeek:
-          type: string
-          enum:
-          - M
-          - T
-          - W
-          - Th
-          - F
-          - S
-          - Su
-        scheduleWindows:
-          maxItems: 1
-          minItems: 0
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleWindow'
-    PredicateObject:
-      required:
-      - jpQuery
-      - rValue
-      - type
-      type: object
-      properties:
-        comparator:
-          $ref: '#/components/schemas/HasCompareFunctionObject'
-        type:
-          type: string
-          description: The type of primitive this predicate operates on
-          enum:
-          - String
-          - Number
-          - Boolean
-        jpQuery:
-          type: string
-          description: The json path query to run to read from the response body
-        rValue:
-          type: object
-          description: The right hand value of the predicate
-      description: The list of predicates to evaluate against the status check response body
-      discriminator:
-        propertyName: type
     ServiceReadinessAgentsFromPodUIDsRequest:
       type: object
       properties:
@@ -1059,66 +1392,55 @@ components:
           type: array
           items:
             type: string
-    TestSeriesRunResponse:
+    FieldError:
       type: object
       properties:
-        teamId:
+        field:
           type: string
-        serviceId:
+          description: The request field the error applies to, or null for a whole-item error.
+        message:
           type: string
-        startTime:
+          description: Human-readable description of the validation failure.
+      description: Errors that apply to the request at this position.
+    LoadGenerator:
+      type: object
+      properties:
+        identifier:
           type: string
-          format: date-time
-        pauseUntil:
+        name:
           type: string
-          format: date-time
-        pauseReason:
+        active:
+          type: boolean
+        type:
           type: string
-        tests:
+          enum:
+          - WEBHOOK
+          - EXTERNAL
+        webhookStartLoadTriggerId:
+          type: string
+        webhookStatusCheckId:
+          type: string
+        webhookStopLoadTriggerId:
+          type: string
+        externalTestId:
+          type: string
+        externalIntegrationId:
+          type: string
+        loadGeneratorWebhooks:
           type: array
           items:
             type: string
-        currentTestIndex:
-          type: integer
-          format: int64
-        createdBy:
-          type: string
-        state:
-          type: string
-          enum:
-          - PENDING
-          - ACTIVE
-          - FINISHED
-          - HALTED
-          - FAILED
-    DetailedServiceRiskSummaryResponse:
+    BatchCreateServicesRequest:
+      required:
+      - services
       type: object
       properties:
-        serviceId:
-          type: string
-        evaluations:
+        services:
+          maxItems: 25
+          minItems: 1
           type: array
           items:
-            $ref: '#/components/schemas/RiskEvaluationResponse'
-        lastEvaluatedAt:
-          type: string
-          format: date-time
-    ScheduleWindow:
-      required:
-      - end
-      - start
-      type: object
-      properties:
-        start:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
-        end:
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          type: string
-          description: Time in HH:mm format (24-hour)
-          example: '14:30'
+            $ref: '#/components/schemas/UserDefinedServiceRequest'
     ServiceFromLoadBalancerRequest:
       required:
       - arn
@@ -1132,124 +1454,6 @@ components:
           type: string
         targetingStrategy:
           $ref: '#/components/schemas/TargetingStrategy'
-    SpofAudit:
-      type: object
-      properties:
-        markedAsSpofOn:
-          type: string
-          format: date-time
-        markedAsSpofBy:
-          type: string
-    CategoryAudit:
-      type: object
-      properties:
-        categorySetOn:
-          type: string
-          format: date-time
-        categorySetBy:
-          type: string
-    UserDefinedServiceRequest:
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        targetingStrategy:
-          $ref: '#/components/schemas/TargetingStrategy'
-        applicationSelector:
-          $ref: '#/components/schemas/ApplicationSelector'
-        statusCheckIds:
-          type: array
-          items:
-            type: string
-        scheduleSettings:
-          $ref: '#/components/schemas/ScheduleSettings'
-        tags:
-          type: object
-          additionalProperties:
-            type: string
-        multiSelectTags:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        serviceOwner:
-          $ref: '#/components/schemas/ServiceOwner'
-        startBaselineRequest:
-          $ref: '#/components/schemas/StartBaselineRequest'
-        awsTargetsArn:
-          type: array
-          items:
-            type: string
-        intelligentHealthCheckTargetIds:
-          type: array
-          items:
-            type: string
-        enabledGremlinAwsStatusCheck:
-          type: boolean
-        originatingScenarioId:
-          type: string
-    ServiceStatusCheckResponse:
-      type: object
-      properties:
-        serviceStatusChecks:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceStatusCheck'
-        autoGremlinAwsStatusChecks:
-          type: array
-          items:
-            $ref: '#/components/schemas/GremlinAwsStatusCheckMetadata'
-        loadBalancerStates:
-          type: array
-          items:
-            $ref: '#/components/schemas/LoadBalancerState'
-    BulkUpdateRequest:
-      required:
-      - serviceIds
-      - statusCheckIdsToAttach
-      type: object
-      properties:
-        serviceIds:
-          maxItems: 2147483647
-          minItems: 1
-          type: array
-          items:
-            type: string
-        statusCheckIdsToAttach:
-          maxItems: 2147483647
-          minItems: 1
-          type: array
-          items:
-            type: string
-    TestEligibleToRun:
-      type: object
-      properties:
-        reliabilityTestId:
-          type: string
-        dependencyId:
-          type: string
-        failureFlagName:
-          type: string
-        status:
-          type: string
-          enum:
-          - Passed
-          - RunOnce
-          - Always
-    TargetingStrategy:
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
     EvaluationConfiguration:
       required:
       - okStatusCodes
@@ -1268,34 +1472,6 @@ components:
         responseBodyEvaluation:
           $ref: '#/components/schemas/ResponseBodyEvaluation'
       description: The configuration for evaluating the success/failure of a status check
-    StatsByDateTime:
-      type: object
-      properties:
-        trackingDate:
-          type: string
-          format: date-time
-        value:
-          type: number
-          format: double
-    RiskSummaryStats:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int32
-        atRisk:
-          type: integer
-          format: int32
-        previousIntervalAtRisk:
-          type: integer
-          format: int32
-        evaluationState:
-          type: string
-          enum:
-          - RISKS_NOT_SUPPORTED
-          - NO_DEPLOYMENT_FOUND
-          - EVALUATED
-          - RISKS_NOT_INCLUDED
     BulkDeleteRequest:
       required:
       - serviceIds
@@ -1307,6 +1483,89 @@ components:
           type: array
           items:
             type: string
+    ScheduleWindow:
+      required:
+      - end
+      - start
+      type: object
+      properties:
+        start:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+        end:
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          type: string
+          description: Time in HH:mm format (24-hour)
+          example: '14:30'
+    GcpResourceResponse:
+      type: object
+      properties:
+        resourceId:
+          type: string
+        projectId:
+          type: string
+        name:
+          type: string
+        region:
+          type: string
+        resourceType:
+          type: string
+          enum:
+          - ForwardingRule
+          - UrlMap
+          - BackendService
+          - CloudRunService
+    UpdateDependencyRequest:
+      type: object
+      properties:
+        name:
+          maxLength: 253
+          minLength: 1
+          type: string
+          description: Updated name of dependency
+        isSpof:
+          type: boolean
+          description: Boolean to denote if a dependency is a single point of failure
+    ResponseBodyEvaluation:
+      required:
+      - op
+      - predicates
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to logically combine predicates into a success or failure
+          enum:
+          - AND
+          - OR
+        predicates:
+          type: array
+          description: The list of predicates to evaluate against the status check response body
+          items:
+            $ref: '#/components/schemas/PredicateObject'
+      description: The configuration for evaluating the success of a response body
+    BatchValidateServicesRequest:
+      required:
+      - services
+      type: object
+      properties:
+        services:
+          maxItems: 25
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDefinedServiceRequest'
+    BulkCreateServicesFromLoadBalancersRequest:
+      type: object
+      properties:
+        serviceFromLoadBalancerRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceFromLoadBalancerRequest'
+        accountId:
+          type: string
     ServiceUpdateRequest:
       type: object
       properties:
@@ -1346,6 +1605,14 @@ components:
           type: array
           items:
             type: string
+        gcpTargetResourceIds:
+          type: array
+          items:
+            type: string
+        azureTargetResourceIds:
+          type: array
+          items:
+            type: string
         serviceOwner:
           $ref: '#/components/schemas/ServiceOwner'
         intelligentHealthCheckTargetIds:
@@ -1354,56 +1621,25 @@ components:
             type: string
         enabledGremlinAwsStatusCheck:
           type: boolean
-    MetricDataQuery:
-      type: object
-    TeamExternalIntegrationReference:
-      title: StatusCheckRequest.TeamExternalIntegrationReference
-      required:
-      - name
+    RiskSummaryStats:
       type: object
       properties:
-        type:
+        total:
+          type: integer
+          format: int32
+        atRisk:
+          type: integer
+          format: int32
+        previousIntervalAtRisk:
+          type: integer
+          format: int32
+        evaluationState:
           type: string
-          description: The type of the external integration for the health check to be created/updated
           enum:
-          - JIRA
-          - DATADOG
-          - DATADOG_EU
-          - DATADOG_US3
-          - DATADOG_US5
-          - DATADOG_US1_FED
-          - PAGERDUTY
-          - NEWRELIC
-          - GRAFANA
-          - DYNATRACE
-          - APPDYNAMICS
-          - PROMETHEUS
-          - CUSTOM
-          - K6
-          - LOAD_GENERATOR_CUSTOM
-          - AWS
-          - AZURE
-        observabilityToolType:
-          type: string
-          description: The observability tool type of the external integration for the health check to be created/updated
-          enum:
-          - DATADOG
-          - PAGERDUTY
-          - NEWRELIC
-          - GRAFANA
-          - DYNATRACE
-          - APPDYNAMICS
-          - PROMETHEUS
-          - CUSTOM
-          - AWS
-          - AZURE
-        domain:
-          type: string
-          description: The domain of the observability tool type of the external integration for the health check to be created/updated
-        name:
-          type: string
-          description: The name of the external integration for the health check to be created/updated
-      description: Represents the configuration for referencing an external integration
+          - RISKS_NOT_SUPPORTED
+          - NO_DEPLOYMENT_FOUND
+          - EVALUATED
+          - RISKS_NOT_INCLUDED
     PagedResponseDependencyResponse:
       type: object
       properties:
@@ -1428,102 +1664,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DependencyResponse'
-    StartBaselineRequest:
-      title: StartBaselineRequest
-      type: object
-      properties:
-        tests:
-          type: array
-          items:
-            type: string
-      description: Represents a request to run all tests
-    PagedResponseUserDefinedServiceResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          description: 'The size of the page requested. If none was supplied this is a default value (depending on the endpoint).
-
-            If the length of items is less than this number that means there are _no_ more pages to request.
-
-
-            NOTE: if the length *is* equal there may or may not be additional pages to request, it is unknowable until they are requested
-
-            '
-          format: int32
-        pageToken:
-          type: string
-          description: Supply this token on successive requests to retrieve the next page if there is one
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserDefinedServiceResponse'
-    DefineDependencyRequest:
-      required:
-      - endpoints
-      - name
-      type: object
-      properties:
-        endpoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/DependencyEndpoint'
-        name:
-          maxLength: 253
-          minLength: 1
-          type: string
-        discoveredDependencyId:
-          type: string
-        isSpof:
-          type: boolean
-          description: Boolean to denote if a dependency is a single point of failure
-    ServiceStatusCheck:
-      type: object
-      properties:
-        id:
-          type: string
-        integration:
-          $ref: '#/components/schemas/TeamExternalIntegrationReference'
-        name:
-          type: string
-        evaluationConfiguration:
-          $ref: '#/components/schemas/EvaluationConfiguration'
-        isContinuous:
-          type: boolean
-        isAutogenerated:
-          type: boolean
-        description:
-          type: string
-        autoGeneratedFromIdentifier:
-          type: string
-        category:
-          type: string
-          enum:
-          - ERRORS
-          - LATENCY
-          - REQUESTS
-          - UNKNOWN
-        categoryAudit:
-          $ref: '#/components/schemas/CategoryAudit'
-    Graph:
-      type: object
-      properties:
-        start:
-          type: string
-          format: date-time
-        end:
-          type: string
-          format: date-time
-        numOfDataPoints:
-          type: integer
-          format: int32
-        statsByDate:
-          type: array
-          items:
-            $ref: '#/components/schemas/StatsByDateTime'
     UserDefinedServiceResponse:
       type: object
       properties:
@@ -1590,6 +1730,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AwsTarget'
+        gcpTargets:
+          type: array
+          items:
+            $ref: '#/components/schemas/GcpResourceResponse'
+        azureTargets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AzureResourceResponse'
         teamOwningProcess:
           type: string
         cachedScore:
@@ -1607,36 +1755,93 @@ components:
           type: boolean
         eligibleForFFProxyIntelligentHealthCheck:
           type: boolean
-        enabledGremlinAwsStatusCheck:
-          type: boolean
+        agentCoverageState:
+          type: string
+          enum:
+          - SUPPRESSED
+          - EXPIRED
+          - RESTORED_AFTER_EXPIRATION
         eligibleForGremlinAwsStatusCheck:
+          type: boolean
+        enabledGremlinAwsStatusCheck:
           type: boolean
         createdFromOnboarding:
           type: boolean
-    ServiceCreationReadinessResponse:
+    TestEligibleToRun:
       type: object
       properties:
-        hasProcesses:
-          type: boolean
-        processCollectionOn:
-          type: boolean
-    ServiceReadinessClientsResponse:
-      type: object
-      properties:
-        clientIds:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-    BulkCreateServicesFromLoadBalancersRequest:
-      type: object
-      properties:
-        serviceFromLoadBalancerRequests:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceFromLoadBalancerRequest'
-        accountId:
+        reliabilityTestId:
           type: string
+        dependencyId:
+          type: string
+        failureFlagName:
+          type: string
+        status:
+          type: string
+          enum:
+          - Passed
+          - RunOnce
+          - Always
+    CategoryAudit:
+      type: object
+      properties:
+        categorySetOn:
+          type: string
+          format: date-time
+        categorySetBy:
+          type: string
+    TeamExternalIntegrationReference:
+      title: StatusCheckRequest.TeamExternalIntegrationReference
+      required:
+      - name
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of the external integration for the health check to be created/updated
+          enum:
+          - JIRA
+          - DATADOG
+          - DATADOG_EU
+          - DATADOG_US3
+          - DATADOG_US5
+          - DATADOG_US1_FED
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - K6
+          - LOAD_GENERATOR_CUSTOM
+          - AWS
+          - AZURE
+          - GCP
+          - BLAZEMETER
+        observabilityToolType:
+          type: string
+          description: The observability tool type of the external integration for the health check to be created/updated
+          enum:
+          - DATADOG
+          - PAGERDUTY
+          - NEWRELIC
+          - GRAFANA
+          - DYNATRACE
+          - APPDYNAMICS
+          - PROMETHEUS
+          - CUSTOM
+          - AWS
+          - AZURE
+        domain:
+          type: string
+          description: The domain of the observability tool type of the external integration for the health check to be created/updated
+        name:
+          type: string
+          description: The name of the external integration for the health check to be created/updated
+      description: Represents the configuration for referencing an external integration
+    HasCompareFunctionObject:
+      type: object
     DefaultJiraIssueFields:
       required:
       - assignee
@@ -1661,37 +1866,51 @@ components:
           type: array
           items:
             type: string
-    UpdateDependencyRequest:
+    ServiceStatusCheck:
       type: object
       properties:
+        id:
+          type: string
+        integration:
+          $ref: '#/components/schemas/TeamExternalIntegrationReference'
         name:
-          maxLength: 253
-          minLength: 1
           type: string
-          description: Updated name of dependency
-        isSpof:
+        evaluationConfiguration:
+          $ref: '#/components/schemas/EvaluationConfiguration'
+        isContinuous:
           type: boolean
-          description: Boolean to denote if a dependency is a single point of failure
-    MetricResponse:
+        isAutogenerated:
+          type: boolean
+        description:
+          type: string
+        autoGeneratedFromIdentifier:
+          type: string
+        category:
+          type: string
+          enum:
+          - ERRORS
+          - LATENCY
+          - REQUESTS
+          - UNKNOWN
+        categoryAudit:
+          $ref: '#/components/schemas/CategoryAudit'
+    BatchValidateServicesResponse:
       type: object
       properties:
-        awsResource:
-          type: string
-        graphs:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Graph'
-    ServiceCreationReadinessForOwnedAndSharedAssetsResponse:
-      type: object
-      properties:
-        hasProcesses:
+        valid:
           type: boolean
-        processCollectionOn:
-          type: boolean
-        sharedAssetsReadiness:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ServiceCreationReadinessResponse'
+          description: True if every item and every batch-wide check passed, otherwise false.
+        batchErrors:
+          type: array
+          description: Errors that apply to the whole batch rather than one item (e.g. limit exceeded).
+          items:
+            type: string
+            description: Errors that apply to the whole batch rather than one item (e.g. limit exceeded).
+        serviceValidationErrors:
+          type: array
+          description: One entry per service request that failed validation.
+          items:
+            $ref: '#/components/schemas/ServiceValidationErrors'
     RiskEvaluationResponse:
       type: object
       properties:
@@ -1708,122 +1927,39 @@ components:
           type: string
         isAtRisk:
           type: boolean
-    ThresholdStrategy:
-      required:
-      - type
+    ScheduleSettings:
       type: object
       properties:
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    LoadBalancerState:
-      type: object
-      properties:
-        accountId:
-          type: string
-        name:
-          type: string
-        arn:
-          type: string
-        state:
+        enabled:
+          type: boolean
+        scheduleType:
           type: string
           enum:
-          - ACTIVE
-          - IDLE
-          - DISAPPEARED
-    LoadGenerator:
+          - OnlyOnce
+          - Random
+        triggerType:
+          type: string
+          enum:
+          - Passed
+          - RunOnce
+          - Always
+        triggers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Trigger'
+    ServiceReadinessClientsResponse:
       type: object
       properties:
-        identifier:
-          type: string
-        name:
-          type: string
-        webhookStartLoadTriggerId:
-          type: string
-        webhookStatusCheckId:
-          type: string
-        webhookStopLoadTriggerId:
-          type: string
-        active:
-          type: boolean
-        loadGeneratorWebhooks:
+        clientIds:
+          uniqueItems: true
           type: array
           items:
             type: string
-    AwsHealthCheckDefinition:
-      type: object
-      properties:
-        resultId:
-          type: string
-        evaluationQuery:
-          type: string
-        evaluationComparator:
-          type: string
-          enum:
-          - EQU
-          - EQUALS
-          - NEQ
-          - NOT_EQUALS
-          - LES
-          - LESS_THAN
-          - LEQ
-          - LESS_THAN_OR_EQUAL_TO
-          - GRT
-          - GREATER_THAN
-          - GEQ
-          - GREATER_THAN_OR_EQUAL_TO
-        metricDataQueries:
-          type: array
-          items:
-            $ref: '#/components/schemas/MetricDataQuery'
-        thresholdStrategy:
-          $ref: '#/components/schemas/ThresholdStrategy'
-    ApplicationSelector:
-      required:
-      - applicationName
-      type: object
-      properties:
-        applicationName:
-          type: string
-    ResponseBodyEvaluation:
-      required:
-      - op
-      - predicates
-      type: object
-      properties:
-        op:
-          type: string
-          description: The operation to logically combine predicates into a success or failure
-          enum:
-          - AND
-          - OR
-        predicates:
-          type: array
-          description: The list of predicates to evaluate against the status check response body
-          items:
-            $ref: '#/components/schemas/PredicateObject'
-      description: The configuration for evaluating the success of a response body
-    GremlinAwsStatusCheckMetadata:
+    ServiceOwner:
       type: object
       properties:
         identifier:
           type: string
-        name:
-          type: string
-        description:
-          type: string
-        definition:
-          $ref: '#/components/schemas/AwsHealthCheckDefinition'
-        enabled:
-          type: boolean
-        category:
-          type: string
-          enum:
-          - ERRORS
-          - LATENCY
-          - REQUESTS
-          - UNKNOWN
     AwsTarget:
       type: object
       properties:
@@ -1847,17 +1983,160 @@ components:
           type: string
         suggested:
           type: boolean
-    HasCompareFunctionObject:
-      type: object
-    DependencyEndpoint:
+    AzureResourceResponse:
       type: object
       properties:
-        address:
+        resourceId:
           type: string
-        port:
+        subscriptionId:
           type: string
-    ServiceOwner:
+        name:
+          type: string
+        resourceType:
+          type: string
+          enum:
+          - ApplicationGateway
+    ServiceValidationErrors:
       type: object
       properties:
-        identifier:
+        index:
+          type: integer
+          description: Position of this item in the request's services list.
+          format: int32
+        name:
           type: string
+          description: The requested name for the service request at this position.
+        errors:
+          type: array
+          description: Errors that apply to the request at this position.
+          items:
+            $ref: '#/components/schemas/FieldError'
+      description: One entry per service request that failed validation.
+    UserDefinedServiceRequest:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        targetingStrategy:
+          $ref: '#/components/schemas/TargetingStrategy'
+        applicationSelector:
+          $ref: '#/components/schemas/ApplicationSelector'
+        statusCheckIds:
+          type: array
+          items:
+            type: string
+        scheduleSettings:
+          $ref: '#/components/schemas/ScheduleSettings'
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        multiSelectTags:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        serviceOwner:
+          $ref: '#/components/schemas/ServiceOwner'
+        startBaselineRequest:
+          $ref: '#/components/schemas/StartBaselineRequest'
+        awsTargetsArn:
+          type: array
+          items:
+            type: string
+        gcpTargetResourceIds:
+          type: array
+          items:
+            type: string
+        azureTargetResourceIds:
+          type: array
+          items:
+            type: string
+        intelligentHealthCheckTargetIds:
+          type: array
+          items:
+            type: string
+        enabledGremlinAwsStatusCheck:
+          type: boolean
+        originatingScenarioId:
+          type: string
+    PredicateObject:
+      required:
+      - jpQuery
+      - rValue
+      - type
+      type: object
+      properties:
+        comparator:
+          $ref: '#/components/schemas/HasCompareFunctionObject'
+        type:
+          type: string
+          description: The type of primitive this predicate operates on
+          enum:
+          - String
+          - Number
+          - Boolean
+        jpQuery:
+          type: string
+          description: The json path query to run to read from the response body
+        rValue:
+          type: object
+          description: The right hand value of the predicate
+      description: The list of predicates to evaluate against the status check response body
+      discriminator:
+        propertyName: type
+    StartBaselineRequest:
+      title: StartBaselineRequest
+      type: object
+      properties:
+        tests:
+          type: array
+          items:
+            type: string
+      description: Represents a request to run all tests
+    Trigger:
+      required:
+      - dayOfWeek
+      - scheduleWindows
+      type: object
+      properties:
+        dayOfWeek:
+          type: string
+          enum:
+          - M
+          - T
+          - W
+          - Th
+          - F
+          - S
+          - Su
+        scheduleWindows:
+          maxItems: 1
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleWindow'
+    DefineDependencyRequest:
+      required:
+      - endpoints
+      - name
+      type: object
+      properties:
+        endpoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/DependencyEndpoint'
+        name:
+          maxLength: 253
+          minLength: 1
+          type: string
+        discoveredDependencyId:
+          type: string
+        isSpof:
+          type: boolean
+          description: Boolean to denote if a dependency is a single point of failure

@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: reports.security
   description: Endpoints for receiving access and event logs
@@ -63,6 +62,43 @@ paths:
 
         Requires the privilege `SECURITY_REPORTS_READ`'
       operationId: eventSummary
+      parameters:
+      - name: start
+        in: query
+        description: Start time in format 'yyyy-mm-ddThh:mm:ss.sssZ'
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - name: end
+        in: query
+        description: End time in format 'yyyy-mm-ddThh:mm:ss.sssZ'
+        required: true
+        schema:
+          type: string
+          format: date-time
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+            text/plain: {}
+        '403':
+          description: 'User requires privilege: SECURITY_REPORTS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - SECURITY_REPORTS_READ
+  /reports/security/event/delegate:
+    get:
+      tags:
+      - reports.security
+      summary: Loads the Experiment Summary for the specified company in the time period…
+      description: 'COMPANY_OWNER and COMPANY_ADMIN users only
+
+        Requires the privilege `SECURITY_REPORTS_READ`'
+      operationId: eventSummaryDelegate
       parameters:
       - name: start
         in: query

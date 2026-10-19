@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Roles
   description: List and modify roles
@@ -176,6 +175,97 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/RoleResponse'
+    RoleResponse:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+          enum:
+          - Company
+          - Team
+        privileges:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - ADMIN
+            - DEV
+            - ALL_API_KEYS_READ
+            - API_KEYS_READ
+            - API_KEYS_WRITE
+            - COMPANIES_READ
+            - COMPANIES_WRITE
+            - COMPANY_INTEGRATIONS_READ
+            - COMPANY_INTEGRATIONS_WRITE
+            - COMPANY_PREFERENCES_WRITE
+            - COMPANY_SECURITY_WRITE
+            - COMPANY_SECURITY_READ
+            - COMPANY_SAMLCLAIM_ALIAS_READ
+            - COMPANY_SAMLCLAIM_ALIAS_WRITE
+            - COMPANY_USERS_READ
+            - COMPANY_USERS_WRITE
+            - USERS_BATCH_WRITE
+            - HALT_ALL
+            - LARGE_SCALE_TESTS_READ
+            - LARGE_SCALE_TESTS_WRITE
+            - DISASTER_RECOVERY_TESTS_READ
+            - DISASTER_RECOVERY_TESTS_WRITE
+            - MINIMUM_COMPANY_PRIVILEGES
+            - PROMOTE_DEMOTE_OWNER
+            - RELIABILITY_REPORTS_READ
+            - REPORTS_READ
+            - ROLES_WRITE
+            - SECURITY_REPORTS_READ
+            - TEAMS_READ
+            - TEST_SUITES_READ
+            - TEST_SUITES_WRITE
+            - CLIENTS_READ
+            - CLIENTS_WRITE
+            - EXPERIMENTS_READ
+            - EXPERIMENTS_RUN
+            - EXPERIMENTS_WRITE
+            - FAULT_CPU
+            - FAULT_IO
+            - FAULT_MEMORY
+            - FAULT_DISK
+            - FAULT_BLACKHOLE
+            - FAULT_DNS
+            - FAULT_LATENCY
+            - FAULT_PACKET_LOSS
+            - FAULT_COLLECT_CERTS
+            - FAULT_SHUTDOWN
+            - FAULT_TIME_TRAVEL
+            - FAULT_PROCESS_KILLER
+            - FAULT_PROCESS_EXHAUSTION
+            - FAULT_GPU
+            - HALT_WRITE
+            - IMAGES_READ
+            - IMAGES_WRITE
+            - INTEGRATIONS_READ
+            - INTEGRATIONS_WRITE
+            - MINIMUM_TEAM_PRIVILEGES
+            - SCENARIO_SHARE_WRITE
+            - SCENARIOS_READ
+            - SCENARIOS_RUN
+            - SCENARIOS_WRITE
+            - SERVICES_READ
+            - SERVICES_RUN
+            - SERVICES_WRITE
+            - TEAM_SECURITY_READ
+            - TEAM_SECURITY_WRITE
+            - TEAMS_WRITE
+            - TPM_WRITE
+            - USERS_READ
+            - USERS_WRITE
+            - WEBHOOKS_READ
+            - WEBHOOKS_WRITE
     CreateCustomRoleRequest:
       required:
       - name
@@ -213,6 +303,7 @@ components:
             - COMPANY_SAMLCLAIM_ALIAS_WRITE
             - COMPANY_USERS_READ
             - COMPANY_USERS_WRITE
+            - USERS_BATCH_WRITE
             - HALT_ALL
             - LARGE_SCALE_TESTS_READ
             - LARGE_SCALE_TESTS_WRITE
@@ -262,92 +353,31 @@ components:
             - TEAM_SECURITY_READ
             - TEAM_SECURITY_WRITE
             - TEAMS_WRITE
+            - TPM_WRITE
             - USERS_READ
             - USERS_WRITE
             - WEBHOOKS_READ
             - WEBHOOKS_WRITE
-    UpdateCustomRoleRequest:
+    RolesResponse:
       type: object
       properties:
-        name:
-          type: string
-        description:
-          type: string
+        customRoles:
+          $ref: '#/components/schemas/Roles'
+        roles:
+          $ref: '#/components/schemas/Roles'
         privileges:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-            enum:
-            - ADMIN
-            - DEV
-            - ALL_API_KEYS_READ
-            - API_KEYS_READ
-            - API_KEYS_WRITE
-            - COMPANIES_READ
-            - COMPANIES_WRITE
-            - COMPANY_INTEGRATIONS_READ
-            - COMPANY_INTEGRATIONS_WRITE
-            - COMPANY_PREFERENCES_WRITE
-            - COMPANY_SECURITY_WRITE
-            - COMPANY_SECURITY_READ
-            - COMPANY_SAMLCLAIM_ALIAS_READ
-            - COMPANY_SAMLCLAIM_ALIAS_WRITE
-            - COMPANY_USERS_READ
-            - COMPANY_USERS_WRITE
-            - HALT_ALL
-            - LARGE_SCALE_TESTS_READ
-            - LARGE_SCALE_TESTS_WRITE
-            - DISASTER_RECOVERY_TESTS_READ
-            - DISASTER_RECOVERY_TESTS_WRITE
-            - MINIMUM_COMPANY_PRIVILEGES
-            - PROMOTE_DEMOTE_OWNER
-            - RELIABILITY_REPORTS_READ
-            - REPORTS_READ
-            - ROLES_WRITE
-            - SECURITY_REPORTS_READ
-            - TEAMS_READ
-            - TEST_SUITES_READ
-            - TEST_SUITES_WRITE
-            - CLIENTS_READ
-            - CLIENTS_WRITE
-            - EXPERIMENTS_READ
-            - EXPERIMENTS_RUN
-            - EXPERIMENTS_WRITE
-            - FAULT_CPU
-            - FAULT_IO
-            - FAULT_MEMORY
-            - FAULT_DISK
-            - FAULT_BLACKHOLE
-            - FAULT_DNS
-            - FAULT_LATENCY
-            - FAULT_PACKET_LOSS
-            - FAULT_COLLECT_CERTS
-            - FAULT_SHUTDOWN
-            - FAULT_TIME_TRAVEL
-            - FAULT_PROCESS_KILLER
-            - FAULT_PROCESS_EXHAUSTION
-            - FAULT_GPU
-            - HALT_WRITE
-            - IMAGES_READ
-            - IMAGES_WRITE
-            - INTEGRATIONS_READ
-            - INTEGRATIONS_WRITE
-            - MINIMUM_TEAM_PRIVILEGES
-            - SCENARIO_SHARE_WRITE
-            - SCENARIOS_READ
-            - SCENARIOS_RUN
-            - SCENARIOS_WRITE
-            - SERVICES_READ
-            - SERVICES_RUN
-            - SERVICES_WRITE
-            - TEAM_SECURITY_READ
-            - TEAM_SECURITY_WRITE
-            - TEAMS_WRITE
-            - USERS_READ
-            - USERS_WRITE
-            - WEBHOOKS_READ
-            - WEBHOOKS_WRITE
+          $ref: '#/components/schemas/Privileges'
+    Privileges:
+      type: object
+      properties:
+        company:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/PrivilegeDefinition'
+        team:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/PrivilegeDefinition'
     PrivilegeDefinition:
       type: object
       properties:
@@ -385,31 +415,16 @@ components:
           - TEAMS
           - TEAM_SECURITY
           - TEST_SUITES
+          - TPM
           - USERS
           - WEBHOOKS
-    RolesResponse:
+    UpdateCustomRoleRequest:
       type: object
       properties:
-        customRoles:
-          $ref: '#/components/schemas/Roles'
-        roles:
-          $ref: '#/components/schemas/Roles'
-        privileges:
-          $ref: '#/components/schemas/Privileges'
-    RoleResponse:
-      type: object
-      properties:
-        key:
-          type: string
         name:
           type: string
         description:
           type: string
-        type:
-          type: string
-          enum:
-          - Company
-          - Team
         privileges:
           uniqueItems: true
           type: array
@@ -432,6 +447,7 @@ components:
             - COMPANY_SAMLCLAIM_ALIAS_WRITE
             - COMPANY_USERS_READ
             - COMPANY_USERS_WRITE
+            - USERS_BATCH_WRITE
             - HALT_ALL
             - LARGE_SCALE_TESTS_READ
             - LARGE_SCALE_TESTS_WRITE
@@ -481,18 +497,8 @@ components:
             - TEAM_SECURITY_READ
             - TEAM_SECURITY_WRITE
             - TEAMS_WRITE
+            - TPM_WRITE
             - USERS_READ
             - USERS_WRITE
             - WEBHOOKS_READ
             - WEBHOOKS_WRITE
-    Privileges:
-      type: object
-      properties:
-        company:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/PrivilegeDefinition'
-        team:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/PrivilegeDefinition'

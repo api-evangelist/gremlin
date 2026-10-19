@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: google-cloud.integration
   description: Fetch setup instructions for configuring a Google Cloud integration.
@@ -48,7 +47,6 @@ paths:
       security:
       - privilege:
         - MINIMUM_TEAM_PRIVILEGES
-      x-gremlin-feature-flag: gcp-ihc
 components:
   schemas:
     GcpIntegrationMetadataResponse:

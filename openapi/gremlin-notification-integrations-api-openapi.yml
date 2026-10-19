@@ -11,8 +11,7 @@ info:
     url: https://www.gremlin.com/license_2017_03_24
   version: '1.0'
 servers:
-- url: https://api.gremlin.com/v1
-  description: Gremlin API v1
+- url: /v1
 tags:
 - name: Notification Integrations
   description: Manage company level integrations with Slack/Datadog
@@ -97,6 +96,33 @@ paths:
       security:
       - privilege:
         - COMPANY_INTEGRATIONS_WRITE
+  /integrations/{type}/delegate:
+    get:
+      tags:
+      - Notification Integrations
+      summary: Get the integration identified by the supplied type, with credentials redacted.
+      description: Requires the privilege `COMPANY_INTEGRATIONS_READ`
+      operationId: getDelegate
+      parameters:
+      - name: type
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationIntegrationResponse'
+        '403':
+          description: 'User requires privilege: COMPANY_INTEGRATIONS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_INTEGRATIONS_READ
   /integrations:
     get:
       tags:
@@ -104,6 +130,30 @@ paths:
       summary: List all integrations associated with your company
       description: Requires the privilege `COMPANY_INTEGRATIONS_READ`
       operationId: list
+      parameters: []
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationIntegrationResponse'
+        '403':
+          description: 'User requires privilege: COMPANY_INTEGRATIONS_READ'
+        '401':
+          description: Authorization header missing or malformed. Please provide proper credentials in the authorization header.
+      security:
+      - privilege:
+        - COMPANY_INTEGRATIONS_READ
+  /integrations/delegate:
+    get:
+      tags:
+      - Notification Integrations
+      summary: List all integrations associated with your company, with credentials redacted.
+      description: Requires the privilege `COMPANY_INTEGRATIONS_READ`
+      operationId: listDelegate
       parameters: []
       responses:
         default:
@@ -140,19 +190,6 @@ components:
           format: date-time
         data:
           $ref: '#/components/schemas/Data'
-    Data:
-      type: object
-      properties:
-        webhook:
-          type: string
-        baseUrl:
-          type: string
-        teams:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamData'
-        api_key:
-          type: string
     TeamData:
       type: object
       properties:
@@ -175,6 +212,19 @@ components:
         hostname:
           type: string
         webhook:
+          type: string
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamData'
+        api_key:
+          type: string
+    Data:
+      type: object
+      properties:
+        webhook:
+          type: string
+        baseUrl:
           type: string
         teams:
           type: array
