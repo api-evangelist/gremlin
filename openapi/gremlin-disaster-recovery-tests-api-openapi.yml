@@ -773,3 +773,9 @@ components:
       description: The list of predicates to evaluate against the status check response body
       discriminator:
         propertyName: type
+x-provenance:
+  method: harvested
+  publisher: Gremlin
+  source: https://api.gremlin.com/v1/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

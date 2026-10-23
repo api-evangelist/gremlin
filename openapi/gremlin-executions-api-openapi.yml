@@ -292,3 +292,9 @@ components:
           type: string
           format: date-time
       description: A collection of states an execution goes through during its lifecycle, along with their corresponding timestamps. This list can be used to create a timeline of what happened to a particular target during an experiment. Meanings of specific state values can be found at https://www.gremlin.com/docs/fault-injection-experiments#experiment-stages
+x-provenance:
+  method: harvested
+  publisher: Gremlin
+  source: https://api.gremlin.com/v1/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

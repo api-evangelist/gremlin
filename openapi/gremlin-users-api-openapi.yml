@@ -485,3 +485,9 @@ components:
           type: string
           description: The unique identifier for the user (user's email)
       description: represents a request to add an existing user to a team
+x-provenance:
+  method: harvested
+  publisher: Gremlin
+  source: https://api.gremlin.com/v1/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
